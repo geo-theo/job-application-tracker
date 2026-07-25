@@ -1,0 +1,94 @@
+Geospatial Data Analyst
+Missoula, MT
+
+Job Type
+Full-time
+Description
+Geospatial Data Analyst
+The Rocky Mountain Elk Foundation (RMEF) is a mission-driven non-profit dedicated to ensuring the future of elk, other wildlife, their habitat and our hunting heritage. Since our founding in 1984, we have helped conserve nearly one square mile of elk country every day. In partnership with others, we have conserved or enhanced more than 9.1 million acres, including improving public access to 1.6 million acres. Our impact will extend to 10 million acres by 2030. RMEF is proud of our conservation successes and is committed to making an even larger impact in the future. 
+
+
+
+  
+
+RMEF is seeking an experienced professional to serve as the organization’s central geospatial resource, responsible for collecting, managing, analyzing, and visualizing spatial data to advance RMEF’s operations, mission, and strategic goals.  Responsibilities include:
+
+Designing and maintaining a      centralized GIS architecture
+Developing standardized workflows
+Producing high-quality maps,      applications, and analyses that support mission delivery, storytelling,      advocacy, fundraising, membership growth, and executive decision-making
+This is an exciting opportunity to help shape the future of conservation in a dynamic, mission-driven environment. 
+
+
+
+Qualifications include:
+
+· Bachelor’s degree is required in geography, GIS, natural resource management, or a closely related field
+
+· Minimum of five years’ experience with geospatial analysis, GIS data management, and cartography is required, preferably within a wildlife conservation or natural resources context
+
+· Demonstrated experience with cartographic design, interactive mapping, or geospatial storytelling preferred
+
+
+
+Location: This position is based at RMEF’s Headquarters office in Missoula, Montana and requires fulltime on-site work. 
+
+
+
+Essential Functions:
+
+1. Geospatial Data Governance + Standards: Design, implement, and maintain RMEF’s centralized GIS data structure in conjunction with organizational data governance. Establish and document standards for geospatial data collection, storage, access, naming conventions, metadata, quality control, and versioning. Ensure spatial datasets are consistent, sustainable, and usable across departments and systems. Work across departments to promote consistent, standardized use of GIS tools and data. Develop documentation, workflows, and training resources to improve GIS literacy and enable non-technical staff to effectively access organizational data through GIS tools.
+
+
+
+2. Geospatial Data Management + Integration: Collect, manage, maintain, and validate internal and external datasets critical to mission delivery and organizational planning. Engage with agency and industry partners to research, acquire, and steward key datasets, including parcel data, conservation easements, habitat and wildlife layers, proprietary partner layers, and access-related information. Identify and integrate GIS data with internal systems, NetSuite, and workflows, including mission, grants, membership, marketing, and development data, to support reporting, analysis, and compliance needs.
+
+
+
+3. Mapping, Visualization + Design: Create high-quality static and interactive maps, dashboards, and web-based GIS applications that clearly communicate RMEF accomplishments, opportunities, and future direction. Apply strong cartographic design principles to ensure clarity, accuracy, and visual impact in line with RMEF brand standards. Collaborate with the Brand + Communications and Marketing + Partnerships departments to support storytelling, donor engagement, and public-facing communications through compelling visual products. 
+
+
+
+4. Mission Support: Provide direct geospatial support to Mission projects, including creation of project maps, access analysis, parcel research, and grant applications. Support conservation planning, project selection, and development by supplying spatial research, analysis, and visualization that strengthens decision-making and documentation.
+
+
+
+5. Evolving Technology + Modernization: Maintain and administer GIS software, tools, licenses, and supporting infrastructure in coordination with Internal Operations staff. Stay current on emerging GIS technologies, visualization techniques, and best practices, recommending and implementing improvements that increase analytical capacity, efficiency, and organizational value.
+
+
+
+6. Additional Responsibilities: Maintain relevant GIS certifications and pursue ongoing professional development. Coordinate with external partners and vendors as needed. Serve as backup support for other members of the department as needed. Perform other work as required.
+
+
+
+Supervision of Others: 
+
+This position does not have direct supervisory responsibilities.
+
+
+
+Education and Experience:
+
+A bachelor’s degree is required in geography, GIS, natural resource management, or a closely related field. A minimum of five years’ experience with geospatial analysis, GIS data management, and cartography is required, preferably within a wildlife conservation or natural resources context. Demonstrated experience with cartographic design, interactive mapping, or geospatial storytelling preferred.
+
+
+
+Knowledge, Skills, Abilities:
+
+Knowledge and support of RMEF’s mission, goals, and activities, and ability to promote them.
+Strong knowledge of GIS principles, spatial analysis techniques, and geospatial data management.
+Proficiency in creating high-quality maps and dynamic maps using sound cartographic design principles.
+Knowledge of wildlife management, habitat management, land conservation, and access-related spatial data.
+Working knowledge of real estate transactions, including title work and proficiency in reading legal descriptions, to support accurate spatial data interpretation and creation.
+Demonstrated experience designing and maintaining geospatial data structures, standards, and workflows.
+Ability to translate complex spatial data into clear, compelling visual products for technical and non-technical audiences.
+Working knowledge and understanding of accounting, Microsoft Office, and relational databases. 
+Exceptional attention to detail and accuracy.
+Strong analytical, critical thinking, and problem-solving skills with sound judgment.
+Ability to meet deadlines, set priorities, and work within a dynamic, changing environment.
+Ability to work independently while functioning effectively in a team environment.
+Strong customer service ethic and professional demeanor.
+
+
+Physical Demands:
+
+The employee must sit or stand for long periods of time; use a computer terminal; reach forward and to the side; bend from both standing and sitting position; and lift items of light and medium weight. Travel by automobile, airplane, foot, or mechanized ORV may be required. Travel may include overnight and weekend trips.

@@ -21,6 +21,20 @@ const ROLE_OPTIONS = [
   "Other",
 ];
 
+const ROLE_ICONS = {
+  "GIS / Geospatial": "GIS",
+  "Intelligence / Risk": "IR",
+  Research: "R",
+  "Data Analysis": "DA",
+  Policy: "P",
+  "Program Management": "PM",
+  "Community Engagement": "CE",
+  "Field Work": "FW",
+  "Writing / Editing": "WE",
+  Operations: "O",
+  "Business Development": "BD",
+};
+
 const CSV_COLUMNS = [
   "id",
   "createdAt",
@@ -40,6 +54,7 @@ const CSV_COLUMNS = [
   "datePosted",
   "deadline",
   "appliedDate",
+  "applicationNeeds",
   "favoriteJob",
   "roles",
   "roleOther",
@@ -68,6 +83,7 @@ const els = {
   datePosted: document.querySelector("#date-posted"),
   deadline: document.querySelector("#deadline"),
   appliedDate: document.querySelector("#applied-date"),
+  applicationNeeds: document.querySelectorAll("input[name='applicationNeeds']"),
   favoriteJob: document.querySelector("#favorite-job"),
   roles: document.querySelector("#roles"),
   roleOtherWrap: document.querySelector("#role-other-wrap"),
@@ -304,6 +320,7 @@ function collectFormData() {
       datePosted: els.datePosted.value,
       deadline: els.deadline.value,
       appliedDate: els.appliedDate.value,
+      applicationNeeds: getCheckedValues(els.applicationNeeds),
       favoriteJob: els.favoriteJob.checked,
       roles: allRoles,
       roleOther,
@@ -386,6 +403,7 @@ async function loadJobIntoForm(jobId) {
   els.datePosted.value = job.datePosted || "";
   els.deadline.value = job.deadline || "";
   els.appliedDate.value = job.appliedDate || "";
+  setCheckedValues(els.applicationNeeds, job.applicationNeeds || []);
   els.favoriteJob.checked = Boolean(job.favoriteJob);
   setMultiSelectValues(els.roles, normalizeRolesForForm(job.roles || [], job.roleOther));
   els.roleOther.value = job.roleOther || "";
@@ -488,15 +506,27 @@ function createJobCard(job) {
     }
   });
 
+  const logo = createCompanyLogo(job);
+
   const main = document.createElement("div");
   main.className = "job-main";
+  const titleRow = document.createElement("div");
+  titleRow.className = "job-title-row";
   const title = document.createElement("p");
   title.className = "job-title";
   title.textContent = job.title || "";
+  titleRow.append(title);
+  if (job.favoriteJob) {
+    const favoriteStar = document.createElement("span");
+    favoriteStar.className = "favorite-star";
+    favoriteStar.setAttribute("aria-label", "Favorite job");
+    favoriteStar.textContent = "★";
+    titleRow.append(favoriteStar);
+  }
   const company = document.createElement("div");
   company.className = "job-company";
   company.textContent = job.company || "";
-  main.append(title, company);
+  main.append(titleRow, company);
 
   const location = cell(job.location || "");
   const pay = cell("", "job-pay");
@@ -518,10 +548,12 @@ function createJobCard(job) {
     deadline.append(asap);
   }
 
+  const industry = cell(getIndustryDisplay(job), "job-industry");
+
   const roleChips = document.createElement("div");
   roleChips.className = "chips";
-  (job.roles || []).forEach((role, index) => {
-    roleChips.append(chip(role, `role-${index % 4}`));
+  (job.roles || []).forEach((role) => {
+    roleChips.append(roleChip(role));
   });
 
   const priorityChips = document.createElement("div");
@@ -544,7 +576,7 @@ function createJobCard(job) {
   link.addEventListener("click", (event) => event.stopPropagation());
   linkWrap.append(link);
 
-  card.append(main, location, pay, deadline, roleChips, priorityChips, linkWrap);
+  card.append(logo, main, location, pay, deadline, industry, roleChips, priorityChips, linkWrap);
   return card;
 }
 
@@ -555,11 +587,84 @@ function cell(text, className = "") {
   return div;
 }
 
+function createCompanyLogo(job) {
+  const logo = document.createElement("div");
+  logo.className = "company-logo";
+  const domain = getDomainFromUrl(job.link);
+  const fallback = document.createElement("span");
+  fallback.className = "company-logo-fallback";
+  fallback.textContent = getCompanyInitials(job.company || domain || job.title);
+
+  if (domain) {
+    const image = document.createElement("img");
+    image.alt = job.company ? `${job.company} logo` : "Company logo";
+    image.loading = "lazy";
+    image.src = `https://www.google.com/s2/favicons?domain=${encodeURIComponent(domain)}&sz=64`;
+    image.addEventListener("error", () => {
+      image.remove();
+      logo.classList.add("show-fallback");
+    });
+    logo.append(image);
+  } else {
+    logo.classList.add("show-fallback");
+  }
+
+  logo.append(fallback);
+  return logo;
+}
+
 function chip(text, extraClass) {
   const span = document.createElement("span");
   span.className = `chip ${extraClass}`;
   span.textContent = text;
   return span;
+}
+
+function roleChip(role) {
+  const span = chip(role, `role-${getRoleStyleIndex(role)}`);
+  const icon = document.createElement("span");
+  icon.className = "chip-icon";
+  icon.setAttribute("aria-hidden", "true");
+  icon.textContent = getRoleIcon(role);
+  span.prepend(icon);
+  return span;
+}
+
+function getRoleStyleIndex(role) {
+  const optionIndex = ROLE_OPTIONS.indexOf(role);
+  if (optionIndex >= 0) return optionIndex % 8;
+  return hashString(role) % 8;
+}
+
+function getRoleIcon(role) {
+  if (ROLE_ICONS[role]) return ROLE_ICONS[role];
+  const words = role
+    .split(/[^a-z0-9]+/i)
+    .filter(Boolean)
+    .slice(0, 2);
+  return (words.map((word) => word[0]).join("") || "?").toUpperCase();
+}
+
+function getIndustryDisplay(job) {
+  if (job.industry === "Other") return job.industryOther || "Other";
+  return job.industry || "";
+}
+
+function getDomainFromUrl(value) {
+  if (!value) return "";
+  try {
+    return new URL(value).hostname.replace(/^www\./i, "");
+  } catch (error) {
+    return "";
+  }
+}
+
+function getCompanyInitials(value) {
+  const words = (value || "Job")
+    .split(/[^a-z0-9]+/i)
+    .filter(Boolean)
+    .slice(0, 2);
+  return words.map((word) => word[0]).join("").toUpperCase() || "J";
 }
 
 function statusChip(job) {
@@ -831,6 +936,7 @@ function csvRowToJob(header, row) {
     datePosted: record.datePosted || "",
     deadline: record.deadline || "",
     appliedDate: record.appliedDate || "",
+    applicationNeeds: splitList(record.applicationNeeds),
     favoriteJob: parseBoolean(record.favoriteJob),
     roles: splitList(record.roles),
     roleOther: record.roleOther || "",
@@ -902,10 +1008,21 @@ function getSelectedValues(select) {
   return [...select.selectedOptions].map((option) => option.value);
 }
 
+function getCheckedValues(inputs) {
+  return [...inputs].filter((input) => input.checked).map((input) => input.value);
+}
+
 function setMultiSelectValues(select, values) {
   const valueSet = new Set(values);
   [...select.options].forEach((option) => {
     option.selected = valueSet.has(option.value);
+  });
+}
+
+function setCheckedValues(inputs, values) {
+  const valueSet = new Set(values);
+  [...inputs].forEach((input) => {
+    input.checked = valueSet.has(input.value);
   });
 }
 
@@ -969,6 +1086,10 @@ function createId() {
 
 function unique(values) {
   return [...new Set(values.filter(Boolean))];
+}
+
+function hashString(value) {
+  return [...value].reduce((hash, char) => hash + char.charCodeAt(0), 0);
 }
 
 function splitList(value) {
