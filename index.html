@@ -94,6 +94,7 @@
                 <label><input type="radio" name="priority" value="Urgent"><span>Urgent</span></label>
                 <label><input type="radio" name="priority" value="High"><span>High</span></label>
                 <label><input type="radio" name="priority" value="Low"><span>Low</span></label>
+                <label><input type="radio" name="priority" value="Future"><span>Future</span></label>
               </div>
             </div>
 
@@ -108,10 +109,14 @@
               </label>
             </div>
 
-            <label class="field">
+            <div class="field">
               <span>Applied?</span>
-              <input id="applied-date" name="appliedDate" type="date">
-            </label>
+              <div class="segmented compact applied-group" role="radiogroup" aria-label="Applied">
+                <label><input type="radio" name="appliedStatus" value="Yes"><span>Yes</span></label>
+                <label><input type="radio" name="appliedStatus" value="No"><span>No</span></label>
+              </div>
+              <input id="applied-date" class="conditional-field" name="appliedDate" type="date" hidden>
+            </div>
 
             <div class="field">
               <span>Application needs</span>
@@ -223,12 +228,32 @@
           <div class="control-row">
             <div class="filter-group" aria-label="Status filter">
               <button type="button" class="filter-button active" data-status="All">All</button>
+
+              <div class="filter-accordion priority-accordion">
+                <button type="button" class="filter-button accordion-trigger priority-trigger" id="priority-filter-button" aria-expanded="false" aria-controls="priority-filter-panel">
+                  Priority
+                </button>
+                <div class="accordion-panel" id="priority-filter-panel" hidden>
+                  <button type="button" class="filter-button" data-status="Urgent">Urgent</button>
+                  <button type="button" class="filter-button" data-status="High">High</button>
+                  <button type="button" class="filter-button" data-status="Low">Low</button>
+                </div>
+              </div>
+
               <button type="button" class="filter-button" data-status="Applied">Applied</button>
-              <button type="button" class="filter-button" data-status="Urgent">Urgent</button>
-              <button type="button" class="filter-button" data-status="High">High</button>
-              <button type="button" class="filter-button" data-status="Low">Low</button>
+
+              <div class="filter-accordion sort-accordion">
+                <button type="button" class="filter-button accordion-trigger" id="sort-filter-button" aria-expanded="false" aria-controls="sort-filter-panel">
+                  Sort by
+                </button>
+                <div class="accordion-panel" id="sort-filter-panel" hidden>
+                  <button type="button" class="filter-button" data-sort="deadline">Deadline</button>
+                  <button type="button" class="filter-button" data-sort="priority">Priority</button>
+                </div>
+              </div>
+
+              <button type="button" class="filter-button reference-filter" data-status="Reference">Reference</button>
             </div>
-            <button type="button" id="deadline-sort-button" class="filter-button">Deadline</button>
           </div>
 
           <div class="control-row data-row">

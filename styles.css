@@ -263,6 +263,10 @@ button:focus-visible {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.priority-group {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
 .segmented label {
   min-width: 0;
 }
@@ -310,6 +314,12 @@ button:focus-visible {
   border-color: var(--yellow);
   background: #fbf3cf;
   color: #6c5200;
+}
+
+.priority-group input[value="Future"]:checked + span {
+  border-color: var(--purple);
+  background: #f1e8fb;
+  color: #5a388c;
 }
 
 .split-grid {
@@ -425,15 +435,77 @@ button:focus-visible {
 
 .filter-group {
   display: flex;
+  align-items: flex-start;
   gap: 8px;
   flex-wrap: wrap;
+  width: 100%;
 }
 
-.filter-button.active,
-#deadline-sort-button.active {
+.filter-button.active {
   border-color: #006b62;
   background: #dff0ec;
   color: #00564e;
+}
+
+.filter-accordion {
+  position: relative;
+}
+
+.accordion-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.accordion-trigger::after {
+  width: 0;
+  height: 0;
+  border-top: 5px solid currentColor;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+  content: "";
+}
+
+.accordion-trigger[aria-expanded="true"]::after {
+  transform: rotate(180deg);
+}
+
+.priority-trigger {
+  border-color: #315c9b;
+  background: #e5f1fb;
+  color: #1d4f7a;
+}
+
+.priority-trigger.active,
+.priority-trigger[aria-expanded="true"] {
+  border-color: #315c9b;
+  background: #315c9b;
+  color: #ffffff;
+}
+
+.accordion-panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 20;
+  display: grid;
+  min-width: 142px;
+  gap: 6px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper-strong);
+  box-shadow: var(--shadow);
+}
+
+.accordion-panel .filter-button {
+  justify-content: flex-start;
+  width: 100%;
+  text-align: left;
+}
+
+.reference-filter {
+  margin-left: auto;
 }
 
 .data-row {
@@ -682,6 +754,16 @@ button:focus-visible {
   color: #6c5200;
 }
 
+.chip.future {
+  background: #f1e8fb;
+  color: #5a388c;
+}
+
+.chip.reference {
+  background: #e4edf4;
+  color: #25536d;
+}
+
 .link-button {
   display: inline-flex;
   align-items: center;
@@ -797,5 +879,9 @@ button:focus-visible {
 
   .role-filter-label {
     width: 100%;
+  }
+
+  .reference-filter {
+    margin-left: 0;
   }
 }

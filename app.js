@@ -35,6 +35,12 @@ const ROLE_ICONS = {
   "Business Development": "BD",
 };
 
+const COMPANY_LOGOS = {
+  "Institute for the Study of War": "Institute for the Study of War.jpg",
+  "Rocky Mountain Elk Foundation": "Rocky Mountain Elk Foundation.jpg",
+  Sibylline: "Sibylline.jpg",
+};
+
 const CSV_COLUMNS = [
   "id",
   "createdAt",
@@ -53,6 +59,7 @@ const CSV_COLUMNS = [
   "priority",
   "datePosted",
   "deadline",
+  "appliedStatus",
   "appliedDate",
   "applicationNeeds",
   "favoriteJob",
@@ -82,6 +89,7 @@ const els = {
   payMidpoint: document.querySelector("#pay-midpoint"),
   datePosted: document.querySelector("#date-posted"),
   deadline: document.querySelector("#deadline"),
+  appliedStatus: document.querySelectorAll("input[name='appliedStatus']"),
   appliedDate: document.querySelector("#applied-date"),
   applicationNeeds: document.querySelectorAll("input[name='applicationNeeds']"),
   favoriteJob: document.querySelector("#favorite-job"),
@@ -99,7 +107,10 @@ const els = {
   saveButton: document.querySelector("#save-button"),
   deleteButton: document.querySelector("#delete-button"),
   statusButtons: document.querySelectorAll("[data-status]"),
-  deadlineSortButton: document.querySelector("#deadline-sort-button"),
+  sortButtons: document.querySelectorAll("[data-sort]"),
+  accordionTriggers: document.querySelectorAll(".accordion-trigger"),
+  priorityFilterButton: document.querySelector("#priority-filter-button"),
+  sortFilterButton: document.querySelector("#sort-filter-button"),
   roleFilter: document.querySelector("#role-filter"),
   connectFolderButton: document.querySelector("#connect-folder-button"),
   exportCsvButton: document.querySelector("#export-csv-button"),
@@ -120,7 +131,7 @@ let isResettingForm = false;
 
 const filters = {
   status: "All",
-  deadlineFirst: false,
+  sortBy: "",
   roles: [],
 };
 
@@ -129,6 +140,7 @@ document.addEventListener("DOMContentLoaded", init);
 async function init() {
   populateRoleOptions();
   bindEvents();
+  updateFilterControls();
   resetForm();
   els.saveButton.disabled = true;
   try {
@@ -155,19 +167,34 @@ function bindEvents() {
   els.payMax.addEventListener("input", updatePayMidpoint);
   els.roles.addEventListener("change", syncConditionalFields);
   els.industry.addEventListener("change", syncConditionalFields);
+  els.appliedStatus.forEach((input) => input.addEventListener("change", syncConditionalFields));
   els.scrapeButton.addEventListener("click", scrapeJobDescription);
   els.downloadDescriptionButton.addEventListener("click", downloadCurrentDescription);
   els.statusButtons.forEach((button) => {
     button.addEventListener("click", () => {
       filters.status = button.dataset.status;
-      els.statusButtons.forEach((item) => item.classList.toggle("active", item === button));
+      updateFilterControls();
+      closeFilterAccordions();
       renderJobs();
     });
   });
-  els.deadlineSortButton.addEventListener("click", () => {
-    filters.deadlineFirst = !filters.deadlineFirst;
-    els.deadlineSortButton.classList.toggle("active", filters.deadlineFirst);
-    renderJobs();
+  els.sortButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      filters.sortBy = filters.sortBy === button.dataset.sort ? "" : button.dataset.sort;
+      updateFilterControls();
+      closeFilterAccordions();
+      renderJobs();
+    });
+  });
+  els.accordionTriggers.forEach((button) => {
+    button.addEventListener("click", () => {
+      const panel = document.querySelector(`#${button.getAttribute("aria-controls")}`);
+      const expanded = button.getAttribute("aria-expanded") === "true";
+      const shouldExpand = !expanded;
+      closeFilterAccordions(button);
+      button.setAttribute("aria-expanded", String(shouldExpand));
+      if (panel) panel.hidden = !shouldExpand;
+    });
   });
   els.roleFilter.addEventListener("change", () => {
     filters.roles = getSelectedValues(els.roleFilter);
@@ -298,6 +325,7 @@ function collectFormData() {
   const allRoles = rolesToSave(roles, roleOther);
   const industry = els.industry.value;
   const industryOther = els.industryOther.value.trim();
+  const appliedStatus = getRadioValue("appliedStatus");
   const descriptionText = els.jobDescription.value.trim();
 
   return {
@@ -319,7 +347,8 @@ function collectFormData() {
       priority: getRadioValue("priority"),
       datePosted: els.datePosted.value,
       deadline: els.deadline.value,
-      appliedDate: els.appliedDate.value,
+      appliedStatus,
+      appliedDate: appliedStatus === "Yes" ? els.appliedDate.value : "",
       applicationNeeds: getCheckedValues(els.applicationNeeds),
       favoriteJob: els.favoriteJob.checked,
       roles: allRoles,
@@ -402,6 +431,7 @@ async function loadJobIntoForm(jobId) {
   setRadioValue("priority", job.priority || "");
   els.datePosted.value = job.datePosted || "";
   els.deadline.value = job.deadline || "";
+  setRadioValue("appliedStatus", getAppliedStatus(job));
   els.appliedDate.value = job.appliedDate || "";
   setCheckedValues(els.applicationNeeds, job.applicationNeeds || []);
   els.favoriteJob.checked = Boolean(job.favoriteJob);
@@ -434,6 +464,10 @@ function syncConditionalFields() {
   const selectedRoles = getSelectedValues(els.roles);
   els.roleOtherWrap.hidden = !selectedRoles.includes("Other");
   if (els.roleOtherWrap.hidden) els.roleOther.value = "";
+
+  const appliedStatus = getRadioValue("appliedStatus");
+  els.appliedDate.hidden = appliedStatus !== "Yes";
+  if (appliedStatus !== "Yes") els.appliedDate.value = "";
 
   els.industryOtherWrap.hidden = els.industry.value !== "Other";
   if (els.industryOtherWrap.hidden) els.industryOther.value = "";
@@ -473,17 +507,24 @@ function renderJobs() {
 
 function getVisibleJobs() {
   let visible = [...jobs];
-  if (filters.status !== "All") {
+  if (filters.status === "Reference") {
+    visible = visible.filter(isReferenceJob);
+  } else {
+    visible = visible.filter((job) => !isReferenceJob(job));
+  }
+  if (filters.status !== "All" && filters.status !== "Reference") {
     visible = visible.filter((job) => {
-      if (filters.status === "Applied") return Boolean(job.appliedDate);
+      if (filters.status === "Applied") return isAppliedJob(job);
       return (job.priority || "") === filters.status;
     });
   }
   if (filters.roles.length) {
     visible = visible.filter((job) => filters.roles.some((role) => (job.roles || []).includes(role)));
   }
-  if (filters.deadlineFirst) {
+  if (filters.sortBy === "deadline") {
     visible.sort((a, b) => deadlineRank(a) - deadlineRank(b));
+  } else if (filters.sortBy === "priority") {
+    visible.sort((a, b) => priorityRank(a) - priorityRank(b));
   }
   return visible;
 }
@@ -491,6 +532,46 @@ function getVisibleJobs() {
 function deadlineRank(job) {
   if (!job.deadline) return 0;
   return new Date(`${job.deadline}T00:00:00`).getTime();
+}
+
+function priorityRank(job) {
+  const ranks = {
+    Urgent: 0,
+    High: 1,
+    Low: 2,
+    Future: 3,
+  };
+  return ranks[job.priority] ?? 4;
+}
+
+function updateFilterControls() {
+  els.statusButtons.forEach((button) => {
+    button.classList.toggle("active", button.dataset.status === filters.status);
+  });
+  els.sortButtons.forEach((button) => {
+    button.classList.toggle("active", button.dataset.sort === filters.sortBy);
+  });
+
+  const priorityStatuses = ["Urgent", "High", "Low"];
+  const activePriority = priorityStatuses.includes(filters.status) ? filters.status : "";
+  els.priorityFilterButton.classList.toggle("active", Boolean(activePriority));
+  els.priorityFilterButton.textContent = activePriority ? `Priority: ${activePriority}` : "Priority";
+
+  const sortLabels = {
+    deadline: "Deadline",
+    priority: "Priority",
+  };
+  els.sortFilterButton.classList.toggle("active", Boolean(filters.sortBy));
+  els.sortFilterButton.textContent = filters.sortBy ? `Sort by: ${sortLabels[filters.sortBy]}` : "Sort by";
+}
+
+function closeFilterAccordions(exceptButton = null) {
+  els.accordionTriggers.forEach((button) => {
+    if (button === exceptButton) return;
+    const panel = document.querySelector(`#${button.getAttribute("aria-controls")}`);
+    button.setAttribute("aria-expanded", "false");
+    if (panel) panel.hidden = true;
+  });
 }
 
 function createJobCard(job) {
@@ -590,27 +671,31 @@ function cell(text, className = "") {
 function createCompanyLogo(job) {
   const logo = document.createElement("div");
   logo.className = "company-logo";
-  const domain = getDomainFromUrl(job.link);
+
+  const image = document.createElement("img");
+  image.alt = job.company ? `${job.company} logo` : "Company logo";
+  image.loading = "lazy";
+  image.src = getCompanyLogoSrc(job.company);
+  image.addEventListener("error", () => {
+    if (!image.src.endsWith("/placeholder.jpg")) {
+      image.src = "img/placeholder.jpg";
+      return;
+    }
+    image.remove();
+    logo.classList.add("show-fallback");
+  });
+  logo.append(image);
+
   const fallback = document.createElement("span");
   fallback.className = "company-logo-fallback";
-  fallback.textContent = getCompanyInitials(job.company || domain || job.title);
-
-  if (domain) {
-    const image = document.createElement("img");
-    image.alt = job.company ? `${job.company} logo` : "Company logo";
-    image.loading = "lazy";
-    image.src = `https://www.google.com/s2/favicons?domain=${encodeURIComponent(domain)}&sz=64`;
-    image.addEventListener("error", () => {
-      image.remove();
-      logo.classList.add("show-fallback");
-    });
-    logo.append(image);
-  } else {
-    logo.classList.add("show-fallback");
-  }
-
+  fallback.textContent = "Logo";
   logo.append(fallback);
   return logo;
+}
+
+function getCompanyLogoSrc(company) {
+  const fileName = COMPANY_LOGOS[(company || "").trim()] || "placeholder.jpg";
+  return `img/${encodeURIComponent(fileName)}`;
 }
 
 function chip(text, extraClass) {
@@ -650,30 +735,32 @@ function getIndustryDisplay(job) {
   return job.industry || "";
 }
 
-function getDomainFromUrl(value) {
-  if (!value) return "";
-  try {
-    return new URL(value).hostname.replace(/^www\./i, "");
-  } catch (error) {
-    return "";
-  }
-}
-
-function getCompanyInitials(value) {
-  const words = (value || "Job")
-    .split(/[^a-z0-9]+/i)
-    .filter(Boolean)
-    .slice(0, 2);
-  return words.map((word) => word[0]).join("").toUpperCase() || "J";
-}
-
 function statusChip(job) {
-  if (job.appliedDate) return chip("Applied", "applied");
+  if (isAppliedJob(job)) return chip("Applied", "applied");
   const priority = job.priority || "";
   if (priority === "Urgent") return chip("Urgent", "urgent");
   if (priority === "High") return chip("High", "high");
   if (priority === "Low") return chip("Low", "low");
+  if (priority === "Future") return chip("Future", "future");
+  if (isAppliedNo(job)) return chip("Reference", "reference");
   return chip("", "low");
+}
+
+function isReferenceJob(job) {
+  return (job.priority || "") === "Future" || isAppliedNo(job);
+}
+
+function isAppliedJob(job) {
+  return getAppliedStatus(job) === "Yes";
+}
+
+function isAppliedNo(job) {
+  return getAppliedStatus(job) === "No";
+}
+
+function getAppliedStatus(job) {
+  if (job.appliedStatus) return job.appliedStatus;
+  return job.appliedDate ? "Yes" : "";
 }
 
 function getPayDisplay(job) {
@@ -935,6 +1022,7 @@ function csvRowToJob(header, row) {
     priority: record.priority || "",
     datePosted: record.datePosted || "",
     deadline: record.deadline || "",
+    appliedStatus: record.appliedStatus || (record.appliedDate ? "Yes" : ""),
     appliedDate: record.appliedDate || "",
     applicationNeeds: splitList(record.applicationNeeds),
     favoriteJob: parseBoolean(record.favoriteJob),
