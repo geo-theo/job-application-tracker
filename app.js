@@ -35,12 +35,6 @@ const ROLE_ICONS = {
   "Business Development": "BD",
 };
 
-const COMPANY_LOGOS = {
-  "Institute for the Study of War": "Institute for the Study of War.jpg",
-  "Rocky Mountain Elk Foundation": "Rocky Mountain Elk Foundation.jpg",
-  Sibylline: "Sibylline.jpg",
-};
-
 const CSV_COLUMNS = [
   "id",
   "createdAt",
@@ -601,7 +595,7 @@ function createJobCard(job) {
     const favoriteStar = document.createElement("span");
     favoriteStar.className = "favorite-star";
     favoriteStar.setAttribute("aria-label", "Favorite job");
-    favoriteStar.textContent = "★";
+    favoriteStar.innerHTML = "&starf;";
     titleRow.append(favoriteStar);
   }
   const company = document.createElement("div");
@@ -671,14 +665,16 @@ function cell(text, className = "") {
 function createCompanyLogo(job) {
   const logo = document.createElement("div");
   logo.className = "company-logo";
+  const logoSources = getCompanyLogoSources(job.company);
 
   const image = document.createElement("img");
   image.alt = job.company ? `${job.company} logo` : "Company logo";
   image.loading = "lazy";
-  image.src = getCompanyLogoSrc(job.company);
+  image.src = logoSources.shift();
   image.addEventListener("error", () => {
-    if (!image.src.endsWith("/placeholder.jpg")) {
-      image.src = "img/placeholder.jpg";
+    const nextSource = logoSources.shift();
+    if (nextSource) {
+      image.src = nextSource;
       return;
     }
     image.remove();
@@ -693,9 +689,13 @@ function createCompanyLogo(job) {
   return logo;
 }
 
-function getCompanyLogoSrc(company) {
-  const fileName = COMPANY_LOGOS[(company || "").trim()] || "placeholder.jpg";
-  return `img/${encodeURIComponent(fileName)}`;
+function getCompanyLogoSources(company) {
+  const trimmedCompany = (company || "").trim();
+  const fileBase = trimmedCompany ? encodeURIComponent(trimmedCompany) : "";
+  const sources = fileBase
+    ? [".jpg", ".png", ".jpeg"].map((extension) => `img/${fileBase}${extension}`)
+    : [];
+  return [...sources, "img/placeholder.jpg"];
 }
 
 function chip(text, extraClass) {
