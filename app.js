@@ -194,13 +194,17 @@ function bindEvents() {
       if (panel) panel.hidden = !shouldExpand;
     });
   });
-  els.roleFilter.addEventListener("change", () => {
-    filters.roles = getSelectedValues(els.roleFilter);
+  els.roleFilter.addEventListener("click", (event) => {
+    const button = event.target instanceof Element ? event.target.closest("[data-role-filter]") : null;
+    if (!button) return;
+    filters.roles = toggleFilterValue(filters.roles, button.dataset.roleFilter);
     updateFilterControls();
     renderJobs();
   });
-  els.industryFilter.addEventListener("change", () => {
-    filters.industries = getSelectedValues(els.industryFilter);
+  els.industryFilter.addEventListener("click", (event) => {
+    const button = event.target instanceof Element ? event.target.closest("[data-industry-filter]") : null;
+    if (!button) return;
+    filters.industries = toggleFilterValue(filters.industries, button.dataset.industryFilter);
     updateFilterControls();
     renderJobs();
   });
@@ -575,9 +579,11 @@ function updateFilterControls() {
 
   els.roleFilterButton.classList.toggle("active", Boolean(filters.roles.length));
   els.roleFilterButton.textContent = getFilterButtonLabel("Role", filters.roles);
+  syncFilterOptionButtons(els.roleFilter, filters.roles, "roleFilter");
 
   els.industryFilterButton.classList.toggle("active", Boolean(filters.industries.length));
   els.industryFilterButton.textContent = getFilterButtonLabel("Industry", filters.industries);
+  syncFilterOptionButtons(els.industryFilter, filters.industries, "industryFilter");
 }
 
 function getFilterButtonLabel(label, values) {
@@ -593,6 +599,24 @@ function closeFilterAccordions(exceptButton = null) {
     button.setAttribute("aria-expanded", "false");
     if (panel) panel.hidden = true;
   });
+}
+
+function toggleFilterValue(values, value) {
+  if (!value) return values;
+  return values.includes(value) ? values.filter((item) => item !== value) : [...values, value];
+}
+
+function syncFilterOptionButtons(container, selectedValues, dataKey) {
+  const selected = new Set(selectedValues);
+  container.querySelectorAll(`[data-${toKebabCase(dataKey)}]`).forEach((button) => {
+    const isSelected = selected.has(button.dataset[dataKey]);
+    button.classList.toggle("active", isSelected);
+    button.setAttribute("aria-selected", String(isSelected));
+  });
+}
+
+function toKebabCase(value) {
+  return value.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
 }
 
 function createJobCard(job) {
@@ -822,9 +846,7 @@ function updateRoleFilterOptions(sourceJobs) {
 
   els.roleFilter.replaceChildren();
   knownRoles.forEach((role) => {
-    const option = new Option(role, role);
-    option.selected = selected.has(role);
-    els.roleFilter.append(option);
+    els.roleFilter.append(createFilterOptionButton(role, "roleFilter", selected.has(role)));
   });
 }
 
@@ -840,10 +862,20 @@ function updateIndustryFilterOptions(sourceJobs) {
 
   els.industryFilter.replaceChildren();
   knownIndustries.forEach((industry) => {
-    const option = new Option(industry, industry);
-    option.selected = selected.has(industry);
-    els.industryFilter.append(option);
+    els.industryFilter.append(createFilterOptionButton(industry, "industryFilter", selected.has(industry)));
   });
+}
+
+function createFilterOptionButton(label, dataKey, selected) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "filter-button filter-option";
+  button.dataset[dataKey] = label;
+  button.setAttribute("role", "option");
+  button.setAttribute("aria-selected", String(selected));
+  button.classList.toggle("active", selected);
+  button.textContent = label;
+  return button;
 }
 
 async function scrapeJobDescription() {

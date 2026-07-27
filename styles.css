@@ -508,14 +508,33 @@ button:focus-visible {
   text-align: left;
 }
 
-.accordion-panel select {
-  min-height: 178px;
-  border-color: #c9bfaf;
-  background: #fffdf8;
+.filter-option-list {
+  display: grid;
+  gap: 6px;
+  max-height: 238px;
+  overflow-y: auto;
+  padding-right: 2px;
 }
 
-.accordion-panel select option {
-  padding: 5px 7px;
+.filter-option {
+  min-height: 34px;
+  padding: 7px 10px;
+  border-color: #c9bfaf;
+  background: #fffdf8;
+  color: #2f2b25;
+  line-height: 1.2;
+}
+
+.filter-option.active,
+.filter-option[aria-selected="true"] {
+  border-color: #00756a;
+  background: #dff0ec;
+  color: #004f48;
+}
+
+.filter-option:focus-visible {
+  outline: 3px solid rgba(0, 117, 106, 0.24);
+  outline-offset: 2px;
 }
 
 .reference-filter {
