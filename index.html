@@ -199,7 +199,18 @@
               </label>
               <label class="field">
                 <span>Deadline</span>
-                <input id="deadline" name="deadline" type="date" />
+                <select id="deadline-choice" name="deadlineChoice">
+                  <option value="ASAP">ASAP</option>
+                  <option value="Select Date">Select Date</option>
+                  <option value="Blank">Blank</option>
+                </select>
+                <input
+                  id="deadline"
+                  class="conditional-field"
+                  name="deadline"
+                  type="date"
+                  hidden
+                />
               </label>
             </div>
 

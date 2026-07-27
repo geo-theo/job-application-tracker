@@ -52,6 +52,7 @@ const CSV_COLUMNS = [
   "payMidpoint",
   "priority",
   "datePosted",
+  "deadlineChoice",
   "deadline",
   "appliedStatus",
   "appliedDate",
@@ -82,6 +83,7 @@ const els = {
   payMax: document.querySelector("#pay-max"),
   payMidpoint: document.querySelector("#pay-midpoint"),
   datePosted: document.querySelector("#date-posted"),
+  deadlineChoice: document.querySelector("#deadline-choice"),
   deadline: document.querySelector("#deadline"),
   appliedStatus: document.querySelectorAll("input[name='appliedStatus']"),
   appliedDate: document.querySelector("#applied-date"),
@@ -165,6 +167,13 @@ function bindEvents() {
   els.payMax.addEventListener("input", updatePayMidpoint);
   els.roles.addEventListener("change", syncConditionalFields);
   els.industry.addEventListener("change", syncConditionalFields);
+  els.deadlineChoice.addEventListener("change", handleDeadlineChoiceChange);
+  document.querySelectorAll("input[name='priority']").forEach((input) => {
+    input.addEventListener("pointerdown", rememberRadioState);
+    input.addEventListener("click", toggleCheckedRadio);
+    input.addEventListener("keydown", toggleCheckedRadioWithKeyboard);
+  });
+  document.querySelector(".priority-group")?.addEventListener("pointerdown", rememberPriorityGroupRadioState);
   els.appliedStatus.forEach((input) => input.addEventListener("change", syncConditionalFields));
   els.scrapeButton.addEventListener("click", scrapeJobDescription);
   els.downloadDescriptionButton.addEventListener("click", downloadCurrentDescription);
@@ -335,6 +344,7 @@ function collectFormData() {
   const allRoles = rolesToSave(roles, roleOther);
   const industry = els.industry.value;
   const industryOther = els.industryOther.value.trim();
+  const deadlineChoice = els.deadlineChoice.value;
   const appliedStatus = getRadioValue("appliedStatus");
   const descriptionText = els.jobDescription.value.trim();
 
@@ -356,7 +366,8 @@ function collectFormData() {
       payMidpoint,
       priority: getRadioValue("priority"),
       datePosted: els.datePosted.value,
-      deadline: els.deadline.value,
+      deadlineChoice,
+      deadline: deadlineChoice === "Select Date" ? els.deadline.value : "",
       appliedStatus,
       appliedDate: appliedStatus === "Yes" ? els.appliedDate.value : "",
       applicationNeeds: getCheckedValues(els.applicationNeeds),
@@ -440,6 +451,7 @@ async function loadJobIntoForm(jobId) {
   els.payMax.value = job.payMax || "";
   setRadioValue("priority", job.priority || "");
   els.datePosted.value = job.datePosted || "";
+  els.deadlineChoice.value = getDeadlineChoice(job);
   els.deadline.value = job.deadline || "";
   setRadioValue("appliedStatus", getAppliedStatus(job));
   els.appliedDate.value = job.appliedDate || "";
@@ -475,12 +487,29 @@ function syncConditionalFields() {
   els.roleOtherWrap.hidden = !selectedRoles.includes("Other");
   if (els.roleOtherWrap.hidden) els.roleOther.value = "";
 
+  const deadlineChoice = els.deadlineChoice.value;
+  els.deadline.hidden = deadlineChoice !== "Select Date";
+  if (deadlineChoice !== "Select Date") els.deadline.value = "";
+
   const appliedStatus = getRadioValue("appliedStatus");
   els.appliedDate.hidden = appliedStatus !== "Yes";
   if (appliedStatus !== "Yes") els.appliedDate.value = "";
 
   els.industryOtherWrap.hidden = els.industry.value !== "Other";
   if (els.industryOtherWrap.hidden) els.industryOther.value = "";
+}
+
+function handleDeadlineChoiceChange() {
+  syncConditionalFields();
+  if (els.deadlineChoice.value !== "Select Date") return;
+  els.deadline.focus();
+  if (typeof els.deadline.showPicker === "function") {
+    try {
+      els.deadline.showPicker();
+    } catch (error) {
+      // Some browsers focus the field but block programmatic picker opening.
+    }
+  }
 }
 
 function updatePayMidpoint() {
@@ -519,14 +548,13 @@ function getVisibleJobs() {
   let visible = [...jobs];
   if (filters.status === "Reference") {
     visible = visible.filter(isReferenceJob);
+  } else if (filters.status === "Applied") {
+    visible = visible.filter(isAppliedJob);
   } else {
-    visible = visible.filter((job) => !isReferenceJob(job));
+    visible = visible.filter((job) => !isReferenceJob(job) && !isAppliedJob(job));
   }
-  if (filters.status !== "All" && filters.status !== "Reference") {
-    visible = visible.filter((job) => {
-      if (filters.status === "Applied") return isAppliedJob(job);
-      return (job.priority || "") === filters.status;
-    });
+  if (filters.status !== "All" && filters.status !== "Reference" && filters.status !== "Applied") {
+    visible = visible.filter((job) => (job.priority || "") === filters.status);
   }
   if (filters.roles.length) {
     visible = visible.filter((job) => filters.roles.some((role) => (job.roles || []).includes(role)));
@@ -537,13 +565,16 @@ function getVisibleJobs() {
   if (filters.sortBy === "deadline") {
     visible.sort((a, b) => deadlineRank(a) - deadlineRank(b));
   } else if (filters.sortBy === "priority") {
-    visible.sort((a, b) => priorityRank(a) - priorityRank(b));
+    visible.sort(comparePriorityJobs);
   }
   return visible;
 }
 
 function deadlineRank(job) {
-  if (!job.deadline) return 0;
+  const deadlineChoice = getDeadlineChoice(job);
+  if (deadlineChoice === "ASAP") return 0;
+  if (deadlineChoice === "Blank") return Number.MAX_SAFE_INTEGER;
+  if (!job.deadline) return Number.MAX_SAFE_INTEGER;
   return new Date(`${job.deadline}T00:00:00`).getTime();
 }
 
@@ -555,6 +586,12 @@ function priorityRank(job) {
     Future: 3,
   };
   return ranks[job.priority] ?? 4;
+}
+
+function comparePriorityJobs(a, b) {
+  const priorityDifference = priorityRank(a) - priorityRank(b);
+  if (priorityDifference) return priorityDifference;
+  return deadlineRank(a) - deadlineRank(b);
 }
 
 function updateFilterControls() {
@@ -667,7 +704,7 @@ function createJobCard(job) {
   const deadline = cell("");
   if (job.deadline) {
     deadline.textContent = formatDate(job.deadline);
-  } else {
+  } else if (getDeadlineChoice(job) === "ASAP") {
     const asap = document.createElement("span");
     asap.className = "asap";
     asap.textContent = "ASAP";
@@ -812,6 +849,11 @@ function isAppliedNo(job) {
 function getAppliedStatus(job) {
   if (job.appliedStatus) return job.appliedStatus;
   return job.appliedDate ? "Yes" : "";
+}
+
+function getDeadlineChoice(job) {
+  if (job.deadlineChoice) return job.deadlineChoice;
+  return job.deadline ? "Select Date" : "ASAP";
 }
 
 function getPayDisplay(job) {
@@ -1081,6 +1123,7 @@ function csvRowToJob(header, row) {
     record[column] = row[index] ?? "";
   });
   const now = new Date().toISOString();
+  const deadlineChoice = record.deadlineChoice || (record.deadline ? "Select Date" : "ASAP");
   return {
     id: record.id || createId(),
     createdAt: record.createdAt || now,
@@ -1098,7 +1141,8 @@ function csvRowToJob(header, row) {
     payMidpoint: record.payMidpoint || calculateMidpoint(record.payMin || "", record.payMax || ""),
     priority: record.priority || "",
     datePosted: record.datePosted || "",
-    deadline: record.deadline || "",
+    deadlineChoice,
+    deadline: deadlineChoice === "Select Date" ? record.deadline || "" : "",
     appliedStatus: record.appliedStatus || (record.appliedDate ? "Yes" : ""),
     appliedDate: record.appliedDate || "",
     applicationNeeds: splitList(record.applicationNeeds),
@@ -1167,6 +1211,31 @@ function setRadioValue(name, value) {
   document.querySelectorAll(`input[name='${name}']`).forEach((input) => {
     input.checked = input.value === value;
   });
+}
+
+function rememberRadioState(event) {
+  event.currentTarget.dataset.wasChecked = String(event.currentTarget.checked);
+}
+
+function rememberPriorityGroupRadioState(event) {
+  const input = event.target.closest("label")?.querySelector("input[name='priority']");
+  if (input) input.dataset.wasChecked = String(input.checked);
+}
+
+function toggleCheckedRadio(event) {
+  const input = event.currentTarget;
+  if (input.dataset.wasChecked !== "true") return;
+  input.checked = false;
+  input.dataset.wasChecked = "false";
+  input.dispatchEvent(new Event("change", { bubbles: true }));
+}
+
+function toggleCheckedRadioWithKeyboard(event) {
+  const input = event.currentTarget;
+  if (!input.checked || (event.key !== " " && event.key !== "Enter")) return;
+  event.preventDefault();
+  input.checked = false;
+  input.dispatchEvent(new Event("change", { bubbles: true }));
 }
 
 function getSelectedValues(select) {
