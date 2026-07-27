@@ -498,10 +498,24 @@ button:focus-visible {
   box-shadow: var(--shadow);
 }
 
+.select-panel {
+  min-width: 230px;
+}
+
 .accordion-panel .filter-button {
   justify-content: flex-start;
   width: 100%;
   text-align: left;
+}
+
+.accordion-panel select {
+  min-height: 178px;
+  border-color: #c9bfaf;
+  background: #fffdf8;
+}
+
+.accordion-panel select option {
+  padding: 5px 7px;
 }
 
 .reference-filter {
@@ -510,7 +524,7 @@ button:focus-visible {
 
 .data-row {
   align-items: end;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 
 .role-filter-label {

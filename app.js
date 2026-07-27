@@ -105,7 +105,10 @@ const els = {
   accordionTriggers: document.querySelectorAll(".accordion-trigger"),
   priorityFilterButton: document.querySelector("#priority-filter-button"),
   sortFilterButton: document.querySelector("#sort-filter-button"),
+  roleFilterButton: document.querySelector("#role-filter-button"),
   roleFilter: document.querySelector("#role-filter"),
+  industryFilterButton: document.querySelector("#industry-filter-button"),
+  industryFilter: document.querySelector("#industry-filter"),
   connectFolderButton: document.querySelector("#connect-folder-button"),
   exportCsvButton: document.querySelector("#export-csv-button"),
   exportDescriptionsButton: document.querySelector("#export-descriptions-button"),
@@ -127,6 +130,7 @@ const filters = {
   status: "All",
   sortBy: "",
   roles: [],
+  industries: [],
 };
 
 document.addEventListener("DOMContentLoaded", init);
@@ -192,6 +196,12 @@ function bindEvents() {
   });
   els.roleFilter.addEventListener("change", () => {
     filters.roles = getSelectedValues(els.roleFilter);
+    updateFilterControls();
+    renderJobs();
+  });
+  els.industryFilter.addEventListener("change", () => {
+    filters.industries = getSelectedValues(els.industryFilter);
+    updateFilterControls();
     renderJobs();
   });
   els.connectFolderButton.addEventListener("click", connectFolder);
@@ -210,6 +220,7 @@ function populateRoleOptions() {
     els.roles.append(new Option(role, role));
   });
   updateRoleFilterOptions([]);
+  updateIndustryFilterOptions([]);
 }
 
 function openDatabase() {
@@ -301,6 +312,7 @@ function transactionDone(tx) {
 async function refreshJobs() {
   jobs = (await getAllJobs()).sort((a, b) => (b.updatedAt || "").localeCompare(a.updatedAt || ""));
   updateRoleFilterOptions(jobs);
+  updateIndustryFilterOptions(jobs);
   renderJobs();
 }
 
@@ -515,6 +527,9 @@ function getVisibleJobs() {
   if (filters.roles.length) {
     visible = visible.filter((job) => filters.roles.some((role) => (job.roles || []).includes(role)));
   }
+  if (filters.industries.length) {
+    visible = visible.filter((job) => filters.industries.includes(getIndustryDisplay(job)));
+  }
   if (filters.sortBy === "deadline") {
     visible.sort((a, b) => deadlineRank(a) - deadlineRank(b));
   } else if (filters.sortBy === "priority") {
@@ -557,6 +572,18 @@ function updateFilterControls() {
   };
   els.sortFilterButton.classList.toggle("active", Boolean(filters.sortBy));
   els.sortFilterButton.textContent = filters.sortBy ? `Sort by: ${sortLabels[filters.sortBy]}` : "Sort by";
+
+  els.roleFilterButton.classList.toggle("active", Boolean(filters.roles.length));
+  els.roleFilterButton.textContent = getFilterButtonLabel("Role", filters.roles);
+
+  els.industryFilterButton.classList.toggle("active", Boolean(filters.industries.length));
+  els.industryFilterButton.textContent = getFilterButtonLabel("Industry", filters.industries);
+}
+
+function getFilterButtonLabel(label, values) {
+  if (!values.length) return label;
+  if (values.length === 1) return `${label}: ${values[0]}`;
+  return `${label}: ${values.length}`;
 }
 
 function closeFilterAccordions(exceptButton = null) {
@@ -798,6 +825,24 @@ function updateRoleFilterOptions(sourceJobs) {
     const option = new Option(role, role);
     option.selected = selected.has(role);
     els.roleFilter.append(option);
+  });
+}
+
+function updateIndustryFilterOptions(sourceJobs) {
+  const selected = new Set(filters.industries);
+  const standardIndustries = [...els.industry.options]
+    .map((option) => option.value)
+    .filter((value) => value && value !== "Other");
+  const knownIndustries = unique([
+    ...standardIndustries,
+    ...sourceJobs.map(getIndustryDisplay),
+  ]);
+
+  els.industryFilter.replaceChildren();
+  knownIndustries.forEach((industry) => {
+    const option = new Option(industry, industry);
+    option.selected = selected.has(industry);
+    els.industryFilter.append(option);
   });
 }
 

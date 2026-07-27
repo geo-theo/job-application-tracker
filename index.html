@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Job Application Tracker</title>
-    <link rel="icon" href="data:,">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <main class="app-shell" aria-label="Job application tracker">
@@ -16,16 +16,20 @@
             <h1 id="form-title">Job Record</h1>
           </div>
           <div class="header-actions">
-            <button type="button" class="ghost-button" id="new-record-button">New</button>
+            <button type="button" class="ghost-button" id="new-record-button">
+              New
+            </button>
           </div>
         </header>
 
         <form id="job-form" class="job-form">
-          <input type="hidden" id="record-id" name="recordId">
+          <input type="hidden" id="record-id" name="recordId" />
 
           <div class="edit-banner" id="edit-banner" hidden>
             <span id="edit-banner-text">Editing record</span>
-            <button type="button" class="text-button" id="cancel-edit-button">Cancel</button>
+            <button type="button" class="text-button" id="cancel-edit-button">
+              Cancel
+            </button>
           </div>
 
           <fieldset class="form-section">
@@ -33,53 +37,123 @@
 
             <label class="field">
               <span>Link</span>
-              <input id="job-link" name="link" type="url" placeholder="https://">
+              <input
+                id="job-link"
+                name="link"
+                type="url"
+                placeholder="https://"
+              />
             </label>
 
             <div class="field with-checkbox">
               <label>
                 <span>Company</span>
-                <input id="company" name="company" type="text" autocomplete="organization">
+                <input
+                  id="company"
+                  name="company"
+                  type="text"
+                  autocomplete="organization"
+                />
               </label>
               <label class="check-option">
-                <input id="favorite-company" name="favoriteCompany" type="checkbox">
+                <input
+                  id="favorite-company"
+                  name="favoriteCompany"
+                  type="checkbox"
+                />
                 <span>Favorite target</span>
               </label>
             </div>
 
             <label class="field">
               <span>Job Title</span>
-              <input id="job-title" name="title" type="text" autocomplete="off">
+              <input
+                id="job-title"
+                name="title"
+                type="text"
+                autocomplete="off"
+              />
             </label>
 
             <div class="field">
               <span>Location</span>
               <div class="segmented" role="radiogroup" aria-label="Location">
-                <label><input type="radio" name="locationChoice" value="Missoula, MT"><span>Missoula, MT</span></label>
-                <label><input type="radio" name="locationChoice" value="Remote"><span>Remote</span></label>
-                <label><input type="radio" name="locationChoice" value="Other"><span>Other</span></label>
+                <label
+                  ><input
+                    type="radio"
+                    name="locationChoice"
+                    value="Missoula, MT"
+                  /><span>Missoula, MT</span></label
+                >
+                <label
+                  ><input
+                    type="radio"
+                    name="locationChoice"
+                    value="Remote"
+                  /><span>Remote</span></label
+                >
+                <label
+                  ><input
+                    type="radio"
+                    name="locationChoice"
+                    value="Other"
+                  /><span>Other</span></label
+                >
               </div>
-              <input id="location-other" class="conditional-field" name="locationOther" type="text" placeholder="Other location" hidden>
+              <input
+                id="location-other"
+                class="conditional-field"
+                name="locationOther"
+                type="text"
+                placeholder="Other location"
+                hidden
+              />
             </div>
 
             <div class="field">
               <span>Pay</span>
-              <div class="segmented compact" role="radiogroup" aria-label="Pay type">
-                <label><input type="radio" name="payType" value="Hourly"><span>Hourly</span></label>
-                <label><input type="radio" name="payType" value="Salary"><span>Salary</span></label>
+              <div
+                class="segmented compact"
+                role="radiogroup"
+                aria-label="Pay type"
+              >
+                <label
+                  ><input type="radio" name="payType" value="Hourly" /><span
+                    >Hourly</span
+                  ></label
+                >
+                <label
+                  ><input type="radio" name="payType" value="Salary" /><span
+                    >Salary</span
+                  ></label
+                >
               </div>
               <div class="split-grid pay-grid">
                 <label>
                   <span>Minimum</span>
-                  <input id="pay-min" name="payMin" type="text" inputmode="decimal">
+                  <input
+                    id="pay-min"
+                    name="payMin"
+                    type="text"
+                    inputmode="decimal"
+                  />
                 </label>
                 <label>
                   <span>Maximum</span>
-                  <input id="pay-max" name="payMax" type="text" inputmode="decimal">
+                  <input
+                    id="pay-max"
+                    name="payMax"
+                    type="text"
+                    inputmode="decimal"
+                  />
                 </label>
                 <label>
                   <span>Midpoint</span>
-                  <output id="pay-midpoint" name="payMidpoint" class="readonly-output"></output>
+                  <output
+                    id="pay-midpoint"
+                    name="payMidpoint"
+                    class="readonly-output"
+                  ></output>
                 </label>
               </div>
             </div>
@@ -90,55 +164,109 @@
 
             <div class="field">
               <span>Priority</span>
-              <div class="segmented priority-group" role="radiogroup" aria-label="Priority">
-                <label><input type="radio" name="priority" value="Urgent"><span>Urgent</span></label>
-                <label><input type="radio" name="priority" value="High"><span>High</span></label>
-                <label><input type="radio" name="priority" value="Low"><span>Low</span></label>
-                <label><input type="radio" name="priority" value="Future"><span>Future</span></label>
+              <div
+                class="segmented priority-group"
+                role="radiogroup"
+                aria-label="Priority"
+              >
+                <label
+                  ><input type="radio" name="priority" value="Urgent" /><span
+                    >Urgent</span
+                  ></label
+                >
+                <label
+                  ><input type="radio" name="priority" value="High" /><span
+                    >High</span
+                  ></label
+                >
+                <label
+                  ><input type="radio" name="priority" value="Low" /><span
+                    >Low</span
+                  ></label
+                >
+                <label
+                  ><input type="radio" name="priority" value="Future" /><span
+                    >Future</span
+                  ></label
+                >
               </div>
             </div>
 
             <div class="split-grid">
               <label class="field">
                 <span>Date Posted</span>
-                <input id="date-posted" name="datePosted" type="date">
+                <input id="date-posted" name="datePosted" type="date" />
               </label>
               <label class="field">
                 <span>Deadline</span>
-                <input id="deadline" name="deadline" type="date">
+                <input id="deadline" name="deadline" type="date" />
               </label>
             </div>
 
             <div class="field">
               <span>Applied?</span>
-              <div class="segmented compact applied-group" role="radiogroup" aria-label="Applied">
-                <label><input type="radio" name="appliedStatus" value="Yes"><span>Yes</span></label>
-                <label><input type="radio" name="appliedStatus" value="No"><span>No</span></label>
+              <div
+                class="segmented compact applied-group"
+                role="radiogroup"
+                aria-label="Applied"
+              >
+                <label
+                  ><input type="radio" name="appliedStatus" value="Yes" /><span
+                    >Yes</span
+                  ></label
+                >
+                <label
+                  ><input type="radio" name="appliedStatus" value="No" /><span
+                    >Not applying</span
+                  ></label
+                >
               </div>
-              <input id="applied-date" class="conditional-field" name="appliedDate" type="date" hidden>
+              <input
+                id="applied-date"
+                class="conditional-field"
+                name="appliedDate"
+                type="date"
+                hidden
+              />
             </div>
 
             <div class="field">
               <span>Application needs</span>
               <div class="checkbox-grid" aria-label="Application needs">
                 <label class="check-option">
-                  <input type="checkbox" name="applicationNeeds" value="Resume">
+                  <input
+                    type="checkbox"
+                    name="applicationNeeds"
+                    value="Resume"
+                  />
                   <span>Resume</span>
                 </label>
                 <label class="check-option">
-                  <input type="checkbox" name="applicationNeeds" value="CV">
+                  <input type="checkbox" name="applicationNeeds" value="CV" />
                   <span>CV</span>
                 </label>
                 <label class="check-option">
-                  <input type="checkbox" name="applicationNeeds" value="Cover Letter">
+                  <input
+                    type="checkbox"
+                    name="applicationNeeds"
+                    value="Cover Letter"
+                  />
                   <span>Cover Letter</span>
                 </label>
                 <label class="check-option">
-                  <input type="checkbox" name="applicationNeeds" value="Writing Sample">
+                  <input
+                    type="checkbox"
+                    name="applicationNeeds"
+                    value="Writing Sample"
+                  />
                   <span>Writing Sample</span>
                 </label>
                 <label class="check-option">
-                  <input type="checkbox" name="applicationNeeds" value="Portfolio">
+                  <input
+                    type="checkbox"
+                    name="applicationNeeds"
+                    value="Portfolio"
+                  />
                   <span>Portfolio</span>
                 </label>
               </div>
@@ -149,7 +277,7 @@
             <legend>Section 3: Job Attributes</legend>
 
             <label class="check-option prominent-check">
-              <input id="favorite-job" name="favoriteJob" type="checkbox">
+              <input id="favorite-job" name="favoriteJob" type="checkbox" />
               <span>Favorite this job</span>
             </label>
 
@@ -160,7 +288,7 @@
 
             <label class="field" id="role-other-wrap" hidden>
               <span>Other role</span>
-              <input id="role-other" name="roleOther" type="text">
+              <input id="role-other" name="roleOther" type="text" />
             </label>
 
             <div class="split-grid">
@@ -171,7 +299,9 @@
                   <option value="Geospatial">Geospatial</option>
                   <option value="Geopolitical Risk">Geopolitical Risk</option>
                   <option value="Intl Development">Intl Development</option>
-                  <option value="Defense & Security">Defense &amp; Security</option>
+                  <option value="Defense & Security">
+                    Defense &amp; Security
+                  </option>
                   <option value="Local Government">Local Government</option>
                   <option value="Outdoors">Outdoors</option>
                   <option value="Other">Other</option>
@@ -191,25 +321,55 @@
 
             <label class="field" id="industry-other-wrap" hidden>
               <span>Other industry</span>
-              <input id="industry-other" name="industryOther" type="text">
+              <input id="industry-other" name="industryOther" type="text" />
             </label>
 
             <div class="field description-field">
               <span>Job Description</span>
               <div class="description-grid">
                 <div class="description-tools">
-                  <button type="button" id="scrape-button" class="secondary-button">Scrape Job Description</button>
-                  <button type="button" id="download-description-button" class="ghost-button" hidden>Download TXT</button>
-                  <p id="scrape-status" class="field-note" aria-live="polite"></p>
+                  <button
+                    type="button"
+                    id="scrape-button"
+                    class="secondary-button"
+                  >
+                    Scrape Job Description
+                  </button>
+                  <button
+                    type="button"
+                    id="download-description-button"
+                    class="ghost-button"
+                    hidden
+                  >
+                    Download TXT
+                  </button>
+                  <p
+                    id="scrape-status"
+                    class="field-note"
+                    aria-live="polite"
+                  ></p>
                 </div>
-                <textarea id="job-description" name="jobDescription" rows="12"></textarea>
+                <textarea
+                  id="job-description"
+                  name="jobDescription"
+                  rows="12"
+                ></textarea>
               </div>
             </div>
           </fieldset>
 
           <div class="form-actions">
-            <button type="submit" class="primary-button" id="save-button">Save Job</button>
-            <button type="button" class="ghost-button danger" id="delete-button" hidden>Delete</button>
+            <button type="submit" class="primary-button" id="save-button">
+              Save Job
+            </button>
+            <button
+              type="button"
+              class="ghost-button danger"
+              id="delete-button"
+              hidden
+            >
+              Delete
+            </button>
             <button type="reset" class="ghost-button">Clear</button>
           </div>
         </form>
@@ -227,46 +387,158 @@
         <div class="board-controls" aria-label="Board controls">
           <div class="control-row">
             <div class="filter-group" aria-label="Status filter">
-              <button type="button" class="filter-button active" data-status="All">All</button>
+              <button
+                type="button"
+                class="filter-button active"
+                data-status="All"
+              >
+                All
+              </button>
 
               <div class="filter-accordion priority-accordion">
-                <button type="button" class="filter-button accordion-trigger priority-trigger" id="priority-filter-button" aria-expanded="false" aria-controls="priority-filter-panel">
+                <button
+                  type="button"
+                  class="filter-button accordion-trigger priority-trigger"
+                  id="priority-filter-button"
+                  aria-expanded="false"
+                  aria-controls="priority-filter-panel"
+                >
                   Priority
                 </button>
                 <div class="accordion-panel" id="priority-filter-panel" hidden>
-                  <button type="button" class="filter-button" data-status="Urgent">Urgent</button>
-                  <button type="button" class="filter-button" data-status="High">High</button>
-                  <button type="button" class="filter-button" data-status="Low">Low</button>
+                  <button
+                    type="button"
+                    class="filter-button"
+                    data-status="Urgent"
+                  >
+                    Urgent
+                  </button>
+                  <button
+                    type="button"
+                    class="filter-button"
+                    data-status="High"
+                  >
+                    High
+                  </button>
+                  <button type="button" class="filter-button" data-status="Low">
+                    Low
+                  </button>
                 </div>
               </div>
 
-              <button type="button" class="filter-button" data-status="Applied">Applied</button>
+              <button type="button" class="filter-button" data-status="Applied">
+                Applied
+              </button>
+
+              <div class="filter-accordion">
+                <button
+                  type="button"
+                  class="filter-button accordion-trigger"
+                  id="role-filter-button"
+                  aria-expanded="false"
+                  aria-controls="role-filter-panel"
+                >
+                  Role
+                </button>
+                <div
+                  class="accordion-panel select-panel"
+                  id="role-filter-panel"
+                  hidden
+                >
+                  <select
+                    id="role-filter"
+                    aria-label="Role filter"
+                    multiple
+                    size="7"
+                  ></select>
+                </div>
+              </div>
+
+              <div class="filter-accordion">
+                <button
+                  type="button"
+                  class="filter-button accordion-trigger"
+                  id="industry-filter-button"
+                  aria-expanded="false"
+                  aria-controls="industry-filter-panel"
+                >
+                  Industry
+                </button>
+                <div
+                  class="accordion-panel select-panel"
+                  id="industry-filter-panel"
+                  hidden
+                >
+                  <select
+                    id="industry-filter"
+                    aria-label="Industry filter"
+                    multiple
+                    size="7"
+                  ></select>
+                </div>
+              </div>
 
               <div class="filter-accordion sort-accordion">
-                <button type="button" class="filter-button accordion-trigger" id="sort-filter-button" aria-expanded="false" aria-controls="sort-filter-panel">
+                <button
+                  type="button"
+                  class="filter-button accordion-trigger"
+                  id="sort-filter-button"
+                  aria-expanded="false"
+                  aria-controls="sort-filter-panel"
+                >
                   Sort by
                 </button>
                 <div class="accordion-panel" id="sort-filter-panel" hidden>
-                  <button type="button" class="filter-button" data-sort="deadline">Deadline</button>
-                  <button type="button" class="filter-button" data-sort="priority">Priority</button>
+                  <button
+                    type="button"
+                    class="filter-button"
+                    data-sort="deadline"
+                  >
+                    Deadline
+                  </button>
+                  <button
+                    type="button"
+                    class="filter-button"
+                    data-sort="priority"
+                  >
+                    Priority
+                  </button>
                 </div>
               </div>
 
-              <button type="button" class="filter-button reference-filter" data-status="Reference">Reference</button>
+              <button
+                type="button"
+                class="filter-button reference-filter"
+                data-status="Reference"
+              >
+                Reference
+              </button>
             </div>
           </div>
 
           <div class="control-row data-row">
-            <label class="role-filter-label">
-              <span>Role filter</span>
-              <select id="role-filter" multiple size="4"></select>
-            </label>
             <div class="data-actions">
-              <button type="button" class="ghost-button" id="connect-folder-button">Connect Folder</button>
-              <button type="button" class="ghost-button" id="export-csv-button">Export CSV</button>
-              <button type="button" class="ghost-button" id="export-descriptions-button">Export TXT</button>
-              <button type="button" class="ghost-button" id="import-csv-button">Import CSV</button>
-              <input id="csv-input" type="file" accept=".csv,text/csv" hidden>
+              <button
+                type="button"
+                class="ghost-button"
+                id="connect-folder-button"
+              >
+                Connect Folder
+              </button>
+              <button type="button" class="ghost-button" id="export-csv-button">
+                Export CSV
+              </button>
+              <button
+                type="button"
+                class="ghost-button"
+                id="export-descriptions-button"
+              >
+                Export TXT
+              </button>
+              <button type="button" class="ghost-button" id="import-csv-button">
+                Import CSV
+              </button>
+              <input id="csv-input" type="file" accept=".csv,text/csv" hidden />
             </div>
           </div>
         </div>
