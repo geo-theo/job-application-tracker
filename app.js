@@ -57,7 +57,11 @@ const CSV_COLUMNS = [
   "appliedStatus",
   "appliedDate",
   "applicationNeeds",
+  "referenceCount",
+  "jobLevel",
   "favoriteJob",
+  "internship",
+  "partTime",
   "roles",
   "roleOther",
   "industry",
@@ -88,7 +92,12 @@ const els = {
   appliedStatus: document.querySelectorAll("input[name='appliedStatus']"),
   appliedDate: document.querySelector("#applied-date"),
   applicationNeeds: document.querySelectorAll("input[name='applicationNeeds']"),
+  needsReferences: document.querySelector("#needs-references"),
+  referenceCountWrap: document.querySelector("#reference-count-wrap"),
+  referenceCount: document.querySelector("#reference-count"),
   favoriteJob: document.querySelector("#favorite-job"),
+  internship: document.querySelector("#internship"),
+  partTime: document.querySelector("#part-time"),
   roles: document.querySelector("#roles"),
   roleOtherWrap: document.querySelector("#role-other-wrap"),
   roleOther: document.querySelector("#role-other"),
@@ -168,13 +177,15 @@ function bindEvents() {
   els.roles.addEventListener("change", syncConditionalFields);
   els.industry.addEventListener("change", syncConditionalFields);
   els.deadlineChoice.addEventListener("change", handleDeadlineChoiceChange);
-  document.querySelectorAll("input[name='priority']").forEach((input) => {
+  document.querySelectorAll("input[name='priority'], input[name='jobLevel']").forEach((input) => {
     input.addEventListener("pointerdown", rememberRadioState);
     input.addEventListener("click", toggleCheckedRadio);
     input.addEventListener("keydown", toggleCheckedRadioWithKeyboard);
   });
-  document.querySelector(".priority-group")?.addEventListener("pointerdown", rememberPriorityGroupRadioState);
+  document.querySelector(".priority-group")?.addEventListener("pointerdown", rememberToggleableGroupRadioState);
+  document.querySelector(".level-group")?.addEventListener("pointerdown", rememberToggleableGroupRadioState);
   els.appliedStatus.forEach((input) => input.addEventListener("change", syncConditionalFields));
+  els.needsReferences.addEventListener("change", syncConditionalFields);
   els.scrapeButton.addEventListener("click", scrapeJobDescription);
   els.downloadDescriptionButton.addEventListener("click", downloadCurrentDescription);
   els.statusButtons.forEach((button) => {
@@ -371,7 +382,11 @@ function collectFormData() {
       appliedStatus,
       appliedDate: appliedStatus === "Yes" ? els.appliedDate.value : "",
       applicationNeeds: getCheckedValues(els.applicationNeeds),
+      referenceCount: els.needsReferences.checked ? normalizeIntegerString(els.referenceCount.value) : "",
+      jobLevel: getRadioValue("jobLevel"),
       favoriteJob: els.favoriteJob.checked,
+      internship: els.internship.checked,
+      partTime: els.partTime.checked,
       roles: allRoles,
       roleOther,
       industry,
@@ -456,7 +471,11 @@ async function loadJobIntoForm(jobId) {
   setRadioValue("appliedStatus", getAppliedStatus(job));
   els.appliedDate.value = job.appliedDate || "";
   setCheckedValues(els.applicationNeeds, job.applicationNeeds || []);
+  els.referenceCount.value = job.referenceCount || "";
+  setRadioValue("jobLevel", job.jobLevel || "");
   els.favoriteJob.checked = Boolean(job.favoriteJob);
+  els.internship.checked = Boolean(job.internship);
+  els.partTime.checked = Boolean(job.partTime);
   setMultiSelectValues(els.roles, normalizeRolesForForm(job.roles || [], job.roleOther));
   els.roleOther.value = job.roleOther || "";
   els.industry.value = job.industry || "";
@@ -494,6 +513,9 @@ function syncConditionalFields() {
   const appliedStatus = getRadioValue("appliedStatus");
   els.appliedDate.hidden = appliedStatus !== "Yes";
   if (appliedStatus !== "Yes") els.appliedDate.value = "";
+
+  els.referenceCountWrap.hidden = !els.needsReferences.checked;
+  if (els.referenceCountWrap.hidden) els.referenceCount.value = "";
 
   els.industryOtherWrap.hidden = els.industry.value !== "Other";
   if (els.industryOtherWrap.hidden) els.industryOther.value = "";
@@ -658,7 +680,7 @@ function toKebabCase(value) {
 
 function createJobCard(job) {
   const card = document.createElement("article");
-  card.className = `job-card${job.favoriteJob ? " favorite" : ""}`;
+  card.className = getJobCardClassName(job);
   card.tabIndex = 0;
   card.setAttribute("role", "button");
   card.addEventListener("click", () => loadJobIntoForm(job.id));
@@ -721,6 +743,7 @@ function createJobCard(job) {
 
   const priorityChips = document.createElement("div");
   priorityChips.className = "chips";
+  if (job.jobLevel) priorityChips.append(chip(job.jobLevel, `level-${job.jobLevel.toLowerCase()}`));
   priorityChips.append(statusChip(job));
 
   const linkWrap = document.createElement("div");
@@ -741,6 +764,17 @@ function createJobCard(job) {
 
   card.append(logo, main, location, pay, deadline, industry, roleChips, priorityChips, linkWrap);
   return card;
+}
+
+function getJobCardClassName(job) {
+  return [
+    "job-card",
+    job.favoriteJob ? "favorite" : "",
+    job.internship ? "internship" : "",
+    job.partTime ? "part-time" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 }
 
 function cell(text, className = "") {
@@ -1124,6 +1158,10 @@ function csvRowToJob(header, row) {
   });
   const now = new Date().toISOString();
   const deadlineChoice = record.deadlineChoice || (record.deadline ? "Select Date" : "ASAP");
+  const applicationNeeds = splitList(record.applicationNeeds);
+  if (record.referenceCount && !applicationNeeds.includes("References")) {
+    applicationNeeds.push("References");
+  }
   return {
     id: record.id || createId(),
     createdAt: record.createdAt || now,
@@ -1145,8 +1183,12 @@ function csvRowToJob(header, row) {
     deadline: deadlineChoice === "Select Date" ? record.deadline || "" : "",
     appliedStatus: record.appliedStatus || (record.appliedDate ? "Yes" : ""),
     appliedDate: record.appliedDate || "",
-    applicationNeeds: splitList(record.applicationNeeds),
+    applicationNeeds,
+    referenceCount: record.referenceCount || "",
+    jobLevel: record.jobLevel || "",
     favoriteJob: parseBoolean(record.favoriteJob),
+    internship: parseBoolean(record.internship),
+    partTime: parseBoolean(record.partTime),
     roles: splitList(record.roles),
     roleOther: record.roleOther || "",
     industry: record.industry || "",
@@ -1217,8 +1259,8 @@ function rememberRadioState(event) {
   event.currentTarget.dataset.wasChecked = String(event.currentTarget.checked);
 }
 
-function rememberPriorityGroupRadioState(event) {
-  const input = event.target.closest("label")?.querySelector("input[name='priority']");
+function rememberToggleableGroupRadioState(event) {
+  const input = event.target.closest("label")?.querySelector("input[type='radio']");
   if (input) input.dataset.wasChecked = String(input.checked);
 }
 
@@ -1275,6 +1317,11 @@ function rolesToSave(roles, roleOther) {
 
 function normalizeNumberString(value) {
   return value.replace(/[$,\s]/g, "").trim();
+}
+
+function normalizeIntegerString(value) {
+  const number = Number.parseInt(String(value).trim(), 10);
+  return Number.isFinite(number) && number > 0 ? String(number) : "";
 }
 
 function parseNumber(value) {

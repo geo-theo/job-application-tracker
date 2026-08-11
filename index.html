@@ -280,6 +280,51 @@
                   />
                   <span>Portfolio</span>
                 </label>
+                <label class="check-option">
+                  <input
+                    id="needs-references"
+                    type="checkbox"
+                    name="applicationNeeds"
+                    value="References"
+                  />
+                  <span>References</span>
+                </label>
+              </div>
+              <label class="field inline-number-field" id="reference-count-wrap" hidden>
+                <span>Number of references</span>
+                <input
+                  id="reference-count"
+                  name="referenceCount"
+                  type="number"
+                  inputmode="numeric"
+                  min="1"
+                  step="1"
+                />
+              </label>
+            </div>
+
+            <div class="field">
+              <span>Level</span>
+              <div
+                class="segmented level-group"
+                role="radiogroup"
+                aria-label="Job level"
+              >
+                <label
+                  ><input type="radio" name="jobLevel" value="Junior" /><span
+                    >Junior</span
+                  ></label
+                >
+                <label
+                  ><input type="radio" name="jobLevel" value="Mid" /><span
+                    >Mid</span
+                  ></label
+                >
+                <label
+                  ><input type="radio" name="jobLevel" value="Senior" /><span
+                    >Senior</span
+                  ></label
+                >
               </div>
             </div>
           </fieldset>
@@ -287,10 +332,20 @@
           <fieldset class="form-section">
             <legend>Section 3: Job Attributes</legend>
 
-            <label class="check-option prominent-check">
-              <input id="favorite-job" name="favoriteJob" type="checkbox" />
-              <span>Favorite this job</span>
-            </label>
+            <div class="attribute-checks">
+              <label class="check-option prominent-check">
+                <input id="favorite-job" name="favoriteJob" type="checkbox" />
+                <span>Favorite this job</span>
+              </label>
+              <label class="check-option prominent-check">
+                <input id="internship" name="internship" type="checkbox" />
+                <span>Internship</span>
+              </label>
+              <label class="check-option prominent-check">
+                <input id="part-time" name="partTime" type="checkbox" />
+                <span>Part-time</span>
+              </label>
+            </div>
 
             <label class="field">
               <span>Role</span>

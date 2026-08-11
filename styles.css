@@ -198,6 +198,11 @@ h2 {
   white-space: normal;
 }
 
+.inline-number-field {
+  width: min(220px, 100%);
+  margin-top: 8px;
+}
+
 .field label.check-option,
 label.check-option {
   display: inline-flex;
@@ -210,8 +215,16 @@ label.check-option {
   padding: 8px 0;
 }
 
+.attribute-checks {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
 input[type="text"],
 input[type="url"],
+input[type="number"],
 input[type="date"],
 select,
 textarea,
@@ -226,6 +239,7 @@ textarea,
 
 input[type="text"],
 input[type="url"],
+input[type="number"],
 input[type="date"],
 select,
 .readonly-output {
@@ -602,6 +616,52 @@ button:focus-visible {
   border-left: 5px solid var(--teal);
 }
 
+.job-card.internship {
+  border-left: 5px solid #5fa8d3;
+}
+
+.job-card.part-time {
+  border-left: 5px solid #d77aa4;
+}
+
+.job-card.favorite.internship,
+.job-card.favorite.part-time,
+.job-card.internship.part-time {
+  border-left: 0;
+  box-shadow:
+    inset 5px 0 0 var(--teal),
+    0 8px 24px rgba(59, 50, 38, 0.08);
+}
+
+.job-card.internship.part-time:not(.favorite) {
+  box-shadow:
+    inset 5px 0 0 #5fa8d3,
+    inset 10px 0 0 #d77aa4,
+    0 8px 24px rgba(59, 50, 38, 0.08);
+}
+
+.job-card.favorite.internship:not(.part-time) {
+  box-shadow:
+    inset 5px 0 0 var(--teal),
+    inset 10px 0 0 #5fa8d3,
+    0 8px 24px rgba(59, 50, 38, 0.08);
+}
+
+.job-card.favorite.part-time:not(.internship) {
+  box-shadow:
+    inset 5px 0 0 var(--teal),
+    inset 10px 0 0 #d77aa4,
+    0 8px 24px rgba(59, 50, 38, 0.08);
+}
+
+.job-card.favorite.internship.part-time {
+  box-shadow:
+    inset 5px 0 0 var(--teal),
+    inset 10px 0 0 #5fa8d3,
+    inset 15px 0 0 #d77aa4,
+    0 8px 24px rgba(59, 50, 38, 0.08);
+}
+
 .company-logo {
   position: relative;
   display: grid;
@@ -795,6 +855,21 @@ button:focus-visible {
 .chip.reference {
   background: #e4edf4;
   color: #25536d;
+}
+
+.chip.level-junior {
+  background: #e6f0df;
+  color: #41631f;
+}
+
+.chip.level-mid {
+  background: #e6edf8;
+  color: #274f83;
+}
+
+.chip.level-senior {
+  background: #eee6f5;
+  color: #654180;
 }
 
 .link-button {
