@@ -113,6 +113,7 @@ const els = {
   deleteButton: document.querySelector("#delete-button"),
   statusButtons: document.querySelectorAll("[data-status]"),
   typeButtons: document.querySelectorAll("[data-type-filter]"),
+  priorityButtons: document.querySelectorAll("[data-priority-filter]"),
   sortButtons: document.querySelectorAll("[data-sort]"),
   accordionTriggers: document.querySelectorAll(".accordion-trigger"),
   typeFilterButton: document.querySelector("#type-filter-button"),
@@ -141,7 +142,8 @@ let isResettingForm = false;
 
 const filters = {
   status: "All",
-  type: "All",
+  types: [],
+  priorities: [],
   sortBy: "",
   roles: [],
   industries: [],
@@ -193,17 +195,25 @@ function bindEvents() {
   els.downloadDescriptionButton.addEventListener("click", downloadCurrentDescription);
   els.statusButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      filters.status = button.dataset.status;
+      filters.status = filters.status === button.dataset.status ? "All" : button.dataset.status;
       updateFilterControls();
       closeFilterAccordions();
       renderJobs();
     });
   });
   els.typeButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      filters.type = button.dataset.typeFilter;
+    button.addEventListener("click", (event) => {
+      filters.types = updateOptionSelection(filters.types, button.dataset.typeFilter, event);
       updateFilterControls();
-      closeFilterAccordions();
+      if (!event.ctrlKey && !event.metaKey) closeFilterAccordions();
+      renderJobs();
+    });
+  });
+  els.priorityButtons.forEach((button) => {
+    button.addEventListener("click", (event) => {
+      filters.priorities = updateOptionSelection(filters.priorities, button.dataset.priorityFilter, event);
+      updateFilterControls();
+      if (!event.ctrlKey && !event.metaKey) closeFilterAccordions();
       renderJobs();
     });
   });
@@ -228,15 +238,17 @@ function bindEvents() {
   els.roleFilter.addEventListener("click", (event) => {
     const button = event.target instanceof Element ? event.target.closest("[data-role-filter]") : null;
     if (!button) return;
-    filters.roles = toggleFilterValue(filters.roles, button.dataset.roleFilter);
+    filters.roles = updateOptionSelection(filters.roles, button.dataset.roleFilter, event);
     updateFilterControls();
+    if (!event.ctrlKey && !event.metaKey) closeFilterAccordions();
     renderJobs();
   });
   els.industryFilter.addEventListener("click", (event) => {
     const button = event.target instanceof Element ? event.target.closest("[data-industry-filter]") : null;
     if (!button) return;
-    filters.industries = toggleFilterValue(filters.industries, button.dataset.industryFilter);
+    filters.industries = updateOptionSelection(filters.industries, button.dataset.industryFilter, event);
     updateFilterControls();
+    if (!event.ctrlKey && !event.metaKey) closeFilterAccordions();
     renderJobs();
   });
   els.connectFolderButton.addEventListener("click", connectFolder);
@@ -586,13 +598,11 @@ function getVisibleJobs() {
   } else {
     visible = visible.filter((job) => !isReferenceJob(job) && !isAppliedJob(job));
   }
-  if (filters.status !== "All" && filters.status !== "Reference" && filters.status !== "Applied") {
-    visible = visible.filter((job) => (job.priority || "") === filters.status);
+  if (filters.priorities.length) {
+    visible = visible.filter((job) => filters.priorities.includes(job.priority || ""));
   }
-  if (filters.type === "Internship") {
-    visible = visible.filter((job) => Boolean(job.internship));
-  } else if (filters.type === "Part-time") {
-    visible = visible.filter((job) => Boolean(job.partTime));
+  if (filters.types.length) {
+    visible = visible.filter((job) => filters.types.some((type) => matchesJobType(job, type)));
   }
   if (filters.roles.length) {
     visible = visible.filter((job) => filters.roles.some((role) => (job.roles || []).includes(role)));
@@ -637,19 +647,24 @@ function updateFilterControls() {
     button.classList.toggle("active", button.dataset.status === filters.status);
   });
   els.typeButtons.forEach((button) => {
-    button.classList.toggle("active", button.dataset.typeFilter === filters.type);
+    const isSelected =
+      button.dataset.typeFilter === "All"
+        ? !filters.types.length
+        : filters.types.includes(button.dataset.typeFilter);
+    button.classList.toggle("active", isSelected);
+  });
+  els.priorityButtons.forEach((button) => {
+    button.classList.toggle("active", filters.priorities.includes(button.dataset.priorityFilter));
   });
   els.sortButtons.forEach((button) => {
     button.classList.toggle("active", button.dataset.sort === filters.sortBy);
   });
 
   els.typeFilterButton.classList.add("active");
-  els.typeFilterButton.textContent = filters.type;
+  els.typeFilterButton.textContent = getFilterButtonLabel("Type", filters.types, "All");
 
-  const priorityStatuses = ["Urgent", "High", "Low"];
-  const activePriority = priorityStatuses.includes(filters.status) ? filters.status : "";
-  els.priorityFilterButton.classList.toggle("active", Boolean(activePriority));
-  els.priorityFilterButton.textContent = activePriority ? `Priority: ${activePriority}` : "Priority";
+  els.priorityFilterButton.classList.toggle("active", Boolean(filters.priorities.length));
+  els.priorityFilterButton.textContent = getFilterButtonLabel("Priority", filters.priorities);
 
   const sortLabels = {
     deadline: "Deadline",
@@ -667,8 +682,8 @@ function updateFilterControls() {
   syncFilterOptionButtons(els.industryFilter, filters.industries, "industryFilter");
 }
 
-function getFilterButtonLabel(label, values) {
-  if (!values.length) return label;
+function getFilterButtonLabel(label, values, emptyLabel = label) {
+  if (!values.length) return emptyLabel;
   if (values.length === 1) return `${label}: ${values[0]}`;
   return `${label}: ${values.length}`;
 }
@@ -682,9 +697,20 @@ function closeFilterAccordions(exceptButton = null) {
   });
 }
 
-function toggleFilterValue(values, value) {
-  if (!value) return values;
-  return values.includes(value) ? values.filter((item) => item !== value) : [...values, value];
+function updateOptionSelection(values, value, event) {
+  if (!value || value === "All") return [];
+  const selected = values.includes(value);
+  if (event.ctrlKey || event.metaKey) {
+    return selected ? values.filter((item) => item !== value) : [...values, value];
+  }
+  return selected ? [] : [value];
+}
+
+function matchesJobType(job, type) {
+  if (type === "Internship") return Boolean(job.internship);
+  if (type === "Part-time") return Boolean(job.partTime);
+  if (type === "Full-time") return !job.internship && !job.partTime;
+  return true;
 }
 
 function syncFilterOptionButtons(container, selectedValues, dataKey) {
