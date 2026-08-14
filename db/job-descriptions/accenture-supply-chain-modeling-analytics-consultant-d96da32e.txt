@@ -1,0 +1,45 @@
+Supply Chain Modeling & Analytics Consultant
+Washington, DC
+ 
+At Accenture Federal Services, nothing matters more than helping the US federal government make the nation stronger and safer and life better for people. Our 13,000+ people are united in a shared purpose to pursue the limitless potential of technology and ingenuity for clients across defense, national security, public safety, civilian, and military health organizations. 
+ 
+Join Accenture Federal Services, a technology company within global Accenture. Recognized as a Glassdoor Top 100 Best Place to Work, we offer a collaborative and caring community where you feel like you belong and are empowered to grow, learn and thrive through hands-on experience, certifications, industry training and more. 
+ 
+Join us to drive positive, lasting change that moves missions and the government forward!
+ 
+The Supply Chain Modeling & Analytics Consultant will lead analytical workstreams that support supply chain modeling, digital‑twin analysis, forecasting, and scenario evaluation. Translates analytical outputs into recommendations for planning, logistics, engineering, and operations leaders.
+
+ 
+
+The work:
+
+Data Preparation & Quality: Oversee preparation and validation of complex supply‑chain datasets to ensure accuracy and scalability for modeling and analytics workflows.
+Analytics & Forecasting: Perform deeper descriptive and statistical analysis, build repeatable forecasting approaches, and guide junior team members in analytical best practices.
+Scenario & Model Support: Design and execute scenario and sensitivity analyses within existing digital‑twin, network, or simulation models and synthesize operational implications.
+Visualization & Reporting: Develop dashboards and analytical narratives that clearly communicate findings to client and internal leadership stakeholders.
+Documentation & Mapping: Create structured, repeatable documentation for analytical logic, assumptions, methodologies, and data flows.
+Cross‑Functional Leadership: Lead discussions with planning, logistics, engineering, and operations teams to shape analytical needs and solution approaches.
+Team Leadership & Quality: Guide junior analysts, review outputs, and ensure quality and consistency across analytical deliverables.
+ 
+
+Here’s what you need:
+
+3–6 years of experience in analytics, data science or quantitative analysis roles within supply‑chain.
+Proven experience owning analytical workstreams or modules in client delivery.
+Proficiency in SQL and Python or R; experience building dashboards (Power BI, Tableau).
+Experience conducting statistical analysis, scenario testing, or forecasting.
+Ability to translate complex analysis into clear, actionable business insights.
+Experience mentoring junior analysts or reviewing analytical work products
+ 
+
+As required by local law, Accenture Federal Services provides reasonable ranges of compensation for hired roles based on labor costs in the states of California, Colorado, Hawaii, Illinois, Maine, Maryland, Massachusetts, Minnesota, New Jersey, New York, Vermont, Virginia, Washington, and the District of Columbia, and the city of Cleveland. The base pay range for this position in these locations is shown below. Compensation for roles at Accenture Federal Services varies depending on a wide array of factors, including but not limited to office location, role, skill set, and level of experience. Accenture Federal Services offers a wide variety of benefits. You can find more information on benefits here. We accept applications on an on-going basis and there is no fixed deadline to apply.
+
+ 
+
+The pay range for the states of California, Colorado, Hawaii, Illinois, Maine, Maryland, Massachusetts, Minnesota, New Jersey, New York, Vermont, Virginia, Washington, and the District of Columbia, and the city of Cleveland is:
+
+$91,300 - $184,900 USD
+
+ 
+What We Believe
+As a company wholly dedicated to serving the US federal government, we bring together the best talent to help reinvent how federal agencies operate and deliver greater value for their mission and the American people. We have an unwavering commitment to creating a culture in which all our people are respected, feel a sense of belonging, and have equal opportunity. As a business imperative, every person at Accenture Federal Services has the responsibility to create and sustain a culture where everyone feels welcomed and included. This is grounded in our core values and our experience that hiring and developing great people who reflect different perspectives, experiences, and backgrounds is key to driving innovation and delivering the results that our clients and the country count on.

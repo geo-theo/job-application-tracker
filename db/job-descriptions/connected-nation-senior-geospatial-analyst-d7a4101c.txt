@@ -1,0 +1,66 @@
+Organization: Connected Nation, Inc.
+Title: Senior Geospatial Analyst
+Location: Remote
+
+Posted: 2026-07-15
+Application Deadline:
+
+Position Description:
+
+Senior Geospatial Analyst
+
+REPORTS TO: VP Data Strategy and Technical Services
+LOCATION: Remote
+STATUS: Full-time, Exempt
+DATE: July 14, 2026
+
+We offer a competitive compensation and benefits package. Compensation is based on experience, skills, and qualifications. Specific salary information will be discussed with candidates as part of the interview process.
+
+DESCRIPTION
+The Senior Geospatial Analyst manages and performs analyses of geospatial data related to broadband access, adoption, and use in a geographic information system (GIS). The Senior Geospatial Analyst works extensively with broadband-related, environmental, and demographic information to provide analytical, interactive map and data visualization solutions for Connected Nation’s (CN’s) internal and external stakeholders. The Senior Geospatial Analyst supports geospatial databases and data warehouses to manage internal and project data. The Senior Geospatial Analyst develops scripts and workflow automations to optimize data processing, management, and analysis.
+
+ESSENTIAL DUTIES AND RESPONSIBILITIES
+•Develop hardcopy and interactive geospatial and mapping products through the development and analysis of data using the software tools and resources provided by Connected Nation.
+•Develop and maintain custom geospatial applications and interactive mapping solutions.
+•Develop and maintain databases and automation scripts for processing and loading data.
+•Perform location-based data processing, including but not limited to geocoding, digitizing, data editing and aggregation, table creation, data conversion, and georeferencing.
+•Analyze, calculate, and compile statistics from spatial analysis by geographic area to assist in qualitative and quantitative decision making.
+•Collaborate and coordinate with the Geospatial team for efficiency and effective product development.
+•Keep pace with geospatial technology advances and innovations through training and conference opportunities.
+•Responsibilities are not all inclusive; additional duties may be assigned.
+
+EDUCATION/EXPERIENCE
+•Bachelor’s degree in GIS, geography, geology, planning, or related scientific field required with emphasis on GIS preferred.
+•Five years’ minimum experience, or educational equivalent, in GIS required.
+
+QUALIFICATIONS
+•Hands-on experience with Esri’s ArcGIS suite of products including ArcGIS Pro, ArcGIS Online, ArcGIS Field Apps and Story Maps.
+•Python scripting and SQL proficiency.
+•Geodatabase and Google BigQuery experience.
+•Must be proficient in Microsoft Office Suite, especially Microsoft Excel.
+•Cultivates strong and collaborative working relationships with staff, while having the ability to handle sensitive and confidential datasets.
+•Must be able to communicate effectively with all levels of staff.
+•Strong analytical, organizational, and communication skills.
+•Must be able to work independently and under pressure in a fast-paced environment.
+•An extremely organized, disciplined, self-directed, hands-on, and process-oriented individual who is not afraid of digging into details when necessary.
+•Ability to manage and prioritize multiple tasks.
+•Strong work ethic and unquestioned personal and professional integrity.
+•High level of commitment to team and company values.
+•Attention to detail, establishing priorities, and meeting deadlines.
+•Willing to travel as needed.
+•Valid state driver’s license required.
+
+ESSENTIAL PHYSICAL REQUIREMENTS
+•Ability to sit at a desk for one or more hours at a time.
+•Ability to lift and carry up to 10 lbs.
+•Ability to operate computers and equipment in the office.
+•Must have sufficient mobility to move around the office and the community.
+
+This job description in no way states or implies that these are the only duties to be performed by the employee(s) incumbent in this position. Employee(s) will be required to follow any other job-related instructions and to perform any other job-related duties requested by any person authorized to give instructions or assignments. A review of this position has excluded the marginal functions of the position that are incidental to the performance of fundamental job duties. All duties and responsibilities are essential to job functions and requirements and are subject to possible modification to reasonably accommodate individuals with disabilities. To perform this job successfully, the incumbent(s) will possess the skills, aptitudes, and abilities to perform each duty proficiently. Some requirements may exclude individuals who pose a direct threat or significant risk to the health or safety of themselves or others. The requirements listed in this document are the minimum levels of knowledge, skills, or abilities. This document does not create an employment contract, implied or otherwise, other than an “at will” relationship.
+
+Connected Nation is an equal opportunity employer. We are committed to providing equal employment opportunities to all employees and applicants for employment without regard to race, color, religion, sex, national origin, age, disability, veteran status, genetic information, or any other characteristic protected by applicable law.
+
+TO APPLY:
+•Submit your resume by email to hr@connectednation.org
+•Include the position title, Senior Geospatial Analyst, in the subject line.
+•Applications will be reviewed as they are received.

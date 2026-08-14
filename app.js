@@ -112,8 +112,10 @@ const els = {
   saveButton: document.querySelector("#save-button"),
   deleteButton: document.querySelector("#delete-button"),
   statusButtons: document.querySelectorAll("[data-status]"),
+  typeButtons: document.querySelectorAll("[data-type-filter]"),
   sortButtons: document.querySelectorAll("[data-sort]"),
   accordionTriggers: document.querySelectorAll(".accordion-trigger"),
+  typeFilterButton: document.querySelector("#type-filter-button"),
   priorityFilterButton: document.querySelector("#priority-filter-button"),
   sortFilterButton: document.querySelector("#sort-filter-button"),
   roleFilterButton: document.querySelector("#role-filter-button"),
@@ -139,6 +141,7 @@ let isResettingForm = false;
 
 const filters = {
   status: "All",
+  type: "All",
   sortBy: "",
   roles: [],
   industries: [],
@@ -191,6 +194,14 @@ function bindEvents() {
   els.statusButtons.forEach((button) => {
     button.addEventListener("click", () => {
       filters.status = button.dataset.status;
+      updateFilterControls();
+      closeFilterAccordions();
+      renderJobs();
+    });
+  });
+  els.typeButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      filters.type = button.dataset.typeFilter;
       updateFilterControls();
       closeFilterAccordions();
       renderJobs();
@@ -578,6 +589,11 @@ function getVisibleJobs() {
   if (filters.status !== "All" && filters.status !== "Reference" && filters.status !== "Applied") {
     visible = visible.filter((job) => (job.priority || "") === filters.status);
   }
+  if (filters.type === "Internship") {
+    visible = visible.filter((job) => Boolean(job.internship));
+  } else if (filters.type === "Part-time") {
+    visible = visible.filter((job) => Boolean(job.partTime));
+  }
   if (filters.roles.length) {
     visible = visible.filter((job) => filters.roles.some((role) => (job.roles || []).includes(role)));
   }
@@ -620,9 +636,15 @@ function updateFilterControls() {
   els.statusButtons.forEach((button) => {
     button.classList.toggle("active", button.dataset.status === filters.status);
   });
+  els.typeButtons.forEach((button) => {
+    button.classList.toggle("active", button.dataset.typeFilter === filters.type);
+  });
   els.sortButtons.forEach((button) => {
     button.classList.toggle("active", button.dataset.sort === filters.sortBy);
   });
+
+  els.typeFilterButton.classList.add("active");
+  els.typeFilterButton.textContent = filters.type;
 
   const priorityStatuses = ["Urgent", "High", "Low"];
   const activePriority = priorityStatuses.includes(filters.status) ? filters.status : "";

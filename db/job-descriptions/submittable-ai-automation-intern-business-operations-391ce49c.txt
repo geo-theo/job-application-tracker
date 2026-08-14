@@ -1,0 +1,41 @@
+AI Automation Intern, Business Operations
+Missoula, MT
+At Submittable, we are transforming how organizations create social impact. Our platform empowers thousands of mission-driven organizations, from nonprofits to government entities, to make a difference in their communities and beyond. In 2024, our innovative software helped organizations worldwide run 30,000 programs, welcomed 1.2 million applicants, and facilitated the distribution of more than $10 billion in funding through our products on behalf of our clients.
+
+We are on a mission to help organizations accelerate their impact, so we are proud to partner with organizations focused on Equity & Social Justice, Children & Education, Creative & Arts, Health & Wellness, Economic Justice & Opportunity, and Environment & Climate. At Submittable, technology and purpose converge, offering a unique opportunity to contribute to meaningful change. 
+
+About the Role
+We're looking for an intern who already has real hands-on experience with AI tools like Claude and Gemini and is excited to put that experience to work on real business problems. You'll join our G&A team, partnering with People Ops, IT, Finance, and Accounting to spot repetitive, manual processes and turn them into AI-assisted or fully automated workflows.
+
+This is a hands-on role from day one — you'll be embedded with real teams, solving real problems, and helping move active projects across the finish line. It's a great fit for a business-minded student who wants experience at the intersection of AI, operations, and process improvement, and who wants to see their work actually put to use.
+
+What You'll Do
+Partner with G&A, People Ops, IT, and Accounting to identify and develop AI automated solutions to support daily operations. 
+Design, build, and pilot AI-powered workflows and tools using Claude, Gemini, and other AI platforms.
+Help move existing AI and operations projects forward — from research and prototyping to testing and rollout.
+Document new processes and create simple guides or playbooks so teams can adopt and maintain the tools you build.
+Gather requirements from stakeholders across departments, test proposed solutions, and iterate based on feedback.
+Track the impact of your work — time saved, errors reduced, processes streamlined — and report results to G&A leaders and key stakeholders. 
+Take on ad hoc business operations projects and tasks as priorities shift across the G&A function.
+What We're Looking For
+Demonstrated hands-on expertise using AI tools such as Claude and Gemini to complete work — research, writing, workflow design, data tasks, and more. 
+Able to speak concretely about how you've used AI tools to solve a real problem, not just that you've experimented with them.
+Currently pursuing a Bachelor's or Master's degree; Juniors, Seniors, and graduate students are all encouraged to apply.
+Business-related majors preferred (e.g., Business Administration, Management Information Systems, Business Analytics, Accounting) — but strong candidates from other majors with genuine AI expertise are welcome.
+Strong analytical and problem-solving skills, with a resourceful mindset and comfort learning new software quickly.
+Strong written and verbal communication skills; comfortable working cross-functionally with stakeholders across multiple departments.
+Highly organized and detail-oriented, with the ability to manage several small projects at once.
+Able to work independently while knowing when to loop in your manager or stakeholders.
+University of Montana students preferred; students at other schools are welcome to apply as long as they can reliably commute to and from work in person at our Missoula office.
+Preferred Qualifications
+Coursework or project experience in business process improvement, data analytics, or operations.
+Familiarity with AI tools, Large Language Models (LLMs), APIs, and automation platforms such as Zapier or Power Automate
+Solid Excel and/or Google Sheets skills.
+Prior internship or work experience in HR, IT, or Accounting functions.
+Internship Details
+Duration: Fall 2026 term, with the possibility of extending into spring based on performance and team need.
+Location: On-site at Submittable's Missoula, MT headquarters. University of Montana students preferred; open to students at other schools who can commute in.
+Compensation: $16–$18/hour, based on experience.
+Schedule flexibility available around class schedules.
+Direct mentorship from Submittable's IT & Operations Manager and exposure to leaders across G&A, HR, IT, and Accounting.
+The chance to work on real AI initiatives with direct, visible business impact.

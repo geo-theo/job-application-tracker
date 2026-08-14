@@ -453,13 +453,40 @@
         <div class="board-controls" aria-label="Board controls">
           <div class="control-row">
             <div class="filter-group" aria-label="Status filter">
-              <button
-                type="button"
-                class="filter-button active"
-                data-status="All"
-              >
-                All
-              </button>
+              <div class="filter-accordion type-accordion">
+                <button
+                  type="button"
+                  class="filter-button accordion-trigger active"
+                  id="type-filter-button"
+                  aria-expanded="false"
+                  aria-controls="type-filter-panel"
+                >
+                  All
+                </button>
+                <div class="accordion-panel" id="type-filter-panel" hidden>
+                  <button
+                    type="button"
+                    class="filter-button"
+                    data-type-filter="All"
+                  >
+                    All
+                  </button>
+                  <button
+                    type="button"
+                    class="filter-button"
+                    data-type-filter="Internship"
+                  >
+                    Internship
+                  </button>
+                  <button
+                    type="button"
+                    class="filter-button"
+                    data-type-filter="Part-time"
+                  >
+                    Part-time
+                  </button>
+                </div>
+              </div>
 
               <div class="filter-accordion priority-accordion">
                 <button
@@ -491,10 +518,6 @@
                   </button>
                 </div>
               </div>
-
-              <button type="button" class="filter-button" data-status="Applied">
-                Applied
-              </button>
 
               <div class="filter-accordion">
                 <button
@@ -574,13 +597,18 @@
                 </div>
               </div>
 
-              <button
-                type="button"
-                class="filter-button reference-filter"
-                data-status="Reference"
-              >
-                Reference
-              </button>
+              <div class="status-filter-actions">
+                <button type="button" class="filter-button" data-status="Applied">
+                  Applied
+                </button>
+                <button
+                  type="button"
+                  class="filter-button reference-filter"
+                  data-status="Reference"
+                >
+                  Reference
+                </button>
+              </div>
             </div>
           </div>
 

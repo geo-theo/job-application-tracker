@@ -1,0 +1,44 @@
+DevOps Engineer I - ArcGIS Enterprise
+
+Overview
+Join our team of talented, dynamic, and passionate engineers who work with diverse technologies to develop and deliver state-of-the-art geospatial server-side software. In this role, you will design, implement, and oversee process workflows, CI/CD pipelines, deployment frameworks, deployment artifacts for installation and patches and build systems required for generating release-ready versions of the on-premises ArcGIS Enterprise stack, comprising ArcGIS Server, Portal for ArcGIS, and ArcGIS DataStore, which are collectively being used by thousands of users across the globe.
+
+We are working towards modernizing our build systems and processes to fit into newer microservices-based architecture as well as continually adopting and integrating newer industry standards in our processes and workflows. Join us and help us build the next generation of ArcGIS Enterprise.
+
+Responsibilities
+Design, implement, and orchestrate build and deployment frameworks for delivering the software products listed above
+Provide integration points for the products with the various install (InstallAnywhere, InstallShield) and deployment (AWS AMI, Azure, Docker containers, Vagrant) technologies
+Work closely with various app and other teams for bringing in new features and components into the product stack, providing support for builds, code obfuscation, third-party dependency management and other release-specific tasks for these components
+Participate in development of continuous integration software build systems
+Design and implement monitoring systems and test frameworks for various build process and artifacts
+Identify process bottlenecks and implement solutions
+Work with various documentation and localization teams to integrate the content from these teams into daily build processes
+Support and oversee third-party dependency management across the product stack from the point of view of vulnerability, licensing, and versioning
+Oversee and support maintenance and patch requests on previous versions of the applications
+Requirements
+1+ years of relevant work experience in the following areas:
+Java
+Maven, Ant, Groovy
+Continuous integration, continuous deployment, Git, Jenkins
+Linux servers and shell scripting
+Strong problem solving and debugging skills
+Experience with multi-tiered software applications (web, databases, middleware, and more)
+Understanding of large, high performance, highly scalable, resilient server-based architectures including replication/failover, distributed architectures, caches, and security
+Bachelor's degree in computer science or related field
+Recommended Qualifications
+Experience with Kubernetes, Docker, and Github Actions
+Ability to collaborate across teams on SDLC
+Familiarity with Windows MSI/MSP technologies, performance monitoring (JMeter, JProfiler), and L10N/I18N in app development
+Master’s degree in computer science or related field
+#LI-TA1
+
+#LI-onsite
+
+Total Rewards
+
+Esri’s competitive total rewards strategy includes industry-leading health and welfare benefits: medical, dental, vision, basic and supplemental life insurance for employees (and their families), 401(k) and profit-sharing programs, minimum accrual of 80 hours of vacation leave, twelve paid holidays throughout the calendar year, and opportunities for personal and professional growth. Base salary is one component of our total rewards strategy. Compensation decisions and the base range for this role take into account many factors including but not limited to skill sets; experience and training; licensure and certifications; and other business and organizational needs.
+
+A reasonable estimate of the base salary range is
+$79,040-$133,016 USD
+About Esri
+At Esri, diversity is more than just a word on a map. When employees of different experiences, perspectives, backgrounds, and cultures come together, we are more innovative and ultimately a better place to work. We believe in having a diverse workforce that is unified under our mission of creating positive global change. We understand that diversity, equity, and inclusion is not a destination but an ongoing process. We are committed to the continuation of learning, growing, and changing our workplace so every employee can contribute to their life’s best work. Our commitment to these principles extends to the global communities we serve by creating positive change with GIS technology. For more information on Esri’s Racial Equity and Social Justice initiatives, please visit our website here.

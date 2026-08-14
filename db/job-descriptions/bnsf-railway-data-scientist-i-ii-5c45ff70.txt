@@ -1,0 +1,119 @@
+Data Scientist I/II (Remote - US)
+Location REMOTE, US, 76131Job Id 95561Company Name BNSF Railway
+ 
+ 
+be part of a team that values safety, inclusion, and excellence 
+we are one of the largest U.S. railroads transporting the nation’s freight across 28 western states and 3 Canadian provinces. as a member of our team, you will play a role in supporting the movement of essential products and materials that help feed, clothe, supply, and power communities throughout America and the world.
+ 
+bnsf | tech: innovating and transforming the future of freight rail
+bnsf | tech is the technology division making BNSF the preeminent freight and mobility company in north america.
+ 
+are you ready to drive change?
+if you are passionate about making a difference and eager to advance your career in a dynamic and supportive environment, we want you on our team! join us in reshaping the future of freight rail and discover a fulfilling career where your contributions matter.
+ 
+we are committed to a culture where all employees are included, belong, and have equal opportunity to achieve their full potential. Come make a difference with us!
+ 
+learn more about BNSF and our Benefits
+ 
+Job Location: Remote US
+Anticipated Start Date: 08/03/2026
+
+ 
+
+The US base salary range for this full-time position is provided below:
+
+Salary Range: $93,750-$175,000
+
+L3: $93,750 - $125,000
+L4: $123,750 - $175,000
+
+ 
+
+The range represents the amount bnsf | tech reasonably expects to pay for the position based on the level, scope, and responsibilities of the role.  Individual compensation and level of position offered is determined by the hiring location and additional factors including but not limited to job-related skills, experience, and relevant education or training. In addition to base pay and bonus eligibility, BNSF offers a comprehensive benefits package.
+ 
+This is a full-time remote position. Employees may work from anywhere within the contiguous 48 states of the United States
+
+ 
+
+Travel is up to 20%. Employees will be required to occasionally travel to our corporate headquarters in Fort Worth, TX for in person meetings. Travel expenses for business needs will be covered by BNSF 
+
+ 
+
+This position is open to candidates who are currently authorized to work in the United States. We are also open to sponsoring H-1B transfers, TN nonimmigrant status, and STEM OPT candidates with at least 2 years of remaining eligibility.
+
+ 
+
+Apply early as this job may be removed or filled prior to the closing date, which is approximately seven (7) days after the posting date.
+
+
+data & ai: lead our charge into the future as an ai company by transforming our data assets into a real time enterprise.
+
+ 
+
+Key responsibilities may include:
+
+Work with cross-functional teams to identify business problems and develop data-driven solutions.
+
+Apply data science skills to analyze large, complex datasets and identify meaningful patterns that lead to actionable insights and data-driven solutions to business problems.
+
+Develop and implement machine learning models to predict outcomes and improve processes.
+
+Collaborate with stakeholders to understand their needs and provide actionable insights.
+
+Create visualizations and reports to communicate findings effectively.
+
+Maintain and update data pipelines to ensure data integrity and accuracy.
+
+Stay current with industry trends and advancements in data science and machine learning.
+
+Identify, extract, aggregate, and synthesize data using SQL and NoSQL databases, R, Python or other appropriate languages to enable analysis, model development, and solution deployment.
+
+Drive moderate to complex data science, machine learning, traditional artificial intelligence, generative artificial intelligence or optimization projects, working with stakeholders to understand contextual problems quickly and define, analyze, and deliver solutions based on business objectives
+
+Demonstrate operational excellence by monitoring, troubleshooting, and resolving production issues, including participating in a 24/7 on-call rotation.
+
+
+The duties and responsibilities in this posting are representative categories to be used in deciding whether to apply for this position. This is not an exhaustive list of the position’s duties.  
+ 
+
+At BNSF Railway, we encourage individuals from all backgrounds to apply, showcasing their skills, experiences and development. We provide resources and tools to help you reach your full potential, fostering a supportive and inclusive environment.
+
+ 
+
+Basic Qualifications
+
+Minimum of 2 years experience building data science solutions or relevant experience
+Demonstrated understanding of statistical analysis and machine learning techniques.
+Experience with data visualization tools.
+Proficiency in programming languages such as Python, R, SQL, and familiarity with Java or Scala
+Experience with data science cloud platforms
+ 
+
+Preferred Qualifications
+
+Bachelor's degree or higher in Operations Research, Computer Science, Industrial Engineering, or a related field
+Previous hands-on experience with AI/Machine Learning frameworks and tools like TensorFlow, PyTorch, or scikit-learn. 
+Experience in Rail, Shipping, Airline, Logistics, Warehousing, Supply Chain, or other Transportation industries.
+Experience with geospatial python libraries
+Experience with open-source libraries and frameworks. 
+Experience working in an Agile environment (Scrum, Kanban, SAFe).  
+ 
+
+
+ 
+
+At BNSF, you will have access to a comprehensive and competitive benefits package including:
+
+ 
+
+An industry-leading 401(k) and renowned Railroad Retirement program.
+A range of robust health care options for you and your dependents (including domestic partners), including medical, dental, vision, telemedicine, mental health, cancer support, and high-quality care network options.
+Health care spending accounts (HSA) with employer contributions, as well as life and disability insurance, provided at no cost.
+Family benefits including parental, pediatric and family building support, adoption and surrogacy reimbursement, and dependent care spending account (with employer match).
+Access to discounts on travel, gym memberships, counseling services and wellness support.
+Annual bonus (Incentive Compensation Program)
+Generous leave / time off policies.
+For more information, visit Benefits.
+ 
+
+Federal authority requires BNSF employees, whose work requires unescorted access to secure areas of port facilities, to obtain a TWIC.  More information is available at https://www.tsa.gov/for-industry/twic

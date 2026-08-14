@@ -58,7 +58,7 @@ button:disabled {
 
 .app-shell {
   display: grid;
-  grid-template-columns: minmax(410px, 1fr) minmax(560px, 1fr);
+  grid-template-columns: minmax(340px, 1fr) minmax(0, 2fr);
   height: 100dvh;
   overflow: hidden;
 }
@@ -551,8 +551,14 @@ button:focus-visible {
   outline-offset: 2px;
 }
 
-.reference-filter {
+.status-filter-actions {
+  display: flex;
+  gap: 8px;
   margin-left: auto;
+}
+
+.reference-filter {
+  margin-left: 0;
 }
 
 .data-row {
@@ -907,7 +913,7 @@ button:focus-visible {
 
 @media (max-width: 1140px) {
   .app-shell {
-    grid-template-columns: minmax(380px, 1fr) minmax(470px, 1fr);
+    grid-template-columns: minmax(320px, 1fr) minmax(0, 2fr);
   }
 
   .job-card {
@@ -990,6 +996,10 @@ button:focus-visible {
   }
 
   .reference-filter {
+    margin-left: 0;
+  }
+
+  .status-filter-actions {
     margin-left: 0;
   }
 }

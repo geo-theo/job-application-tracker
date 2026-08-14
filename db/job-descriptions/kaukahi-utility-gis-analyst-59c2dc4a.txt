@@ -1,0 +1,61 @@
+Utility GIS Analyst
+Location : LocationUS-RemoteID2026-3322
+Category Intelligence & Analysis Position Type Full-Time Clearance Level No Clearance Required
+Overview
+This professional and skilled analyst position works as a member of Kaukahi's project team supporting the development and maintenance of client utility Geographic Information Systems (GIS). Working in conjunction with program goals and guidelines, the GIS Analyst collaborates with utility project stakeholders to ensure GIS information and services are delivered on an ongoing basis. Duties are performed under the direction of the assigned Project Manager and are subject to review through oral and written reports and by inspection.
+ 
+Essential Functions and Responsibilities 
+Enters spatial data using established workflows and methods through the use of coordinate geometry, various digitizing methods, and geo-referencing of design plans, record surveys, and historic maps into GIS.Produces custom maps, exhibits, and sketches as needed using ArcGIS software.Produces various ArcGIS analysis and geoprocessing routines as needed to generate spreadsheets, data tables, statistics, and program deliverables.
+Assumes responsibility for writing, updating, and maintaining the data library and feature codes for field data collection input.
+Creates and maintains a static geometric network for all utility systems and performs regular diagnostic maintenance routines of the network to ensure accuracy.Reviews GIS data for accuracy by applying established quality control procedures.
+Creates and edits data from various data sources and creates corresponding attributes and metadata.Fulfills data requests and inquiries from client and stakeholder customers.Incorporates record surveys (as-built) into the GIS database through geo-referencing and hyper-linking drawings to utility features.Maintains and continually upgrades knowledge of GIS functionality, principles, and practices; stays abreast of new trends and innovations in GIS, database design, and related hardware and software.
+Assists with construction inspections when required.Assists with underground utility locates when needed.
+Represents Kaukahi at client and project meetings when needed.Performs other related duties as assigned.
+Kaukahi may add to or change duties at any time as determined by company and project leadership to best ensure client and mission needs are met.
+ 
+
+Requirements
+Minimum Qualifications: 
+Bachelor's degree from an accredited college or university in GIS, geography, information systems management, or a closely related field with major coursework in GIS; OR Equivalent academic credentials related to the field of GIS.
+A GIS certification may be used to establish equivalency; AND 3-5 years of experience in the use of GIS technology in a multi-user geographic information system; OR A comparable amount of training and/or experience in lieu of certain minimum qualifications may be substituted, including experience with: utility distribution systems; utility location and surveying; ground penetrating radar (GPR); Trimble Business Center software; Trimble Access software; and appurtenant ArcGIS add-ons.
+Licenses and/or Certifications
+
+Possession of, or ability to obtain and maintain, a valid state driver's license upon offer of employment, with a driving record acceptable to Kaukahi's driving policy and insurance program.
+Geographic Information Systems Professional (GISP) and/or ESRI ArcGIS Desktop Professional (EADP) preferred.
+ 
+
+Knowledge, Abilities, and Skills
+Knowledge of the principles of Geographic Information Science (GIS) and GIS technology.
+Knowledge of GPS receivers and proficiency in their use for field data collection.
+Knowledge of GPS satellite constellation theory, signalization, GPS receivers, field data collection computers, and post-processing techniques.
+Knowledge of data entry principles, including digitizing and georeferencing map plans from aerial imagery.
+Proficiency with Microsoft Word, Excel, and Outlook.
+Knowledge of project management principles and strong organizational skills.
+Moderate proficiency with ESRI ArcGIS (ArcMap) and/or ArcGIS Pro.
+Ability to integrate and work with CAD data in ArcGIS Desktop.
+Ability to provide direction, guidance, and mentoring to junior Utility GIS Analysts and field technicians.
+Excellent oral and written communication skills.
+Strong interpersonal skills with the ability to effectively interact with clients and the public.
+Ability to clearly and concisely communicate ideas verbally and in writing.
+Ability to organize work, establish priorities, meet deadlines, and complete assignments with minimal supervision.
+Ability to operate scanners, printers, large-format plotters, and other office equipment.
+Ability to utilize personal computers and standard office software, including word processing, database, and spreadsheet applications.
+Ability to comprehend, read, write, and speak the English language.
+Ability to maintain reliable full-time attendance. 
+Work Location
+
+Remote position with travel up to 100% as required for assigned project worksites.
+Physical Requirements: Work may involve sitting or standing for extended periods of time and typing or reading from a computer screen. This position requires sufficient mobility, including but not limited to bending, reaching, kneeling, stooping, crouching, climbing, walking, standing, pushing, pulling, grasping, and repetitive hand and finger movements to perform assigned duties in a timely and efficient manner. Work is performed both indoors and outdoors and may include warehouses, garages, industrial facilities, and field environments with exposure to varying weather conditions, extreme temperatures, noise, dust, odors, heights, and other changing environmental conditions. The position may involve exposure to hazardous materials, heavy equipment, and other physical safety risks. Employees may be required to wear appropriate Personal Protective Equipment (PPE) and successfully complete applicable medical evaluations or clearances. The position requires visual acuity, hearing, and effective verbal communication. Frequent lifting and carrying of 25 to 50 pounds is required, with occasional lifting of up to 100 pounds as necessary. Employees may also be required to walk or stand for more than six (6) hours per day.
+ 
+Kaukahi reserves the right to change or modify job duties and assignments at any time. The above job description is not all encompassing. Positions, functions and qualifications may vary depending on business needs.
+
+ 
+
+Kaukahi is an equal opportunity employer and does not discriminate against applicants based on race, color, creed, religion, medical condition, legally protected genetic information, national origin, sex (including pregnancy, childbirth, or related medical condition), sexual orientation, gender identity and expression, age, disability, or Vietnam era, or other eligible veteran status or legally.
+
+ 
+
+Salary Range: $50,000.0. - $70,000.00
+
+Posted Salary Range
+USD $50,000.00 - USD $70,000.00 /Yr.

@@ -1,0 +1,42 @@
+Product Engineer II – ArcGIS Arcade
+Overview
+Bring your enthusiasm and knowledge of GIS customization to help build and test advancements to ArcGIS Arcade. Arcade is used by organisations around the world to customize their workflows, QA/QC data input, and create cutting edge visualisations. This is a fantastic opportunity to become part of the product development team and support the delivery of regular, high-quality releases in a fast-paced, dynamic environment.
+
+Help us improve our Arcade functional capabilities, test routines, and documentation as part of the ArcGIS Pro development team developing Arcade. You’ll also collaborate with engineers on other products to ensure seamless integration across ArcGIS.
+
+Esri has a Relocation Assistance Program and can provide support with relocating to the Cardiff, UK area for this position. Check out more details of the Esri R&D Center – Cardiff!
+
+Responsibilities
+Apply curious, independent thought, and attention to detail to explore and understand the challenges that ArcGIS users face and provide usable, informative feedback on user experience
+Build rich and varied GIS datasets and maps, sample applications and articles that can be used to highlight product capabilities, explain scripting functions, and guide scripting best practices
+Work with your development team, and teams across Esri, to design, create, and validate the newest datasets and GIS workflows to support visualisation, map labelling, pop-ups, attribute rules and verify the functionality meets user workflows and is consistent with Esri ecosystem
+Describe GIS best practices and demonstrate how to apply these GIS workflows in internal team meetings, on product forums and websites, with customers, at Esri events, or in publications like the ArcGIS Blog
+Learn about and collaborate in AI code generation experiences to explore issues, investigate problems, and design and prototype enhancements
+Build focused test code to represent complex situations for investigation and regression testing
+Administer, automate, and manage online and database GIS systems and services to support the development of new product features and ongoing product releases
+Requirements
+2+ years of GIS experience (such as modeling, analyzing, or presenting geospatial data in a scientific, engineering, governmental, or post graduate academic environment)
+Proficiency with mapping, spatial data or GIS platforms such as ArcGIS or QGIS
+Strong problem-solving and analytic skills
+Proven initiative and creativity to find ways to explore, investigate, test and validate software behavior
+Experience of, and interest in, scripting or coding to appreciate our end users' challenges and to communicate effectively with the development team
+Excellent communication and team collaboration skills
+Bachelor’s degree in GIS, geography, computer science, engineering, or related field
+Existing work authorisation for the United Kingdom
+Recommended Qualifications
+Experience and passion for working with cartography, mapping or geospatial data
+Interest in or knowledge of AI code generation and development tools
+Proven experience of user communication and education such as having been responsible for product documentation, blogs, written or video tutorials, presentations
+Familiarity using version control systems such as Git, for documentation and code
+Familiarity with some of the scripting or coding languages such as Python, Lua, JavaScript, Perl, or Typescript
+Master’s degree in GIS, computer science, engineering, or related field
+Base salary is one component of our total rewards strategy. Compensation decisions and the base range for this role take into account many factors including but not limited to skill sets; experience and training; licensure and certifications; and other business and organizational needs.
+
+A reasonable estimate of the base salary range is £37,080 - £58,092.
+
+#LI-EL1
+
+#LI-Onsite
+
+About Esri
+At Esri, diversity is more than just a word on a map. When employees of different experiences, perspectives, backgrounds, and cultures come together, we are more innovative and ultimately a better place to work. We believe in having a diverse workforce that is unified under our mission of creating positive global change. We understand that diversity, equity, and inclusion is not a destination but an ongoing process. We are committed to the continuation of learning, growing, and changing our workplace so every employee can contribute to their life’s best work. Our commitment to these principles extends to the global communities we serve by creating positive change with GIS technology.

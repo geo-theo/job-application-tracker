@@ -1,0 +1,57 @@
+Organization: IAFF
+Title: GIS Analyst
+Location: Washington, District of Columbia
+
+Posted: 2026-07-16
+Application Deadline:
+
+Position Description:
+
+If you are ready to change the world and protect the protectors, the International Association of Fire Fighters (IAFF) currently has an IMMEDIATE opportunity for TWO GIS Analysts to work in the IAFF Fire & EMS Operations Department.
+
+This is a non-exempt, full-time position (32.5-hour work week) with office assignment at the Headquarters of the International Association of Fire Fighters in Washington D.C. Starting salary is $87K rising to 97K within 1.5 years - SUPERB benefits including free comprehensive health insurance for employee and dependents, extensive vacation and sick leave, flexible schedule, hybrid work up to two days per week, tuition reimbursement, 401k match, pension, and more!!
+
+With headquarters in Washington, DC, and Ottawa, Ontario, the International Association of Fire Fighters represents more than 350,000 full-time professional fire fighters and single-role EMS practitioners in more than 3,500 local affiliates.
+
+Please note: The IAFF is unable to provide immigration sponsorship.
+
+Position Summary:
+
+Evaluates emergency response systems using Geographic Information System (GIS) and data analysis based on industry standards and SME references. Uses technical writing expertise to write reports that improve fire fighter working conditions by promoting appropriate staffing and deployment of fire-based all-hazards response systems.
+
+Responsibilities:
+
+Effectively communicate with clients regarding project objectives, priorities, and expectations.
+Perform GIS and data analysis to produce emergency response standards of cover and strategic staffing and deployment plans.
+Create and present analytical findings using ESRI StoryMaps and Tableau/PowerBI dashboards for stakeholder dissemination.
+Clean datasets using R or python and generate summary statistics.
+Perform content review and technical support of analytical products with fire fighters.
+Contribute to computer-aided (CAD) dispatch database development.
+Coordinate with other IAFF divisions such as Strategic Campaigns, Labor Issues, Health & Safety, and Grants Administration to meet the needs of the membership.
+Manage multiple projects simultaneously and provide deliverables in a timely manner.
+Perform other duties as required to support the department and its mission.
+
+Skills:
+
+Five years of professional experience in ESRI ArcGISPro and ArcGIS Online.
+Five years of professional experience preferred in R, python, SQL, or another programming language.
+Understanding of fire department operations.
+Familiarity with IAFF structure and workflows.
+Experience with data visualization tools, predictive modeling, and AI.
+Experience learning new software and programs from the ground up, self-starter.
+Proficient in Microsoft Office Suite.
+Strong organizational and time management skills.
+Ability to conduct self-review of work content.
+Excellent oral and written communication and interpersonal skills.
+
+Qualifications:
+
+Bachelor’s degree in geography or related field, or Bachelor’s and professional experience in geospatial analysis; Master’s preferred.
+
+
+Company Description
+
+With headquarters in Washington, DC, and Ottawa, Ontario, the International Association of Fire Fighters represents more than 350,000 full-time professional fire fighters and single-role EMS practitioners in more than 3,500 local affiliates.
+
+
+Apply Here: https://jobs.dayforcehcm.com/en-US/iaffhq/CANDIDATEPORTAL/jobs/296
