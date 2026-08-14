@@ -203,7 +203,7 @@ function bindEvents() {
   });
   els.typeButtons.forEach((button) => {
     button.addEventListener("click", (event) => {
-      filters.types = updateOptionSelection(filters.types, button.dataset.typeFilter, event);
+      filters.types = updateTypeSelection(filters.types, button.dataset.typeFilter, event);
       updateFilterControls();
       if (!event.ctrlKey && !event.metaKey) closeFilterAccordions();
       renderJobs();
@@ -661,7 +661,7 @@ function updateFilterControls() {
   });
 
   els.typeFilterButton.classList.add("active");
-  els.typeFilterButton.textContent = getFilterButtonLabel("Type", filters.types, "All");
+  els.typeFilterButton.textContent = getTypeFilterButtonLabel(filters.types);
 
   els.priorityFilterButton.classList.toggle("active", Boolean(filters.priorities.length));
   els.priorityFilterButton.textContent = getFilterButtonLabel("Priority", filters.priorities);
@@ -704,6 +704,21 @@ function updateOptionSelection(values, value, event) {
     return selected ? values.filter((item) => item !== value) : [...values, value];
   }
   return selected ? [] : [value];
+}
+
+function updateTypeSelection(values, value, event) {
+  if (!value || value === "All") return [];
+  const selected = values.includes(value);
+  if (value === "Full-time") return selected ? [] : ["Full-time"];
+  if (!(event.ctrlKey || event.metaKey)) return selected ? [] : [value];
+  const withoutFullTime = values.filter((item) => item !== "Full-time");
+  return selected ? withoutFullTime.filter((item) => item !== value) : [...withoutFullTime, value];
+}
+
+function getTypeFilterButtonLabel(values) {
+  if (!values.length) return "All";
+  if (values.length === 1) return values[0];
+  return `Type: ${values.length}`;
 }
 
 function matchesJobType(job, type) {
