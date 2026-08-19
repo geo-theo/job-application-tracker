@@ -630,8 +630,9 @@ function priorityRank(job) {
   const ranks = {
     Urgent: 0,
     High: 1,
-    Low: 2,
-    Future: 3,
+    Medium: 2,
+    Low: 3,
+    Future: 4,
   };
   return ranks[job.priority] ?? 4;
 }
@@ -925,6 +926,7 @@ function statusChip(job) {
   const priority = job.priority || "";
   if (priority === "Urgent") return chip("Urgent", "urgent");
   if (priority === "High") return chip("High", "high");
+  if (priority === "Medium") return chip("Medium", "medium");
   if (priority === "Low") return chip("Low", "low");
   if (priority === "Future") return chip("Future", "future");
   if (isAppliedNo(job)) return chip("Reference", "reference");

@@ -278,7 +278,7 @@ button:focus-visible {
 }
 
 .priority-group {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
 .segmented label {
@@ -322,6 +322,12 @@ button:focus-visible {
   border-color: var(--orange);
   background: #fff0df;
   color: var(--orange);
+}
+
+.priority-group input[value="Medium"]:checked + span {
+  border-color: var(--blue);
+  background: #e6edf8;
+  color: #274f83;
 }
 
 .priority-group input[value="Low"]:checked + span {
@@ -846,6 +852,11 @@ button:focus-visible {
 .chip.high {
   background: #fff0df;
   color: var(--orange);
+}
+
+.chip.medium {
+  background: #e6edf8;
+  color: #274f83;
 }
 
 .chip.low {

@@ -180,6 +180,11 @@
                   ></label
                 >
                 <label
+                  ><input type="radio" name="priority" value="Medium" /><span
+                    >Medium</span
+                  ></label
+                >
+                <label
                   ><input type="radio" name="priority" value="Low" /><span
                     >Low</span
                   ></label
@@ -271,6 +276,14 @@
                     value="Writing Sample"
                   />
                   <span>Writing Sample</span>
+                </label>
+                <label class="check-option">
+                  <input
+                    type="checkbox"
+                    name="applicationNeeds"
+                    value="Transcript"
+                  />
+                  <span>Transcript</span>
                 </label>
                 <label class="check-option">
                   <input
@@ -519,6 +532,13 @@
                     data-priority-filter="High"
                   >
                     High
+                  </button>
+                  <button
+                    type="button"
+                    class="filter-button"
+                    data-priority-filter="Medium"
+                  >
+                    Medium
                   </button>
                   <button type="button" class="filter-button" data-priority-filter="Low">
                     Low
