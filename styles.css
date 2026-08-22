@@ -689,6 +689,14 @@ button:focus-visible {
   font-weight: 900;
 }
 
+.company-logo.favorite-company-logo {
+  border-color: #b88400;
+  background: #fff4cf;
+  box-shadow:
+    inset 0 0 0 2px #d8a820,
+    0 0 0 3px rgba(184, 132, 0, 0.22);
+}
+
 .company-logo img {
   width: 100%;
   height: 100%;

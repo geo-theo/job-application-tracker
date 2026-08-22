@@ -1,0 +1,49 @@
+Data EngineerRemote | W2 Contract
+OverviewWe are hiring a Data Engineer to support a large scale data and analytics initiative. This role will focus on building reliable data systems that help teams make better decisions faster.
+You will design and develop data pipelines, create analytics ready datasets, and build reporting layers used across business and operations teams. Your work will directly impact how performance is tracked, measured, and improved.
+This is a high visibility role with strong cross functional collaboration.
+What You Will Do
+Build and maintain scalable data pipelines for large datasets
+Design and optimize data warehouse architecture and models
+Develop clean, reliable datasets for analytics and reporting
+Write advanced SQL to support dashboards and business logic
+Implement data quality checks and monitoring systems
+Define and standardize business metrics across teams
+Build dashboards and self service reporting solutions
+Partner with stakeholders to translate business needs into data solutions
+
+What You Bring
+Strong experience in data engineering or analytics engineering
+Advanced SQL skills
+Experience with data modeling and warehousing concepts
+Experience building ETL or ELT pipelines
+Familiarity with data quality, governance, and validation practices
+Experience working with cross functional teams
+Ability to turn business questions into data solutions
+
+Job Info:
+Job Type: Contract (W2)
+Job Location: Remote
+Hourly Pay: $60.00-$70.00 per hour
+Work Hours: Monday-Friday / 40 hours per week
+
+Featured Benefits:
+Medical insurance
+Vision insurance
+Dental insurance
+401(k) Plan
+
+
+Benefits found in job post
+
+Medical insurance, Vision insurance, Dental insurance, 401(k)
+
+Requirements added by the job poster
+
+• Bachelor's Degree
+
+• 5+ years of work experience with PHP
+
+• 5+ years of work experience with C#
+
+• 3+ years of work experience with Artificial Intelligence (AI)

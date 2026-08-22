@@ -114,10 +114,12 @@ const els = {
   statusButtons: document.querySelectorAll("[data-status]"),
   typeButtons: document.querySelectorAll("[data-type-filter]"),
   priorityButtons: document.querySelectorAll("[data-priority-filter]"),
+  favoriteButtons: document.querySelectorAll("[data-favorite-filter]"),
   sortButtons: document.querySelectorAll("[data-sort]"),
   accordionTriggers: document.querySelectorAll(".accordion-trigger"),
   typeFilterButton: document.querySelector("#type-filter-button"),
   priorityFilterButton: document.querySelector("#priority-filter-button"),
+  favoriteFilterButton: document.querySelector("#favorite-filter-button"),
   sortFilterButton: document.querySelector("#sort-filter-button"),
   roleFilterButton: document.querySelector("#role-filter-button"),
   roleFilter: document.querySelector("#role-filter"),
@@ -144,6 +146,7 @@ const filters = {
   status: "All",
   types: [],
   priorities: [],
+  favorites: [],
   sortBy: "",
   roles: [],
   industries: [],
@@ -212,6 +215,14 @@ function bindEvents() {
   els.priorityButtons.forEach((button) => {
     button.addEventListener("click", (event) => {
       filters.priorities = updateOptionSelection(filters.priorities, button.dataset.priorityFilter, event);
+      updateFilterControls();
+      if (!event.ctrlKey && !event.metaKey) closeFilterAccordions();
+      renderJobs();
+    });
+  });
+  els.favoriteButtons.forEach((button) => {
+    button.addEventListener("click", (event) => {
+      filters.favorites = updateOptionSelection(filters.favorites, button.dataset.favoriteFilter, event);
       updateFilterControls();
       if (!event.ctrlKey && !event.metaKey) closeFilterAccordions();
       renderJobs();
@@ -604,6 +615,9 @@ function getVisibleJobs() {
   if (filters.types.length) {
     visible = visible.filter((job) => filters.types.some((type) => matchesJobType(job, type)));
   }
+  if (filters.favorites.length) {
+    visible = visible.filter((job) => filters.favorites.some((favorite) => matchesFavoriteFilter(job, favorite)));
+  }
   if (filters.roles.length) {
     visible = visible.filter((job) => filters.roles.some((role) => (job.roles || []).includes(role)));
   }
@@ -657,6 +671,11 @@ function updateFilterControls() {
   els.priorityButtons.forEach((button) => {
     button.classList.toggle("active", filters.priorities.includes(button.dataset.priorityFilter));
   });
+  els.favoriteButtons.forEach((button) => {
+    const isSelected = filters.favorites.includes(button.dataset.favoriteFilter);
+    button.classList.toggle("active", isSelected);
+    button.setAttribute("aria-selected", String(isSelected));
+  });
   els.sortButtons.forEach((button) => {
     button.classList.toggle("active", button.dataset.sort === filters.sortBy);
   });
@@ -666,6 +685,9 @@ function updateFilterControls() {
 
   els.priorityFilterButton.classList.toggle("active", Boolean(filters.priorities.length));
   els.priorityFilterButton.textContent = getFilterButtonLabel("Priority", filters.priorities);
+
+  els.favoriteFilterButton.classList.toggle("active", Boolean(filters.favorites.length));
+  els.favoriteFilterButton.textContent = getFilterButtonLabel("Favorite", filters.favorites);
 
   const sortLabels = {
     deadline: "Deadline",
@@ -726,6 +748,12 @@ function matchesJobType(job, type) {
   if (type === "Internship") return Boolean(job.internship);
   if (type === "Part-time") return Boolean(job.partTime);
   if (type === "Full-time") return !job.internship && !job.partTime;
+  return true;
+}
+
+function matchesFavoriteFilter(job, favorite) {
+  if (favorite === "Jobs") return Boolean(job.favoriteJob);
+  if (favorite === "Companies") return Boolean(job.favoriteCompany);
   return true;
 }
 
@@ -850,7 +878,7 @@ function cell(text, className = "") {
 
 function createCompanyLogo(job) {
   const logo = document.createElement("div");
-  logo.className = "company-logo";
+  logo.className = `company-logo${job.favoriteCompany ? " favorite-company-logo" : ""}`;
   const logoSources = getCompanyLogoSources(job.company);
 
   const image = document.createElement("img");

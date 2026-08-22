@@ -1,0 +1,24 @@
+Premier opérateur aéroportuaire privé au monde, VINCI Airports gère plus de 70 aéroports dans 14 pays en Europe, en Asie et sur le continent américain. Grâce à son expertise d’intégrateur global, VINCI Airports développe, finance, construit et exploite les aéroports en apportant sa capacité d’investissement et son savoir-faire dans l’optimisation de la performance opérationnelle, la modernisation des infrastructures et la conduite de leur transition environnementale. Rattaché(e) au Département Data de la Direction des Opérations de VINCI Airports, et dans le cadre du projet stratégique Smart Data Hub visant à offrir à l’ensemble des aéroports du groupe des outils avancés d’aide au pilotage grâce à la data, nous recherchons un(e) Data Scientist Junior (F/M) pour renforcer notre équipe. Notre équipe Data Science développe et opère deux grands axes de solutions : 
+Machine Learning & Forecasting : modèles de prévision court et long terme (trafic passagers, flux opérationnels) intégrés dans des boucles d'amélioration continue avec les métiers.
+GenAi & Agentic : outils généralistes (chatbot, recherche documentaire, analyse de documents), spécialisations métiers, ainsi que des projets d'automatisation et de plateformes agentiques.
+En parallèle, l'équipe accompagne les Business Units et les communautés métiers dans leur montée en compétence sur l'utilisation et le développement d'outils IA/ML. Dans ce rôle, vous contribuerez à l'ensemble de ces activités, en étroite collaboration avec les équipes Data & IA ainsi que le métier et les experts des aéroports du réseau. Vos missions seront les suivantes :
+Développer et améliorer les algorithmes de machine learning pour le forecasting court et long terme en utilisant une grande variété de modèles ML adaptés au forecasting temporelle.
+Assurer le suivi et la performance des modèles en production, garantir leur robustesse et détecter les dérives.
+Contribuer au développement des outils d'IA générative transverses : concevoir et faire évoluer les solutions de chatbot, recherche et analyse documentaires.
+Participer aux projets de spécialisation métier et d'automatisation : concevoir des architectures RAG, orchestrer des agents, intégrer des LLM dans les workflows opérationnels via des plateformes agentiques.
+Intégrer les modèles dans les environnements techniques du Smart Data Hub, gérer les pipelines de d’entrainement associés et contribuer aux pratiques MLOps/LLMOps.
+Travailler avec les métiers pour assurer l’interprétabilité des outils, leur intégration dans les processus décisionnels et leur bonne appropriation.
+Soutenir l’adoption des solutions en accompagnant, formant et en communicant auprès des utilisateurs non techniques.
+
+Le profil recherché à ce poste :
+Vous êtes diplômé(e) d’une école d’ingénieur, d’une formation universitaire, avec une spécialisation ou un intérêt marqué pour les statistiques, le machine learning ou les mathématiques appliquées.
+Vous justifiez d'une première expérience en Data Science avec une pratique de la mise en production, idéalement complétée par une exposition aux technologies d'IA générative (LLM, Agent, RAG).
+Vous êtes à l'aise avec Python, aussi bien pour l'analyse de données et la construction de pipelines ML modulaires que pour le développement de backend applicatif.
+Vous savez travailler en équipe, collaborer avec des profils variés et communiquer clairement avec des interlocuteurs non techniques.
+Vous êtes autonome, rigoureux(se), curieux(se) et motivé(e) par la résolution de sujets complexes.
+Connaissances mathématiques, en statistiques ou dans un domaine connexe.
+Expérience en analyse de données et modélisation (Time series, Tabulaire, Stats).
+Code structuré et maintenable, conception de pipelines d'entraînement et d'inférence (Kubeflow, Pandas).
+Construction d'API et développement backend (FastAPI, Flask).
+Maîtrise des pipelines de données et sensibilité aux problématiques MLOps/LLMOps (versionning, monitoring, CI/CD).
+Une connaissance du secteur aéroportuaire serait un plus.
