@@ -690,16 +690,26 @@ button:focus-visible {
 }
 
 .company-logo.favorite-company-logo {
+  overflow: visible;
   border-color: #b88400;
   background: #fff4cf;
-  box-shadow:
-    inset 0 0 0 2px #d8a820,
-    0 0 0 3px rgba(184, 132, 0, 0.22);
+  box-shadow: 0 0 0 2px rgba(184, 132, 0, 0.18);
+}
+
+.company-logo.favorite-company-logo::after {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border: 2px solid #d8a820;
+  border-radius: 12px;
+  box-shadow: 0 0 0 3px rgba(184, 132, 0, 0.18);
+  pointer-events: none;
 }
 
 .company-logo img {
   width: 100%;
   height: 100%;
+  border-radius: inherit;
   object-fit: cover;
 }
 
