@@ -1,0 +1,35 @@
+DATA ANALYST SUPPLY CHAIN CONFIRME (E) H/F
+
+RUEIL MALMAISON
+
+ 
+
+POSTE
+
+ 
+
+Othmane, Responsable data et performance supply chain, recrute pour son équipe un(e) Data analyst supply chain confirmé(e) pour assurer le traitement de l’ensemble des données Supply Chain afin de produire les dashboards, les indicateurs clés de performance et les analyses Adhoc permettant le pilotage de l’activité ainsi que la prise de décision.  
+
+Vous êtes le référent des outils de traitement de la data, notamment B1 et Power BI, et avez la responsabilité de créer, maintenir et faire évoluer l’ensemble des rapports Supply Chain.
+
+ 
+
+Vos missions principales :   
+
+ 
+
+Développer, mettre à jour et fiabiliser les Dashboard Power BI des COE Supply Chain.
+Collecter, analyser et comprendre les besoins métiers et les traduire en besoins technico-fonctionnels.
+Accompagner les COE Supply Chain et les équipes terrain dans la lecture et l’interprétation des indicateurs liés à leur activité.
+Être le référent Data Supply auprès des directions IT, Commerciale et Contrôle de gestion.
+Coconstruire la feuille de route data supply chain annuelle et en assurer le suivi.
+Proposer des optimisations sur les bases de données, méthodes de calcul, process et Dashboard.
+Contribuer aux projets d’amélioration continue de la direction Supply Chain.
+Recruter, former et accompagner les alternants / stagiaires data.
+ 
+
+ 
+
+VOS ATOUTS
+
+De formation supérieure en informatique, data ou Supply Chain, vous justifiez d’au moins 2 ans d’expérience en tant que Data Analyst. Vous savez donner du sens à la donnée, travailler efficacement en équipe et êtes reconnu pour votre sens de l’analyse et de la synthèse. Vous maîtrisez Power BI et le langage SQL, avec une vraie capacité à transformer la data en leviers de performance… Ce poste est pour vous !
