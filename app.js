@@ -60,6 +60,7 @@ const CSV_COLUMNS = [
   "referenceCount",
   "jobLevel",
   "favoriteJob",
+  "fullTime",
   "internship",
   "partTime",
   "roles",
@@ -391,6 +392,8 @@ function collectFormData() {
   const industryOther = els.industryOther.value.trim();
   const deadlineChoice = els.deadlineChoice.value;
   const appliedStatus = getRadioValue("appliedStatus");
+  const internship = els.internship.checked;
+  const partTime = els.partTime.checked;
   const descriptionText = els.jobDescription.value.trim();
 
   return {
@@ -419,8 +422,9 @@ function collectFormData() {
       referenceCount: els.needsReferences.checked ? normalizeIntegerString(els.referenceCount.value) : "",
       jobLevel: getRadioValue("jobLevel"),
       favoriteJob: els.favoriteJob.checked,
-      internship: els.internship.checked,
-      partTime: els.partTime.checked,
+      fullTime: deriveFullTime(internship, partTime),
+      internship,
+      partTime,
       roles: allRoles,
       roleOther,
       industry,
@@ -747,8 +751,17 @@ function getTypeFilterButtonLabel(values) {
 function matchesJobType(job, type) {
   if (type === "Internship") return Boolean(job.internship);
   if (type === "Part-time") return Boolean(job.partTime);
-  if (type === "Full-time") return !job.internship && !job.partTime;
+  if (type === "Full-time") return isFullTimeJob(job);
   return true;
+}
+
+function deriveFullTime(internship, partTime) {
+  return !Boolean(internship) && !Boolean(partTime);
+}
+
+function isFullTimeJob(job) {
+  if (typeof job.fullTime === "boolean") return job.fullTime;
+  return deriveFullTime(job.internship, job.partTime);
 }
 
 function matchesFavoriteFilter(job, favorite) {
@@ -1181,7 +1194,7 @@ async function exportCsv() {
 }
 
 async function buildCsv() {
-  const rows = jobs.map((job) => CSV_COLUMNS.map((column) => serializeCsvValue(job[column])));
+  const rows = jobs.map((job) => CSV_COLUMNS.map((column) => serializeCsvValue(getCsvColumnValue(job, column))));
   return [CSV_COLUMNS, ...rows].map((row) => row.map(escapeCsv).join(",")).join("\r\n");
 }
 
@@ -1255,6 +1268,8 @@ function csvRowToJob(header, row) {
   if (record.referenceCount && !applicationNeeds.includes("References")) {
     applicationNeeds.push("References");
   }
+  const internship = parseBoolean(record.internship);
+  const partTime = parseBoolean(record.partTime);
   return {
     id: record.id || createId(),
     createdAt: record.createdAt || now,
@@ -1280,8 +1295,9 @@ function csvRowToJob(header, row) {
     referenceCount: record.referenceCount || "",
     jobLevel: record.jobLevel || "",
     favoriteJob: parseBoolean(record.favoriteJob),
-    internship: parseBoolean(record.internship),
-    partTime: parseBoolean(record.partTime),
+    fullTime: record.fullTime ? parseBoolean(record.fullTime) : deriveFullTime(internship, partTime),
+    internship,
+    partTime,
     roles: splitList(record.roles),
     roleOther: record.roleOther || "",
     industry: record.industry || "",
@@ -1290,6 +1306,11 @@ function csvRowToJob(header, row) {
     descriptionFilename: record.descriptionFilename || "",
     descriptionLength: 0,
   };
+}
+
+function getCsvColumnValue(job, column) {
+  if (column === "fullTime") return isFullTimeJob(job);
+  return job[column];
 }
 
 function serializeCsvValue(value) {
