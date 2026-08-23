@@ -60,9 +60,7 @@ const CSV_COLUMNS = [
   "referenceCount",
   "jobLevel",
   "favoriteJob",
-  "fullTime",
-  "internship",
-  "partTime",
+  "jobTypes",
   "roles",
   "roleOther",
   "industry",
@@ -394,6 +392,7 @@ function collectFormData() {
   const appliedStatus = getRadioValue("appliedStatus");
   const internship = els.internship.checked;
   const partTime = els.partTime.checked;
+  const jobTypes = getSelectedJobTypes(internship, partTime);
   const descriptionText = els.jobDescription.value.trim();
 
   return {
@@ -422,9 +421,7 @@ function collectFormData() {
       referenceCount: els.needsReferences.checked ? normalizeIntegerString(els.referenceCount.value) : "",
       jobLevel: getRadioValue("jobLevel"),
       favoriteJob: els.favoriteJob.checked,
-      fullTime: deriveFullTime(internship, partTime),
-      internship,
-      partTime,
+      jobTypes,
       roles: allRoles,
       roleOther,
       industry,
@@ -512,8 +509,8 @@ async function loadJobIntoForm(jobId) {
   els.referenceCount.value = job.referenceCount || "";
   setRadioValue("jobLevel", job.jobLevel || "");
   els.favoriteJob.checked = Boolean(job.favoriteJob);
-  els.internship.checked = Boolean(job.internship);
-  els.partTime.checked = Boolean(job.partTime);
+  els.internship.checked = hasJobType(job, "Internship");
+  els.partTime.checked = hasJobType(job, "Part-time");
   setMultiSelectValues(els.roles, normalizeRolesForForm(job.roles || [], job.roleOther));
   els.roleOther.value = job.roleOther || "";
   els.industry.value = job.industry || "";
@@ -749,19 +746,49 @@ function getTypeFilterButtonLabel(values) {
 }
 
 function matchesJobType(job, type) {
-  if (type === "Internship") return Boolean(job.internship);
-  if (type === "Part-time") return Boolean(job.partTime);
-  if (type === "Full-time") return isFullTimeJob(job);
+  if (type === "Internship") return hasJobType(job, "Internship");
+  if (type === "Part-time") return hasJobType(job, "Part-time");
+  if (type === "Full-time") return hasJobType(job, "Full-time");
   return true;
 }
 
-function deriveFullTime(internship, partTime) {
-  return !Boolean(internship) && !Boolean(partTime);
+function getSelectedJobTypes(internship, partTime) {
+  const types = [];
+  if (internship) types.push("Internship");
+  if (partTime) types.push("Part-time");
+  return types.length ? types : ["Full-time"];
 }
 
-function isFullTimeJob(job) {
-  if (typeof job.fullTime === "boolean") return job.fullTime;
-  return deriveFullTime(job.internship, job.partTime);
+function getJobTypes(job) {
+  if (Array.isArray(job.jobTypes) && job.jobTypes.length) return normalizeJobTypes(job.jobTypes);
+  if (typeof job.jobTypes === "string" && job.jobTypes.trim()) return normalizeJobTypes(splitList(job.jobTypes));
+
+  const legacyTypes = [];
+  if (job.fullTime === true) legacyTypes.push("Full-time");
+  if (job.internship) legacyTypes.push("Internship");
+  if (job.partTime) legacyTypes.push("Part-time");
+  if (legacyTypes.length) return unique(legacyTypes);
+  if (job.fullTime === false) return [];
+  return ["Full-time"];
+}
+
+function normalizeJobTypes(values) {
+  const labels = {
+    fulltime: "Full-time",
+    "full-time": "Full-time",
+    internship: "Internship",
+    parttime: "Part-time",
+    "part-time": "Part-time",
+  };
+  return unique(
+    values
+      .map((value) => labels[String(value).trim().toLowerCase()] || "")
+      .filter(Boolean),
+  );
+}
+
+function hasJobType(job, type) {
+  return getJobTypes(job).includes(type);
 }
 
 function matchesFavoriteFilter(job, favorite) {
@@ -875,8 +902,8 @@ function getJobCardClassName(job) {
   return [
     "job-card",
     job.favoriteJob ? "favorite" : "",
-    job.internship ? "internship" : "",
-    job.partTime ? "part-time" : "",
+    hasJobType(job, "Internship") ? "internship" : "",
+    hasJobType(job, "Part-time") ? "part-time" : "",
   ]
     .filter(Boolean)
     .join(" ");
@@ -1268,8 +1295,7 @@ function csvRowToJob(header, row) {
   if (record.referenceCount && !applicationNeeds.includes("References")) {
     applicationNeeds.push("References");
   }
-  const internship = parseBoolean(record.internship);
-  const partTime = parseBoolean(record.partTime);
+  const jobTypes = getImportedJobTypes(record);
   return {
     id: record.id || createId(),
     createdAt: record.createdAt || now,
@@ -1295,9 +1321,7 @@ function csvRowToJob(header, row) {
     referenceCount: record.referenceCount || "",
     jobLevel: record.jobLevel || "",
     favoriteJob: parseBoolean(record.favoriteJob),
-    fullTime: record.fullTime ? parseBoolean(record.fullTime) : deriveFullTime(internship, partTime),
-    internship,
-    partTime,
+    jobTypes,
     roles: splitList(record.roles),
     roleOther: record.roleOther || "",
     industry: record.industry || "",
@@ -1309,8 +1333,23 @@ function csvRowToJob(header, row) {
 }
 
 function getCsvColumnValue(job, column) {
-  if (column === "fullTime") return isFullTimeJob(job);
+  if (column === "jobTypes") return getJobTypes(job);
   return job[column];
+}
+
+function getImportedJobTypes(record) {
+  if (record.jobTypes) return normalizeJobTypes(splitList(record.jobTypes));
+
+  const legacyTypes = [];
+  const hasFullTimeColumn = Object.prototype.hasOwnProperty.call(record, "fullTime");
+  const internship = parseBoolean(record.internship);
+  const partTime = parseBoolean(record.partTime);
+  if (parseBoolean(record.fullTime) || (!hasFullTimeColumn && !internship && !partTime)) {
+    legacyTypes.push("Full-time");
+  }
+  if (internship) legacyTypes.push("Internship");
+  if (partTime) legacyTypes.push("Part-time");
+  return unique(legacyTypes);
 }
 
 function serializeCsvValue(value) {
