@@ -874,9 +874,12 @@ function createJobCard(job) {
     roleChips.append(roleChip(role));
   });
 
+  const levelChips = document.createElement("div");
+  levelChips.className = "chips level-chips";
+  if (job.jobLevel) levelChips.append(chip(job.jobLevel, `level-${job.jobLevel.toLowerCase()}`));
+
   const priorityChips = document.createElement("div");
-  priorityChips.className = "chips";
-  if (job.jobLevel) priorityChips.append(chip(job.jobLevel, `level-${job.jobLevel.toLowerCase()}`));
+  priorityChips.className = "chips priority-chips";
   priorityChips.append(statusChip(job));
 
   const linkWrap = document.createElement("div");
@@ -895,7 +898,7 @@ function createJobCard(job) {
   link.addEventListener("click", (event) => event.stopPropagation());
   linkWrap.append(link);
 
-  card.append(logo, main, location, pay, deadline, industry, roleChips, priorityChips, linkWrap);
+  card.append(logo, main, location, pay, deadline, industry, roleChips, levelChips, priorityChips, linkWrap);
   return card;
 }
 

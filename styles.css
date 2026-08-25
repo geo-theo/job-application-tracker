@@ -600,7 +600,7 @@ button:focus-visible {
   grid-template-columns:
     44px minmax(150px, 1.18fr) minmax(80px, 0.54fr) minmax(100px, 0.64fr)
     minmax(74px, 0.48fr) minmax(90px, 0.58fr) minmax(132px, 0.9fr)
-    minmax(78px, 0.46fr) minmax(64px, 0.34fr);
+    minmax(58px, 0.34fr) minmax(78px, 0.46fr) minmax(64px, 0.34fr);
   gap: 10px;
   align-items: center;
   min-height: 86px;
@@ -788,6 +788,11 @@ button:focus-visible {
   gap: 5px;
   flex-wrap: wrap;
   min-height: 30px;
+}
+
+.level-chips,
+.priority-chips {
+  justify-content: center;
 }
 
 .chip {
