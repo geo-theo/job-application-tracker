@@ -184,13 +184,14 @@ function bindEvents() {
   els.roles.addEventListener("change", syncConditionalFields);
   els.industry.addEventListener("change", syncConditionalFields);
   els.deadlineChoice.addEventListener("change", handleDeadlineChoiceChange);
-  document.querySelectorAll("input[name='priority'], input[name='jobLevel']").forEach((input) => {
+  document.querySelectorAll("input[name='priority'], input[name='jobLevel'], input[name='appliedStatus']").forEach((input) => {
     input.addEventListener("pointerdown", rememberRadioState);
     input.addEventListener("click", toggleCheckedRadio);
     input.addEventListener("keydown", toggleCheckedRadioWithKeyboard);
   });
   document.querySelector(".priority-group")?.addEventListener("pointerdown", rememberToggleableGroupRadioState);
   document.querySelector(".level-group")?.addEventListener("pointerdown", rememberToggleableGroupRadioState);
+  document.querySelector(".applied-group")?.addEventListener("pointerdown", rememberToggleableGroupRadioState);
   els.appliedStatus.forEach((input) => input.addEventListener("change", syncConditionalFields));
   els.needsReferences.addEventListener("change", syncConditionalFields);
   els.scrapeButton.addEventListener("click", scrapeJobDescription);
