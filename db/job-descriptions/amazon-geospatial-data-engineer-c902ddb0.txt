@@ -1,0 +1,42 @@
+Geospatial Data Engineer , WW Sustainability
+Job ID: 10519667 | Amazon.com Services LLC
+Description
+Join us at the forefront of Amazon's sustainability initiatives to work on environmental and social advancements to support Amazon's long term worldwide sustainability strategy. At Amazon, we're working to be the most customer-centric company on earth. To get there, we need exceptionally talented, bright, and driven people.
+
+The Worldwide Sustainability (WWS) organization capitalizes on Amazon’s scale and speed to build a more resilient and sustainable company. We manage our social and environmental impacts globally, and drive solutions that enable our customers, businesses, and the world to become more sustainable.
+
+The Sustainability Measurement & Abatement Technology team builds technical solutions to track, record, and forecast Amazon's WW impact on the Environment (i.e., Carbon, Water, Waste, etc.). This includes calculating past and current impacts and future abatement plans, ensuring credibility through standards and validations, and highlighting non-obvious opportunities for Amazon’s global business teams.
+
+We are looking for a Data Engineer to help us extend our geospatial capabilities to build sustainable experiences for customers at Amazon. This individual will play a critical role in establishing the foundational data infrastructure that scales metric derivation for assessments requiring area-based analysis and insights.
+
+This role focuses on building ready and fit for use risk factor data (such as hazards, vulnerability, etc.), derived from climate, weather, and socioeconomic geospatial datasets from various internal and external sources. We build systems to evaluate and vend the geospatial data required for risk assessment activities that ultimately influence operational planning mechanisms.
+
+Key job responsibilities
+- Own the operations of Amazon World-Wide Sustainability’s geospatial data, including ingestion, documentation, quality, and metadata management
+- Design, develop, and program methods and processes to consolidate unstructured data from bespoke sources
+- Design, implement, and automate deployment of data pipelines using CI/CD practices and multiple programming languages (Python/Scala/Java) to collect, process, and store data that serves as source of truth for organizational metrics.
+- Build and optimize data infrastructure using AWS services (Redshift, S3, Glue, EMR, Step Functions, EventBridge)
+- Develop and maintain ETL/ELT processes using diverse frameworks including PySpark, Apache Spark (Scala/Java), AWS Glue, Apache Airflow, and SQL-based transformations to integrate organizational data sources
+- Own the design and maintenance of metrics, reports, and dashboards that drive sustainability business decisions and support data-driven insights
+- Develop data services and APIs that support both internal and external system integrations while ensuring compliance with data governance, security, and privacy requirements
+- Partner with the science team to operationalize new data pipelines, identifying opportunities to scale science work, and promote data best practices
+- Collaborate with the engineering team to build scalable, state of the art data pipelines that enable statistical and ML-based modeling with geospatial data
+- Produce initial reporting and visualization to support Amazon World-Wide Sustainability’s needs as a customer of this team, producing denormalized tables and associated dashboards. Develop a reporting and analysis roadmap.
+- Regularly interact with product and program teams to identify core problems and opportunities that can be answered through data analysis and experiments
+- Adopt new technologies and frameworks to improve platform capabilities, with focus on automation and efficiency gains
+
+About the team
+World Wide Sustainability (WWS) values diverse experiences. Even if you do not meet all of the qualifications and skills listed in the job description, we encourage candidates to apply. If your career is just starting, hasn’t followed a traditional path, or includes alternative experiences, don’t let it stop you from applying.
+
+
+Basic Qualifications
+- 3+ years of data engineering experience
+- Experience with data modeling, warehousing and building ETL pipelines
+- Experience working on and delivering end to end projects independently
+- Experience building/operating highly available, distributed systems of data extraction, ingestion, and processing of large data sets
+- Deep experience with geospatial data types: both raster (GeoTIFF, COG, NetCDF, etc.) and vector (GeoJSON, etc.), as well as usage of GIS tools
+
+Preferred Qualifications
+- Experience with AWS technologies like Redshift, S3, AWS Glue, EMR, Kinesis, FireHose, Lambda, and IAM roles and permissions
+- Experience with non-relational databases / data stores (object storage, document or key-value stores, graph databases, column-family databases)
+- Experience in at least one modern scripting or programming language, such as Python, Java, Scala, or NodeJS

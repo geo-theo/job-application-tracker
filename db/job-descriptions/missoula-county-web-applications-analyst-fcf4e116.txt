@@ -1,0 +1,41 @@
+Web Applications Analyst
+
+remote type
+Hybrid
+locations
+Missoula, Montana
+time type
+Full time
+posted on
+Posted 9 Days Ago
+job requisition id
+R88
+Join Missoula County in making a meaningful impact, where your work supports our vibrant community, promotes public service, and contributes to a better future for all. 
+
+Job Description:
+
+RATE OF PAY: $33.589 per hour
+
+JOB TYPE: Regular, Full-time
+
+DEPARTMENT: Technology
+
+BARGAINING UNIT: Federation of Missoula County Employees
+
+We will take our first look at the applicant pool on September 4, 2026. We will continue to accept applications until we receive an adequate applicant pool, or the position is filled.
+
+TO APPLY: Please complete the online application with your education and work history.
+
+DEFINITION:   Performs professional technical and analytical work throughout the full lifecycle of County web applications and related information and reporting systems. Analyzes business needs and processes; recommends, designs, develops, configures, integrates, tests, deploys, administers, secures, documents, supports, and improves web-based solutions.​
+
+EXAMPLE OF DUTIES: Analyzes County business processes, user needs, data requirements, and existing systems. Elicits and documents functional and technical requirements, evaluates alternatives, defines acceptance criteria, and recommends appropriate solutions. Designs, develops, configures, integrates, tests, deploys, administers, maintains, and improves County websites, web applications, content management systems, and related information and reporting systems. Develops and maintains application components using client-side and server-side technologies, application frameworks, relational databases, SQL, web APIs, and other integration methods. Uses Git or comparable version control and established development, testing, release, and change-management practices. Administers and supports application platforms and hosting components, including content management systems, web servers, containers, and related services. Plans and implements upgrades, patches, releases, and lifecycle replacements. Supports departmental content-publishing workflows as needed. Applies County security requirements and secure development and configuration practices throughout the application lifecycle. Implements and supports authentication and authorization controls; protects confidential, protected, or regulated information; assists with vulnerability identification and remediation; maintains appropriate logging and auditability; and supports application-related security response activities. Evaluates, tests, and remediates web applications and content for conformance with applicable accessibility requirements and County standards. Advises County departments on accessible application and content practices. Investigates and resolves application incidents, service requests, defects, integration failures, and performance issues. Performs root-cause analysis and communicates status, workarounds, and resolutions to users and stakeholders. Coordinates with administrators, developers, analysts, vendors, business owners, and user representatives in planning and implementing software solutions. Manages multiple projects, operational responsibilities, and deadlines. Creates and maintains technical, administrative, operational, and user documentation. Provides technical guidance, cross-training, and support to Technology Department staff and County departments and may lead project teams as assigned.
+
+MINIMUM QUALIFICATION REQUIREMENTS: Requires a Bachelor's degree. Degrees best suited to this position are computer science, information systems, and software engineering. Requires two years of experience performing systems analysis and designing, developing, configuring, integrating, implementing, administering, or maintaining websites and web applications. Experience in project team leadership desired. An equivalent combination of education and experience may be considered. Special Requirements:  Must be able to pass a criminal background check conducted by the Missoula County Sheriff’s Department.
+
+PHYSICAL/ENVIRONMENTAL DEMANDS:  The work is performed at a desk and requires extensive keyboarding.  Work requires little physical activity, and the employee commonly remains in an office setting.  May involve light lifting (10-20#) and visiting a variety of office sites.  May include after hours or on-call work.
+
+Additional Job Description:
+
+Complete job description available upon request to the Department of Human Resources.
+
+As a Missoula County employee, you will be a part of a team that is committed to positively impacting the community.
