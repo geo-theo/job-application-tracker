@@ -162,6 +162,11 @@ async function init() {
   try {
     db = await openDatabase();
     await restoreDirectoryHandle();
+    if (directoryHandle) {
+      await importFromConnectedFolder(directoryHandle);
+    } else {
+      await importFromRepositoryFiles();
+    }
     await refreshJobs();
     els.saveButton.disabled = false;
   } catch (error) {
@@ -1147,14 +1152,31 @@ async function connectFolder() {
   }
 
   try {
-    directoryHandle = await window.showDirectoryPicker({ mode: "readwrite" });
+    const pickedHandle = await window.showDirectoryPicker({ mode: "readwrite" });
+    const permission = await requestDirectoryPermission(pickedHandle);
+    if (permission !== "granted") {
+      directoryHandle = null;
+      showToast("Folder permission is needed to import and export files.");
+      return;
+    }
+    directoryHandle = await getDataDirectoryHandle(pickedHandle);
     try {
       await putSetting("directoryHandle", directoryHandle);
     } catch (error) {
       // Some browsers support folder writing but do not persist handles.
     }
-    await safeSyncToConnectedFolder(true);
-    showToast("Folder connected.");
+    const importResult = await importFromConnectedFolder(directoryHandle);
+    await refreshJobs();
+    const syncStatus = await safeSyncToConnectedFolder();
+    if (syncStatus === "failed") {
+      showToast("Folder connected, but export failed.");
+      return;
+    }
+    showToast(
+      importResult.jobs
+        ? `Folder connected. ${importResult.jobs} ${importResult.jobs === 1 ? "job" : "jobs"} imported.`
+        : "Folder connected.",
+    );
   } catch (error) {
     showToast("Folder connection canceled.");
   }
@@ -1218,6 +1240,36 @@ async function writeFile(parentHandle, fileName, contents) {
   await writable.close();
 }
 
+async function readTextFile(parentHandle, fileName) {
+  try {
+    const fileHandle = await parentHandle.getFileHandle(fileName);
+    const file = await fileHandle.getFile();
+    return file.text();
+  } catch (error) {
+    if (error.name === "NotFoundError") return null;
+    throw error;
+  }
+}
+
+async function getExistingDirectoryHandle(parentHandle, directoryName) {
+  try {
+    return await parentHandle.getDirectoryHandle(directoryName);
+  } catch (error) {
+    if (error.name === "NotFoundError") return null;
+    throw error;
+  }
+}
+
+async function getDataDirectoryHandle(pickedHandle) {
+  if (pickedHandle.name === "db") return pickedHandle;
+  const dbHandle = await getExistingDirectoryHandle(pickedHandle, "db");
+  if (!dbHandle) return pickedHandle;
+  const csv = await readTextFile(dbHandle, "jobs.csv");
+  if (csv !== null) return dbHandle;
+  const descriptionsDir = await getExistingDirectoryHandle(dbHandle, "job-descriptions");
+  return descriptionsDir || pickedHandle;
+}
+
 async function exportCsv() {
   const csv = await buildCsv();
   downloadBlob(csv, "jobs.csv", "text/csv");
@@ -1266,14 +1318,8 @@ async function importCsv(event) {
   if (!file) return;
   try {
     const text = await file.text();
-    const rows = parseCsv(text);
-    const header = rows.shift() || [];
-    const imported = rows
-      .filter((row) => row.some((value) => value.trim()))
-      .map((row) => csvRowToJob(header, row));
-    for (const job of imported) {
-      await putJob(job);
-    }
+    const imported = parseJobsCsv(text);
+    await importJobs(imported);
     await refreshJobs();
     const syncStatus = await safeSyncToConnectedFolder();
     showToast(
@@ -1286,6 +1332,93 @@ async function importCsv(event) {
   } finally {
     event.target.value = "";
   }
+}
+
+async function importFromConnectedFolder(handle) {
+  const csv = await readTextFile(handle, "jobs.csv");
+  if (!csv) return { jobs: 0, descriptions: 0 };
+
+  const imported = parseJobsCsv(csv);
+  const descriptionsDir = await getExistingDirectoryHandle(handle, "job-descriptions");
+  let descriptionCount = 0;
+
+  if (descriptionsDir) {
+    for (const job of imported) {
+      if (!job.descriptionFilename) continue;
+      const text = await readTextFile(descriptionsDir, job.descriptionFilename);
+      if (text === null) continue;
+      await putDescription(job.id, text);
+      job.descriptionLength = text.length;
+      descriptionCount += 1;
+    }
+  }
+
+  const savedJobs = await importJobs(imported);
+  return { jobs: savedJobs, descriptions: descriptionCount };
+}
+
+async function importFromRepositoryFiles() {
+  const csv = await fetchTextFile("db/jobs.csv");
+  if (!csv) return { jobs: 0, descriptions: 0 };
+
+  const imported = parseJobsCsv(csv);
+  const descriptionCount = await importDescriptionsFromRepository(imported);
+  const savedJobs = await importJobs(imported);
+  return { jobs: savedJobs, descriptions: descriptionCount };
+}
+
+async function importDescriptionsFromRepository(imported) {
+  const counts = await Promise.all(
+    imported.map(async (job) => {
+      if (!job.descriptionFilename) return 0;
+      const text = await fetchTextFile(`db/job-descriptions/${encodeURIComponent(job.descriptionFilename)}`);
+      if (text === null) return 0;
+      await putDescription(job.id, text);
+      job.descriptionLength = text.length;
+      return 1;
+    }),
+  );
+  return counts.reduce((total, count) => total + count, 0);
+}
+
+async function fetchTextFile(path) {
+  try {
+    const response = await fetch(path, { cache: "no-store" });
+    if (!response.ok) return null;
+    return response.text();
+  } catch (error) {
+    return null;
+  }
+}
+
+async function importJobs(imported) {
+  const existingJobs = await getAllJobs();
+  const existingById = new Map(existingJobs.map((job) => [job.id, job]));
+  let savedJobs = 0;
+  for (const job of imported) {
+    if (!shouldImportJob(job, existingById.get(job.id))) continue;
+    await putJob(job);
+    savedJobs += 1;
+  }
+  return savedJobs;
+}
+
+function shouldImportJob(imported, existing) {
+  if (!existing) return true;
+  const importedUpdatedAt = Date.parse(imported.updatedAt || "");
+  const existingUpdatedAt = Date.parse(existing.updatedAt || "");
+  if (Number.isFinite(importedUpdatedAt) && Number.isFinite(existingUpdatedAt)) {
+    return importedUpdatedAt >= existingUpdatedAt;
+  }
+  return Boolean(imported.updatedAt && !existing.updatedAt);
+}
+
+function parseJobsCsv(text) {
+  const rows = parseCsv(text);
+  const header = rows.shift() || [];
+  return rows
+    .filter((row) => row.some((value) => value.trim()))
+    .map((row) => csvRowToJob(header, row));
 }
 
 function csvRowToJob(header, row) {

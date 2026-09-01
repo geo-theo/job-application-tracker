@@ -53,4 +53,13 @@ Data controls in the board let you:
 - export saved job descriptions as individual `.txt` files
 - connect a local folder in supported browsers so the app can write `jobs.csv` and `job-descriptions/*.txt`
 
+## Git sync workflow
+
+Use Git as the portable source of truth and the browser database as a local cache:
+
+1. Open the app through GitHub Pages or a local server, not directly from `index.html`, so it can read `db/jobs.csv`.
+2. Click **Connect Folder** and select either the repository folder or its `db` folder. After that, saved jobs are written to `db/jobs.csv` and descriptions are written to `db/job-descriptions/`.
+3. Commit and push those changed files.
+4. On another device, pull the repo and reload the app. The app imports `db/jobs.csv` on startup and shows the pulled jobs.
+
 To deploy, enable GitHub Pages for the repository root. `index.html`, `styles.css`, and `app.js` are the only files needed for the public page.
