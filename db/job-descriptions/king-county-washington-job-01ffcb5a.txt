@@ -1,0 +1,115 @@
+Senior GIS Engineer
+    
+﻿
+Salary
+$123,947.20 - $157,110.10 Annually
+
+Location 
+King Street Center - 201 S Jackson St, Seattle, WA
+
+Job Type
+Career Service (Exec)
+
+Job Number
+2026-27874
+
+Department
+KCIT - Information Technology
+
+Division
+Engineering Division
+
+Opening Date
+08/31/2026
+
+Closing Date
+9/21/2026 11:59 PM Pacific
+
+FLSA
+Exempt
+
+Bargaining Unit
+C19 : PROTEC17-Information Tech
+
+Full- or Part-Time
+Full Time
+
+Description
+Benefits
+Questions
+Summary
+20260130114652_Group 3 Banner.png
+
+King County Department of Information Technology (KCIT) is seeking a Senior GIS Engineer to join the award-winning King County GIS Center. Our team provides enterprise GIS data services that support every County department, advancing data-driven decision-making, operational efficiency, and innovative public service delivery.
+
+As a key member of the GeoData Team, you will help lead a major modernization effort to migrate and re-engineer our GIS applications, services, and data platforms into cloud-based environments. This work includes transforming legacy systems, streamlining workflows, and improving reliability and scalability in alignment with King County’s cloud strategy. This isn't a lift and shift. We're modernizing as we migrate, reimagining our applications rather than rebuilding them as they were, and taking a hard look at current practices to make them more efficient.
+
+Why Join King County GIS Center? The GIS Center has earned national recognition, including Esri’s 2025 Enterprise GIS Award and multiple Exemplary Systems in Geospatial industry awards. You’ll be part of a forward-thinking team dedicated to innovation, service excellence, and delivering geospatial solutions that directly support King County residents. If you’re energized by modernizing systems, building practical GIS solutions, and shaping the future of geospatial services in public government, we’d love to hear from you.
+About King County Department of Information Technology (KCIT)
+
+King County is committed to being the best-run government in the nation, and King County Information Technology (KCIT) is helping lead that transformation. KCIT harnesses the power of technology to modernize operations, advance digital equity and social justice, and deliver innovative solutions that engage, empower, and serve our residents, businesses, and community partners.
+
+Recognized by the National Association of Counties (NACo) for excellence in vision, strategy, innovation, and collaboration, KCIT is focused on delivering smart, secure, and customer-centered technology services that strengthen county operations and support thriving, resilient communities. As the technology business partner to all 18 County departments, KCIT provides the foundational systems and services that power many of the region’s most essential functions. We work side-by-side with our partners to design and deliver technology solutions that enhance customer experience and advance King County’s mission. Learn more about KCIT at: http://kingcounty.gov/depts/it.aspx. 
+
+This recruitment may be used to fill additional vacancies that may occur.
+Job Duties
+Build, maintain, and enhance enterprise GIS data systems and automated workflows.
+Acquire, process, and maintain spatial datasets used across County programs.
+Apply AI tools and techniques to improve spatial analysis and data processing.
+Monitor GIS platforms to ensure secure, reliable, and high-performing operations.
+Provide technical guidance and responsive support to King County staff and partners.
+Develop and support department and countywide spatial databases and configurations per organizational standards.
+Develop and maintain scripts and automation (Python, ArcPy, or equivalent) to support data processing, quality control, and platform operations.
+Design and implement cloud-native spatial data pipelines.
+Key contributor in developing, planning, advising on, communicating, and implementing migration of on premise GIS resources to the cloud, including SQL Server geodatabases, ETL workflows, and legacy systems and applications.
+Key contributor in developing, planning, advising on, communicating, and implementing AI standards and practical AI use cases within GIS platforms and workflows.
+Provide quality assurance, quality control, and user acceptance testing using established methodology and best practices.
+Administer various county-wide platforms such as ArcGIS Enterprise, ArcGIS Server, and geodatabases.
+Develop and support department and countywide spatial databases and configurations per organizational standards.
+Coordinate enterprise-level GIS services, policies, standards, and procedures with other County professionals.
+Experience, Qualifications, Knowledge, Skills
+5 years or more of increasingly responsible professional experience in GIS technological data platform. 
+Advanced knowledge of GIS software and platforms: ArcGIS Pro and extensions, ArcGIS Enterprise, ArcGIS Online.
+Advanced knowledge of geodatabase and relational database platforms (e.g., Azure SQL, SQL Server, PostgreSQL).
+Advanced knowledge in complex spatial data management, system administration, spatial ETL processes with custom python and/or FME, and infrastructure migrations to cloud environments.
+Experience using AI-assisted development tools (e.g., Claude Code, GitHub Copilot, or similar) to write, review, refactor, and maintain application code and scripts.
+Advanced experience in both raster and vector processing from source data to product.
+Advanced programming knowledge developing cross-platform, multi-function, interactive applications, and data integrations for end-users. 
+Ability to troubleshoot issues, track, resolve, and document system problems and issues requiring a broad understanding of a complex system.
+Experience developing standards and operating procedures for GIS products.
+Effectively communicate and maintain a strong rapport with cross functional team members and maintain the principles and strategy within KCIT.
+Ability to follow established change management processes.
+Facilitate complex system changes; identify, analyze, and prioritize system change requests; assess potential system-wide impacts of proposed module configuration changes.
+Convey technical information to non-technical system users.
+Perform duties as assigned.
+Supplemental Information
+Hybrid Work: KCIT works in a hybrid model, with days in the office as well as telecommuting. The ratio of remote to onsite work will be dependent on business needs and is subject to change. The primary onsite location is the King Street Center - 201 S Jackson St, Seattle, Washington. 
+
+Employees must reside in Washington state and within a reasonable distance to their King County worksite to respond to workplace reporting requirements.
+
+King County has a robust collection of tools and resources to support working remotely. The individual selected for this opportunity will join an innovative and progressive team that is redefining how we work as we transition to the department's hybrid environment. Employees will be provided with a County-issued laptop and must maintain a home workspace with an internet connection where they can reliably perform work and remain available and responsive during scheduled work hours.
+
+Work Schedule: The normal workweek for this position is Monday through Friday, 8:00 a.m. to 5:00 p.m. Alternative work schedules may be considered by your manager. This position will participate on the After-Hours Support (AHS) team (24x7, 7-day rotation Monday-Sunday).
+
+FLSA Status: This position is FLSA Exempt and is not eligible for overtime pay.
+
+Classification: IT Engineer-Senior (job code: 741301)
+
+Union: PROTEC17 - Information Technology
+
+Who May Apply: This recruitment is open to all qualified applicants. We value diversity, diverse perspectives and life experience and encourage people of all background to apply. 
+
+Application Process
+
+Applicants must complete the online application to include:
+
+Employment history going back at least seven years if possible (or more to include all relevant experience). 
+A resume including all relevant experience.
+A cover letter detailing how you are an excellent fit for this position.
+If you are interested in pursuing this position and supporting King County’s vision for unified, equitable, and high-performing government, please follow the application instructions carefully. Provide us with your work history as applicable, ensuring that you provide details that highlight your ability to fulfill the requirements for this position.
+
+If you need this announcement in an alternate language or format, or you would like to request accommodation or assistance in the application or assessment process, please contact Angelia Remolana at aremolana@kingcounty.gov
+
+King County's Vision, Mission, and ACTIVATE Values unite us.
+
+King County serves residents with a relentless sense of urgency, delivering on commitments with transparency and accountability. We are action-oriented, creative problem solvers who collaborate across roles, engage directly with communities, and challenge the status quo to achieve meaningful impact. As a unified team, we uphold high ethical and stewardship standards, embrace change, stay curious, and continuously improve. Across all interactions, we listen first, act quickly, and stay aligned as a team to earn and sustain public trust. Learn more about our Vision, Mission, and ACTIVATE Values here and visit our Why work at King County page here.
