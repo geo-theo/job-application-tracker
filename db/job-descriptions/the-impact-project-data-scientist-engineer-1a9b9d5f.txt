@@ -1,0 +1,50 @@
+Data Scientist/Engineer
+Description
+The Impact Project is a national nonprofit organization that tracks changes in federal policy, funding, and workforce, and how those changes affect communities across the country.
+
+We are experiencing a moment of unprecedented change. The federal government has made sweeping funding, workforce, and policy changes in 2025 and 2026. Hundreds of thousands of federal workers were terminated or took deferred resignation, billions in funding have been impacted, programs have been cancelled, and essential services are at risk. These changes have largely not been systematically tracked by the government. Simultaneously, federal data is disappearing, leaving the American public and institutions without reliable data. These changes compound long-standing dysfunction: federal systems have failed many Americans for decades.
+
+The Impact Project is building technical infrastructure that bridges subject areas and data types necessary for a shared understanding of the impact of change. Without this data, Americans don’t have the information they need to help protect their communities and rebuild essential systems.
+
+The Impact Project has established itself as a leader in translating and explaining federal change and has already shaped the conversation in The Atlantic, NPR, CBS, Federal News Network, and more. Our work has been cited in congressional testimony and partners have used our data to protect millions of dollars of funding.
+
+We’re now growing: The Impact Project is hiring a data engineer to join our small New York City-based team. You'll build and maintain data pipelines and applications, write documentation and technical briefs, and collaborate on data and study design.
+
+Your first project will be to design and implement the methodology behind our Sensing Data Gaps Program, which quantifies changes to federal air monitoring data. You'll build the data mapping and analysis approach used to track those changes, produce maps and tools that place that change in local context, and work closely with the rest of the team to translate technical findings into accessible, actionable recommendations for communities.
+
+The Impact Project is an early-stage startup nonprofit organization, and every day looks different. This role suits a strong technical generalist who can move from methodology design to hands-on implementation and who is comfortable with responsibilities expanding as the program's data needs evolve.
+
+Key responsibilities
+Design and implement the methodology for tracking and quantifying changes in federal data streams
+Build and maintain data pipelines to collect, clean, and monitor federal datasets and agency changes over time
+Develop maps and geospatial tools that overlay environmental, socioeconomic, and weather data to show government change in local context
+Support pilot site selection analysis using data-driven metrics such as need, capacity, and historical monitoring gaps
+Document methodology and findings for use in public reports, mapping products, and partner-facing tools
+Evaluate and integrate new data sources and technical tools as program needs grow
+Take on other technical tasks as needed to advance the work
+What we're looking for
+You're a builder and a strategist: someone who is excited to design data pipelines collaboratively and who thinks holistically about the organization's priorities when making technical decisions. You're comfortable working with limited direction, choosing between imperfect options, and flagging the decisions that have consequences beyond the code. You write code that is both scalable and performant. You can always defend your choices but don’t let the perfect be the enemy of the good when working under tight deadlines.
+
+The Impact Project is headquartered in New York City. We envision this role being hybrid, with work in the office about 3 days per week. We have a strong preference for candidates based in New York City or surrounding areas.
+
+Required
+
+Approximately 3–5 years of professional experience building and maintaining data pipelines, or equivalent demonstrated skill
+Proficiency in Python for data collection, cleaning, analysis, and pipeline development (e.g. pandas, requests, working with APIs)
+Working knowledge of SQL and database design for organizing large or evolving datasets
+Experience with mapping and geospatial tools such as Mapbox, ArcGIS, QGIS, PostGIS, or similar
+Fluency with version control (Git) and reproducible, well-documented workflows
+Excellent written and verbal communication, including the ability to explain technical decisions to non-technical colleagues and community partners
+Nice to have
+
+Experience with federal or other government open data sources (e.g. EPA AQS or AirNow, NOAA, Census/ACS)
+Familiarity with cloud platforms and data hosting (e.g. AWS, Google Cloud)
+Data visualization skills for translating technical findings into public-facing maps and reports
+Experience incorporating LLMs or other machine learning into internal tooling or analysis workflows
+Background or coursework in environmental science, public health, or environmental justice, or prior work with community-based organizations
+We don't expect any single candidate to check every box. If you meet most of the required qualifications and are excited about this work, we encourage you to apply.
+
+Compensation and benefits
+The expected salary range for this role is $105,000–$135,000. Compensation may be based on skills, qualifications, experience, and other factors.
+
+This role is a full-time 1099 contractor position with the possibility to convert to a W-2 position with benefits as The Impact Project grows. The contract does not include benefits.
