@@ -56,6 +56,18 @@ const CSV_COLUMNS = [
   "deadline",
   "appliedStatus",
   "appliedDate",
+  "applicationStatus",
+  "lastHeardFrom",
+  "responseStatus",
+  "responseDate",
+  "screenStatus",
+  "screenDate",
+  "interviewStatus",
+  "interviewDate",
+  "assessmentStatus",
+  "assessmentDate",
+  "finalStatus",
+  "finalStatusDate",
   "applicationNeeds",
   "referenceCount",
   "jobLevel",
@@ -88,15 +100,25 @@ const els = {
   datePosted: document.querySelector("#date-posted"),
   deadlineChoice: document.querySelector("#deadline-choice"),
   deadline: document.querySelector("#deadline"),
+  priorityInputs: document.querySelectorAll("input[name='priority']"),
   appliedStatus: document.querySelectorAll("input[name='appliedStatus']"),
   appliedDate: document.querySelector("#applied-date"),
+  appliedTrackingPanel: document.querySelector("#applied-tracking-panel"),
+  responseStatus: document.querySelectorAll("input[name='responseStatus']"),
+  responseDate: document.querySelector("#response-date"),
+  screenStatus: document.querySelectorAll("input[name='screenStatus']"),
+  screenDate: document.querySelector("#screen-date"),
+  interviewStatus: document.querySelectorAll("input[name='interviewStatus']"),
+  interviewDate: document.querySelector("#interview-date"),
+  assessmentStatus: document.querySelectorAll("input[name='assessmentStatus']"),
+  assessmentDate: document.querySelector("#assessment-date"),
+  finalStatus: document.querySelectorAll("input[name='finalStatus']"),
+  finalStatusDate: document.querySelector("#final-status-date"),
   applicationNeeds: document.querySelectorAll("input[name='applicationNeeds']"),
   needsReferences: document.querySelector("#needs-references"),
   referenceCountWrap: document.querySelector("#reference-count-wrap"),
   referenceCount: document.querySelector("#reference-count"),
   favoriteJob: document.querySelector("#favorite-job"),
-  internship: document.querySelector("#internship"),
-  partTime: document.querySelector("#part-time"),
   roles: document.querySelector("#roles"),
   roleOtherWrap: document.querySelector("#role-other-wrap"),
   roleOther: document.querySelector("#role-other"),
@@ -189,15 +211,26 @@ function bindEvents() {
   els.roles.addEventListener("change", syncConditionalFields);
   els.industry.addEventListener("change", syncConditionalFields);
   els.deadlineChoice.addEventListener("change", handleDeadlineChoiceChange);
-  document.querySelectorAll("input[name='priority'], input[name='jobLevel'], input[name='appliedStatus']").forEach((input) => {
-    input.addEventListener("pointerdown", rememberRadioState);
-    input.addEventListener("click", toggleCheckedRadio);
-    input.addEventListener("keydown", toggleCheckedRadioWithKeyboard);
-  });
+  document
+    .querySelectorAll(
+      "input[name='priority'], input[name='jobLevel'], input[name='appliedStatus'], input[name='responseStatus'], input[name='screenStatus'], input[name='interviewStatus'], input[name='assessmentStatus'], input[name='finalStatus']",
+    )
+    .forEach((input) => {
+      input.addEventListener("pointerdown", rememberRadioState);
+      input.addEventListener("click", toggleCheckedRadio);
+      input.addEventListener("keydown", toggleCheckedRadioWithKeyboard);
+    });
   document.querySelector(".priority-group")?.addEventListener("pointerdown", rememberToggleableGroupRadioState);
   document.querySelector(".level-group")?.addEventListener("pointerdown", rememberToggleableGroupRadioState);
   document.querySelector(".applied-group")?.addEventListener("pointerdown", rememberToggleableGroupRadioState);
-  els.appliedStatus.forEach((input) => input.addEventListener("change", syncConditionalFields));
+  document.querySelectorAll(".lifecycle-toggle, .lifecycle-status-group").forEach((group) => {
+    group.addEventListener("pointerdown", rememberToggleableGroupRadioState);
+  });
+  els.priorityInputs.forEach((input) => input.addEventListener("change", handlePriorityChange));
+  els.appliedStatus.forEach((input) => input.addEventListener("change", handleAppliedStatusChange));
+  [...els.responseStatus, ...els.screenStatus, ...els.interviewStatus, ...els.assessmentStatus, ...els.finalStatus].forEach((input) => {
+    input.addEventListener("change", syncConditionalFields);
+  });
   els.needsReferences.addEventListener("change", syncConditionalFields);
   els.scrapeButton.addEventListener("click", scrapeJobDescription);
   els.downloadDescriptionButton.addEventListener("click", downloadCurrentDescription);
@@ -396,9 +429,18 @@ function collectFormData() {
   const industryOther = els.industryOther.value.trim();
   const deadlineChoice = els.deadlineChoice.value;
   const appliedStatus = getRadioValue("appliedStatus");
-  const internship = els.internship.checked;
-  const partTime = els.partTime.checked;
-  const jobTypes = getSelectedJobTypes(internship, partTime);
+  const responseStatus = getAppliedLifecycleChoice("responseStatus", appliedStatus);
+  const responseDate = responseStatus === "Yes" ? els.responseDate.value : "";
+  const screenStatus = getAppliedLifecycleChoice("screenStatus", appliedStatus);
+  const screenDate = screenStatus === "Yes" ? els.screenDate.value : "";
+  const interviewStatus = getAppliedLifecycleChoice("interviewStatus", appliedStatus);
+  const interviewDate = interviewStatus === "Yes" ? els.interviewDate.value : "";
+  const assessmentStatus = getAppliedLifecycleChoice("assessmentStatus", appliedStatus);
+  const assessmentDate = assessmentStatus === "Yes" ? els.assessmentDate.value : "";
+  const finalStatus = appliedStatus === "Yes" ? getRadioValue("finalStatus") : "";
+  const finalStatusDate = isDatedFinalStatus(finalStatus) ? els.finalStatusDate.value : "";
+  const jobLevel = getRadioValue("jobLevel");
+  const jobTypes = getSelectedJobTypes(jobLevel);
   const descriptionText = els.jobDescription.value.trim();
 
   return {
@@ -423,9 +465,21 @@ function collectFormData() {
       deadline: deadlineChoice === "Select Date" ? els.deadline.value : "",
       appliedStatus,
       appliedDate: appliedStatus === "Yes" ? els.appliedDate.value : "",
+      applicationStatus: getApplicationStatus(appliedStatus, finalStatus),
+      lastHeardFrom: getLastHeardFrom([responseDate, screenDate, interviewDate, assessmentDate, finalStatusDate]),
+      responseStatus,
+      responseDate,
+      screenStatus,
+      screenDate,
+      interviewStatus,
+      interviewDate,
+      assessmentStatus,
+      assessmentDate,
+      finalStatus,
+      finalStatusDate,
       applicationNeeds: getCheckedValues(els.applicationNeeds),
       referenceCount: els.needsReferences.checked ? normalizeIntegerString(els.referenceCount.value) : "",
-      jobLevel: getRadioValue("jobLevel"),
+      jobLevel,
       favoriteJob: els.favoriteJob.checked,
       jobTypes,
       roles: allRoles,
@@ -511,12 +565,20 @@ async function loadJobIntoForm(jobId) {
   els.deadline.value = job.deadline || "";
   setRadioValue("appliedStatus", getAppliedStatus(job));
   els.appliedDate.value = job.appliedDate || "";
+  setRadioValue("responseStatus", getLifecycleStatusForForm(job.responseStatus, job.responseDate, getAppliedStatus(job)));
+  els.responseDate.value = job.responseDate || "";
+  setRadioValue("screenStatus", getLifecycleStatusForForm(job.screenStatus, job.screenDate, getAppliedStatus(job)));
+  els.screenDate.value = job.screenDate || "";
+  setRadioValue("interviewStatus", getLifecycleStatusForForm(job.interviewStatus, job.interviewDate, getAppliedStatus(job)));
+  els.interviewDate.value = job.interviewDate || "";
+  setRadioValue("assessmentStatus", getLifecycleStatusForForm(job.assessmentStatus, job.assessmentDate, getAppliedStatus(job)));
+  els.assessmentDate.value = job.assessmentDate || "";
+  setRadioValue("finalStatus", getFinalStatusForForm(job));
+  els.finalStatusDate.value = job.finalStatusDate || "";
   setCheckedValues(els.applicationNeeds, job.applicationNeeds || []);
   els.referenceCount.value = job.referenceCount || "";
-  setRadioValue("jobLevel", job.jobLevel || "");
+  setRadioValue("jobLevel", getJobLevelForForm(job));
   els.favoriteJob.checked = Boolean(job.favoriteJob);
-  els.internship.checked = hasJobType(job, "Internship");
-  els.partTime.checked = hasJobType(job, "Part-time");
   setMultiSelectValues(els.roles, normalizeRolesForForm(job.roles || [], job.roleOther));
   els.roleOther.value = job.roleOther || "";
   els.industry.value = job.industry || "";
@@ -552,14 +614,72 @@ function syncConditionalFields() {
   if (deadlineChoice !== "Select Date") els.deadline.value = "";
 
   const appliedStatus = getRadioValue("appliedStatus");
-  els.appliedDate.hidden = appliedStatus !== "Yes";
-  if (appliedStatus !== "Yes") els.appliedDate.value = "";
+  const isApplied = appliedStatus === "Yes";
+  els.appliedTrackingPanel.hidden = !isApplied;
+  if (isApplied) {
+    ensureDefaultRadioValue("responseStatus", "No");
+    ensureDefaultRadioValue("screenStatus", "No");
+    ensureDefaultRadioValue("interviewStatus", "No");
+    ensureDefaultRadioValue("assessmentStatus", "No");
+  } else {
+    clearApplicationTrackingFields();
+  }
+  syncLifecycleDateField("responseStatus", els.responseDate);
+  syncLifecycleDateField("screenStatus", els.screenDate);
+  syncLifecycleDateField("interviewStatus", els.interviewDate);
+  syncLifecycleDateField("assessmentStatus", els.assessmentDate);
+  els.finalStatusDate.hidden = !isDatedFinalStatus(getRadioValue("finalStatus"));
+  if (els.finalStatusDate.hidden) els.finalStatusDate.value = "";
 
   els.referenceCountWrap.hidden = !els.needsReferences.checked;
   if (els.referenceCountWrap.hidden) els.referenceCount.value = "";
 
   els.industryOtherWrap.hidden = els.industry.value !== "Other";
   if (els.industryOtherWrap.hidden) els.industryOther.value = "";
+}
+
+function handlePriorityChange(event) {
+  const changedInput = event.currentTarget;
+  if (changedInput.value === "Future" && changedInput.checked) {
+    setRadioValue("appliedStatus", "No");
+  } else if (changedInput.checked && getRadioValue("appliedStatus") === "No") {
+    setRadioValue("appliedStatus", "");
+  } else if (changedInput.value === "Future" && !changedInput.checked && getRadioValue("appliedStatus") === "No") {
+    setRadioValue("appliedStatus", "");
+  }
+  syncConditionalFields();
+}
+
+function handleAppliedStatusChange(event) {
+  const changedInput = event.currentTarget;
+  const appliedStatus = getRadioValue("appliedStatus");
+  if (appliedStatus === "No") {
+    setRadioValue("priority", "Future");
+  } else if (appliedStatus === "Yes" && getRadioValue("priority") === "Future") {
+    setRadioValue("priority", "");
+  } else if (changedInput.value === "No" && !changedInput.checked && getRadioValue("priority") === "Future") {
+    setRadioValue("priority", "");
+  }
+  syncConditionalFields();
+}
+
+function syncLifecycleDateField(statusName, dateInput) {
+  dateInput.hidden = getRadioValue(statusName) !== "Yes";
+  if (dateInput.hidden) dateInput.value = "";
+}
+
+function clearApplicationTrackingFields() {
+  els.appliedDate.value = "";
+  clearRadioValue("responseStatus");
+  els.responseDate.value = "";
+  clearRadioValue("screenStatus");
+  els.screenDate.value = "";
+  clearRadioValue("interviewStatus");
+  els.interviewDate.value = "";
+  clearRadioValue("assessmentStatus");
+  els.assessmentDate.value = "";
+  clearRadioValue("finalStatus");
+  els.finalStatusDate.value = "";
 }
 
 function handleDeadlineChoiceChange() {
@@ -758,11 +878,11 @@ function matchesJobType(job, type) {
   return true;
 }
 
-function getSelectedJobTypes(internship, partTime) {
-  const types = [];
-  if (internship) types.push("Internship");
-  if (partTime) types.push("Part-time");
-  return types.length ? types : ["Full-time"];
+function getSelectedJobTypes(jobLevel) {
+  const normalizedLevel = normalizeJobLevel(jobLevel);
+  if (normalizedLevel === "PT") return ["Part-time"];
+  if (normalizedLevel === "Intern") return ["Internship"];
+  return ["Full-time"];
 }
 
 function getJobTypes(job) {
@@ -770,6 +890,9 @@ function getJobTypes(job) {
   if (typeof job.jobTypes === "string" && job.jobTypes.trim()) return normalizeJobTypes(splitList(job.jobTypes));
 
   const legacyTypes = [];
+  const normalizedLevel = normalizeJobLevel(job.jobLevel);
+  if (normalizedLevel === "PT") legacyTypes.push("Part-time");
+  if (normalizedLevel === "Intern") legacyTypes.push("Internship");
   if (job.fullTime === true) legacyTypes.push("Full-time");
   if (job.internship) legacyTypes.push("Internship");
   if (job.partTime) legacyTypes.push("Part-time");
@@ -783,6 +906,8 @@ function normalizeJobTypes(values) {
     fulltime: "Full-time",
     "full-time": "Full-time",
     internship: "Internship",
+    intern: "Internship",
+    pt: "Part-time",
     parttime: "Part-time",
     "part-time": "Part-time",
   };
@@ -795,6 +920,30 @@ function normalizeJobTypes(values) {
 
 function hasJobType(job, type) {
   return getJobTypes(job).includes(type);
+}
+
+function normalizeJobLevel(value) {
+  const levels = {
+    pt: "PT",
+    "part-time": "PT",
+    parttime: "PT",
+    intern: "Intern",
+    internship: "Intern",
+    jr: "Jr",
+    junior: "Jr",
+    mid: "Mid",
+    sr: "Sr",
+    senior: "Sr",
+  };
+  return levels[String(value || "").trim().toLowerCase()] || "";
+}
+
+function getJobLevelForForm(job) {
+  const normalizedLevel = normalizeJobLevel(job.jobLevel);
+  if (normalizedLevel) return normalizedLevel;
+  if (hasJobType(job, "Part-time")) return "PT";
+  if (hasJobType(job, "Internship")) return "Intern";
+  return "";
 }
 
 function matchesFavoriteFilter(job, favorite) {
@@ -881,7 +1030,8 @@ function createJobCard(job) {
 
   const levelChips = document.createElement("div");
   levelChips.className = "chips level-chips";
-  if (job.jobLevel) levelChips.append(chip(job.jobLevel, `level-${job.jobLevel.toLowerCase()}`));
+  const jobLevel = normalizeJobLevel(job.jobLevel);
+  if (jobLevel) levelChips.append(chip(jobLevel, `level-${jobLevel.toLowerCase()}`));
 
   const priorityChips = document.createElement("div");
   priorityChips.className = "chips priority-chips";
@@ -999,7 +1149,10 @@ function getIndustryDisplay(job) {
 }
 
 function statusChip(job) {
-  if (isAppliedJob(job)) return chip("Applied", "applied");
+  if (isAppliedJob(job)) {
+    const applicationStatus = getApplicationStatus(getAppliedStatus(job), getFinalStatusForForm(job));
+    return chip(applicationStatus, applicationStatus.toLowerCase());
+  }
   const priority = job.priority || "";
   if (priority === "Urgent") return chip("Urgent", "urgent");
   if (priority === "High") return chip("High", "high");
@@ -1025,6 +1178,43 @@ function isAppliedNo(job) {
 function getAppliedStatus(job) {
   if (job.appliedStatus) return job.appliedStatus;
   return job.appliedDate ? "Yes" : "";
+}
+
+function getAppliedLifecycleChoice(name, appliedStatus) {
+  if (appliedStatus !== "Yes") return "";
+  return getRadioValue(name) || "No";
+}
+
+function getLifecycleStatusForForm(status, date, appliedStatus) {
+  if (status) return status;
+  if (date) return "Yes";
+  return appliedStatus === "Yes" ? "No" : "";
+}
+
+function getFinalStatusForForm(job) {
+  if (isFinalApplicationStatus(job.finalStatus)) return job.finalStatus;
+  if (isFinalApplicationStatus(job.applicationStatus)) return job.applicationStatus;
+  return "";
+}
+
+function getApplicationStatus(appliedStatus, finalStatus) {
+  if (appliedStatus !== "Yes") return "";
+  return isFinalApplicationStatus(finalStatus) ? finalStatus : "In-progress";
+}
+
+function isFinalApplicationStatus(status) {
+  return ["Ghosted", "Rejected", "Accepted"].includes(status);
+}
+
+function isDatedFinalStatus(status) {
+  return ["Rejected", "Accepted"].includes(status);
+}
+
+function getLastHeardFrom(dates) {
+  const sortedDates = dates
+    .filter(Boolean)
+    .sort();
+  return sortedDates[sortedDates.length - 1] || "";
 }
 
 function getDeadlineChoice(job) {
@@ -1433,6 +1623,17 @@ function csvRowToJob(header, row) {
     applicationNeeds.push("References");
   }
   const jobTypes = getImportedJobTypes(record);
+  const appliedStatus = record.appliedStatus || (record.appliedDate ? "Yes" : "");
+  const finalStatus = getImportedFinalStatus(record);
+  const finalStatusDate = isDatedFinalStatus(finalStatus) ? record.finalStatusDate || "" : "";
+  const responseStatus = getImportedLifecycleStatus(record.responseStatus, record.responseDate, appliedStatus);
+  const responseDate = responseStatus === "Yes" ? record.responseDate || "" : "";
+  const screenStatus = getImportedLifecycleStatus(record.screenStatus, record.screenDate, appliedStatus);
+  const screenDate = screenStatus === "Yes" ? record.screenDate || "" : "";
+  const interviewStatus = getImportedLifecycleStatus(record.interviewStatus, record.interviewDate, appliedStatus);
+  const interviewDate = interviewStatus === "Yes" ? record.interviewDate || "" : "";
+  const assessmentStatus = getImportedLifecycleStatus(record.assessmentStatus, record.assessmentDate, appliedStatus);
+  const assessmentDate = assessmentStatus === "Yes" ? record.assessmentDate || "" : "";
   return {
     id: record.id || createId(),
     createdAt: record.createdAt || now,
@@ -1452,11 +1653,23 @@ function csvRowToJob(header, row) {
     datePosted: record.datePosted || "",
     deadlineChoice,
     deadline: deadlineChoice === "Select Date" ? record.deadline || "" : "",
-    appliedStatus: record.appliedStatus || (record.appliedDate ? "Yes" : ""),
-    appliedDate: record.appliedDate || "",
+    appliedStatus,
+    appliedDate: appliedStatus === "Yes" ? record.appliedDate || "" : "",
+    applicationStatus: record.applicationStatus || getApplicationStatus(appliedStatus, finalStatus),
+    lastHeardFrom: record.lastHeardFrom || getLastHeardFrom([responseDate, screenDate, interviewDate, assessmentDate, finalStatusDate]),
+    responseStatus,
+    responseDate,
+    screenStatus,
+    screenDate,
+    interviewStatus,
+    interviewDate,
+    assessmentStatus,
+    assessmentDate,
+    finalStatus,
+    finalStatusDate,
     applicationNeeds,
     referenceCount: record.referenceCount || "",
-    jobLevel: record.jobLevel || "",
+    jobLevel: normalizeJobLevel(record.jobLevel),
     favoriteJob: parseBoolean(record.favoriteJob),
     jobTypes,
     roles: splitList(record.roles),
@@ -1478,15 +1691,30 @@ function getImportedJobTypes(record) {
   if (record.jobTypes) return normalizeJobTypes(splitList(record.jobTypes));
 
   const legacyTypes = [];
+  const normalizedLevel = normalizeJobLevel(record.jobLevel);
   const hasFullTimeColumn = Object.prototype.hasOwnProperty.call(record, "fullTime");
   const internship = parseBoolean(record.internship);
   const partTime = parseBoolean(record.partTime);
-  if (parseBoolean(record.fullTime) || (!hasFullTimeColumn && !internship && !partTime)) {
+  if (normalizedLevel === "PT") legacyTypes.push("Part-time");
+  if (normalizedLevel === "Intern") legacyTypes.push("Internship");
+  if (parseBoolean(record.fullTime) || (!hasFullTimeColumn && !internship && !partTime && !legacyTypes.length)) {
     legacyTypes.push("Full-time");
   }
   if (internship) legacyTypes.push("Internship");
   if (partTime) legacyTypes.push("Part-time");
   return unique(legacyTypes);
+}
+
+function getImportedLifecycleStatus(status, date, appliedStatus) {
+  if (status) return status;
+  if (date) return "Yes";
+  return appliedStatus === "Yes" ? "No" : "";
+}
+
+function getImportedFinalStatus(record) {
+  if (isFinalApplicationStatus(record.finalStatus)) return record.finalStatus;
+  if (isFinalApplicationStatus(record.applicationStatus)) return record.applicationStatus;
+  return "";
 }
 
 function serializeCsvValue(value) {
@@ -1543,6 +1771,14 @@ function setRadioValue(name, value) {
   document.querySelectorAll(`input[name='${name}']`).forEach((input) => {
     input.checked = input.value === value;
   });
+}
+
+function clearRadioValue(name) {
+  setRadioValue(name, "");
+}
+
+function ensureDefaultRadioValue(name, value) {
+  if (!getRadioValue(name)) setRadioValue(name, value);
 }
 
 function rememberRadioState(event) {

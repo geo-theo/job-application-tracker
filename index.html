@@ -75,88 +75,10 @@
               />
             </label>
 
-            <div class="field">
-              <span>Location</span>
-              <div class="segmented" role="radiogroup" aria-label="Location">
-                <label
-                  ><input
-                    type="radio"
-                    name="locationChoice"
-                    value="Missoula, MT"
-                  /><span>Missoula, MT</span></label
-                >
-                <label
-                  ><input
-                    type="radio"
-                    name="locationChoice"
-                    value="Remote"
-                  /><span>Remote</span></label
-                >
-                <label
-                  ><input
-                    type="radio"
-                    name="locationChoice"
-                    value="Other"
-                  /><span>Other</span></label
-                >
-              </div>
-              <input
-                id="location-other"
-                class="conditional-field"
-                name="locationOther"
-                type="text"
-                placeholder="Other location"
-                hidden
-              />
-            </div>
-
-            <div class="field">
-              <span>Pay</span>
-              <div
-                class="segmented compact"
-                role="radiogroup"
-                aria-label="Pay type"
-              >
-                <label
-                  ><input type="radio" name="payType" value="Hourly" /><span
-                    >Hourly</span
-                  ></label
-                >
-                <label
-                  ><input type="radio" name="payType" value="Salary" /><span
-                    >Salary</span
-                  ></label
-                >
-              </div>
-              <div class="split-grid pay-grid">
-                <label>
-                  <span>Minimum</span>
-                  <input
-                    id="pay-min"
-                    name="payMin"
-                    type="text"
-                    inputmode="decimal"
-                  />
-                </label>
-                <label>
-                  <span>Maximum</span>
-                  <input
-                    id="pay-max"
-                    name="payMax"
-                    type="text"
-                    inputmode="decimal"
-                  />
-                </label>
-                <label>
-                  <span>Midpoint</span>
-                  <output
-                    id="pay-midpoint"
-                    name="payMidpoint"
-                    class="readonly-output"
-                  ></output>
-                </label>
-              </div>
-            </div>
+            <label class="check-option prominent-check">
+              <input id="favorite-job" name="favoriteJob" type="checkbox" />
+              <span>Favorite this job</span>
+            </label>
           </fieldset>
 
           <fieldset class="form-section">
@@ -217,33 +139,6 @@
                   hidden
                 />
               </label>
-            </div>
-
-            <div class="field">
-              <span>Applied?</span>
-              <div
-                class="segmented compact applied-group"
-                role="radiogroup"
-                aria-label="Applied"
-              >
-                <label
-                  ><input type="radio" name="appliedStatus" value="Yes" /><span
-                    >Yes</span
-                  ></label
-                >
-                <label
-                  ><input type="radio" name="appliedStatus" value="No" /><span
-                    >Not applying</span
-                  ></label
-                >
-              </div>
-              <input
-                id="applied-date"
-                class="conditional-field"
-                name="appliedDate"
-                type="date"
-                hidden
-              />
             </div>
 
             <div class="field">
@@ -317,6 +212,196 @@
             </div>
 
             <div class="field">
+              <span>Applied?</span>
+              <div
+                class="segmented compact applied-group"
+                role="radiogroup"
+                aria-label="Applied"
+              >
+                <label
+                  ><input type="radio" name="appliedStatus" value="Yes" /><span
+                    >Yes</span
+                  ></label
+                >
+                <label
+                  ><input type="radio" name="appliedStatus" value="No" /><span
+                    >Not applying</span
+                  ></label
+                >
+              </div>
+
+              <div
+                id="applied-tracking-panel"
+                class="applied-tracking-panel"
+                hidden
+              >
+                <label class="field">
+                  <span>Date applied</span>
+                  <input id="applied-date" name="appliedDate" type="date" />
+                </label>
+
+                <div class="lifecycle-item">
+                  <div class="lifecycle-row">
+                    <span>Response</span>
+                    <div
+                      class="segmented compact lifecycle-toggle"
+                      role="radiogroup"
+                      aria-label="Response"
+                    >
+                      <label
+                        ><input type="radio" name="responseStatus" value="Yes" /><span
+                          >Yes</span
+                        ></label
+                      >
+                      <label
+                        ><input type="radio" name="responseStatus" value="No" /><span
+                          >No</span
+                        ></label
+                      >
+                    </div>
+                  </div>
+                  <input
+                    id="response-date"
+                    class="conditional-field"
+                    name="responseDate"
+                    type="date"
+                    hidden
+                  />
+                </div>
+
+                <div class="lifecycle-item">
+                  <div class="lifecycle-row">
+                    <span>Screen?</span>
+                    <div
+                      class="segmented compact lifecycle-toggle"
+                      role="radiogroup"
+                      aria-label="Screen"
+                    >
+                      <label
+                        ><input type="radio" name="screenStatus" value="Yes" /><span
+                          >Yes</span
+                        ></label
+                      >
+                      <label
+                        ><input type="radio" name="screenStatus" value="No" /><span
+                          >No</span
+                        ></label
+                      >
+                    </div>
+                  </div>
+                  <input
+                    id="screen-date"
+                    class="conditional-field"
+                    name="screenDate"
+                    type="date"
+                    hidden
+                  />
+                </div>
+
+                <div class="lifecycle-item">
+                  <div class="lifecycle-row">
+                    <span>Interview?</span>
+                    <div
+                      class="segmented compact lifecycle-toggle"
+                      role="radiogroup"
+                      aria-label="Interview"
+                    >
+                      <label
+                        ><input type="radio" name="interviewStatus" value="Yes" /><span
+                          >Yes</span
+                        ></label
+                      >
+                      <label
+                        ><input type="radio" name="interviewStatus" value="No" /><span
+                          >No</span
+                        ></label
+                      >
+                    </div>
+                  </div>
+                  <input
+                    id="interview-date"
+                    class="conditional-field"
+                    name="interviewDate"
+                    type="date"
+                    hidden
+                  />
+                </div>
+
+                <div class="lifecycle-item">
+                  <div class="lifecycle-row">
+                    <span>Assessment?</span>
+                    <div
+                      class="segmented compact lifecycle-toggle"
+                      role="radiogroup"
+                      aria-label="Assessment"
+                    >
+                      <label
+                        ><input type="radio" name="assessmentStatus" value="Yes" /><span
+                          >Yes</span
+                        ></label
+                      >
+                      <label
+                        ><input type="radio" name="assessmentStatus" value="No" /><span
+                          >No</span
+                        ></label
+                      >
+                    </div>
+                  </div>
+                  <input
+                    id="assessment-date"
+                    class="conditional-field"
+                    name="assessmentDate"
+                    type="date"
+                    hidden
+                  />
+                </div>
+
+                <div class="lifecycle-item">
+                  <span>Status</span>
+                  <div
+                    class="segmented lifecycle-status-group"
+                    role="radiogroup"
+                    aria-label="Application status"
+                  >
+                    <label
+                      ><input
+                        type="radio"
+                        name="finalStatus"
+                        value="Ghosted"
+                      /><span>Ghosted</span></label
+                    >
+                    <label
+                      ><input
+                        type="radio"
+                        name="finalStatus"
+                        value="Rejected"
+                      /><span>Rejected</span></label
+                    >
+                    <label
+                      ><input
+                        type="radio"
+                        name="finalStatus"
+                        value="Accepted"
+                      /><span>Accepted</span></label
+                    >
+                  </div>
+                  <input
+                    id="final-status-date"
+                    class="conditional-field"
+                    name="finalStatusDate"
+                    type="date"
+                    hidden
+                  />
+                </div>
+              </div>
+            </div>
+
+          </fieldset>
+
+          <fieldset class="form-section">
+            <legend>Section 3: Job Attributes</legend>
+
+            <div class="field">
               <span>Level</span>
               <div
                 class="segmented level-group"
@@ -324,8 +409,18 @@
                 aria-label="Job level"
               >
                 <label
-                  ><input type="radio" name="jobLevel" value="Junior" /><span
-                    >Junior</span
+                  ><input type="radio" name="jobLevel" value="PT" /><span
+                    >PT</span
+                  ></label
+                >
+                <label
+                  ><input type="radio" name="jobLevel" value="Intern" /><span
+                    >Intern</span
+                  ></label
+                >
+                <label
+                  ><input type="radio" name="jobLevel" value="Jr" /><span
+                    >Jr</span
                   ></label
                 >
                 <label
@@ -334,30 +429,11 @@
                   ></label
                 >
                 <label
-                  ><input type="radio" name="jobLevel" value="Senior" /><span
-                    >Senior</span
+                  ><input type="radio" name="jobLevel" value="Sr" /><span
+                    >Sr</span
                   ></label
                 >
               </div>
-            </div>
-          </fieldset>
-
-          <fieldset class="form-section">
-            <legend>Section 3: Job Attributes</legend>
-
-            <div class="attribute-checks">
-              <label class="check-option prominent-check">
-                <input id="favorite-job" name="favoriteJob" type="checkbox" />
-                <span>Favorite this job</span>
-              </label>
-              <label class="check-option prominent-check">
-                <input id="internship" name="internship" type="checkbox" />
-                <span>Internship</span>
-              </label>
-              <label class="check-option prominent-check">
-                <input id="part-time" name="partTime" type="checkbox" />
-                <span>Part-time</span>
-              </label>
             </div>
 
             <label class="field">
@@ -369,6 +445,41 @@
               <span>Other role</span>
               <input id="role-other" name="roleOther" type="text" />
             </label>
+
+            <div class="field">
+              <span>Location</span>
+              <div class="segmented" role="radiogroup" aria-label="Location">
+                <label
+                  ><input
+                    type="radio"
+                    name="locationChoice"
+                    value="Missoula, MT"
+                  /><span>Missoula, MT</span></label
+                >
+                <label
+                  ><input
+                    type="radio"
+                    name="locationChoice"
+                    value="Remote"
+                  /><span>Remote</span></label
+                >
+                <label
+                  ><input
+                    type="radio"
+                    name="locationChoice"
+                    value="Other"
+                  /><span>Other</span></label
+                >
+              </div>
+              <input
+                id="location-other"
+                class="conditional-field"
+                name="locationOther"
+                type="text"
+                placeholder="Other location"
+                hidden
+              />
+            </div>
 
             <div class="split-grid">
               <label class="field">
@@ -402,6 +513,54 @@
               <span>Other industry</span>
               <input id="industry-other" name="industryOther" type="text" />
             </label>
+
+            <div class="field">
+              <span>Pay</span>
+              <div
+                class="segmented compact"
+                role="radiogroup"
+                aria-label="Pay type"
+              >
+                <label
+                  ><input type="radio" name="payType" value="Hourly" /><span
+                    >Hourly</span
+                  ></label
+                >
+                <label
+                  ><input type="radio" name="payType" value="Salary" /><span
+                    >Salary</span
+                  ></label
+                >
+              </div>
+              <div class="split-grid pay-grid">
+                <label>
+                  <span>Minimum</span>
+                  <input
+                    id="pay-min"
+                    name="payMin"
+                    type="text"
+                    inputmode="decimal"
+                  />
+                </label>
+                <label>
+                  <span>Maximum</span>
+                  <input
+                    id="pay-max"
+                    name="payMax"
+                    type="text"
+                    inputmode="decimal"
+                  />
+                </label>
+                <label>
+                  <span>Midpoint</span>
+                  <output
+                    id="pay-midpoint"
+                    name="payMidpoint"
+                    class="readonly-output"
+                  ></output>
+                </label>
+              </div>
+            </div>
 
             <div class="field description-field">
               <span>Job Description</span>

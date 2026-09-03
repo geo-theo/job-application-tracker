@@ -281,6 +281,10 @@ button:focus-visible {
   grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
+.level-group {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
 .segmented label {
   min-width: 0;
 }
@@ -340,6 +344,88 @@ button:focus-visible {
   border-color: var(--purple);
   background: #f1e8fb;
   color: #5a388c;
+}
+
+.level-group input[value="PT"]:checked + span {
+  border-color: #d77aa4;
+  background: #fdebf3;
+  color: #8a2f58;
+}
+
+.level-group input[value="Intern"]:checked + span {
+  border-color: #5fa8d3;
+  background: #e5f3fb;
+  color: #24607d;
+}
+
+.applied-tracking-panel {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 14px;
+  border: 1px solid #5e554b;
+  border-radius: 8px;
+  background: #332e28;
+  color: #fffaf0;
+}
+
+.applied-tracking-panel .field,
+.lifecycle-item {
+  display: grid;
+  gap: 8px;
+}
+
+.applied-tracking-panel .field > span,
+.lifecycle-item > span,
+.lifecycle-row > span {
+  color: #fff4dd;
+  font-weight: 850;
+}
+
+.applied-tracking-panel input[type="date"] {
+  border-color: #7a6c5e;
+  background: #fffdf8;
+}
+
+.lifecycle-row {
+  display: grid;
+  grid-template-columns: minmax(92px, 1fr) minmax(150px, 0.9fr);
+  gap: 10px;
+  align-items: center;
+}
+
+.applied-tracking-panel .segmented span {
+  border-color: #71665a;
+  background: #484035;
+  color: #fff6e8;
+}
+
+.applied-tracking-panel .segmented input:checked + span {
+  border-color: #4fc2b6;
+  background: #dff0ec;
+  color: #004f48;
+}
+
+.applied-tracking-panel input[value="Ghosted"]:checked + span {
+  border-color: #91adc0;
+  background: #e4edf4;
+  color: #25536d;
+}
+
+.applied-tracking-panel input[value="Rejected"]:checked + span {
+  border-color: var(--red);
+  background: #fde8e4;
+  color: var(--red);
+}
+
+.applied-tracking-panel input[value="Accepted"]:checked + span {
+  border-color: #4fc2b6;
+  background: #dff0ec;
+  color: #005c52;
+}
+
+.lifecycle-status-group {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .split-grid {
@@ -867,6 +953,26 @@ button:focus-visible {
   color: var(--green);
 }
 
+.chip.in-progress {
+  background: #e2f2df;
+  color: var(--green);
+}
+
+.chip.ghosted {
+  background: #e4edf4;
+  color: #25536d;
+}
+
+.chip.rejected {
+  background: #fde8e4;
+  color: var(--red);
+}
+
+.chip.accepted {
+  background: #dff0ec;
+  color: #005c52;
+}
+
 .chip.urgent {
   background: #fde8e4;
   color: var(--red);
@@ -897,6 +1003,17 @@ button:focus-visible {
   color: #25536d;
 }
 
+.chip.level-pt {
+  background: #fdebf3;
+  color: #8a2f58;
+}
+
+.chip.level-intern {
+  background: #e5f3fb;
+  color: #24607d;
+}
+
+.chip.level-jr,
 .chip.level-junior {
   background: #e6f0df;
   color: #41631f;
@@ -907,6 +1024,7 @@ button:focus-visible {
   color: #274f83;
 }
 
+.chip.level-sr,
 .chip.level-senior {
   background: #eee6f5;
   color: #654180;
