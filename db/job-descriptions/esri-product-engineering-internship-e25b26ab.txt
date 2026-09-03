@@ -1,0 +1,58 @@
+ArcGIS Product Engineering Internship
+Full Time
+Vienna, VARedlands, CAPortland, ME + 1
+In-Person
+Software Engineering & Development
+InternshipPaid
+$33.00–$38.00 / hr
+Start date: Summer
+Application Deadline: Jan 2, 2027
+
+ArcGIS Product Engineering Internship 
+
+Build Technology That Matters
+As an ArcGIS Product Engineering Intern at Esri, you will collaborate with engineers to design, test, and improve software used across cloud, mobile, and desktop platforms. You will contribute to mapping and spatial analytics technology that supports users across industries while learning how product teams build, validate, and release ArcGIS software.
+
+What You’ll Experience
+Gain hands-on knowledge of the software development lifecycle, GIS concepts, and ArcGIS product workflows.
+
+Work on real product engineering projects while receiving mentorship and feedback from experienced team members.
+
+Test software components through the user interface and provide usable, informative feedback on user experience.
+
+Learn existing product technologies, troubleshoot production issues, and support current and past software platform versions.
+
+Document software issues found during testing, reproduce bugs, and work with software development engineers to support resolution.
+
+Real Projects Interns May Work On
+Assist in the design and development of new ArcGIS features or functionality that address user needs.
+
+Identify user scenarios and best-practice approaches for applying ArcGIS.
+
+Support release management activities so software is ready for release.
+
+Contribute to system translation, localization, testing, troubleshooting, documentation, or product-quality workflows.
+
+What You’ll Gain
+Practical product engineering experience connected to GIS, Web GIS, ArcGIS, software testing, and user experience.
+
+Exposure to how software teams design, test, troubleshoot, document, and release products used by real customers.
+
+Mentorship, feedback, and a clearer view of product engineering career paths at Esri.
+
+Connections with fellow interns and professionals across the company.
+
+We’re Excited to Meet Students Who
+Are currently enrolled in a four-year undergraduate, graduate, or PhD program at a university in the United States, majoring in GIS, geography, engineering, sciences, or a related field graduating in 2027 or 2028.
+
+For undergraduate students, are in junior or senior standing.
+
+Have knowledge of or experience with GIS, Web GIS, or ArcGIS.
+
+Bring software testing or scripting skills, or an interest in building those skills through hands-on product work.
+
+Are curious, collaborative, and interested in learning through real software engineering and product-quality projects.
+
+Can complete a consecutive, onsite 12-week internship beginning in May or June 2027.
+
+Are able to obtain work authorization in the United States in 2027.
