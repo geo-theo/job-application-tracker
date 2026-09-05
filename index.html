@@ -701,6 +701,52 @@
         <div class="board-controls" id="board-controls" aria-label="List filters">
           <div class="control-row">
             <div class="filter-group" aria-label="List filters">
+              <div
+                class="filter-accordion scoped-type-filter"
+                id="page-type-filter-wrap"
+                hidden
+              >
+                <button
+                  type="button"
+                  class="filter-button accordion-trigger"
+                  id="page-type-filter-button"
+                  aria-expanded="false"
+                  aria-controls="page-type-filter-panel"
+                >
+                  Type: All
+                </button>
+                <div class="accordion-panel" id="page-type-filter-panel" hidden>
+                  <button
+                    type="button"
+                    class="filter-button"
+                    data-page-type-filter="All"
+                  >
+                    All
+                  </button>
+                  <button
+                    type="button"
+                    class="filter-button"
+                    data-page-type-filter="Full-time"
+                  >
+                    Full-time
+                  </button>
+                  <button
+                    type="button"
+                    class="filter-button"
+                    data-page-type-filter="Internship"
+                  >
+                    Internship
+                  </button>
+                  <button
+                    type="button"
+                    class="filter-button"
+                    data-page-type-filter="Part-time"
+                  >
+                    Part-time
+                  </button>
+                </div>
+              </div>
+
               <div class="filter-accordion priority-accordion">
                 <button
                   type="button"

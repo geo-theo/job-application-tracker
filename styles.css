@@ -592,12 +592,29 @@ button:focus-visible {
   border: 1px solid transparent;
   background: transparent;
   color: #514a3f;
+  font-weight: 900;
 }
 
 .page-nav-button.active {
   border-color: #315c9b;
   background: #e6edf8;
   color: #244d82;
+}
+
+.page-nav-button[data-page="applied"],
+.page-nav-button[data-page="reference"],
+.page-nav-button[data-page="viz"] {
+  border-color: #d2c7b7;
+  background: #ded8ce;
+  color: #3f3932;
+}
+
+.page-nav-button[data-page="applied"].active,
+.page-nav-button[data-page="reference"].active,
+.page-nav-button[data-page="viz"].active {
+  border-color: #315c9b;
+  background: #d6e0eb;
+  color: #1f4778;
 }
 
 .filter-group {

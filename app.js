@@ -147,6 +147,9 @@ const els = {
   saveButton: document.querySelector("#save-button"),
   deleteButton: document.querySelector("#delete-button"),
   pageButtons: document.querySelectorAll("[data-page]"),
+  pageTypeFilterWrap: document.querySelector("#page-type-filter-wrap"),
+  pageTypeFilterButton: document.querySelector("#page-type-filter-button"),
+  pageTypeButtons: document.querySelectorAll("[data-page-type-filter]"),
   priorityButtons: document.querySelectorAll("[data-priority-filter]"),
   sortButtons: document.querySelectorAll("[data-sort]"),
   accordionTriggers: document.querySelectorAll(".accordion-trigger"),
@@ -178,6 +181,7 @@ let activePage = getPageFromHash();
 let lastFocusedElement = null;
 
 const filters = {
+  type: "All",
   priorities: [],
   sortBy: "",
   roles: [],
@@ -253,6 +257,14 @@ function bindEvents() {
   els.downloadDescriptionButton.addEventListener("click", downloadCurrentDescription);
   els.pageButtons.forEach((button) => {
     button.addEventListener("click", () => setActivePage(button.dataset.page || "all"));
+  });
+  els.pageTypeButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      filters.type = button.dataset.pageTypeFilter || "All";
+      updateFilterControls();
+      closeFilterAccordions();
+      renderJobs();
+    });
   });
   els.priorityButtons.forEach((button) => {
     button.addEventListener("click", (event) => {
@@ -350,13 +362,23 @@ function setActivePage(page) {
 
 function updatePageControls() {
   const config = PAGE_CONFIG[activePage] || PAGE_CONFIG.all;
+  const showScopedTypeFilter = usesScopedTypeFilter(activePage);
   els.boardTitle.textContent = config.title;
   els.boardControls.hidden = activePage === "viz";
+  els.pageTypeFilterWrap.hidden = !showScopedTypeFilter;
+  if (!showScopedTypeFilter) {
+    els.pageTypeFilterButton.setAttribute("aria-expanded", "false");
+    document.querySelector("#page-type-filter-panel").hidden = true;
+  }
   els.pageButtons.forEach((button) => {
     const isActive = button.dataset.page === activePage;
     button.classList.toggle("active", isActive);
     button.setAttribute("aria-current", isActive ? "page" : "false");
   });
+}
+
+function usesScopedTypeFilter(page = activePage) {
+  return ["favorites", "applied", "reference"].includes(page);
 }
 
 function openNewJobForm() {
@@ -525,6 +547,7 @@ function collectFormData() {
   const industryOther = els.industryOther.value.trim();
   const deadlineChoice = els.deadlineChoice.value;
   const appliedStatus = getRadioValue("appliedStatus");
+  const priority = appliedStatus === "No" ? "Future" : getRadioValue("priority");
   const responseStatus = getAppliedLifecycleChoice("responseStatus", appliedStatus);
   const responseDate = responseStatus === "Yes" ? els.responseDate.value : "";
   const screenStatus = getAppliedLifecycleChoice("screenStatus", appliedStatus);
@@ -555,7 +578,7 @@ function collectFormData() {
       payMin,
       payMax,
       payMidpoint,
-      priority: getRadioValue("priority"),
+      priority,
       datePosted: els.datePosted.value,
       deadlineChoice,
       deadline: deadlineChoice === "Select Date" ? els.deadline.value : "",
@@ -833,6 +856,9 @@ function renderJobs() {
 
 function getVisibleJobs() {
   let visible = getPageJobs();
+  if (usesScopedTypeFilter() && filters.type !== "All") {
+    visible = visible.filter((job) => matchesJobType(job, filters.type));
+  }
   if (filters.priorities.length) {
     visible = visible.filter((job) => filters.priorities.includes(job.priority || ""));
   }
@@ -851,19 +877,20 @@ function getVisibleJobs() {
 }
 
 function getPageJobs(page = activePage) {
-  if (page === "full-time") return jobs.filter((job) => matchesJobType(job, "Full-time"));
-  if (page === "internship") return jobs.filter((job) => matchesJobType(job, "Internship"));
-  if (page === "part-time") return jobs.filter((job) => matchesJobType(job, "Part-time"));
-  if (page === "favorites") return jobs.filter(isFavoriteJob);
-  if (page === "applied") return jobs.filter(isAppliedJob);
   if (page === "reference") return jobs.filter(isReferenceJob);
-  return [...jobs];
+  if (page === "applied") return jobs.filter((job) => isAppliedJob(job) && !isReferenceJob(job));
+  const pendingJobs = jobs.filter((job) => !isAppliedJob(job) && !isReferenceJob(job));
+  if (page === "full-time") return pendingJobs.filter((job) => matchesJobType(job, "Full-time"));
+  if (page === "internship") return pendingJobs.filter((job) => matchesJobType(job, "Internship"));
+  if (page === "part-time") return pendingJobs.filter((job) => matchesJobType(job, "Part-time"));
+  if (page === "favorites") return pendingJobs.filter(isFavoriteJob);
+  return pendingJobs;
 }
 
 function getEmptyMessage() {
   if (!jobs.length) return "No saved jobs yet.";
   const config = PAGE_CONFIG[activePage] || PAGE_CONFIG.all;
-  return filters.priorities.length || filters.roles.length || filters.industries.length
+  return (usesScopedTypeFilter() && filters.type !== "All") || filters.priorities.length || filters.roles.length || filters.industries.length
     ? "No jobs match the current filters."
     : config.empty;
 }
@@ -880,7 +907,7 @@ function renderViz() {
     return;
   }
 
-  const appliedJobs = jobs.filter(isAppliedJob);
+  const appliedJobs = getPageJobs("applied");
   const respondedJobs = appliedJobs.filter((job) => job.responseDate || job.responseStatus === "Yes");
   const decisionJobs = appliedJobs.filter((job) => getFinalStatusForForm(job));
   const dashboard = document.createElement("section");
@@ -1010,6 +1037,13 @@ function comparePriorityJobs(a, b) {
 
 function updateFilterControls() {
   updatePageControls();
+  els.pageTypeButtons.forEach((button) => {
+    const isSelected = button.dataset.pageTypeFilter === filters.type;
+    button.classList.toggle("active", isSelected);
+  });
+  els.pageTypeFilterButton.classList.toggle("active", usesScopedTypeFilter() && filters.type !== "All");
+  els.pageTypeFilterButton.textContent = `Type: ${filters.type}`;
+
   els.priorityButtons.forEach((button) => {
     button.classList.toggle("active", filters.priorities.includes(button.dataset.priorityFilter));
   });
@@ -1406,7 +1440,7 @@ function isFavoriteJob(job) {
 }
 
 function isReferenceJob(job) {
-  return (job.priority || "") === "Future" || isAppliedNo(job);
+  return String(job.priority || "").toLowerCase() === "future" || isAppliedNo(job) || Boolean(getFinalStatusForForm(job));
 }
 
 function isAppliedJob(job) {
@@ -1866,6 +1900,7 @@ function csvRowToJob(header, row) {
   }
   const jobTypes = getImportedJobTypes(record);
   const appliedStatus = record.appliedStatus || (record.appliedDate ? "Yes" : "");
+  const priority = appliedStatus === "No" ? "Future" : record.priority || "";
   const finalStatus = getImportedFinalStatus(record);
   const finalStatusDate = isDatedFinalStatus(finalStatus) ? record.finalStatusDate || "" : "";
   const responseStatus = getImportedLifecycleStatus(record.responseStatus, record.responseDate, appliedStatus);
@@ -1891,7 +1926,7 @@ function csvRowToJob(header, row) {
     payMin: record.payMin || "",
     payMax: record.payMax || "",
     payMidpoint: record.payMidpoint || calculateMidpoint(record.payMin || "", record.payMax || ""),
-    priority: record.priority || "",
+    priority,
     datePosted: record.datePosted || "",
     deadlineChoice,
     deadline: deadlineChoice === "Select Date" ? record.deadline || "" : "",
