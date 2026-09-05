@@ -82,7 +82,21 @@ const CSV_COLUMNS = [
   "descriptionLength",
 ];
 
+const PAGE_CONFIG = {
+  all: { title: "All Jobs", empty: "No saved jobs yet." },
+  "full-time": { title: "Full-time", empty: "No full-time jobs match this view." },
+  internship: { title: "Internships", empty: "No internships match this view." },
+  "part-time": { title: "Part-time", empty: "No part-time jobs match this view." },
+  favorites: { title: "Favorites", empty: "No favorited jobs or companies yet." },
+  applied: { title: "Applied", empty: "No applied jobs match this view." },
+  reference: { title: "Reference", empty: "No reference jobs match this view." },
+  viz: { title: "Viz", empty: "" },
+};
+
 const els = {
+  formDialog: document.querySelector("#job-form-dialog"),
+  formBackdrop: document.querySelector("#form-backdrop"),
+  formCloseButton: document.querySelector("#form-close-button"),
   form: document.querySelector("#job-form"),
   recordId: document.querySelector("#record-id"),
   newRecordButton: document.querySelector("#new-record-button"),
@@ -132,20 +146,18 @@ const els = {
   jobDescription: document.querySelector("#job-description"),
   saveButton: document.querySelector("#save-button"),
   deleteButton: document.querySelector("#delete-button"),
-  statusButtons: document.querySelectorAll("[data-status]"),
-  typeButtons: document.querySelectorAll("[data-type-filter]"),
+  pageButtons: document.querySelectorAll("[data-page]"),
   priorityButtons: document.querySelectorAll("[data-priority-filter]"),
-  favoriteButtons: document.querySelectorAll("[data-favorite-filter]"),
   sortButtons: document.querySelectorAll("[data-sort]"),
   accordionTriggers: document.querySelectorAll(".accordion-trigger"),
-  typeFilterButton: document.querySelector("#type-filter-button"),
   priorityFilterButton: document.querySelector("#priority-filter-button"),
-  favoriteFilterButton: document.querySelector("#favorite-filter-button"),
   sortFilterButton: document.querySelector("#sort-filter-button"),
   roleFilterButton: document.querySelector("#role-filter-button"),
   roleFilter: document.querySelector("#role-filter"),
   industryFilterButton: document.querySelector("#industry-filter-button"),
   industryFilter: document.querySelector("#industry-filter"),
+  boardTitle: document.querySelector("#board-title"),
+  boardControls: document.querySelector("#board-controls"),
   connectFolderButton: document.querySelector("#connect-folder-button"),
   exportCsvButton: document.querySelector("#export-csv-button"),
   exportDescriptionsButton: document.querySelector("#export-descriptions-button"),
@@ -162,12 +174,11 @@ let editingId = "";
 let directoryHandle = null;
 let toastTimer = null;
 let isResettingForm = false;
+let activePage = getPageFromHash();
+let lastFocusedElement = null;
 
 const filters = {
-  status: "All",
-  types: [],
   priorities: [],
-  favorites: [],
   sortBy: "",
   roles: [],
   industries: [],
@@ -178,6 +189,7 @@ document.addEventListener("DOMContentLoaded", init);
 async function init() {
   populateRoleOptions();
   bindEvents();
+  syncPageFromHash();
   updateFilterControls();
   resetForm();
   els.saveButton.disabled = true;
@@ -203,8 +215,13 @@ function bindEvents() {
     event.preventDefault();
     resetForm();
   });
-  els.newRecordButton.addEventListener("click", resetForm);
-  els.cancelEditButton.addEventListener("click", resetForm);
+  els.newRecordButton.addEventListener("click", openNewJobForm);
+  els.formCloseButton.addEventListener("click", closeFormDialog);
+  els.formBackdrop.addEventListener("click", closeFormDialog);
+  els.cancelEditButton.addEventListener("click", () => {
+    resetForm();
+    closeFormDialog();
+  });
   els.deleteButton.addEventListener("click", handleDelete);
   els.payMin.addEventListener("input", updatePayMidpoint);
   els.payMax.addEventListener("input", updatePayMidpoint);
@@ -234,33 +251,12 @@ function bindEvents() {
   els.needsReferences.addEventListener("change", syncConditionalFields);
   els.scrapeButton.addEventListener("click", scrapeJobDescription);
   els.downloadDescriptionButton.addEventListener("click", downloadCurrentDescription);
-  els.statusButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      filters.status = filters.status === button.dataset.status ? "All" : button.dataset.status;
-      updateFilterControls();
-      closeFilterAccordions();
-      renderJobs();
-    });
-  });
-  els.typeButtons.forEach((button) => {
-    button.addEventListener("click", (event) => {
-      filters.types = updateTypeSelection(filters.types, button.dataset.typeFilter, event);
-      updateFilterControls();
-      if (!event.ctrlKey && !event.metaKey) closeFilterAccordions();
-      renderJobs();
-    });
+  els.pageButtons.forEach((button) => {
+    button.addEventListener("click", () => setActivePage(button.dataset.page || "all"));
   });
   els.priorityButtons.forEach((button) => {
     button.addEventListener("click", (event) => {
       filters.priorities = updateOptionSelection(filters.priorities, button.dataset.priorityFilter, event);
-      updateFilterControls();
-      if (!event.ctrlKey && !event.metaKey) closeFilterAccordions();
-      renderJobs();
-    });
-  });
-  els.favoriteButtons.forEach((button) => {
-    button.addEventListener("click", (event) => {
-      filters.favorites = updateOptionSelection(filters.favorites, button.dataset.favoriteFilter, event);
       updateFilterControls();
       if (!event.ctrlKey && !event.metaKey) closeFilterAccordions();
       renderJobs();
@@ -309,6 +305,9 @@ function bindEvents() {
   document.querySelectorAll("input[name='locationChoice']").forEach((input) => {
     input.addEventListener("change", syncConditionalFields);
   });
+
+  document.addEventListener("keydown", handleDocumentKeydown);
+  window.addEventListener("hashchange", syncPageFromHash);
 }
 
 function populateRoleOptions() {
@@ -317,6 +316,103 @@ function populateRoleOptions() {
   });
   updateRoleFilterOptions([]);
   updateIndustryFilterOptions([]);
+}
+
+function getPageFromHash() {
+  const page = window.location.hash.replace(/^#\/?/, "");
+  return PAGE_CONFIG[page] ? page : "all";
+}
+
+function syncPageFromHash() {
+  const nextPage = getPageFromHash();
+  if (nextPage === activePage) {
+    updatePageControls();
+    return;
+  }
+  activePage = nextPage;
+  closeFilterAccordions();
+  updateFilterControls();
+  renderJobs();
+}
+
+function setActivePage(page) {
+  const nextPage = PAGE_CONFIG[page] ? page : "all";
+  if (nextPage === activePage) return;
+  activePage = nextPage;
+  const hash = nextPage === "all" ? "" : `#${nextPage}`;
+  if (window.location.hash !== hash) {
+    window.location.hash = hash;
+  }
+  closeFilterAccordions();
+  updateFilterControls();
+  renderJobs();
+}
+
+function updatePageControls() {
+  const config = PAGE_CONFIG[activePage] || PAGE_CONFIG.all;
+  els.boardTitle.textContent = config.title;
+  els.boardControls.hidden = activePage === "viz";
+  els.pageButtons.forEach((button) => {
+    const isActive = button.dataset.page === activePage;
+    button.classList.toggle("active", isActive);
+    button.setAttribute("aria-current", isActive ? "page" : "false");
+  });
+}
+
+function openNewJobForm() {
+  resetForm();
+  openFormDialog();
+}
+
+async function openEditJobForm(jobId) {
+  await loadJobIntoForm(jobId);
+  openFormDialog();
+}
+
+function openFormDialog() {
+  lastFocusedElement = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+  els.formBackdrop.hidden = false;
+  els.formDialog.hidden = false;
+  document.body.classList.add("modal-open");
+  els.formDialog.scrollTo({ top: 0 });
+  window.setTimeout(() => {
+    (els.jobLink || els.formDialog).focus();
+  }, 0);
+}
+
+function closeFormDialog() {
+  if (els.formDialog.hidden) return;
+  els.formDialog.hidden = true;
+  els.formBackdrop.hidden = true;
+  document.body.classList.remove("modal-open");
+  if (lastFocusedElement && document.contains(lastFocusedElement)) {
+    lastFocusedElement.focus();
+  }
+}
+
+function handleDocumentKeydown(event) {
+  if (els.formDialog.hidden) return;
+  if (event.key === "Escape") {
+    closeFormDialog();
+    return;
+  }
+  if (event.key === "Tab") trapFormDialogFocus(event);
+}
+
+function trapFormDialogFocus(event) {
+  const focusable = [...els.formDialog.querySelectorAll(
+    "a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex='-1'])",
+  )].filter((element) => element.offsetParent !== null);
+  if (!focusable.length) return;
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
 }
 
 function openDatabase() {
@@ -511,6 +607,7 @@ async function handleSubmit(event) {
   els.recordId.value = job.id;
   await refreshJobs();
   setEditMode(job);
+  closeFormDialog();
   const syncStatus = await safeSyncToConnectedFolder();
   showToast(syncStatus === "failed" ? "Job saved locally. Folder export failed." : "Job saved.");
 }
@@ -524,6 +621,7 @@ async function handleDelete() {
   await deleteJobRecord(editingId);
   resetForm();
   await refreshJobs();
+  closeFormDialog();
   const syncStatus = await safeSyncToConnectedFolder();
   showToast(syncStatus === "failed" ? "Job deleted locally. Folder export failed." : "Job deleted.");
 }
@@ -590,7 +688,7 @@ async function loadJobIntoForm(jobId) {
   setEditMode(job);
   syncConditionalFields();
   updatePayMidpoint();
-  document.querySelector(".form-pane").scrollTo({ top: 0, behavior: "smooth" });
+  els.formDialog.scrollTo({ top: 0 });
 }
 
 function setEditMode(job) {
@@ -710,14 +808,20 @@ function calculateMidpoint(min, max) {
 }
 
 function renderJobs() {
+  updatePageControls();
+  els.jobList.classList.toggle("viz-board", activePage === "viz");
+  if (activePage === "viz") {
+    renderViz();
+    return;
+  }
   const visibleJobs = getVisibleJobs();
-  els.recordCount.textContent = `${jobs.length} ${jobs.length === 1 ? "job" : "jobs"}`;
+  els.recordCount.textContent = `${visibleJobs.length} ${visibleJobs.length === 1 ? "job" : "jobs"}`;
   els.jobList.replaceChildren();
 
   if (!visibleJobs.length) {
     const empty = document.createElement("div");
     empty.className = "empty-state";
-    empty.textContent = jobs.length ? "No jobs match the current filters." : "No saved jobs yet.";
+    empty.textContent = getEmptyMessage();
     els.jobList.append(empty);
     return;
   }
@@ -728,22 +832,9 @@ function renderJobs() {
 }
 
 function getVisibleJobs() {
-  let visible = [...jobs];
-  if (filters.status === "Reference") {
-    visible = visible.filter(isReferenceJob);
-  } else if (filters.status === "Applied") {
-    visible = visible.filter(isAppliedJob);
-  } else {
-    visible = visible.filter((job) => !isReferenceJob(job) && !isAppliedJob(job));
-  }
+  let visible = getPageJobs();
   if (filters.priorities.length) {
     visible = visible.filter((job) => filters.priorities.includes(job.priority || ""));
-  }
-  if (filters.types.length) {
-    visible = visible.filter((job) => filters.types.some((type) => matchesJobType(job, type)));
-  }
-  if (filters.favorites.length) {
-    visible = visible.filter((job) => filters.favorites.some((favorite) => matchesFavoriteFilter(job, favorite)));
   }
   if (filters.roles.length) {
     visible = visible.filter((job) => filters.roles.some((role) => (job.roles || []).includes(role)));
@@ -757,6 +848,139 @@ function getVisibleJobs() {
     visible.sort(comparePriorityJobs);
   }
   return visible;
+}
+
+function getPageJobs(page = activePage) {
+  if (page === "full-time") return jobs.filter((job) => matchesJobType(job, "Full-time"));
+  if (page === "internship") return jobs.filter((job) => matchesJobType(job, "Internship"));
+  if (page === "part-time") return jobs.filter((job) => matchesJobType(job, "Part-time"));
+  if (page === "favorites") return jobs.filter(isFavoriteJob);
+  if (page === "applied") return jobs.filter(isAppliedJob);
+  if (page === "reference") return jobs.filter(isReferenceJob);
+  return [...jobs];
+}
+
+function getEmptyMessage() {
+  if (!jobs.length) return "No saved jobs yet.";
+  const config = PAGE_CONFIG[activePage] || PAGE_CONFIG.all;
+  return filters.priorities.length || filters.roles.length || filters.industries.length
+    ? "No jobs match the current filters."
+    : config.empty;
+}
+
+function renderViz() {
+  els.recordCount.textContent = `${jobs.length} ${jobs.length === 1 ? "job" : "jobs"}`;
+  els.jobList.replaceChildren();
+
+  if (!jobs.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty-state";
+    empty.textContent = "No saved jobs yet.";
+    els.jobList.append(empty);
+    return;
+  }
+
+  const appliedJobs = jobs.filter(isAppliedJob);
+  const respondedJobs = appliedJobs.filter((job) => job.responseDate || job.responseStatus === "Yes");
+  const decisionJobs = appliedJobs.filter((job) => getFinalStatusForForm(job));
+  const dashboard = document.createElement("section");
+  dashboard.className = "viz-dashboard";
+
+  const stats = document.createElement("div");
+  stats.className = "viz-stat-grid";
+  stats.append(
+    statCard("Total jobs", jobs.length),
+    statCard("Applied", appliedJobs.length),
+    statCard("Favorites", jobs.filter(isFavoriteJob).length),
+    statCard("Response rate", `${Math.round((respondedJobs.length / Math.max(appliedJobs.length, 1)) * 100)}%`),
+  );
+
+  dashboard.append(
+    stats,
+    chartPanel("Application journey", [
+      { label: "Applied", value: appliedJobs.length, tone: "applied" },
+      { label: "Responded", value: respondedJobs.length, tone: "responded" },
+      { label: "Screened", value: appliedJobs.filter((job) => job.screenDate || job.screenStatus === "Yes").length, tone: "screened" },
+      { label: "Interviewed", value: appliedJobs.filter((job) => job.interviewDate || job.interviewStatus === "Yes").length, tone: "interviewed" },
+      { label: "Assessed", value: appliedJobs.filter((job) => job.assessmentDate || job.assessmentStatus === "Yes").length, tone: "assessed" },
+      { label: "Decision", value: decisionJobs.length, tone: "decision" },
+    ]),
+    chartPanel("Job mix", [
+      { label: "Full-time", value: jobs.filter((job) => hasJobType(job, "Full-time")).length, tone: "full-time" },
+      { label: "Internships", value: jobs.filter((job) => hasJobType(job, "Internship")).length, tone: "internship" },
+      { label: "Part-time", value: jobs.filter((job) => hasJobType(job, "Part-time")).length, tone: "part-time" },
+      { label: "Reference", value: jobs.filter(isReferenceJob).length, tone: "reference" },
+    ]),
+    chartPanel("Application status", [
+      { label: "In-progress", value: appliedJobs.filter((job) => !getFinalStatusForForm(job)).length, tone: "in-progress" },
+      { label: "Ghosted", value: appliedJobs.filter((job) => getFinalStatusForForm(job) === "Ghosted").length, tone: "ghosted" },
+      { label: "Rejected", value: appliedJobs.filter((job) => getFinalStatusForForm(job) === "Rejected").length, tone: "rejected" },
+      { label: "Accepted", value: appliedJobs.filter((job) => getFinalStatusForForm(job) === "Accepted").length, tone: "accepted" },
+    ]),
+    chartPanel("Top industries", topCounts(jobs.map(getIndustryDisplay), 6).map(({ label, value }, index) => ({
+      label,
+      value,
+      tone: `industry-${index % 4}`,
+    }))),
+  );
+
+  els.jobList.append(dashboard);
+}
+
+function statCard(label, value) {
+  const card = document.createElement("div");
+  card.className = "viz-stat";
+  const number = document.createElement("strong");
+  number.textContent = String(value);
+  const caption = document.createElement("span");
+  caption.textContent = label;
+  card.append(number, caption);
+  return card;
+}
+
+function chartPanel(title, items) {
+  const panel = document.createElement("section");
+  panel.className = "chart-panel";
+  const heading = document.createElement("h2");
+  heading.textContent = title;
+  const list = document.createElement("div");
+  list.className = "chart-list";
+  const max = Math.max(...items.map((item) => item.value), 1);
+  items.forEach((item) => {
+    const row = document.createElement("div");
+    row.className = "chart-row";
+
+    const label = document.createElement("span");
+    label.className = "chart-label";
+    label.textContent = item.label;
+
+    const track = document.createElement("div");
+    track.className = "chart-track";
+    const fill = document.createElement("span");
+    fill.className = `chart-fill ${item.tone}`;
+    fill.style.width = `${Math.max((item.value / max) * 100, item.value ? 8 : 0)}%`;
+    track.append(fill);
+
+    const value = document.createElement("strong");
+    value.className = "chart-value";
+    value.textContent = String(item.value);
+
+    row.append(label, track, value);
+    list.append(row);
+  });
+  panel.append(heading, list);
+  return panel;
+}
+
+function topCounts(values, limit) {
+  const counts = new Map();
+  values.filter(Boolean).forEach((value) => {
+    counts.set(value, (counts.get(value) || 0) + 1);
+  });
+  return [...counts.entries()]
+    .map(([label, value]) => ({ label, value }))
+    .sort((a, b) => b.value - a.value || a.label.localeCompare(b.label))
+    .slice(0, limit);
 }
 
 function deadlineRank(job) {
@@ -785,40 +1009,21 @@ function comparePriorityJobs(a, b) {
 }
 
 function updateFilterControls() {
-  els.statusButtons.forEach((button) => {
-    button.classList.toggle("active", button.dataset.status === filters.status);
-  });
-  els.typeButtons.forEach((button) => {
-    const isSelected =
-      button.dataset.typeFilter === "All"
-        ? !filters.types.length
-        : filters.types.includes(button.dataset.typeFilter);
-    button.classList.toggle("active", isSelected);
-  });
+  updatePageControls();
   els.priorityButtons.forEach((button) => {
     button.classList.toggle("active", filters.priorities.includes(button.dataset.priorityFilter));
-  });
-  els.favoriteButtons.forEach((button) => {
-    const isSelected = filters.favorites.includes(button.dataset.favoriteFilter);
-    button.classList.toggle("active", isSelected);
-    button.setAttribute("aria-selected", String(isSelected));
   });
   els.sortButtons.forEach((button) => {
     button.classList.toggle("active", button.dataset.sort === filters.sortBy);
   });
 
-  els.typeFilterButton.classList.add("active");
-  els.typeFilterButton.textContent = getTypeFilterButtonLabel(filters.types);
-
   els.priorityFilterButton.classList.toggle("active", Boolean(filters.priorities.length));
   els.priorityFilterButton.textContent = getFilterButtonLabel("Priority", filters.priorities);
-
-  els.favoriteFilterButton.classList.toggle("active", Boolean(filters.favorites.length));
-  els.favoriteFilterButton.textContent = getFilterButtonLabel("Favorite", filters.favorites);
 
   const sortLabels = {
     deadline: "Deadline",
     priority: "Priority",
+    updated: "Last updated",
   };
   els.sortFilterButton.classList.toggle("active", Boolean(filters.sortBy));
   els.sortFilterButton.textContent = filters.sortBy ? `Sort by: ${sortLabels[filters.sortBy]}` : "Sort by";
@@ -854,21 +1059,6 @@ function updateOptionSelection(values, value, event) {
     return selected ? values.filter((item) => item !== value) : [...values, value];
   }
   return selected ? [] : [value];
-}
-
-function updateTypeSelection(values, value, event) {
-  if (!value || value === "All") return [];
-  const selected = values.includes(value);
-  if (value === "Full-time") return selected ? [] : ["Full-time"];
-  if (!(event.ctrlKey || event.metaKey)) return selected ? [] : [value];
-  const withoutFullTime = values.filter((item) => item !== "Full-time");
-  return selected ? withoutFullTime.filter((item) => item !== value) : [...withoutFullTime, value];
-}
-
-function getTypeFilterButtonLabel(values) {
-  if (!values.length) return "All";
-  if (values.length === 1) return values[0];
-  return `Type: ${values.length}`;
 }
 
 function matchesJobType(job, type) {
@@ -946,12 +1136,6 @@ function getJobLevelForForm(job) {
   return "";
 }
 
-function matchesFavoriteFilter(job, favorite) {
-  if (favorite === "Jobs") return Boolean(job.favoriteJob);
-  if (favorite === "Companies") return Boolean(job.favoriteCompany);
-  return true;
-}
-
 function syncFilterOptionButtons(container, selectedValues, dataKey) {
   const selected = new Set(selectedValues);
   container.querySelectorAll(`[data-${toKebabCase(dataKey)}]`).forEach((button) => {
@@ -967,16 +1151,7 @@ function toKebabCase(value) {
 
 function createJobCard(job) {
   const card = document.createElement("article");
-  card.className = getJobCardClassName(job);
-  card.tabIndex = 0;
-  card.setAttribute("role", "button");
-  card.addEventListener("click", () => loadJobIntoForm(job.id));
-  card.addEventListener("keydown", (event) => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      loadJobIntoForm(job.id);
-    }
-  });
+  card.className = `${getJobCardClassName(job)}${activePage === "applied" ? " applied-card" : ""}`;
 
   const logo = createCompanyLogo(job);
 
@@ -1001,24 +1176,8 @@ function createJobCard(job) {
   main.append(titleRow, company);
 
   const location = cell(job.location || "");
-  const pay = cell("", "job-pay");
-  const payInfo = getPayDisplay(job);
-  pay.textContent = payInfo.main;
-  if (payInfo.detail) {
-    const detail = document.createElement("small");
-    detail.textContent = payInfo.detail;
-    pay.append(detail);
-  }
-
-  const deadline = cell("");
-  if (job.deadline) {
-    deadline.textContent = formatDate(job.deadline);
-  } else if (getDeadlineChoice(job) === "ASAP") {
-    const asap = document.createElement("span");
-    asap.className = "asap";
-    asap.textContent = "ASAP";
-    deadline.append(asap);
-  }
+  const pay = activePage === "applied" ? labelledDateCell("Date applied", job.appliedDate) : createPayCell(job);
+  const deadline = activePage === "applied" ? labelledDateCell("Last responded", getLastRespondedDate(job), true) : createDeadlineCell(job);
 
   const industry = cell(getIndustryDisplay(job), "job-industry");
 
@@ -1030,14 +1189,19 @@ function createJobCard(job) {
 
   const levelChips = document.createElement("div");
   levelChips.className = "chips level-chips";
-  const jobLevel = normalizeJobLevel(job.jobLevel);
-  if (jobLevel) levelChips.append(chip(jobLevel, `level-${jobLevel.toLowerCase()}`));
+  if (activePage === "applied") {
+    levelChips.append(applicationStageChip(job));
+  } else {
+    const jobLevel = normalizeJobLevel(job.jobLevel);
+    if (jobLevel) levelChips.append(chip(jobLevel, `level-${jobLevel.toLowerCase()}`));
+  }
 
   const priorityChips = document.createElement("div");
   priorityChips.className = "chips priority-chips";
-  priorityChips.append(statusChip(job));
+  priorityChips.append(activePage === "applied" ? applicationStatusChip(job) : statusChip(job));
 
-  const linkWrap = document.createElement("div");
+  const actions = document.createElement("div");
+  actions.className = "job-actions";
   const link = document.createElement("a");
   link.className = "link-button";
   link.textContent = "Link";
@@ -1050,11 +1214,56 @@ function createJobCard(job) {
     link.setAttribute("aria-disabled", "true");
     link.addEventListener("click", (event) => event.preventDefault());
   }
-  link.addEventListener("click", (event) => event.stopPropagation());
-  linkWrap.append(link);
+  const edit = document.createElement("button");
+  edit.type = "button";
+  edit.className = "edit-row-button";
+  edit.textContent = "Edit";
+  edit.setAttribute("aria-label", `Edit ${job.title || job.company || "job"}`);
+  edit.addEventListener("click", () => openEditJobForm(job.id));
+  actions.append(link, edit);
 
-  card.append(logo, main, location, pay, deadline, industry, roleChips, levelChips, priorityChips, linkWrap);
+  card.append(logo, main, location, pay, deadline, industry, roleChips, levelChips, priorityChips, actions);
   return card;
+}
+
+function createPayCell(job) {
+  const pay = cell("", "job-pay");
+  const payInfo = getPayDisplay(job);
+  pay.textContent = payInfo.main;
+  if (payInfo.detail) {
+    const detail = document.createElement("small");
+    detail.textContent = payInfo.detail;
+    pay.append(detail);
+  }
+  return pay;
+}
+
+function createDeadlineCell(job) {
+  const deadline = cell("");
+  if (job.deadline) {
+    deadline.textContent = formatDate(job.deadline);
+  } else if (getDeadlineChoice(job) === "ASAP") {
+    const asap = document.createElement("span");
+    asap.className = "asap";
+    asap.textContent = "ASAP";
+    deadline.append(asap);
+  }
+  return deadline;
+}
+
+function labelledDateCell(label, date, showMissing = false) {
+  const wrapper = cell("", "job-date");
+  const value = document.createElement("span");
+  if (date) {
+    value.textContent = formatDate(date);
+  } else {
+    value.textContent = showMissing ? "N/A" : "";
+    if (showMissing) value.className = "na-value";
+  }
+  const detail = document.createElement("small");
+  detail.textContent = label;
+  wrapper.append(value, detail);
+  return wrapper;
 }
 
 function getJobCardClassName(job) {
@@ -1161,6 +1370,39 @@ function statusChip(job) {
   if (priority === "Future") return chip("Future", "future");
   if (isAppliedNo(job)) return chip("Reference", "reference");
   return chip("", "low");
+}
+
+function applicationStageChip(job) {
+  const stage = getApplicationStage(job);
+  return chip(stage, `stage-${stage.toLowerCase()}`);
+}
+
+function applicationStatusChip(job) {
+  const applicationStatus = getApplicationStatus(getAppliedStatus(job), getFinalStatusForForm(job)) || "In-progress";
+  return chip(applicationStatus, applicationStatus.toLowerCase());
+}
+
+function getApplicationStage(job) {
+  if (getFinalStatusForForm(job)) return "Decision";
+  if (job.assessmentDate || job.assessmentStatus === "Yes") return "Assessed";
+  if (job.interviewDate || job.interviewStatus === "Yes") return "Interviewed";
+  if (job.screenDate || job.screenStatus === "Yes") return "Screened";
+  if (job.responseDate || job.responseStatus === "Yes") return "Responded";
+  return "Applied";
+}
+
+function getLastRespondedDate(job) {
+  return job.lastHeardFrom || getLastHeardFrom([
+    job.responseDate,
+    job.screenDate,
+    job.interviewDate,
+    job.assessmentDate,
+    job.finalStatusDate,
+  ]);
+}
+
+function isFavoriteJob(job) {
+  return Boolean(job.favoriteJob || job.favoriteCompany);
 }
 
 function isReferenceJob(job) {

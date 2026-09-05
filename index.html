@@ -9,15 +9,24 @@
   </head>
   <body>
     <main class="app-shell" aria-label="Job application tracker">
-      <section class="form-pane" aria-labelledby="form-title">
+      <div id="form-backdrop" class="form-backdrop" hidden></div>
+
+      <section
+        class="form-pane"
+        id="job-form-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="form-title"
+        hidden
+      >
         <header class="pane-header">
           <div>
             <p class="eyebrow">Intake</p>
             <h1 id="form-title">Job Record</h1>
           </div>
           <div class="header-actions">
-            <button type="button" class="ghost-button" id="new-record-button">
-              New
+            <button type="button" class="ghost-button" id="form-close-button">
+              Close
             </button>
           </div>
         </header>
@@ -616,57 +625,82 @@
       <section class="board-pane" aria-labelledby="board-title">
         <header class="pane-header board-header">
           <div>
-            <p class="eyebrow">Board</p>
-            <h2 id="board-title">Saved Jobs</h2>
+            <p class="eyebrow">Tracker</p>
+            <h1 id="board-title">All Jobs</h1>
           </div>
-          <div class="record-count" id="record-count">0 jobs</div>
+          <div class="board-header-actions">
+            <div class="record-count" id="record-count">0 jobs</div>
+            <div class="data-actions" aria-label="Data actions">
+              <button
+                type="button"
+                class="primary-button"
+                id="new-record-button"
+              >
+                Add Job
+              </button>
+              <button
+                type="button"
+                class="utility-button"
+                id="connect-folder-button"
+              >
+                Connect Folder
+              </button>
+              <button
+                type="button"
+                class="utility-button"
+                id="export-csv-button"
+              >
+                Export CSV
+              </button>
+              <button
+                type="button"
+                class="utility-button"
+                id="export-descriptions-button"
+              >
+                Export TXT
+              </button>
+              <button
+                type="button"
+                class="utility-button"
+                id="import-csv-button"
+              >
+                Import CSV
+              </button>
+              <input id="csv-input" type="file" accept=".csv,text/csv" hidden />
+            </div>
+          </div>
         </header>
 
-        <div class="board-controls" aria-label="Board controls">
-          <div class="control-row">
-            <div class="filter-group" aria-label="Status filter">
-              <div class="filter-accordion type-accordion">
-                <button
-                  type="button"
-                  class="filter-button accordion-trigger active"
-                  id="type-filter-button"
-                  aria-expanded="false"
-                  aria-controls="type-filter-panel"
-                >
-                  All
-                </button>
-                <div class="accordion-panel" id="type-filter-panel" hidden>
-                  <button
-                    type="button"
-                    class="filter-button"
-                    data-type-filter="All"
-                  >
-                    All
-                  </button>
-                  <button
-                    type="button"
-                    class="filter-button"
-                    data-type-filter="Full-time"
-                  >
-                    Full-time
-                  </button>
-                  <button
-                    type="button"
-                    class="filter-button"
-                    data-type-filter="Internship"
-                  >
-                    Internship
-                  </button>
-                  <button
-                    type="button"
-                    class="filter-button"
-                    data-type-filter="Part-time"
-                  >
-                    Part-time
-                  </button>
-                </div>
-              </div>
+        <nav class="page-nav" aria-label="Job pages">
+          <button type="button" class="page-nav-button active" data-page="all">
+            All Jobs
+          </button>
+          <button type="button" class="page-nav-button" data-page="full-time">
+            Full-time
+          </button>
+          <button type="button" class="page-nav-button" data-page="internship">
+            Internships
+          </button>
+          <button type="button" class="page-nav-button" data-page="part-time">
+            Part-time
+          </button>
+          <button type="button" class="page-nav-button" data-page="favorites">
+            Favorites
+          </button>
+          <button type="button" class="page-nav-button" data-page="applied">
+            Applied
+          </button>
+          <button type="button" class="page-nav-button" data-page="reference">
+            Reference
+          </button>
+          <button type="button" class="page-nav-button" data-page="viz">
+            Viz
+          </button>
+        </nav>
 
+        <div class="board-controls" id="board-controls" aria-label="List filters">
+          <div class="control-row">
+            <div class="filter-group" aria-label="List filters">
               <div class="filter-accordion priority-accordion">
                 <button
                   type="button"
@@ -699,36 +733,19 @@
                   >
                     Medium
                   </button>
-                  <button type="button" class="filter-button" data-priority-filter="Low">
+                  <button
+                    type="button"
+                    class="filter-button"
+                    data-priority-filter="Low"
+                  >
                     Low
                   </button>
-                </div>
-              </div>
-
-              <div class="filter-accordion favorite-accordion">
-                <button
-                  type="button"
-                  class="filter-button accordion-trigger"
-                  id="favorite-filter-button"
-                  aria-expanded="false"
-                  aria-controls="favorite-filter-panel"
-                >
-                  Favorite
-                </button>
-                <div class="accordion-panel" id="favorite-filter-panel" hidden>
                   <button
                     type="button"
                     class="filter-button"
-                    data-favorite-filter="Jobs"
+                    data-priority-filter="Future"
                   >
-                    Favorited jobs
-                  </button>
-                  <button
-                    type="button"
-                    class="filter-button"
-                    data-favorite-filter="Companies"
-                  >
-                    Favorited companies
+                    Future
                   </button>
                 </div>
               </div>
@@ -810,45 +827,6 @@
                   </button>
                 </div>
               </div>
-
-              <div class="status-filter-actions">
-                <button type="button" class="filter-button" data-status="Applied">
-                  Applied
-                </button>
-                <button
-                  type="button"
-                  class="filter-button reference-filter"
-                  data-status="Reference"
-                >
-                  Reference
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="control-row data-row">
-            <div class="data-actions">
-              <button
-                type="button"
-                class="ghost-button"
-                id="connect-folder-button"
-              >
-                Connect Folder
-              </button>
-              <button type="button" class="ghost-button" id="export-csv-button">
-                Export CSV
-              </button>
-              <button
-                type="button"
-                class="ghost-button"
-                id="export-descriptions-button"
-              >
-                Export TXT
-              </button>
-              <button type="button" class="ghost-button" id="import-csv-button">
-                Import CSV
-              </button>
-              <input id="csv-input" type="file" accept=".csv,text/csv" hidden />
             </div>
           </div>
         </div>
