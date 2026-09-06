@@ -1440,11 +1440,11 @@ function isFavoriteJob(job) {
 }
 
 function isReferenceJob(job) {
-  return String(job.priority || "").toLowerCase() === "future" || isAppliedNo(job) || Boolean(getFinalStatusForForm(job));
+  return String(job.priority || "").toLowerCase() === "future" || isAppliedNo(job);
 }
 
 function isAppliedJob(job) {
-  return getAppliedStatus(job) === "Yes";
+  return getAppliedStatus(job) === "Yes" || Boolean(getFinalStatusForForm(job));
 }
 
 function isAppliedNo(job) {
