@@ -150,6 +150,10 @@ const els = {
   pageTypeFilterWrap: document.querySelector("#page-type-filter-wrap"),
   pageTypeFilterButton: document.querySelector("#page-type-filter-button"),
   pageTypeButtons: document.querySelectorAll("[data-page-type-filter]"),
+  appliedStatusFilterWrap: document.querySelector("#applied-status-filter-wrap"),
+  appliedStatusFilterButton: document.querySelector("#applied-status-filter-button"),
+  appliedStatusButtons: document.querySelectorAll("[data-applied-status-filter]"),
+  priorityFilterWrap: document.querySelector("#priority-filter-wrap"),
   priorityButtons: document.querySelectorAll("[data-priority-filter]"),
   sortButtons: document.querySelectorAll("[data-sort]"),
   accordionTriggers: document.querySelectorAll(".accordion-trigger"),
@@ -182,6 +186,7 @@ let lastFocusedElement = null;
 
 const filters = {
   type: "All",
+  applicationStatus: "All",
   priorities: [],
   sortBy: "",
   roles: [],
@@ -261,6 +266,14 @@ function bindEvents() {
   els.pageTypeButtons.forEach((button) => {
     button.addEventListener("click", () => {
       filters.type = button.dataset.pageTypeFilter || "All";
+      updateFilterControls();
+      closeFilterAccordions();
+      renderJobs();
+    });
+  });
+  els.appliedStatusButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      filters.applicationStatus = button.dataset.appliedStatusFilter || "All";
       updateFilterControls();
       closeFilterAccordions();
       renderJobs();
@@ -363,12 +376,24 @@ function setActivePage(page) {
 function updatePageControls() {
   const config = PAGE_CONFIG[activePage] || PAGE_CONFIG.all;
   const showScopedTypeFilter = usesScopedTypeFilter(activePage);
+  const showAppliedStatusFilter = activePage === "applied";
+  const showPriorityFilter = usesPriorityFilter(activePage);
   els.boardTitle.textContent = config.title;
   els.boardControls.hidden = activePage === "viz";
   els.pageTypeFilterWrap.hidden = !showScopedTypeFilter;
   if (!showScopedTypeFilter) {
     els.pageTypeFilterButton.setAttribute("aria-expanded", "false");
     document.querySelector("#page-type-filter-panel").hidden = true;
+  }
+  els.appliedStatusFilterWrap.hidden = !showAppliedStatusFilter;
+  if (!showAppliedStatusFilter) {
+    els.appliedStatusFilterButton.setAttribute("aria-expanded", "false");
+    document.querySelector("#applied-status-filter-panel").hidden = true;
+  }
+  els.priorityFilterWrap.hidden = !showPriorityFilter;
+  if (!showPriorityFilter) {
+    els.priorityFilterButton.setAttribute("aria-expanded", "false");
+    document.querySelector("#priority-filter-panel").hidden = true;
   }
   els.pageButtons.forEach((button) => {
     const isActive = button.dataset.page === activePage;
@@ -379,6 +404,10 @@ function updatePageControls() {
 
 function usesScopedTypeFilter(page = activePage) {
   return ["favorites", "applied", "reference"].includes(page);
+}
+
+function usesPriorityFilter(page = activePage) {
+  return !["applied", "reference"].includes(page);
 }
 
 function openNewJobForm() {
@@ -859,7 +888,10 @@ function getVisibleJobs() {
   if (usesScopedTypeFilter() && filters.type !== "All") {
     visible = visible.filter((job) => matchesJobType(job, filters.type));
   }
-  if (filters.priorities.length) {
+  if (activePage === "applied" && filters.applicationStatus !== "All") {
+    visible = visible.filter((job) => getApplicationStatusDisplay(job) === filters.applicationStatus);
+  }
+  if (usesPriorityFilter() && filters.priorities.length) {
     visible = visible.filter((job) => filters.priorities.includes(job.priority || ""));
   }
   if (filters.roles.length) {
@@ -890,7 +922,7 @@ function getPageJobs(page = activePage) {
 function getEmptyMessage() {
   if (!jobs.length) return "No saved jobs yet.";
   const config = PAGE_CONFIG[activePage] || PAGE_CONFIG.all;
-  return (usesScopedTypeFilter() && filters.type !== "All") || filters.priorities.length || filters.roles.length || filters.industries.length
+  return (usesScopedTypeFilter() && filters.type !== "All") || (activePage === "applied" && filters.applicationStatus !== "All") || (usesPriorityFilter() && filters.priorities.length) || filters.roles.length || filters.industries.length
     ? "No jobs match the current filters."
     : config.empty;
 }
@@ -909,7 +941,7 @@ function renderViz() {
 
   const appliedJobs = getPageJobs("applied");
   const respondedJobs = appliedJobs.filter((job) => job.responseDate || job.responseStatus === "Yes");
-  const decisionJobs = appliedJobs.filter((job) => getFinalStatusForForm(job));
+  const decisionJobs = appliedJobs.filter((job) => isDecisionApplicationStatus(getFinalStatusForForm(job)));
   const dashboard = document.createElement("section");
   dashboard.className = "viz-dashboard";
 
@@ -1043,6 +1075,13 @@ function updateFilterControls() {
   });
   els.pageTypeFilterButton.classList.toggle("active", usesScopedTypeFilter() && filters.type !== "All");
   els.pageTypeFilterButton.textContent = `Type: ${filters.type}`;
+
+  els.appliedStatusButtons.forEach((button) => {
+    const isSelected = button.dataset.appliedStatusFilter === filters.applicationStatus;
+    button.classList.toggle("active", isSelected);
+  });
+  els.appliedStatusFilterButton.classList.toggle("active", activePage === "applied" && filters.applicationStatus !== "All");
+  els.appliedStatusFilterButton.textContent = `Status: ${filters.applicationStatus}`;
 
   els.priorityButtons.forEach((button) => {
     button.classList.toggle("active", filters.priorities.includes(button.dataset.priorityFilter));
@@ -1393,7 +1432,7 @@ function getIndustryDisplay(job) {
 
 function statusChip(job) {
   if (isAppliedJob(job)) {
-    const applicationStatus = getApplicationStatus(getAppliedStatus(job), getFinalStatusForForm(job));
+    const applicationStatus = getApplicationStatusDisplay(job);
     return chip(applicationStatus, applicationStatus.toLowerCase());
   }
   const priority = job.priority || "";
@@ -1412,12 +1451,16 @@ function applicationStageChip(job) {
 }
 
 function applicationStatusChip(job) {
-  const applicationStatus = getApplicationStatus(getAppliedStatus(job), getFinalStatusForForm(job)) || "In-progress";
+  const applicationStatus = getApplicationStatusDisplay(job);
   return chip(applicationStatus, applicationStatus.toLowerCase());
 }
 
+function getApplicationStatusDisplay(job) {
+  return getFinalStatusForForm(job) || (isAppliedJob(job) ? "In-progress" : "");
+}
+
 function getApplicationStage(job) {
-  if (getFinalStatusForForm(job)) return "Decision";
+  if (isDecisionApplicationStatus(getFinalStatusForForm(job))) return "Decision";
   if (job.assessmentDate || job.assessmentStatus === "Yes") return "Assessed";
   if (job.interviewDate || job.interviewStatus === "Yes") return "Interviewed";
   if (job.screenDate || job.screenStatus === "Yes") return "Screened";
@@ -1482,8 +1525,12 @@ function isFinalApplicationStatus(status) {
   return ["Ghosted", "Rejected", "Accepted"].includes(status);
 }
 
-function isDatedFinalStatus(status) {
+function isDecisionApplicationStatus(status) {
   return ["Rejected", "Accepted"].includes(status);
+}
+
+function isDatedFinalStatus(status) {
+  return isDecisionApplicationStatus(status);
 }
 
 function getLastHeardFrom(dates) {

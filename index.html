@@ -747,7 +747,63 @@
                 </div>
               </div>
 
-              <div class="filter-accordion priority-accordion">
+              <div
+                class="filter-accordion applied-status-filter"
+                id="applied-status-filter-wrap"
+                hidden
+              >
+                <button
+                  type="button"
+                  class="filter-button accordion-trigger"
+                  id="applied-status-filter-button"
+                  aria-expanded="false"
+                  aria-controls="applied-status-filter-panel"
+                >
+                  Status: All
+                </button>
+                <div class="accordion-panel" id="applied-status-filter-panel" hidden>
+                  <button
+                    type="button"
+                    class="filter-button"
+                    data-applied-status-filter="All"
+                  >
+                    All
+                  </button>
+                  <button
+                    type="button"
+                    class="filter-button"
+                    data-applied-status-filter="In-progress"
+                  >
+                    In-progress
+                  </button>
+                  <button
+                    type="button"
+                    class="filter-button"
+                    data-applied-status-filter="Accepted"
+                  >
+                    Accepted
+                  </button>
+                  <button
+                    type="button"
+                    class="filter-button"
+                    data-applied-status-filter="Rejected"
+                  >
+                    Rejected
+                  </button>
+                  <button
+                    type="button"
+                    class="filter-button"
+                    data-applied-status-filter="Ghosted"
+                  >
+                    Ghosted
+                  </button>
+                </div>
+              </div>
+
+              <div
+                class="filter-accordion priority-accordion"
+                id="priority-filter-wrap"
+              >
                 <button
                   type="button"
                   class="filter-button accordion-trigger priority-trigger"
