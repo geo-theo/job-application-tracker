@@ -1,7 +1,10 @@
 "use strict";
 
-// Every chart starts with this cohort. Board filters intentionally do not apply.
-const vizState = { scope: "all", salaryGroup: "industry", salaryMode: "salary", region: "us" };
+// Charts use non-reference applications; only the ready-to-apply card uses pending jobs.
+const vizState = { salaryGroup: "industry", salaryMode: "salary", region: "remote", flowPeriod: "all", activityPeriod: "all", activityUnit: "auto", flowDates: {}, activityDates: {} };
+const VIZ_ANNUAL_HOURS = 8 * 21 * 12;
+const VIZ_DAY = 86400000;
+const VIZ_PERIODS = [["week", "Last week", 7], ["month", "Last month", 30], ["quarter", "Last quarter", 90], ["year", "Last year", 365], ["all", "All time", null]];
 const VIZ_COLORS = { teal: "#177b70", blue: "#497baf", purple: "#8873ad", orange: "#c18441", gray: "#82918e", red: "#bd6b60" };
 const VIZ_STAGES = [
   { key: "response", label: "Responded", color: VIZ_COLORS.teal },
@@ -66,7 +69,7 @@ function vizPay(job, mode = "salary") {
   const savedMidpoint = positive(job.payMidpoint);
   const midpoint = min !== null && max !== null ? (min + max) / 2 : min ?? max ?? savedMidpoint;
   if (midpoint === null) return null;
-  const factor = mode === "annualized" && job.payType === "Hourly" ? 2080 : 1;
+  const factor = mode === "annualized" && job.payType === "Hourly" ? VIZ_ANNUAL_HOURS : 1;
   return {
     low: Math.min(min ?? midpoint, max ?? midpoint) * factor,
     high: Math.max(min ?? midpoint, max ?? midpoint) * factor,
@@ -77,6 +80,138 @@ function vizPay(job, mode = "salary") {
 function vizAveragePay(records, mode = "salary") {
   const values = records.map((job) => vizPay(job, mode)).filter(Boolean);
   return values.length ? values.reduce((sum, pay) => sum + pay.midpoint, 0) / values.length : null;
+}
+
+function vizPaySummary(records) {
+  const values = records.map((job) => vizPay(job, "annualized")?.midpoint).filter(Number.isFinite).sort((a, b) => a - b);
+  const quantile = (p) => {
+    if (!values.length) return null;
+    const position = (values.length - 1) * p;
+    const low = Math.floor(position);
+    return values[low] + (values[Math.ceil(position)] - values[low]) * (position - low);
+  };
+  return { count: values.length, mean: values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : null, p25: quantile(.25), p75: quantile(.75) };
+}
+
+// Calendar dates are compared as UTC day numbers, using the user's local today.
+// This avoids daylight-saving changes changing the length of a day or week.
+function vizToday(now = new Date()) {
+  return Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+}
+
+function vizCalendarRange(period, now = new Date()) {
+  const today = vizToday(now);
+  const date = new Date(today);
+  let start = today;
+  if (period === "week") start -= (date.getUTCDay() + 6) % 7 * VIZ_DAY;
+  if (period === "month") start = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), 1);
+  if (period === "quarter") start = Date.UTC(date.getUTCFullYear(), Math.floor(date.getUTCMonth() / 3) * 3, 1);
+  if (period === "year") start = Date.UTC(date.getUTCFullYear(), 0, 1);
+  return { start, end: today + VIZ_DAY };
+}
+
+function vizPeriodRange(period, now = new Date(), dates = {}) {
+  if (period === "all") return null;
+  if (period === "custom") {
+    const start = vizDate(dates.start);
+    const end = vizDate(dates.end);
+    return start !== null && end !== null && start <= end ? { start, end: end + VIZ_DAY } : null;
+  }
+  const days = VIZ_PERIODS.find(([key]) => key === period)?.[2];
+  const end = vizToday(now) + VIZ_DAY;
+  return days ? { start: end - days * VIZ_DAY, end } : null;
+}
+
+function vizInRange(records, range) {
+  if (!range) return records;
+  return records.filter((job) => {
+    const date = vizDate(job.appliedDate);
+    return date !== null && date >= range.start && date < range.end;
+  });
+}
+
+function vizRangeLabel(range) {
+  if (!range) return "All time";
+  const format = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
+  return `${format.format(range.start)} – ${format.format(range.end - VIZ_DAY)}`;
+}
+
+function vizMissionChange(records, now = new Date()) {
+  const range = vizCalendarRange("month", now);
+  const start = new Date(range.start);
+  const previousRange = { start: Date.UTC(start.getUTCFullYear(), start.getUTCMonth() - 1, 1), end: range.start };
+  const measure = (selected) => ({ total: selected.length, mission: selected.filter(vizIsPublicPurpose).length,
+    share: selected.length ? selected.filter(vizIsPublicPurpose).length / selected.length : null });
+  const current = measure(vizInRange(records, range));
+  const previous = measure(vizInRange(records, previousRange));
+  return { current, previous,
+    relative: current.share !== null && previous.share > 0 ? (current.share - previous.share) / previous.share * 100 : null,
+    points: current.share !== null && previous.share !== null ? (current.share - previous.share) * 100 : null };
+}
+
+function vizSigned(value, suffix = "%") {
+  if (!Number.isFinite(value)) return "—";
+  return `${value > 0 ? "+" : ""}${Number(value.toFixed(1))}${suffix}`;
+}
+
+function vizCalendarControl(key, onChange) {
+  const control = vizElement("details", "viz-calendar");
+  const summary = vizElement("summary");
+  const icon = vizSvg("svg", { viewBox: "0 0 24 24", width: 16, height: 16, fill: "none", stroke: "currentColor", "stroke-width": 1.6, "aria-hidden": "true" });
+  icon.append(vizSvg("rect", { x: 3, y: 5, width: 18, height: 16, rx: 3 }), vizSvg("path", { d: "M7 2v6M17 2v6M3 11h18" }));
+  const caption = vizElement("span");
+  summary.append(icon, caption);
+  summary.setAttribute("aria-label", `${key === "flow" ? "Application flow" : "Activity"} calendar filter`);
+  const choices = vizElement("div", "viz-calendar-options");
+  choices.setAttribute("role", "group");
+  choices.setAttribute("aria-label", "Date range");
+  function update() {
+    caption.textContent = VIZ_PERIODS.find(([period]) => period === vizState[`${key}Period`])?.[1] || "Custom dates";
+    choices.querySelectorAll("button[data-period]").forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.period === vizState[`${key}Period`])));
+  }
+  function choose(period) {
+    vizState[`${key}Period`] = period;
+    control.open = false;
+    update();
+    onChange();
+    summary.focus({ preventScroll: true });
+  }
+  VIZ_PERIODS.forEach(([period, label, days]) => {
+    const button = vizElement("button", "", `${label}${days ? ` · ${days} days` : ""}`);
+    button.type = "button";
+    button.dataset.period = period;
+    button.addEventListener("click", () => choose(period));
+    choices.append(button);
+  });
+  const custom = vizElement("form", "viz-custom-dates");
+  const inputs = {};
+  ["start", "end"].forEach((field) => {
+    const label = vizElement("label", "", field === "start" ? "From" : "Through");
+    const input = vizElement("input");
+    input.type = "date";
+    input.required = true;
+    input.value = vizState[`${key}Dates`][field] || "";
+    input.addEventListener("input", () => inputs.end.setCustomValidity(""));
+    inputs[field] = input;
+    label.append(input);
+    custom.append(label);
+  });
+  const apply = vizElement("button", "", "Apply dates");
+  apply.type = "submit";
+  custom.append(apply);
+  custom.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (inputs.start.value > inputs.end.value) { inputs.end.setCustomValidity("End date must be on or after the start date."); inputs.end.reportValidity(); return; }
+    vizState[`${key}Dates`] = { start: inputs.start.value, end: inputs.end.value };
+    choose("custom");
+  });
+  control.addEventListener("keydown", (event) => { if (event.key === "Escape") { control.open = false; summary.focus(); } });
+  control.addEventListener("focusout", () => { setTimeout(() => { if (!control.contains(document.activeElement)) control.open = false; }, 0); });
+  const menu = vizElement("div", "viz-calendar-menu");
+  menu.append(choices, custom);
+  control.append(summary, menu);
+  update();
+  return control;
 }
 
 function vizSelect(label, choices, value, onChange) {
@@ -105,9 +240,20 @@ function vizPanel(number, title, description, className = "") {
   return panel;
 }
 
-function vizStat(label, value, detail, tone) {
+function vizStat(label, value, detail, tone, figures = []) {
   const card = vizElement("div", `viz-stat viz-stat-${tone}`);
-  card.append(vizElement("span", "viz-stat-label", label), vizElement("strong", "", value), vizElement("span", "viz-stat-detail", detail));
+  const values = vizElement("div", "viz-stat-values");
+  values.append(vizElement("strong", "viz-stat-main", value));
+  const extras = vizElement("div", "viz-stat-extras");
+  if (figures.length <= 2) extras.classList.add("viz-stat-extras-compact");
+  figures.forEach(({ label: caption, value: number, tone: color = tone, title }) => {
+    const item = vizElement("span", `viz-stat-extra viz-extra-${color}`);
+    item.append(vizElement("b", "", number), vizElement("span", "", caption));
+    if (title) item.title = title;
+    extras.append(item);
+  });
+  values.append(extras);
+  card.append(vizElement("span", "viz-stat-label", label), values, vizElement("span", "viz-stat-detail", detail));
   return card;
 }
 
@@ -146,42 +292,45 @@ function vizActivateSvg(element, label, onActivate) {
 }
 
 function renderViz() {
-  const records = getVizJobs(jobs, vizState.scope);
   const all = getVizJobs(jobs);
-  const applied = records.filter(isAppliedJob);
-  const pending = records.filter((job) => !isAppliedJob(job));
-  const active = applied.filter((job) => !getFinalStatusForForm(job));
-  const publicPurpose = records.filter(vizIsPublicPurpose);
-  const salaryCount = records.filter((job) => vizPay(job)).length;
-  els.recordCount.textContent = `${records.length} jobs · references excluded`;
+  const applied = getVizJobs(jobs, "applied");
+  const pending = getVizJobs(jobs, "pending");
+  const publicPurpose = applied.filter(vizIsPublicPurpose);
+  const pay = vizPaySummary(applied);
+  const mission = vizMissionChange(applied);
+  const priorityFigures = [["Urgent", "urgent"], ["High", "high"], ["Medium", "medium"], ["Low", "low"]]
+    .map(([priority, tone]) => ({ label: priority, tone, value: pending.filter((job) => job.priority === priority).length }));
+  const unranked = pending.filter((job) => !["Urgent", "High", "Medium", "Low"].includes(job.priority)).length;
+  if (unranked) priorityFigures.push({ label: "Unranked", tone: "gray", value: unranked });
+  const timelines = [["week", "This week"], ["month", "This month"], ["quarter", "This quarter"], ["year", "This year"]]
+    .map(([period, label]) => ({ label, value: vizInRange(applied, vizCalendarRange(period)).length, title: `${label}: ${vizRangeLabel(vizCalendarRange(period))}. Weeks start Monday.` }));
+  const missingDates = applied.filter((job) => vizDate(job.appliedDate) === null).length;
+  const missionDetail = `This month ${mission.current.mission}/${mission.current.total} (${vizPercent(mission.current.mission, mission.current.total)}) · last month ${mission.previous.mission}/${mission.previous.total} (${vizPercent(mission.previous.mission, mission.previous.total)})`;
+  const changeTitle = mission.relative !== null ? "Relative change in mission-driven share: (this month − last month) / last month." : mission.current.share === null || mission.previous.share === null ? "No comparison: one month has no applications." : "Relative change is undefined because last month's share was 0%. The percentage-point change is shown separately.";
+  els.recordCount.textContent = `${applied.length} applications · references excluded`;
   els.jobList.replaceChildren();
   const dashboard = vizElement("section", "viz-dashboard");
   const intro = vizElement("div", "viz-intro");
   const title = vizElement("div");
   title.append(vizElement("p", "eyebrow", "YOUR SEARCH, IN PERSPECTIVE"),
     vizElement("h2", "viz-title", "Where could your next chapter lead?"),
-    vizElement("p", "viz-description", `${all.length} opportunities. ${jobs.length - all.length} reference jobs excluded from every chart. Select a chart to explore its jobs.`));
-  const scope = vizSelect("Explore", [["all", "All opportunities"], ["applied", "Applied jobs"], ["pending", "Jobs to apply to"]], vizState.scope, (value) => {
-    vizState.scope = value;
-    renderViz();
-    els.jobList.querySelector(".viz-scope select").focus({ preventScroll: true });
-  });
-  scope.classList.add("viz-scope");
-  intro.append(title, scope);
+    vizElement("p", "viz-description", `${applied.length} applications to explore. ${pending.length} jobs ready for a first move. ${jobs.length - all.length} references excluded. Select a chart to see its jobs.`));
+  intro.append(title);
   dashboard.append(intro);
-  if (!records.length) {
-    dashboard.append(vizElement("div", "empty-state viz-wide", all.length ? "No jobs in this view yet. Try All opportunities." : "Add a non-reference job to start exploring your search."));
-    els.jobList.append(dashboard);
-    return;
-  }
   const stats = vizElement("div", "viz-stat-grid");
   stats.append(
-    vizStat("Ready for a first move", pending.length, "Saved jobs you haven’t applied to", "orange"),
-    vizStat("Applications sent", applied.length, `${active.length} in progress · ${applied.length - active.length} closed`, "blue"),
-    vizStat("Average annual salary", vizMoney(vizAveragePay(records)), `${salaryCount} jobs with salary · hourly excluded`, "teal"),
-    vizStat("Public-purpose work", publicPurpose.length, `${vizPercent(publicPurpose.length, records.length)} tagged Govt or Poor`, "purple"),
+    vizStat("Ready for a first move", pending.length, "Saved jobs you haven’t applied to", "orange", priorityFigures),
+    vizStat("Applications sent · all time", applied.length, `Calendar periods to date · Monday starts the week${missingDates ? ` · ${missingDates} undated included only in all time` : ""}`, "blue", timelines),
+    vizStat("Average annual salary", vizMoney(pay.mean), `${pay.count}/${applied.length} applications with pay · hourly × 8 × 21 × 12`, "teal", [
+      { label: "25th percentile", value: vizMoney(pay.p25), tone: "blue" },
+      { label: "75th percentile", value: vizMoney(pay.p75), tone: "teal" },
+    ]),
+    vizStat("Public-purpose applications", vizPercent(publicPurpose.length, applied.length), `${publicPurpose.length}/${applied.length} tagged Govt or Poor. ${missionDetail}`, "purple", [
+      { label: mission.relative !== null ? "month-over-month" : mission.previous.share === 0 && mission.current.share !== null ? "MoM · 0% baseline" : "MoM · missing month", value: vizSigned(mission.relative), tone: mission.relative < 0 ? "urgent" : "teal", title: changeTitle },
+      { label: "percentage points", value: vizSigned(mission.points, " pp"), tone: "purple", title: changeTitle },
+    ]),
   );
-  dashboard.append(stats, vizFlowPanel(applied), vizSalaryPanel(records), vizImpactPanel(records), vizMapPanel(records), vizActivityPanel(applied));
+  dashboard.append(stats, vizFlowPanel(applied), vizSalaryPanel(applied), vizImpactPanel(applied), vizMapPanel(applied), vizActivityPanel(applied));
   els.jobList.append(dashboard);
 }
 
@@ -189,88 +338,109 @@ function renderViz() {
 // Columns follow the tracker’s stage order; they do not infer event chronology.
 function vizFlowModel(records) {
   const stageNodes = VIZ_STAGES.filter((stage) => records.some((job) => vizHasStage(job, stage.key)));
+  const waiting = records.filter(vizAwaitingReply);
+  const hasContactColumn = waiting.length || stageNodes.some((stage) => stage.key === "response");
+  let nextColumn = hasContactColumn ? 2 : 1;
+  const milestones = stageNodes.map((stage) => ({ ...stage, column: stage.key === "response" ? 1 : nextColumn++, jobs: records.filter((job) => vizHasStage(job, stage.key)) }));
+  if (waiting.length) milestones.unshift({ key: "no-response", label: "No response", color: VIZ_COLORS.gray, column: 1, jobs: waiting });
   const nodes = [
     { key: "applied", label: "Applied", color: VIZ_COLORS.blue, column: 0, jobs: records },
-    ...stageNodes.map((stage, index) => ({ ...stage, column: index + 1, jobs: records.filter((job) => vizHasStage(job, stage.key)) })),
-    ...VIZ_OUTCOMES.map((outcome) => ({ ...outcome, key: outcome.label, column: stageNodes.length + 1, jobs: records.filter((job) => vizOutcome(job) === outcome.label) })).filter((node) => node.jobs.length),
+    ...milestones,
+    ...VIZ_OUTCOMES.map((outcome) => ({ ...outcome, key: outcome.label, column: nextColumn, jobs: records.filter((job) => vizOutcome(job) === outcome.label) })).filter((node) => node.jobs.length),
   ];
   const links = new Map();
   records.forEach((job) => {
-    const path = ["applied", ...stageNodes.filter((stage) => vizHasStage(job, stage.key)).map((stage) => stage.key), vizOutcome(job)];
+    const path = ["applied", ...(vizAwaitingReply(job) ? ["no-response"] : stageNodes.filter((stage) => vizHasStage(job, stage.key)).map((stage) => stage.key)), vizOutcome(job)];
     path.slice(1).forEach((key, index) => {
       const id = `${path[index]}:${key}`;
       if (!links.has(id)) links.set(id, { source: path[index], target: key, jobs: [] });
       links.get(id).jobs.push(job);
     });
   });
-  return { nodes, links: [...links.values()], columns: stageNodes.length + 2 };
+  return { nodes, links: [...links.values()], columns: nextColumn + 1 };
 }
 
-function vizFlowPanel(records) {
+function vizAwaitingReply(job) {
+  return !getFinalStatusForForm(job) && !VIZ_STAGES.some((stage) => vizHasStage(job, stage.key));
+}
+
+function vizFlowPanel(allRecords) {
   const panel = vizPanel("01", "Every application has a story", "Follow the streams from application to where things stand today.", "viz-wide viz-flow-panel");
-  if (!records.length) { panel.append(vizElement("p", "viz-empty", "Your first application will start the stream. Saved, unapplied jobs stay out of this flow.")); return panel; }
-  const model = vizFlowModel(records);
-  const chart = vizElement("div", "viz-flow-scroll");
-  const svg = vizSvg("svg", { viewBox: "0 0 1100 330", class: "viz-flow", role: "group", "aria-label": "Application flow. Activate a stream or stage to see its jobs." });
-  const scale = 188 / records.length;
-  const nodeWidth = 15;
-  const byKey = new Map(model.nodes.map((node) => [node.key, node]));
-  for (let column = 0; column < model.columns; column++) {
-    const columnNodes = model.nodes.filter((node) => node.column === column);
-    const height = columnNodes.reduce((sum, node) => sum + node.jobs.length * scale, 0) + (columnNodes.length - 1) * 30;
-    let y = 54 + (242 - height) / 2;
-    columnNodes.forEach((node) => {
-      node.x = 35 + column / (model.columns - 1) * 880;
-      node.y = y;
-      node.height = node.jobs.length * scale;
-      node.inOffset = 0;
-      node.outOffset = 0;
-      y += node.height + 30;
-    });
-    const label = column === 0 ? "START" : column === model.columns - 1 ? "CURRENT OUTCOME" : "RECORDED MILESTONE";
-    svg.append(vizSvg("text", { x: columnNodes[0].x, y: 22, class: "viz-svg-eyebrow" }, label));
-  }
-  const linksGroup = vizSvg("g", { class: "viz-flow-links" });
-  // Put long bypasses first so recorded-stage paths remain visible on top.
-  model.links.sort((a, b) => (byKey.get(b.target).column - byKey.get(b.source).column) - (byKey.get(a.target).column - byKey.get(a.source).column));
-  model.links.forEach((link) => {
-    const source = byKey.get(link.source);
-    const target = byKey.get(link.target);
-    const thickness = link.jobs.length * scale;
-    const x1 = source.x + nodeWidth;
-    const x2 = target.x;
-    const y1 = source.y + source.outOffset;
-    const y2 = target.y + target.inOffset;
-    const middle = (x1 + x2) / 2;
-    const path = vizSvg("path", {
-      d: `M${x1},${y1} C${middle},${y1} ${middle},${y2} ${x2},${y2} L${x2},${y2 + thickness} C${middle},${y2 + thickness} ${middle},${y1 + thickness} ${x1},${y1 + thickness} Z`,
-      fill: target.color, class: "viz-flow-link",
-    });
-    source.outOffset += thickness;
-    target.inOffset += thickness;
-    vizActivateSvg(path, `${source.label} → ${target.label}: ${link.jobs.length} jobs`, () => showJobs(`${source.label} → ${target.label}`, link.jobs));
-    linksGroup.append(path);
-  });
-  svg.append(linksGroup);
-  model.nodes.forEach((node) => {
-    const group = vizSvg("g", { class: "viz-flow-node" });
-    group.append(vizSvg("rect", { x: node.x, y: node.y, width: nodeWidth, height: node.height, rx: 4, fill: node.color }));
-    const isOutcome = node.column === model.columns - 1;
-    const y = isOutcome ? node.y + node.height / 2 - 3 : node.y - 13;
-    group.append(vizSvg("text", { x: node.x + (isOutcome ? 25 : 0), y, class: "viz-svg-label" }, `${node.label} · ${node.jobs.length}`));
-    if (isOutcome) group.append(vizSvg("text", { x: node.x + 25, y: y + 19, class: "viz-svg-detail" }, `${vizPercent(node.jobs.length, records.length)} of applications`));
-    vizActivateSvg(group, `${node.label}: ${node.jobs.length} jobs`, () => showJobs(node.label, node.jobs));
-    svg.append(group);
-  });
-  chart.append(svg);
-  const milestones = vizElement("div", "viz-milestones");
-  VIZ_STAGES.forEach((stage) => {
-    const count = records.filter((job) => vizHasStage(job, stage.key)).length;
-    milestones.append(vizElement("span", count ? "" : "viz-muted", `${stage.label} ${count}`));
-  });
-  VIZ_OUTCOMES.filter((outcome) => !records.some((job) => vizOutcome(job) === outcome.label)).forEach((outcome) => milestones.append(vizElement("span", "viz-muted", `${outcome.label} 0`)));
-  panel.append(chart, milestones, vizElement("p", "viz-note", "Width = number of applications. Only logged milestones appear; unrecorded steps are skipped. Milestones follow form order, not event dates. Ghosted is a saved outcome, never inferred from silence."));
+  panel.querySelector(".viz-panel-header").append(vizCalendarControl("flow", draw));
+  const content = vizElement("div", "viz-flow-content");
+  panel.append(content);
   const showJobs = vizDrilldown(panel);
+  function draw() {
+    content.replaceChildren();
+    panel.querySelector(".viz-drilldown").hidden = true;
+    const range = vizPeriodRange(vizState.flowPeriod, new Date(), vizState.flowDates);
+    const records = vizInRange(allRecords, range);
+    const missing = allRecords.filter((job) => vizDate(job.appliedDate) === null).length;
+    content.append(vizElement("p", "viz-period-caption", `${vizRangeLabel(range)} · ${records.length} applications${range && missing ? ` · ${missing} undated excluded` : ""}`));
+    if (!records.length) { content.append(vizElement("p", "viz-empty", allRecords.length ? "No applications in this date range. Try All time or another range." : "Your first application will start the stream.")); return; }
+    const model = vizFlowModel(records);
+    const chart = vizElement("div", "viz-flow-scroll");
+    const svg = vizSvg("svg", { viewBox: "0 0 1100 330", class: "viz-flow", role: "group", "aria-label": "Application flow. Activate a stream or stage to see its jobs." });
+    const scale = 188 / records.length;
+    const nodeWidth = 15;
+    const byKey = new Map(model.nodes.map((node) => [node.key, node]));
+    for (let column = 0; column < model.columns; column++) {
+      const columnNodes = model.nodes.filter((node) => node.column === column);
+      const height = columnNodes.reduce((sum, node) => sum + node.jobs.length * scale, 0) + (columnNodes.length - 1) * 30;
+      let y = 54 + (242 - height) / 2;
+      columnNodes.forEach((node) => {
+        node.x = 35 + column / (model.columns - 1) * 880;
+        node.y = y;
+        node.height = node.jobs.length * scale;
+        node.inOffset = 0;
+        node.outOffset = 0;
+        y += node.height + 30;
+      });
+      const label = column === 0 ? "START" : column === model.columns - 1 ? "CURRENT OUTCOME" : columnNodes.some((node) => node.key === "no-response") ? "RESPONSE" : "RECORDED MILESTONE";
+      svg.append(vizSvg("text", { x: columnNodes[0].x, y: 22, class: "viz-svg-eyebrow" }, label));
+    }
+    const linksGroup = vizSvg("g", { class: "viz-flow-links" });
+    // Put long bypasses first so recorded-stage paths remain visible on top.
+    model.links.sort((a, b) => (byKey.get(b.target).column - byKey.get(b.source).column) - (byKey.get(a.target).column - byKey.get(a.source).column));
+    model.links.forEach((link) => {
+      const source = byKey.get(link.source);
+      const target = byKey.get(link.target);
+      const thickness = link.jobs.length * scale;
+      const x1 = source.x + nodeWidth;
+      const x2 = target.x;
+      const y1 = source.y + source.outOffset;
+      const y2 = target.y + target.inOffset;
+      const middle = (x1 + x2) / 2;
+      const path = vizSvg("path", {
+        d: `M${x1},${y1} C${middle},${y1} ${middle},${y2} ${x2},${y2} L${x2},${y2 + thickness} C${middle},${y2 + thickness} ${middle},${y1 + thickness} ${x1},${y1 + thickness} Z`,
+        fill: target.color, class: "viz-flow-link",
+      });
+      source.outOffset += thickness;
+      target.inOffset += thickness;
+      vizActivateSvg(path, `${source.label} → ${target.label}: ${link.jobs.length} jobs`, () => showJobs(`${source.label} → ${target.label}`, link.jobs));
+      linksGroup.append(path);
+    });
+    svg.append(linksGroup);
+    model.nodes.forEach((node) => {
+      const group = vizSvg("g", { class: "viz-flow-node" });
+      group.append(vizSvg("rect", { x: node.x, y: node.y, width: nodeWidth, height: node.height, rx: 4, fill: node.color }));
+      const isOutcome = node.column === model.columns - 1;
+      const y = isOutcome ? node.y + node.height / 2 - 3 : node.y - 13;
+      group.append(vizSvg("text", { x: node.x + (isOutcome ? 25 : 0), y, class: "viz-svg-label" }, `${node.label} · ${node.jobs.length}`));
+      if (isOutcome) group.append(vizSvg("text", { x: node.x + 25, y: y + 19, class: "viz-svg-detail" }, `${vizPercent(node.jobs.length, records.length)} of applications`));
+      vizActivateSvg(group, `${node.label}: ${node.jobs.length} jobs`, () => showJobs(node.label, node.jobs));
+      svg.append(group);
+    });
+    chart.append(svg);
+    const milestones = vizElement("div", "viz-milestones");
+    VIZ_STAGES.forEach((stage) => {
+      const count = records.filter((job) => vizHasStage(job, stage.key)).length;
+      milestones.append(vizElement("span", count ? "" : "viz-muted", `${stage.label} ${count}`));
+    });
+    VIZ_OUTCOMES.filter((outcome) => !records.some((job) => vizOutcome(job) === outcome.label)).forEach((outcome) => milestones.append(vizElement("span", "viz-muted", `${outcome.label} 0`)));
+    content.append(chart, milestones, vizElement("p", "viz-note", "Width = applications. No response means still in progress with no recorded milestones; it is never classified as Ghosted. Other unrecorded steps are skipped. Milestones follow form order, not event dates."));
+  }
+  draw();
   return panel;
 }
 
@@ -346,7 +516,7 @@ function vizSalaryPanel(records) {
       rows.append(row);
     });
     content.append(rows, vizElement("p", "viz-note", "Dot = mean of each job’s pay midpoint. Line = lowest to highest advertised pay. A single bound is used when no range exists. Missing pay is excluded, not counted as zero."));
-    if (vizState.salaryMode === "annualized") content.append(vizElement("p", "viz-method", "Hourly × 2,080 hours (40 hours × 52 weeks). This is a comparison equivalent, not expected earnings for part-time work or internships."));
+    if (vizState.salaryMode === "annualized") content.append(vizElement("p", "viz-method", "Average hourly pay × 8 hours × 21 days × 12 months (2,016 hours/year). This is a comparison equivalent, not expected earnings for part-time work or internships."));
     if (vizState.salaryGroup === "role") content.append(vizElement("p", "viz-note", "Jobs with multiple roles appear in each role; the overall average counts each job once."));
   }
   draw();
@@ -359,7 +529,7 @@ function vizImpactPanel(records) {
   const hero = vizElement("div", "viz-impact-hero");
   const ring = vizElement("button", "viz-impact-ring");
   ring.type = "button";
-  ring.style.setProperty("--impact-share", `${publicJobs.length / records.length * 100}%`);
+  ring.style.setProperty("--impact-share", `${publicJobs.length / Math.max(records.length, 1) * 100}%`);
   ring.append(vizElement("strong", "", vizPercent(publicJobs.length, records.length)), vizElement("span", "", "public purpose"));
   ring.setAttribute("aria-label", `${publicJobs.length} public-purpose jobs out of ${records.length}. Show jobs tagged Govt or Poor.`);
   ring.addEventListener("click", () => showJobs("Public purpose · Govt or Poor", publicJobs));
@@ -383,17 +553,17 @@ function vizImpactPanel(records) {
     button.type = "button";
     const track = vizElement("span", "viz-impact-track");
     const fill = vizElement("span");
-    fill.style.width = `${matching.length / records.length * 100}%`;
+    fill.style.width = `${matching.length / Math.max(records.length, 1) * 100}%`;
     fill.style.background = color;
     track.append(fill);
     button.append(vizElement("span", "", label), vizElement("strong", "", `${matching.length} · ${vizPercent(matching.length, records.length)}`), track);
     button.addEventListener("click", () => showJobs(label, matching));
     bars.append(button);
   });
-  const waiting = publicJobs.filter((job) => !isAppliedJob(job));
-  const callout = vizElement("button", "viz-impact-callout", `${waiting.length} public-purpose ${waiting.length === 1 ? "job is" : "jobs are"} still waiting for an application →`);
+  const waiting = publicJobs.filter((job) => !getFinalStatusForForm(job));
+  const callout = vizElement("button", "viz-impact-callout", `${waiting.length} public-purpose ${waiting.length === 1 ? "application is" : "applications are"} still in progress →`);
   callout.type = "button";
-  callout.addEventListener("click", () => showJobs("Public-purpose jobs to apply to", waiting));
+  callout.addEventListener("click", () => showJobs("Public-purpose applications in progress", waiting));
   panel.append(hero, bars, callout, vizElement("p", "viz-note", "Based on your Helping tags, not an independent impact rating. Tags can overlap, so the bars may sum to more than 100%. Environment is shown separately."));
   const showJobs = vizDrilldown(panel);
   return panel;
@@ -402,37 +572,54 @@ function vizImpactPanel(records) {
 // Offline city centers and explicit aliases for the locations in this search.
 // Unknown locations stay in the list instead of being assigned guessed coordinates.
 const VIZ_PLACES = [
-  ["Missoula, MT", -113.994, 46.872, ["Missoula", "Missoula, MT"]],
-  ["Seattle, WA", -122.332, 47.606, ["Seattle", "Seattle, WA"]],
-  ["Redlands, CA", -117.182, 34.055, ["Redlands", "Redlands, CA"]],
-  ["Washington, DC", -77.037, 38.907, ["Washington, DC", "Washington DC"]],
-  ["DMV region", -77.15, 39.0, ["DMV", "DMV region"]],
-  ["Reston, VA", -77.357, 38.958, ["Reston, VA", "Reston"]],
-  ["San Bruno, CA", -122.411, 37.63, ["San Bruno, CA", "San Bruno"]],
-  ["Helena, MT", -112.037, 46.589, ["Helena, MT", "Helena"]],
-  ["Glendive, MT", -104.712, 47.105, ["Glendive, MT", "Glendive"]],
-  ["Bozeman, MT", -111.043, 45.677, ["Bozeman, MT", "Bozeman"]],
-  ["Arlee, MT", -114.085, 47.163, ["Arlee, MT", "Arlee"]],
-  ["Austin, TX", -97.743, 30.267, ["Austin, TX", "Austin"]],
-  ["Annecy, France", 6.129, 45.899, ["Annecy, France", "Annecy"]],
-  ["Nanterre, France", 2.207, 48.892, ["Nanterre, France", "Nanterre, Île-de-France, France", "Nanterre"]],
-  ["Rueil, France", 2.181, 48.877, ["Rueil, France", "Rueil-Malmaison, France"]],
-  ["Vélizy-Villacoublay, France", 2.19, 48.782, ["Vélizy-Villacoublay, Yvelines, France", "Vélizy-Villacoublay, France"]],
-  ["Cardiff, United Kingdom", -3.18, 51.481, ["Cardiff, United Kingdom", "Cardiff, UK", "Cardiff"]],
+  ["Missoula, MT", -113.994, 46.872, ["Missoula", "Missoula, MT"], "us"],
+  ["Seattle, WA", -122.332, 47.606, ["Seattle", "Seattle, WA"], "us"],
+  ["Redlands, CA", -117.182, 34.055, ["Redlands", "Redlands, CA"], "us"],
+  ["Washington, DC", -77.037, 38.907, ["Washington, DC", "Washington DC"], "us"],
+  ["DMV region", -77.15, 39.0, ["DMV", "DMV region"], "us"],
+  ["Reston, VA", -77.357, 38.958, ["Reston, VA", "Reston"], "us"],
+  ["San Bruno, CA", -122.411, 37.63, ["San Bruno, CA", "San Bruno"], "us"],
+  ["Helena, MT", -112.037, 46.589, ["Helena, MT", "Helena"], "us"],
+  ["Glendive, MT", -104.712, 47.105, ["Glendive, MT", "Glendive"], "us"],
+  ["Bozeman, MT", -111.043, 45.677, ["Bozeman, MT", "Bozeman"], "us"],
+  ["Arlee, MT", -114.085, 47.163, ["Arlee, MT", "Arlee"], "us"],
+  ["Austin, TX", -97.743, 30.267, ["Austin, TX", "Austin"], "us"],
+  ["Annecy, France", 6.129, 45.899, ["Annecy, France", "Annecy"], "fr"],
+  ["Nanterre, France", 2.207, 48.892, ["Nanterre, France", "Nanterre, Île-de-France, France", "Nanterre"], "fr"],
+  ["Rueil, France", 2.181, 48.877, ["Rueil, France", "Rueil-Malmaison, France"], "fr"],
+  ["Vélizy-Villacoublay, France", 2.19, 48.782, ["Vélizy-Villacoublay, Yvelines, France", "Vélizy-Villacoublay, France"], "fr"],
+  ["Cardiff, UK", -3.18, 51.481, ["Cardiff, United Kingdom", "Cardiff, UK", "Cardiff"], "gb"],
+  ["Silicon Valley", -122.04, 37.36, ["Silicon Valley", "Silicon Valley, CA", "Silicon Valley area", "Silicon Valley, USA"], "us"],
+  ["Los Angeles area", -118.244, 34.052, ["Los Angeles", "Los Angeles area", "Los Angeles, CA", "Los Angeles area, CA", "Greater Los Angeles", "LA area"], "us"],
+  ["London area", -.128, 51.507, ["London", "London area", "London, UK", "London area, UK", "London, United Kingdom", "Greater London"], "gb"],
+  ["Paris area", 2.352, 48.857, ["Paris", "Paris area", "Paris, France", "Paris area, France", "Greater Paris"], "fr"],
+  ["Amsterdam area", 4.904, 52.368, ["Amsterdam", "Amsterdam area", "Amsterdam, Netherlands", "Amsterdam area, Netherlands", "Amsterdam, The Netherlands"], "nl"],
 ];
-const VIZ_REGIONS = {
-  us: { label: "United States", bounds: [-126, -66, 24, 51] },
-  europe: { label: "Europe", bounds: [-12, 18, 40, 57] },
-  world: { label: "World", bounds: [-180, 180, -60, 85] },
-};
+
+function vizNormalizePlace(value) {
+  return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/\./g, "").replace(/,\s*/g, ", ").replace(/\s+/g, " ").trim();
+}
+
+function vizCountry(raw) {
+  const suffix = vizNormalizePlace(raw.split(",").pop());
+  if (["usa", "us", "united states", "united states of america"].includes(suffix)) return "us";
+  if (["uk", "gb", "united kingdom", "england", "scotland", "wales", "northern ireland"].includes(suffix)) return "gb";
+  if (suffix === "the netherlands") return "nl";
+  // State abbreviations need a comma so a bare country code is not misclassified.
+  if (raw.includes(",") && /^(AL|AK|AZ|AR|CA|CO|CT|DE|DC|FL|GA|HI|ID|IL|IN|IA|KS|KY|LA|ME|MD|MA|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NM|NY|NC|ND|OH|OK|OR|PA|RI|SC|SD|TN|TX|UT|VT|VA|WA|WV|WI|WY)$/.test(raw.split(",").pop().trim())) return "us";
+  return Object.entries(VIZ_COUNTRIES).find(([, country]) => country.aliases.some((alias) => vizNormalizePlace(alias) === suffix))?.[0] || "unmapped";
+}
 
 function vizLocation(job) {
   const raw = (job.location || (job.locationChoice === "Other" ? job.locationOther : job.locationChoice) || "").trim();
-  if (!raw) return { label: "Location not recorded", kind: "missing" };
-  if (/^remote$/i.test(raw)) return { label: "Remote", kind: "remote" };
-  const normalize = (value) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
-  const place = VIZ_PLACES.find((entry) => entry[3].some((alias) => normalize(alias) === normalize(raw)));
-  return place ? { label: place[0], lon: place[1], lat: place[2], kind: "mapped" } : { label: raw, kind: "unmapped" };
+  if (!raw) return { label: "Location not recorded", kind: "missing", country: "remote" };
+  if (/^remote(?:$|[\s,(/-])/i.test(raw)) return { label: "Remote", kind: "remote", country: "remote" };
+  const country = vizCountry(raw);
+  const normalized = vizNormalizePlace(raw);
+  const withoutCountry = raw.split(",").slice(0, -1).join(",");
+  const place = VIZ_PLACES.find((entry) => entry[3].some((alias) => vizNormalizePlace(alias) === normalized ||
+    (entry[4] === country && vizNormalizePlace(alias) === vizNormalizePlace(withoutCountry))));
+  return place ? { label: place[0], lon: place[1], lat: place[2], country: place[4], kind: "mapped" } : { label: raw, kind: "unmapped", country };
 }
 
 function vizLocationGroups(records) {
@@ -450,33 +637,74 @@ function vizProject(lon, lat, bounds) {
   return [(lon - west) / (east - west) * 800, (north - lat) / (north - south) * 380];
 }
 
+function vizMapCountries(groups) {
+  return ["remote", "us", "fr", "gb", ...new Set(groups.map((group) => group.country))].filter((key, index, keys) => keys.indexOf(key) === index);
+}
+
+function vizCountryLabel(key) {
+  return ({ remote: "Remote", us: "USA", gb: "UK", unmapped: "Unmapped" })[key] || VIZ_COUNTRIES[key]?.label || key;
+}
+
+function vizCountryBounds(key) {
+  if (key === "remote") return [-122, -106, 43, 51];
+  if (key === "us") return [-126, -66, 24, 51];
+  if (key === "unmapped") return [-180, 180, -60, 85];
+  const [west, east, south, north] = VIZ_COUNTRIES[key]?.bounds || [-180, 180, -60, 85];
+  const centerLon = (west + east) / 2;
+  const centerLat = (south + north) / 2;
+  const ratio = 800 / 380 / Math.max(.3, Math.cos(centerLat * Math.PI / 180));
+  const height = Math.max((north - south) * 1.2, (east - west) * 1.2 / ratio, 2);
+  return [centerLon - height * ratio / 2, centerLon + height * ratio / 2, centerLat - height / 2, centerLat + height / 2];
+}
+
+function vizMapBackground(svg, bounds, country) {
+  const intersects = (ring) => {
+    const lons = ring.map((point) => point[0]);
+    const lats = ring.map((point) => point[1]);
+    return Math.max(...lons) >= bounds[0] && Math.min(...lons) <= bounds[1] && Math.max(...lats) >= bounds[2] && Math.min(...lats) <= bounds[3];
+  };
+  const path = (ring) => `M${ring.map(([lon, lat]) => vizProject(lon, lat, bounds).map((n) => n.toFixed(1)).join(",")).join("L")}`;
+  const land = vizSvg("g", { fill: "#f5f4e9", stroke: "#c7d2c0", "stroke-width": 1, "stroke-linejoin": "round", "aria-hidden": "true" });
+  VIZ_LAND.filter(intersects).forEach((ring) => land.append(vizSvg("path", { d: `${path(ring)}Z` })));
+  svg.append(land);
+  if (["us", "remote"].includes(country)) {
+    const states = vizSvg("g", { fill: "none", stroke: "#d4dacb", "stroke-width": .8, "aria-hidden": "true" });
+    VIZ_STATE_LINES.filter(intersects).forEach((line) => states.append(vizSvg("path", { d: path(line) })));
+    svg.append(states);
+  }
+}
+
+function vizPlaceSummary(place) {
+  const pay = vizPaySummary(place.jobs);
+  const roles = [...new Set(place.jobs.flatMap((job) => job.roles?.length ? job.roles.map((role) => role === "Other" ? job.roleOther || "Other" : role) : job.roleOther ? [job.roleOther] : []))].sort();
+  return { pay, roles };
+}
+
 function vizMapPanel(records) {
-  const panel = vizPanel("04", "A world of possibilities", "Where the opportunities are, from home turf to farther afield.", "viz-map-panel");
+  const panel = vizPanel("04", "A world of possibilities", "Your applications, country by country. Hover over a pin for pay and roles.", "viz-map-panel");
   const groups = vizLocationGroups(records);
+  const countries = vizMapCountries(groups);
+  if (!countries.includes(vizState.region)) vizState.region = "remote";
   const controls = vizElement("div", "viz-map-tabs");
   controls.setAttribute("role", "group");
-  controls.setAttribute("aria-label", "Map region");
-  Object.entries(VIZ_REGIONS).forEach(([key, region]) => {
-    const button = vizElement("button", "", region.label);
+  controls.setAttribute("aria-label", "Map country");
+  countries.forEach((key) => {
+    const count = groups.filter((place) => place.country === key).reduce((sum, place) => sum + place.jobs.length, 0);
+    const button = vizElement("button", "", `${vizCountryLabel(key)} · ${count}`);
     button.type = "button";
     button.dataset.region = key;
     button.addEventListener("click", () => { vizState.region = key; draw(); });
     controls.append(button);
   });
   const map = vizElement("div", "viz-map");
+  const tooltip = vizElement("div", "viz-map-tooltip");
+  tooltip.id = "viz-map-tooltip";
+  tooltip.setAttribute("role", "tooltip");
+  tooltip.hidden = true;
   const coverage = vizElement("p", "viz-note");
   const locations = vizElement("div", "viz-location-list");
-  groups.forEach((place) => {
-    const button = vizElement("button", `viz-location ${place.kind}`);
-    button.type = "button";
-    const label = vizElement("span", "", place.label);
-    if (place.kind === "unmapped") label.append(vizElement("small", "", "Not mapped"));
-    button.append(label, vizElement("strong", "", place.jobs.length));
-    button.addEventListener("click", () => showJobs(place.label, place.jobs));
-    locations.append(button);
-  });
   panel.append(controls, map, coverage, locations,
-    vizElement("p", "viz-note", "Bubble area = job count. Markers use city centers; DMV uses a regional center. Remote jobs have no map pin. All locations are listed below the map, including missing and unmapped entries."));
+    vizElement("p", "viz-note", "Bubble area = applications. City and area pins are approximate centers. Remote and missing-location applications share a home-base pin in Missoula; this is an anchor, not their job location. Salary includes hourly × 8 × 21 × 12."));
   const attribution = vizElement("p", "viz-note");
   const source = vizElement("a", "", "Natural Earth");
   source.href = "https://www.naturalearthdata.com/";
@@ -486,25 +714,63 @@ function vizMapPanel(records) {
   panel.append(attribution);
   const showJobs = vizDrilldown(panel);
   function draw() {
+    tooltip.hidden = true;
+    panel.querySelector(".viz-drilldown").hidden = true;
     controls.querySelectorAll("button").forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.region === vizState.region)));
-    const region = VIZ_REGIONS[vizState.region];
-    const svg = vizSvg("svg", { viewBox: "0 0 800 380", role: "group", "aria-label": `${region.label} job map. Activate a marker or use the location list below.` });
-    svg.append(vizSvg("image", { href: `img/maps/${vizState.region}.svg`, width: 800, height: 380 }));
-    const visible = groups.filter((place) => place.kind === "mapped" && place.lon >= region.bounds[0] && place.lon <= region.bounds[1] && place.lat >= region.bounds[2] && place.lat <= region.bounds[3]);
+    const country = vizState.region;
+    const bounds = vizCountryBounds(country);
+    const selected = groups.filter((place) => place.country === country);
+    const count = selected.reduce((sum, place) => sum + place.jobs.length, 0);
+    const svg = vizSvg("svg", { viewBox: "0 0 800 380", role: "group", "aria-label": `${vizCountryLabel(country)} application map. Focus a marker for salary and roles; activate to see jobs.` });
+    vizMapBackground(svg, bounds, country);
+    const visible = country === "remote" && count ? [{ label: "Remote & unlocated · Missoula home base", lon: -113.994, lat: 46.872, jobs: selected.flatMap((place) => place.jobs) }] : selected.filter((place) => place.kind === "mapped");
+    locations.replaceChildren();
+    selected.forEach((place) => {
+      const button = vizElement("button", `viz-location ${place.kind}`);
+      button.type = "button";
+      const label = vizElement("span", "", place.label);
+      if (place.kind === "unmapped") label.append(vizElement("small", "", "City not mapped yet"));
+      button.append(label, vizElement("strong", "", place.jobs.length));
+      button.addEventListener("click", () => showJobs(place.label, place.jobs));
+      locations.append(button);
+    });
     // Draw smaller bubbles last so nearby locations remain selectable.
     visible.forEach((place) => {
-      const [x, y] = vizProject(place.lon, place.lat, region.bounds);
+      const [x, y] = vizProject(place.lon, place.lat, bounds);
       const radius = 9 * Math.sqrt(place.jobs.length);
       const group = vizSvg("g", { class: "viz-map-marker" });
       group.append(vizSvg("circle", { cx: x, cy: y, r: radius, fill: VIZ_COLORS.teal, "fill-opacity": ".8", stroke: "#fffdf8", "stroke-width": 2 }),
         vizSvg("text", { x, y: y + 4, "text-anchor": "middle", class: "viz-map-count" }, place.jobs.length));
-      vizActivateSvg(group, `${place.label}: ${place.jobs.length} jobs`, () => showJobs(place.label, place.jobs));
+      const { pay, roles } = vizPlaceSummary(place);
+      const description = `${place.label}: ${place.jobs.length} applications. Average annual salary ${vizMoney(pay.mean)}, ${pay.count} with pay. Roles: ${roles.join(", ") || "Not recorded"}.`;
+      vizActivateSvg(group, description, () => { showPopup(); showJobs(place.label, place.jobs); });
+      // Use the accessible custom popup instead of a second native title tooltip.
+      group.querySelector("title").remove();
+      group.setAttribute("aria-describedby", tooltip.id);
+      function showPopup() {
+        tooltip.replaceChildren(vizElement("strong", "", place.label), vizElement("span", "viz-tooltip-pay", `${vizMoney(pay.mean)} / year · average`),
+          vizElement("small", "", `${pay.count} of ${place.jobs.length} applications with pay`));
+        const tags = vizElement("div", "viz-tooltip-roles");
+        (roles.length ? roles : ["No role attributes recorded"]).forEach((role) => tags.append(vizElement("span", "", role)));
+        tooltip.append(tags);
+        if (country === "remote") tooltip.append(vizElement("small", "", `${selected.find((place) => place.kind === "remote")?.jobs.length || 0} remote · ${selected.find((place) => place.kind === "missing")?.jobs.length || 0} location not recorded`));
+        tooltip.hidden = false;
+        const mapWidth = map.clientWidth;
+        const mapHeight = map.clientHeight;
+        tooltip.style.left = `${Math.max(8, Math.min(mapWidth - tooltip.offsetWidth - 8, x / 800 * mapWidth + 14))}px`;
+        tooltip.style.top = `${Math.max(8, Math.min(mapHeight - tooltip.offsetHeight - 8, y / 380 * mapHeight - tooltip.offsetHeight - 12))}px`;
+      }
+      group.addEventListener("mouseenter", showPopup);
+      group.addEventListener("focus", showPopup);
+      group.addEventListener("mouseleave", () => { if (document.activeElement !== group) tooltip.hidden = true; });
+      group.addEventListener("blur", () => { tooltip.hidden = true; });
+      group.addEventListener("keydown", (event) => { if (event.key === "Escape") tooltip.hidden = true; });
       svg.append(group);
     });
-    const count = visible.reduce((sum, place) => sum + place.jobs.length, 0);
-    coverage.textContent = `${count} of ${records.length} jobs in this map view · ${records.filter((job) => vizLocation(job).kind === "remote").length} remote · ${records.filter((job) => ["missing", "unmapped"].includes(vizLocation(job).kind)).length} missing or unmapped`;
-    if (!count) svg.append(vizSvg("text", { x: 400, y: 190, "text-anchor": "middle", class: "viz-svg-label" }, "No mapped jobs in this region"));
-    map.replaceChildren(svg);
+    const unmapped = selected.filter((place) => place.kind === "unmapped").reduce((sum, place) => sum + place.jobs.length, 0);
+    coverage.textContent = `${count} of ${records.length} applications · ${vizCountryLabel(country)}${unmapped ? ` · ${unmapped} without a mapped city` : ""}${country === "remote" ? " · home-base pin at Missoula, MT" : ""}`;
+    if (!visible.length) svg.append(vizSvg("text", { x: 400, y: 190, "text-anchor": "middle", class: "viz-svg-label" }, count ? "Locations listed below; city pins not mapped yet" : "No applications here yet"));
+    map.replaceChildren(svg, tooltip);
   }
   draw();
   return panel;
@@ -516,66 +782,125 @@ function vizDate(value) {
   return Number.isFinite(timestamp) && new Date(timestamp).toISOString().slice(0, 10) === value ? timestamp : null;
 }
 
-function vizActivityModel(records) {
-  const dated = records.map((job) => ({ job, date: vizDate(job.appliedDate) })).filter((entry) => entry.date !== null);
-  const months = [];
-  if (dated.length) {
-    const first = new Date(Math.min(...dated.map((entry) => entry.date)));
-    const last = new Date(Math.max(...dated.map((entry) => entry.date)));
-    const cursor = new Date(Date.UTC(first.getUTCFullYear(), first.getUTCMonth(), 1));
+function vizActivityModel(records, range = null, requestedUnit = "auto") {
+  const selected = vizInRange(records, range);
+  const dated = selected.map((job) => ({ job, date: vizDate(job.appliedDate) })).filter((entry) => entry.date !== null);
+  const missing = records.filter((job) => vizDate(job.appliedDate) === null).length;
+  const bins = [];
+  const first = range?.start ?? (dated.length ? Math.min(...dated.map((entry) => entry.date)) : null);
+  const last = range ? range.end - VIZ_DAY : dated.length ? Math.max(...dated.map((entry) => entry.date)) : null;
+  const days = first === null ? 0 : (last - first) / VIZ_DAY + 1;
+  let unit = requestedUnit === "auto" ? range && days <= 31 ? "day" : range && days <= 180 ? "week" : "month" : requestedUnit;
+  // Bound the number of visible bars when a long custom range is grouped daily.
+  if (unit === "day" && days > 366) unit = "week";
+  if (unit === "week" && days > 366 * 7) unit = "month";
+  if (first !== null) {
+    const date = new Date(first);
+    const start = unit === "month" ? Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), 1) : unit === "week" ? first - (date.getUTCDay() + 6) % 7 * VIZ_DAY : first;
+    let cursor = start;
+    const formatter = new Intl.DateTimeFormat("en-US", { month: "short", ...(unit === "month" ? { year: "2-digit" } : { day: "numeric" }), timeZone: "UTC" });
     while (cursor <= last) {
-      const key = cursor.toISOString().slice(0, 7);
-      months.push({ key, jobs: dated.filter((entry) => entry.job.appliedDate.startsWith(key)).map((entry) => entry.job) });
-      cursor.setUTCMonth(cursor.getUTCMonth() + 1);
+      const date = new Date(cursor);
+      const end = unit === "month" ? Date.UTC(date.getUTCFullYear(), date.getUTCMonth() + 1, 1) : cursor + (unit === "week" ? 7 : 1) * VIZ_DAY;
+      bins.push({ key: date.toISOString().slice(0, unit === "month" ? 7 : 10), start: cursor, end,
+        label: formatter.format(cursor), jobs: dated.filter((entry) => entry.date >= cursor && entry.date < end).map((entry) => entry.job) });
+      cursor = end;
     }
   }
-  return { months, missing: records.length - dated.length };
+  return { bins, missing, unit, selected, dated };
+}
+
+function vizActivityMetrics(records, range, now = new Date()) {
+  const selected = vizInRange(records, range);
+  const dated = selected.filter((job) => vizDate(job.appliedDate) !== null);
+  const first = dated.length ? Math.min(...dated.map((job) => vizDate(job.appliedDate))) : vizToday(now);
+  const days = range ? (range.end - range.start) / VIZ_DAY : Math.max(1, (vizToday(now) - first) / VIZ_DAY + 1);
+  const replyDays = selected.flatMap((job) => {
+    const applied = vizDate(job.appliedDate);
+    if (applied === null) return [];
+    const dates = [...VIZ_STAGES.map((stage) => job[`${stage.key}Date`]), ...(["Accepted", "Rejected"].includes(vizOutcome(job)) ? [job.finalStatusDate] : [])]
+      .map(vizDate).filter((date) => date !== null && date >= applied);
+    return dates.length ? [(Math.min(...dates) - applied) / VIZ_DAY] : [];
+  }).sort((a, b) => a - b);
+  const middle = Math.floor(replyDays.length / 2);
+  const medianReply = replyDays.length ? replyDays.length % 2 ? replyDays[middle] : (replyDays[middle - 1] + replyDays[middle]) / 2 : null;
+  const previous = range ? vizInRange(records, { start: range.start - (range.end - range.start), end: range.start }).length : null;
+  return { count: selected.length, pace: dated.length / (days / 7), engaged: selected.filter((job) => VIZ_STAGES.some((stage) => vizHasStage(job, stage.key))).length,
+    interviews: selected.filter((job) => vizHasStage(job, "interview")).length, waiting: selected.filter(vizAwaitingReply).length,
+    mission: selected.filter(vizIsPublicPurpose).length, meanPay: vizPaySummary(selected).mean, payCount: vizPaySummary(selected).count,
+    medianReply, replyCount: replyDays.length, previous, volumeChange: previous > 0 ? (selected.length - previous) / previous * 100 : null };
 }
 
 function vizActivityPanel(records) {
-  const panel = vizPanel("05", "The rhythm of your search", "Applications by month, colored by their current outcome.", "viz-activity-panel");
-  const { months, missing } = vizActivityModel(records);
+  const panel = vizPanel("05", "The rhythm of your search", "Change the window, find your pace, and see what comes back.", "viz-activity-panel");
+  panel.querySelector(".viz-panel-header").append(vizCalendarControl("activity", draw));
+  const controls = vizElement("div", "viz-controls");
+  controls.append(vizSelect("Group applications", [["auto", "Automatic"], ["day", "Daily"], ["week", "Weekly"], ["month", "Monthly"]], vizState.activityUnit, (value) => { vizState.activityUnit = value; draw(); }));
   const legend = vizElement("div", "viz-legend");
   VIZ_OUTCOMES.forEach((outcome) => {
     const item = vizElement("span", "", outcome.label);
     item.style.setProperty("--legend-color", outcome.color);
     legend.append(item);
   });
-  panel.append(legend);
-  if (!months.length) { panel.append(vizElement("p", "viz-empty", "Add application dates to see your rhythm."), vizElement("p", "viz-note", `${missing} applications without a valid date.`)); return panel; }
-  const max = Math.max(...months.map((month) => month.jobs.length), 1);
-  const plot = vizElement("div", "viz-activity-plot");
-  const chart = vizElement("div", "viz-months");
-  const dateFormat = new Intl.DateTimeFormat("en-US", { month: "short", year: "2-digit", timeZone: "UTC" });
-  months.forEach((month) => {
-    const column = vizElement("div", "viz-month");
-    const total = vizElement("button", "viz-month-total", month.jobs.length);
-    total.type = "button";
-    const label = dateFormat.format(new Date(`${month.key}-01T00:00:00Z`));
-    total.setAttribute("aria-label", `${label}: ${month.jobs.length} applications. Show jobs.`);
-    total.addEventListener("click", () => showJobs(`Applied in ${label}`, month.jobs));
-    const bar = vizElement("div", "viz-month-bar");
-    bar.style.height = `${month.jobs.length / max * 180}px`;
-    VIZ_OUTCOMES.forEach((outcome) => {
-      const matching = month.jobs.filter((job) => vizOutcome(job) === outcome.label);
-      if (!matching.length) return;
-      const segment = vizElement("button", "viz-month-segment");
-      segment.type = "button";
-      segment.style.height = `${matching.length / month.jobs.length * 100}%`;
-      segment.style.background = outcome.color;
-      segment.title = `${label} · ${outcome.label}: ${matching.length}`;
-      segment.setAttribute("aria-label", segment.title);
-      segment.addEventListener("click", () => showJobs(`${label} · ${outcome.label}`, matching));
-      bar.append(segment);
-    });
-    column.append(total, bar, vizElement("span", "viz-month-label", label));
-    chart.append(column);
-  });
-  plot.append(chart);
-  const latest = months[months.length - 1];
-  const pulse = vizElement("div", "viz-activity-pulse");
-  pulse.append(vizElement("strong", "", latest.jobs.length), vizElement("span", "", `applications in ${dateFormat.format(new Date(`${latest.key}-01T00:00:00Z`))}`));
-  panel.append(plot, pulse, vizElement("p", "viz-note", `Months use the application date, not the outcome date. Colors reflect today’s saved outcome; they are not a historical status timeline. ${missing} applications without a valid date excluded.`));
+  const content = vizElement("div", "viz-activity-content");
+  panel.append(controls, legend, content);
   const showJobs = vizDrilldown(panel);
+  function draw() {
+    content.replaceChildren();
+    panel.querySelector(".viz-drilldown").hidden = true;
+    const range = vizPeriodRange(vizState.activityPeriod, new Date(), vizState.activityDates);
+    const { bins, missing, unit, dated } = vizActivityModel(records, range, vizState.activityUnit);
+    const metrics = vizActivityMetrics(records, range);
+    content.append(vizElement("p", "viz-period-caption", `${vizRangeLabel(range)} · ${unit === "day" ? "Daily" : unit === "week" ? "Weekly · Monday starts" : "Monthly"} bars`));
+    if (!dated.length) content.append(vizElement("p", "viz-empty", "No dated applications in this window. Try another range or add application dates."));
+    const max = Math.max(...bins.map((bin) => bin.jobs.length), 1);
+    const plot = vizElement("div", "viz-activity-plot");
+    const chart = vizElement("div", "viz-months");
+    bins.forEach((bin) => {
+      const column = vizElement("div", "viz-month");
+      const total = vizElement("button", "viz-month-total", bin.jobs.length);
+      total.type = "button";
+      const label = `${unit === "week" ? "Week of " : ""}${bin.label}`;
+      total.setAttribute("aria-label", `${label}: ${bin.jobs.length} applications. Show jobs.`);
+      total.addEventListener("click", () => showJobs(label, bin.jobs));
+      const bar = vizElement("div", "viz-month-bar");
+      bar.style.height = `${bin.jobs.length / max * 180}px`;
+      VIZ_OUTCOMES.forEach((outcome) => {
+        const matching = bin.jobs.filter((job) => vizOutcome(job) === outcome.label);
+        if (!matching.length) return;
+        const segment = vizElement("button", "viz-month-segment");
+        segment.type = "button";
+        segment.style.height = `${matching.length / bin.jobs.length * 100}%`;
+        segment.style.background = outcome.color;
+        segment.title = `${label} · ${outcome.label}: ${matching.length}`;
+        segment.setAttribute("aria-label", segment.title);
+        segment.addEventListener("click", () => showJobs(`${label} · ${outcome.label}`, matching));
+        bar.append(segment);
+      });
+      column.append(total, bar, vizElement("span", "viz-month-label", bin.label));
+      chart.append(column);
+    });
+    plot.append(chart);
+    if (bins.length) content.append(plot);
+    const metricGrid = vizElement("div", "viz-activity-metrics");
+    const volumeDetail = metrics.previous === null ? "All selected applications" : metrics.volumeChange !== null ? `${vizSigned(metrics.volumeChange)} vs previous ${Math.round((range.end - range.start) / VIZ_DAY)} days` : metrics.count ? "New activity · previous window had 0" : "No activity in either window";
+    const figures = [
+      ["Applications", metrics.count, volumeDetail],
+      ["Applications / week", Number(metrics.pace.toFixed(1)), range ? "Average across the full selected window" : "Dated applications since the first, through today"],
+      ["Reached a milestone", vizPercent(metrics.engaged, metrics.count), `${metrics.engaged} with a response, screen, interview or assessment`],
+      ["Reached an interview", vizPercent(metrics.interviews, metrics.count), `${metrics.interviews} recorded interviews`],
+      ["Awaiting a first reply", metrics.waiting, "In progress with no recorded milestones"],
+      ["Mission-driven share", vizPercent(metrics.mission, metrics.count), `${metrics.mission} tagged Govt or Poor`],
+      ["Average annual pay", vizMoney(metrics.meanPay), `${metrics.payCount} with pay · hourly annualized`],
+      ["Median days to first reply", metrics.medianReply === null ? "—" : Number(metrics.medianReply.toFixed(1)), `${metrics.replyCount} with valid application and reply dates`],
+    ];
+    figures.forEach(([label, value, detail]) => {
+      const item = vizElement("div", "viz-activity-metric");
+      item.append(vizElement("span", "", label), vizElement("strong", "", value), vizElement("small", "", detail));
+      metricGrid.append(item);
+    });
+    content.append(metricGrid, vizElement("p", "viz-note", `Dates select the application cohort; outcomes and milestones reflect its current saved state. ${missing} applications without valid dates are excluded from dated windows and bars, but included in all-time totals. First reply uses the earliest dated milestone or accepted/rejected decision; missing and negative intervals are excluded.`));
+  }
+  draw();
   return panel;
 }
