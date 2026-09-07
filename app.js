@@ -94,6 +94,10 @@ const PAGE_CONFIG = {
 };
 
 const els = {
+  trackerApp: document.querySelector("#tracker-app"),
+  folderGate: document.querySelector("#folder-gate"),
+  folderGateButton: document.querySelector("#folder-gate-button"),
+  folderGateStatus: document.querySelector("#folder-gate-status"),
   formDialog: document.querySelector("#job-form-dialog"),
   formBackdrop: document.querySelector("#form-backdrop"),
   formCloseButton: document.querySelector("#form-close-button"),
@@ -188,7 +192,7 @@ const filters = {
   type: "All",
   applicationStatus: "All",
   priorities: [],
-  sortBy: "",
+  sortBy: "deadline",
   roles: [],
   industries: [],
 };
@@ -205,14 +209,16 @@ async function init() {
   try {
     db = await openDatabase();
     await restoreDirectoryHandle();
-    if (directoryHandle) {
-      await importFromConnectedFolder(directoryHandle);
-    } else {
-      await importFromRepositoryFiles();
+    if (!directoryHandle) {
+      setFolderGate(true);
+      return;
     }
+    await importFromConnectedFolder(directoryHandle);
     await refreshJobs();
     els.saveButton.disabled = false;
+    setFolderGate(false);
   } catch (error) {
+    setFolderGate(true, "The folder could not be opened. Try connecting again.");
     showToast("Local database could not be opened.");
   }
 }
@@ -289,7 +295,7 @@ function bindEvents() {
   });
   els.sortButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      filters.sortBy = filters.sortBy === button.dataset.sort ? "" : button.dataset.sort;
+      filters.sortBy = button.dataset.sort || "deadline";
       updateFilterControls();
       closeFilterAccordions();
       renderJobs();
@@ -322,6 +328,7 @@ function bindEvents() {
     renderJobs();
   });
   els.connectFolderButton.addEventListener("click", connectFolder);
+  els.folderGateButton.addEventListener("click", connectFolder);
   els.exportCsvButton.addEventListener("click", exportCsv);
   els.exportDescriptionsButton.addEventListener("click", exportDescriptions);
   els.importCsvButton.addEventListener("click", () => els.csvInput.click());
@@ -408,6 +415,16 @@ function usesScopedTypeFilter(page = activePage) {
 
 function usesPriorityFilter(page = activePage) {
   return !["applied", "reference"].includes(page);
+}
+
+function setFolderGate(isVisible, statusMessage = "Folder connection is required to continue.") {
+  els.folderGate.hidden = !isVisible;
+  els.trackerApp.inert = isVisible;
+  if (isVisible) {
+    els.folderGateStatus.textContent = statusMessage;
+    els.folderGateButton.disabled = !("showDirectoryPicker" in window);
+    els.folderGateButton.focus();
+  }
 }
 
 function openNewJobForm() {
@@ -900,9 +917,10 @@ function getVisibleJobs() {
   if (filters.industries.length) {
     visible = visible.filter((job) => filters.industries.includes(getIndustryDisplay(job)));
   }
-  if (filters.sortBy === "deadline") {
+  const sortBy = filters.sortBy || "deadline";
+  if (sortBy === "deadline") {
     visible.sort((a, b) => deadlineRank(a) - deadlineRank(b));
-  } else if (filters.sortBy === "priority") {
+  } else if (sortBy === "priority") {
     visible.sort(comparePriorityJobs);
   }
   return visible;
@@ -1044,10 +1062,12 @@ function topCounts(values, limit) {
 
 function deadlineRank(job) {
   const deadlineChoice = getDeadlineChoice(job);
-  if (deadlineChoice === "ASAP") return 0;
-  if (deadlineChoice === "Blank") return Number.MAX_SAFE_INTEGER;
-  if (!job.deadline) return Number.MAX_SAFE_INTEGER;
-  return new Date(`${job.deadline}T00:00:00`).getTime();
+  if (deadlineChoice === "Select Date" && job.deadline) {
+    const timestamp = new Date(`${job.deadline}T00:00:00`).getTime();
+    if (Number.isFinite(timestamp)) return timestamp;
+  }
+  if (deadlineChoice === "ASAP") return Number.MAX_SAFE_INTEGER - 1;
+  return Number.MAX_SAFE_INTEGER;
 }
 
 function priorityRank(job) {
@@ -1542,7 +1562,7 @@ function getLastHeardFrom(dates) {
 
 function getDeadlineChoice(job) {
   if (job.deadlineChoice) return job.deadlineChoice;
-  return job.deadline ? "Select Date" : "ASAP";
+  return job.deadline ? "Select Date" : "Blank";
 }
 
 function getPayDisplay(job) {
@@ -1660,6 +1680,7 @@ function extractReadableText(html) {
 
 async function connectFolder() {
   if (!("showDirectoryPicker" in window)) {
+    setFolderGate(true, "This browser does not support folder access. Use a browser with File System Access support.");
     showToast("Folder writing is not supported in this browser.");
     return;
   }
@@ -1682,15 +1703,18 @@ async function connectFolder() {
     await refreshJobs();
     const syncStatus = await safeSyncToConnectedFolder();
     if (syncStatus === "failed") {
+      setFolderGate(true, "The folder connected, but synchronization failed. Try again.");
       showToast("Folder connected, but export failed.");
       return;
     }
+    setFolderGate(false);
     showToast(
       importResult.jobs
         ? `Folder connected. ${importResult.jobs} ${importResult.jobs === 1 ? "job" : "jobs"} imported.`
         : "Folder connected.",
     );
   } catch (error) {
+    setFolderGate(true);
     showToast("Folder connection canceled.");
   }
 }
@@ -1714,6 +1738,7 @@ async function syncToConnectedFolder(forceNotice = false) {
   const permission = await requestDirectoryPermission(directoryHandle);
   if (permission !== "granted") {
     directoryHandle = null;
+    setFolderGate(true, "Folder permission is needed to continue.");
     showToast("Folder permission is needed to export files.");
     return "failed";
   }
@@ -1852,11 +1877,14 @@ async function importFromConnectedFolder(handle) {
   if (!csv) return { jobs: 0, descriptions: 0 };
 
   const imported = parseJobsCsv(csv);
+  const existingJobs = await getAllJobs();
+  const existingById = new Map(existingJobs.map((job) => [job.id, job]));
+  const jobsToImport = imported.filter((job) => shouldImportJob(job, existingById.get(job.id)));
   const descriptionsDir = await getExistingDirectoryHandle(handle, "job-descriptions");
   let descriptionCount = 0;
 
   if (descriptionsDir) {
-    for (const job of imported) {
+    for (const job of jobsToImport) {
       if (!job.descriptionFilename) continue;
       const text = await readTextFile(descriptionsDir, job.descriptionFilename);
       if (text === null) continue;
@@ -1940,7 +1968,7 @@ function csvRowToJob(header, row) {
     record[column] = row[index] ?? "";
   });
   const now = new Date().toISOString();
-  const deadlineChoice = record.deadlineChoice || (record.deadline ? "Select Date" : "ASAP");
+  const deadlineChoice = record.deadlineChoice || (record.deadline ? "Select Date" : "Blank");
   const applicationNeeds = splitList(record.applicationNeeds);
   if (record.referenceCount && !applicationNeeds.includes("References")) {
     applicationNeeds.push("References");

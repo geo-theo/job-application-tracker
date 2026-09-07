@@ -8,7 +8,36 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <main class="app-shell" aria-label="Job application tracker">
+    <section
+      class="folder-gate"
+      id="folder-gate"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="folder-gate-title"
+      aria-describedby="folder-gate-description"
+    >
+      <div class="folder-gate-card">
+        <p class="eyebrow">Workspace access</p>
+        <h1 id="folder-gate-title">Connect to your job folder</h1>
+        <p id="folder-gate-description">
+          Connect the folder that contains your tracker data before opening the workspace.
+          This keeps new entries and edits synchronized with your CSV and description files.
+        </p>
+        <button type="button" class="primary-button" id="folder-gate-button">
+          Connect to folder
+        </button>
+        <p class="folder-gate-status" id="folder-gate-status" role="status" aria-live="polite">
+          Folder connection is required to continue.
+        </p>
+      </div>
+    </section>
+
+    <main
+      class="app-shell"
+      id="tracker-app"
+      aria-label="Job application tracker"
+      inert
+    >
       <div id="form-backdrop" class="form-backdrop" hidden></div>
 
       <section

@@ -38,6 +38,52 @@ body {
   letter-spacing: 0;
 }
 
+.folder-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(32, 33, 36, 0.74);
+}
+
+.folder-gate[hidden] {
+  display: none;
+}
+
+.folder-gate-card {
+  display: grid;
+  gap: 14px;
+  width: min(520px, 100%);
+  padding: 30px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  box-shadow: 0 24px 70px rgba(32, 33, 36, 0.3);
+}
+
+.folder-gate-card h1,
+.folder-gate-card p {
+  margin: 0;
+}
+
+.folder-gate-card h1 {
+  font-size: 1.8rem;
+  line-height: 1.15;
+}
+
+.folder-gate-card > p:not(.eyebrow):not(.folder-gate-status) {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.folder-gate-status {
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 750;
+}
+
 button,
 input,
 select,
