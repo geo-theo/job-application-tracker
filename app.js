@@ -208,15 +208,7 @@ async function init() {
   els.saveButton.disabled = true;
   try {
     db = await openDatabase();
-    await restoreDirectoryHandle();
-    if (!directoryHandle) {
-      setFolderGate(true);
-      return;
-    }
-    await importFromConnectedFolder(directoryHandle);
-    await refreshJobs();
-    els.saveButton.disabled = false;
-    setFolderGate(false);
+    setFolderGate(true);
   } catch (error) {
     setFolderGate(true, "The folder could not be opened. Try connecting again.");
     showToast("Local database could not be opened.");
@@ -550,15 +542,6 @@ async function putDescription(jobId, text) {
 
 async function deleteDescription(jobId) {
   return idbRequest(getStore(DESCRIPTION_STORE, "readwrite").delete(jobId));
-}
-
-async function putSetting(key, value) {
-  return idbRequest(getStore(SETTINGS_STORE, "readwrite").put({ key, value }));
-}
-
-async function getSetting(key) {
-  const record = await idbRequest(getStore(SETTINGS_STORE).get(key));
-  return record?.value;
 }
 
 function transactionDone(tx) {
@@ -943,121 +926,6 @@ function getEmptyMessage() {
   return (usesScopedTypeFilter() && filters.type !== "All") || (activePage === "applied" && filters.applicationStatus !== "All") || (usesPriorityFilter() && filters.priorities.length) || filters.roles.length || filters.industries.length
     ? "No jobs match the current filters."
     : config.empty;
-}
-
-function renderViz() {
-  els.recordCount.textContent = `${jobs.length} ${jobs.length === 1 ? "job" : "jobs"}`;
-  els.jobList.replaceChildren();
-
-  if (!jobs.length) {
-    const empty = document.createElement("div");
-    empty.className = "empty-state";
-    empty.textContent = "No saved jobs yet.";
-    els.jobList.append(empty);
-    return;
-  }
-
-  const appliedJobs = getPageJobs("applied");
-  const respondedJobs = appliedJobs.filter((job) => job.responseDate || job.responseStatus === "Yes");
-  const decisionJobs = appliedJobs.filter((job) => isDecisionApplicationStatus(getFinalStatusForForm(job)));
-  const dashboard = document.createElement("section");
-  dashboard.className = "viz-dashboard";
-
-  const stats = document.createElement("div");
-  stats.className = "viz-stat-grid";
-  stats.append(
-    statCard("Total jobs", jobs.length),
-    statCard("Applied", appliedJobs.length),
-    statCard("Favorites", jobs.filter(isFavoriteJob).length),
-    statCard("Response rate", `${Math.round((respondedJobs.length / Math.max(appliedJobs.length, 1)) * 100)}%`),
-  );
-
-  dashboard.append(
-    stats,
-    chartPanel("Application journey", [
-      { label: "Applied", value: appliedJobs.length, tone: "applied" },
-      { label: "Responded", value: respondedJobs.length, tone: "responded" },
-      { label: "Screened", value: appliedJobs.filter((job) => job.screenDate || job.screenStatus === "Yes").length, tone: "screened" },
-      { label: "Interviewed", value: appliedJobs.filter((job) => job.interviewDate || job.interviewStatus === "Yes").length, tone: "interviewed" },
-      { label: "Assessed", value: appliedJobs.filter((job) => job.assessmentDate || job.assessmentStatus === "Yes").length, tone: "assessed" },
-      { label: "Decision", value: decisionJobs.length, tone: "decision" },
-    ]),
-    chartPanel("Job mix", [
-      { label: "Full-time", value: jobs.filter((job) => hasJobType(job, "Full-time")).length, tone: "full-time" },
-      { label: "Internships", value: jobs.filter((job) => hasJobType(job, "Internship")).length, tone: "internship" },
-      { label: "Part-time", value: jobs.filter((job) => hasJobType(job, "Part-time")).length, tone: "part-time" },
-      { label: "Reference", value: jobs.filter(isReferenceJob).length, tone: "reference" },
-    ]),
-    chartPanel("Application status", [
-      { label: "In-progress", value: appliedJobs.filter((job) => !getFinalStatusForForm(job)).length, tone: "in-progress" },
-      { label: "Ghosted", value: appliedJobs.filter((job) => getFinalStatusForForm(job) === "Ghosted").length, tone: "ghosted" },
-      { label: "Rejected", value: appliedJobs.filter((job) => getFinalStatusForForm(job) === "Rejected").length, tone: "rejected" },
-      { label: "Accepted", value: appliedJobs.filter((job) => getFinalStatusForForm(job) === "Accepted").length, tone: "accepted" },
-    ]),
-    chartPanel("Top industries", topCounts(jobs.map(getIndustryDisplay), 6).map(({ label, value }, index) => ({
-      label,
-      value,
-      tone: `industry-${index % 4}`,
-    }))),
-  );
-
-  els.jobList.append(dashboard);
-}
-
-function statCard(label, value) {
-  const card = document.createElement("div");
-  card.className = "viz-stat";
-  const number = document.createElement("strong");
-  number.textContent = String(value);
-  const caption = document.createElement("span");
-  caption.textContent = label;
-  card.append(number, caption);
-  return card;
-}
-
-function chartPanel(title, items) {
-  const panel = document.createElement("section");
-  panel.className = "chart-panel";
-  const heading = document.createElement("h2");
-  heading.textContent = title;
-  const list = document.createElement("div");
-  list.className = "chart-list";
-  const max = Math.max(...items.map((item) => item.value), 1);
-  items.forEach((item) => {
-    const row = document.createElement("div");
-    row.className = "chart-row";
-
-    const label = document.createElement("span");
-    label.className = "chart-label";
-    label.textContent = item.label;
-
-    const track = document.createElement("div");
-    track.className = "chart-track";
-    const fill = document.createElement("span");
-    fill.className = `chart-fill ${item.tone}`;
-    fill.style.width = `${Math.max((item.value / max) * 100, item.value ? 8 : 0)}%`;
-    track.append(fill);
-
-    const value = document.createElement("strong");
-    value.className = "chart-value";
-    value.textContent = String(item.value);
-
-    row.append(label, track, value);
-    list.append(row);
-  });
-  panel.append(heading, list);
-  return panel;
-}
-
-function topCounts(values, limit) {
-  const counts = new Map();
-  values.filter(Boolean).forEach((value) => {
-    counts.set(value, (counts.get(value) || 0) + 1);
-  });
-  return [...counts.entries()]
-    .map(([label, value]) => ({ label, value }))
-    .sort((a, b) => b.value - a.value || a.label.localeCompare(b.label))
-    .slice(0, limit);
 }
 
 function deadlineRank(job) {
@@ -1694,11 +1562,6 @@ async function connectFolder() {
       return;
     }
     directoryHandle = await getDataDirectoryHandle(pickedHandle);
-    try {
-      await putSetting("directoryHandle", directoryHandle);
-    } catch (error) {
-      // Some browsers support folder writing but do not persist handles.
-    }
     const importResult = await importFromConnectedFolder(directoryHandle);
     await refreshJobs();
     const syncStatus = await safeSyncToConnectedFolder();
@@ -1716,20 +1579,6 @@ async function connectFolder() {
   } catch (error) {
     setFolderGate(true);
     showToast("Folder connection canceled.");
-  }
-}
-
-async function restoreDirectoryHandle() {
-  if (!("showDirectoryPicker" in window)) return;
-  try {
-    const handle = await getSetting("directoryHandle");
-    if (!handle) return;
-    const permission = await handle.queryPermission({ mode: "readwrite" });
-    if (permission === "granted") {
-      directoryHandle = handle;
-    }
-  } catch (error) {
-    directoryHandle = null;
   }
 }
 

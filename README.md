@@ -62,4 +62,20 @@ Use Git as the portable source of truth and the browser database as a local cach
 3. Commit and push those changed files.
 4. On another device, pull the repo and reload the app. The app imports `db/jobs.csv` on startup and shows the pulled jobs.
 
-To deploy, enable GitHub Pages for the repository root. `index.html`, `styles.css`, and `app.js` are the only files needed for the public page.
+To deploy, enable GitHub Pages for the repository root. Include `index.html`, `styles.css`, `app.js`, `viz.css`, `viz.js`, and the `img` directory. No build step or chart CDN is required.
+
+## Viz dashboard
+
+Viz has its own All opportunities / Applied jobs / Jobs to apply to selector. Every chart excludes references using the same rule as the board: Future priority or Applied = No. Board filters do not affect Viz.
+
+- **Application flow:** proportional streams pass through recorded milestones and end in In progress, Accepted, Rejected, or Ghosted. Skipped milestones are not inferred. Columns follow the form's stage order, not event dates; each application reaches one current outcome.
+- **Pay explorer:** group by industry, role, or normalized location. The dot is the mean of each job's advertised midpoint, and the line spans the lowest to highest advertised pay in that group. A lone bound or saved midpoint can supply a value. Missing, invalid, nonpositive, and unknown-type pay are excluded. Annual salary and hourly pay stay separate by default; Annual equivalent explicitly converts hourly pay using 2,080 hours per year, including internships and part-time jobs as comparison equivalents. Role groups can overlap; the overall mean counts each job once.
+- **Impact:** public purpose means a Helping tag of Govt or Poor, counted once per job. All Helping tags are also shown individually, including Environment and untagged records.
+- **Map:** local Natural Earth outlines with explicit city aliases in `VIZ_PLACES` in `viz.js`. Remote, missing, and unmapped locations remain visible in the location list. New locations without a known alias are not assigned guessed pins. United States, Europe, and World views share the same counts.
+- **Activity:** application-date month cohorts, including months with no applications, colored by today's saved outcome. Undated or invalid dates are explicitly excluded.
+
+Chart selections open the underlying job list; selecting a job opens its existing edit form. Controls and SVG marks support keyboard activation. The dashboard uses the connected folder's live records and never modifies job data during analysis.
+
+Run the calculation checks with `node --test tests/viz.test.cjs`.
+
+The bundled map SVGs are derived from [Natural Earth 1:110m data](https://github.com/nvkelso/natural-earth-vector), which is [public domain](https://www.naturalearthdata.com/about/terms-of-use/). Regenerate them with `node scripts/build-viz-maps.cjs` (Node 18+ and network access); the dashboard itself makes no external map or geocoding requests.

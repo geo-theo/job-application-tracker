@@ -1208,139 +1208,6 @@ button:focus-visible {
   text-align: center;
 }
 
-.viz-board {
-  display: block;
-}
-
-.viz-dashboard {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-}
-
-.viz-stat-grid {
-  display: grid;
-  grid-column: 1 / -1;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.viz-stat,
-.chart-panel {
-  border: 1px solid #d1c7b8;
-  border-radius: 8px;
-  background: rgba(255, 253, 248, 0.96);
-  box-shadow: 0 8px 24px rgba(59, 50, 38, 0.08);
-}
-
-.viz-stat {
-  display: grid;
-  gap: 4px;
-  min-height: 92px;
-  padding: 16px;
-}
-
-.viz-stat strong {
-  font-size: 1.9rem;
-  line-height: 1;
-}
-
-.viz-stat span {
-  color: var(--muted);
-  font-size: 0.86rem;
-  font-weight: 800;
-}
-
-.chart-panel {
-  display: grid;
-  gap: 14px;
-  padding: 16px;
-}
-
-.chart-panel h2 {
-  font-size: 1.05rem;
-}
-
-.chart-list {
-  display: grid;
-  gap: 12px;
-}
-
-.chart-row {
-  display: grid;
-  grid-template-columns: minmax(98px, 0.42fr) minmax(0, 1fr) 34px;
-  gap: 10px;
-  align-items: center;
-}
-
-.chart-label,
-.chart-value {
-  font-size: 0.86rem;
-  font-weight: 850;
-}
-
-.chart-label {
-  color: #38332c;
-  overflow-wrap: anywhere;
-}
-
-.chart-value {
-  color: var(--muted);
-  text-align: right;
-}
-
-.chart-track {
-  height: 12px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: #e2dbcf;
-}
-
-.chart-fill {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: var(--teal);
-}
-
-.chart-fill.full-time,
-.chart-fill.screened,
-.chart-fill.industry-1 {
-  background: var(--blue);
-}
-
-.chart-fill.internship,
-.chart-fill.responded,
-.chart-fill.accepted,
-.chart-fill.industry-0 {
-  background: var(--teal);
-}
-
-.chart-fill.part-time,
-.chart-fill.interviewed,
-.chart-fill.industry-2 {
-  background: var(--purple);
-}
-
-.chart-fill.reference,
-.chart-fill.ghosted {
-  background: #6c8799;
-}
-
-.chart-fill.assessed,
-.chart-fill.industry-3 {
-  background: var(--orange);
-}
-
-.chart-fill.rejected {
-  background: var(--red);
-}
-
-.chart-fill.in-progress,
-.chart-fill.applied {
-  background: var(--green);
-}
-
 .toast {
   position: fixed;
   right: 22px;
@@ -1411,10 +1278,6 @@ button:focus-visible {
     justify-content: flex-start;
   }
 
-  .viz-dashboard,
-  .viz-stat-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 640px) {
@@ -1431,8 +1294,7 @@ button:focus-visible {
   .field.with-checkbox,
   .description-grid,
   .split-grid,
-  .pay-grid,
-  .chart-row {
+  .pay-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1457,7 +1319,4 @@ button:focus-visible {
     justify-content: flex-start;
   }
 
-  .chart-value {
-    text-align: left;
-  }
 }
