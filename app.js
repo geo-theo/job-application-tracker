@@ -15,7 +15,7 @@ const ROLE_OPTIONS = [
   "Data Engineer",
   "Product Engineer",
   "Software Engineer",
-  "Geopolitcal Risk",
+  "Geopolitical Risk",
   "Intelligence",
   "Supply Chain",
   "Researcher",
@@ -38,7 +38,7 @@ const ROLE_ICONS = {
   "Data Engineer": "CODE",
   "Product Engineer": "CODE",
   "Software Engineer": "CODE",
-  "Geopolitcal Risk": "IR",
+  "Geopolitical Risk": "IR",
   Intelligence: "IR",
   "Supply Chain": "SC",
   Researcher: "RSC",
@@ -426,6 +426,16 @@ function populateRoleOptions() {
   });
   updateRoleFilterOptions([]);
   updateIndustryFilterOptions([]);
+}
+
+function ensureRoleOptions(roles) {
+  const existing = new Set([...els.roles.options].map((option) => option.value));
+  const otherOption = [...els.roles.options].find((option) => option.value === "Other") || null;
+  roles.filter(Boolean).forEach((role) => {
+    if (existing.has(role)) return;
+    els.roles.insertBefore(new Option(role, role), otherOption);
+    existing.add(role);
+  });
 }
 
 function getPageFromHash() {
@@ -885,13 +895,13 @@ async function loadJobIntoForm(jobId) {
   els.referenceCount.value = job.referenceCount || "";
   setRadioValue("jobLevel", getJobLevelForForm(job));
   els.favoriteJob.checked = Boolean(job.favoriteJob);
-  setMultiSelectValues(
-    els.roles,
-    normalizeRolesForForm(job.roles || [], job.roleOther),
-  );
+  const formRoles = normalizeRolesForForm(job.roles || [], job.roleOther);
+  ensureRoleOptions(formRoles.filter((role) => role !== "Other"));
+  setMultiSelectValues(els.roles, formRoles);
   els.roleOther.value = job.roleOther || "";
-  els.industry.value = job.industry || "";
-  els.industryOther.value = job.industryOther || "";
+  const industry = industryForForm(job, [...els.industry.options].map((option) => option.value));
+  els.industry.value = industry.value;
+  els.industryOther.value = industry.other;
   setMultiSelectValues(els.helping, job.helping || []);
   els.jobDescription.value = await getDescription(job.id);
   els.scrapeStatus.textContent = "";
@@ -1577,8 +1587,26 @@ function getRoleIcon(role) {
 }
 
 function getIndustryDisplay(job) {
-  if (job.industry === "Other") return job.industryOther || "Other";
-  return job.industry || "";
+  const value = job.industry === "Other" ? job.industryOther : job.industry;
+  const aliases = {
+    "Defense & Security": "MIC",
+    "Federal Govt": "Federal Government",
+    "Think Tank": "Policy / Think Tank",
+    Media: "Journalism / Media",
+    Transport: "Transportation",
+    Utilities: "Utilities / Telecommunications",
+  };
+  const label = String(value || "").trim();
+  return aliases[label] || label;
+}
+
+function industryForForm(job, options) {
+  const rawIndustry = String(job.industry || "").trim();
+  const displayed = getIndustryDisplay(job);
+  if (!displayed) return { value: "", other: "" };
+  if (rawIndustry === "Other" && job.industryOther) return { value: "Other", other: displayed };
+  if (options.includes(displayed)) return { value: displayed, other: "" };
+  return { value: "Other", other: displayed };
 }
 
 function statusChip(job) {
@@ -2377,7 +2405,7 @@ function toggleCheckedRadioWithKeyboard(event) {
 }
 
 function getSelectedValues(select) {
-  return [...select.selectedOptions].map((option) => option.value);
+  return unique([...select.selectedOptions].map((option) => option.value));
 }
 
 function getCheckedValues(inputs) {
@@ -2401,9 +2429,8 @@ function setCheckedValues(inputs, values) {
 }
 
 function normalizeRolesForForm(roles, roleOther) {
-  const known = new Set(ROLE_OPTIONS);
-  const normalized = roles.map((role) => (known.has(role) ? role : "Other"));
-  if (roleOther) normalized.push("Other");
+  const normalized = unique((roles || []).filter(Boolean));
+  if (roleOther && (!normalized.length || normalized.includes("Other"))) normalized.push("Other");
   return unique(normalized);
 }
 
@@ -2478,10 +2505,10 @@ function hashString(value) {
 
 function splitList(value) {
   if (!value) return [];
-  return value
+  return unique(value
     .split(";")
     .map((item) => item.trim())
-    .filter(Boolean);
+    .filter(Boolean));
 }
 
 function parseBoolean(value) {

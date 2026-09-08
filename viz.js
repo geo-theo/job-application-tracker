@@ -1,7 +1,7 @@
 "use strict";
 
 // Charts use non-reference applications; only the ready-to-apply card uses pending jobs.
-const vizState = { excludedJobTypes: [], salaryGroup: "industry", salaryMode: "salary", region: "remote", flowPeriod: "all", activityPeriod: "all", activityUnit: "auto", flowDates: {}, activityDates: {} };
+const vizState = { excludedJobTypes: [], salaryGroup: "industry", salaryMode: "annualized", region: "remote", flowPeriod: "all", activityPeriod: "all", activityUnit: "auto", flowDates: {}, activityDates: {} };
 const VIZ_ANNUAL_HOURS = 8 * 21 * 12;
 const VIZ_DAY = 86400000;
 const VIZ_PERIODS = [["week", "Last week", 7], ["month", "Last month", 30], ["quarter", "Last quarter", 90], ["year", "Last year", 365], ["all", "All time", null]];
@@ -495,7 +495,7 @@ function vizSalaryPanel(records) {
   const controls = vizElement("div", "viz-controls");
   controls.append(
     vizSelect("Group by", [["industry", "Industry"], ["role", "Role"], ["location", "Location"]], vizState.salaryGroup, (value) => { vizState.salaryGroup = value; draw(); }),
-    vizSelect("Compare", [["salary", "Annual salary"], ["annualized", "Annual equivalent"], ["hourly", "Hourly pay"]], vizState.salaryMode, (value) => { vizState.salaryMode = value; draw(); }),
+    vizSelect("Compare", [["annualized", "Yearly pay · hourly included"], ["salary", "Salary postings only"], ["hourly", "Hourly postings only"]], vizState.salaryMode, (value) => { vizState.salaryMode = value; draw(); }),
   );
   const content = vizElement("div", "viz-salary-content");
   panel.append(controls, content);
@@ -542,7 +542,7 @@ function vizSalaryPanel(records) {
       rows.append(row);
     });
     content.append(rows, vizElement("p", "viz-note", "Dot = mean of each job’s pay midpoint. Line = lowest to highest advertised pay. A single bound is used when no range exists. Missing pay is excluded, not counted as zero."));
-    if (vizState.salaryMode === "annualized") content.append(vizElement("p", "viz-method", "Average hourly pay × 8 hours × 21 days × 12 months (2,016 hours/year). This is a comparison equivalent, not expected earnings for part-time work or internships."));
+    if (vizState.salaryMode === "annualized") content.append(vizElement("p", "viz-method", "Salary postings use their annual midpoint. Hourly postings use average hourly pay × 8 hours × 21 days × 12 months (2,016 hours/year). Missing pay is excluded."));
     if (vizState.salaryGroup === "role") content.append(vizElement("p", "viz-note", "Jobs with multiple roles appear in each role; the overall average counts each job once."));
   }
   draw();

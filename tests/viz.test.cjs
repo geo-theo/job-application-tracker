@@ -10,7 +10,7 @@ const context = vm.createContext({
 for (const filename of ["app.js", "viz-geography.js", "viz.js"]) {
   vm.runInContext(fs.readFileSync(path.join(__dirname, "..", filename), "utf8"), context);
 }
-const api = vm.runInContext("({ getVizJobs, vizPay, vizAveragePay, vizPaySummary, vizSalaryGroups, vizFlowModel, vizAwaitingReply, vizIsPublicPurpose, vizLocation, vizLocationGroups, vizMapCountries, vizCountryBounds, vizPlaceSummary, vizActivityModel, vizActivityMetrics, vizDate, vizToday, vizCalendarRange, vizPeriodRange, vizInRange, vizMissionChange })", context);
+const api = vm.runInContext("({ getVizJobs, vizPay, vizAveragePay, vizPaySummary, vizSalaryGroups, vizFlowModel, vizAwaitingReply, vizIsPublicPurpose, vizLocation, vizLocationGroups, vizMapCountries, vizCountryBounds, vizPlaceSummary, vizActivityModel, vizActivityMetrics, vizDate, vizToday, vizCalendarRange, vizPeriodRange, vizInRange, vizMissionChange, getIndustryDisplay, industryForForm, normalizeRolesForForm, splitList, parseJobsCsv, vizState })", context);
 const plain = (value) => JSON.parse(JSON.stringify(value));
 
 test("reference definitions are excluded before all scopes and aggregations", () => {
@@ -57,6 +57,54 @@ test("multi-role groups count jobs once per role and expose missing-pay coverage
   assert.equal(api.vizSalaryGroups(rows, "role", "salary").find((group) => group.label === "GIS").jobs.length, 1);
   assert.equal(api.vizAveragePay(rows), 80000);
   assert.ok(api.vizSalaryGroups(rows, "industry", "salary").some((group) => group.label === "NGO"));
+});
+
+test("industry groups use only the saved industry and keep blank industries separate", () => {
+  const rows = [
+    { id: "explicit", industry: "Tech", roles: ["Retail / Customer Service"], payType: "Hourly", payMin: "25" },
+    { id: "custom", industry: "Other", industryOther: "Tech", roles: ["Outdoors"], payType: "Salary", payMin: "100000" },
+    { id: "blank", industry: "", roles: ["Tech"] },
+    { id: "blank-other", industry: "Other", industryOther: "", roles: ["Tech"] },
+    { id: "legacy", industry: "Defense & Security", payType: "Salary", payMin: "90000" },
+  ];
+  const groups = api.vizSalaryGroups(rows, "industry", "annualized");
+  assert.deepEqual(plain(groups.find((group) => group.label === "Tech").jobs.map((job) => job.id)), ["explicit", "custom"]);
+  assert.deepEqual(plain(groups.find((group) => group.label === "Unspecified industry").jobs.map((job) => job.id)), ["blank", "blank-other"]);
+  assert.deepEqual(plain(groups.find((group) => group.label === "MIC").jobs.map((job) => job.id)), ["legacy"]);
+  assert.equal(groups.reduce((sum, group) => sum + group.jobs.length, 0), rows.length);
+});
+
+test("yearly location pay includes salary and hourly postings in the same calculation", () => {
+  const rows = [
+    { id: "salary", location: "Remote", payType: "Salary", payMin: "100000" },
+    { id: "hourly", location: "Remote", payType: "Hourly", payMin: "20", payMax: "30" },
+    { id: "missing", location: "Remote" },
+  ];
+  const yearly = api.vizSalaryGroups(rows, "location", "annualized").find((group) => group.label === "Remote");
+  assert.equal(yearly.jobs.length, 3);
+  assert.equal(yearly.paid.length, 2);
+  assert.equal(yearly.mean, 75200);
+  assert.equal(api.vizSalaryGroups(rows, "location", "salary")[0].paid.length, 1);
+  assert.equal(api.vizState.salaryMode, "annualized");
+});
+
+test("form values preserve legacy and custom classifications without inventing categories", () => {
+  assert.equal(api.getIndustryDisplay({ industry: "Other", industryOther: "" }), "");
+  assert.deepEqual(plain(api.industryForForm({ industry: "Defense & Security" }, ["", "MIC", "Other"])), { value: "MIC", other: "" });
+  assert.deepEqual(plain(api.industryForForm({ industry: "Other", industryOther: "Food & Beverage" }, ["", "Other"])), { value: "Other", other: "Food & Beverage" });
+  assert.deepEqual(plain(api.normalizeRolesForForm(["GIS / Geospatial"], "")), ["GIS / Geospatial"]);
+  assert.deepEqual(plain(api.splitList("Academia; Academia; Govt")), ["Academia", "Govt"]);
+});
+
+test("classification option labels save the value shown to the user", () => {
+  const html = fs.readFileSync(path.join(__dirname, "..", "index.html"), "utf8");
+  for (const id of ["industry", "helping"]) {
+    const body = html.match(new RegExp(`<select[^>]*id="${id}"[^>]*>([\\s\\S]*?)<\\/select>`))[1];
+    const options = [...body.matchAll(/<option value="([^"]*)">([\s\S]*?)<\/option>/g)]
+      .map((match) => [match[1], match[2].replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim()])
+      .filter(([value]) => value);
+    options.forEach(([value, label]) => assert.equal(value, label, `${id}: ${label}`));
+  }
 });
 
 test("flow conserves applications and never invents skipped stages or decisions", () => {
@@ -223,4 +271,33 @@ test("activity metrics use matching cohorts, valid reply intervals and previous 
   assert.equal(result.interviews, 1);
   assert.equal(result.meanPay, 50400);
   assert.equal(api.vizActivityMetrics([], range).medianReply, null);
+});
+
+test("current CSV reconciles Section 02 group counts and annualized pay coverage", () => {
+  const records = api.parseJobsCsv(fs.readFileSync(path.join(__dirname, "..", "db", "jobs.csv"), "utf8"));
+  const applied = api.getVizJobs(records, "applied");
+  const pay = api.vizPaySummary(applied);
+  const independentlyAnnualized = applied.map((job) => {
+    if (!["Salary", "Hourly"].includes(job.payType)) return null;
+    const asNumber = (value) => Number(String(value || "").replace(/[$,\s]/g, ""));
+    const bounds = [job.payMin, job.payMax].map(asNumber).filter((value) => Number.isFinite(value) && value > 0);
+    const savedMidpoint = asNumber(job.payMidpoint);
+    const midpoint = bounds.length ? bounds.reduce((sum, value) => sum + value, 0) / bounds.length : savedMidpoint > 0 ? savedMidpoint : null;
+    return midpoint && job.payType === "Hourly" ? midpoint * 2016 : midpoint;
+  }).filter(Number.isFinite);
+  assert.equal(pay.count, independentlyAnnualized.length);
+  if (independentlyAnnualized.length) {
+    assert.ok(Math.abs(pay.mean - independentlyAnnualized.reduce((sum, value) => sum + value, 0) / independentlyAnnualized.length) < .001);
+  } else {
+    assert.equal(pay.mean, null);
+  }
+
+  for (const dimension of ["industry", "location"]) {
+    const groups = api.vizSalaryGroups(applied, dimension, "annualized");
+    assert.equal(groups.reduce((sum, group) => sum + group.jobs.length, 0), applied.length, `${dimension} job total`);
+    assert.equal(groups.reduce((sum, group) => sum + group.paid.length, 0), pay.count, `${dimension} paid total`);
+    const groupedIds = groups.flatMap((group) => group.jobs.map((job) => job.id));
+    assert.equal(new Set(groupedIds).size, applied.length, `${dimension} unique jobs`);
+  }
+
 });
