@@ -22,8 +22,8 @@
         <h1 id="folder-gate-title">Connect to your job folder</h1>
         <p id="folder-gate-description">
           Connect the folder that contains your tracker data before opening the
-          workspace. This keeps new entries and edits synchronized with your CSV
-          and description files.
+          workspace. This keeps new entries and edits synchronized with your job
+          and company CSV files plus job descriptions.
         </p>
         <button type="button" class="primary-button" id="folder-gate-button">
           Connect to folder
@@ -90,24 +90,26 @@
               />
             </label>
 
-            <div class="field with-checkbox">
+            <div class="field with-action">
               <label>
                 <span>Company</span>
+                <input type="hidden" id="company-id" name="companyId" />
                 <input
                   id="company"
                   name="company"
                   type="text"
                   autocomplete="organization"
+                  list="company-options"
                 />
+                <datalist id="company-options"></datalist>
               </label>
-              <label class="check-option">
-                <input
-                  id="favorite-company"
-                  name="favoriteCompany"
-                  type="checkbox"
-                />
-                <span>Favorite target</span>
-              </label>
+              <button
+                type="button"
+                class="secondary-button company-info-button"
+                id="edit-company-info-button"
+              >
+                Edit Company Info
+              </button>
             </div>
 
             <label class="field">
@@ -545,55 +547,6 @@
               />
             </div>
 
-            <div class="split-grid">
-              <label class="field">
-                <span>Industry</span>
-                <select id="industry" name="industry">
-                  <option value=""></option>
-                  <option value="Geospatial">Geospatial</option>
-                  <option value="Geopolitical Risk">Geopolitical Risk</option>
-                  <option value="Intl Development">Intl Development</option>
-                  <option value="MIC">MIC</option>
-                  <option value="Tech">Tech</option>
-                  <option value="Intl Government">Intl Government</option>
-                  <option value="Federal Government">Federal Government</option>
-                  <option value="Local Government">Local Government</option>
-                  <option value="NGO">NGO</option>
-                  <option value="Policy / Think Tank">Policy / Think Tank</option>
-                  <option value="Journalism / Media">Journalism / Media</option>
-                  <option value="Academia">Academia</option>
-                  <option value="Energy">Energy</option>
-                  <option value="Utilities / Telecommunications">
-                    Utilities / Telecommunications
-                  </option>
-                  <option value="Engineering / Construction">
-                    Engineering / Construction
-                  </option>
-                  <option value="Transportation">Transportation</option>
-                  <option value="Tourism / Leisure">Tourism / Leisure</option>
-                  <option value="Consumer Products">Consumer Products</option>
-                  <option value="Retail / Customer Experience">Retail / Customer Experience</option>
-                  <option value="Other">Other</option>
-                </select>
-              </label>
-              <label class="field">
-                <span>Helping</span>
-                <select id="helping" name="helping" multiple size="6">
-                  <option value="Poor">Poor</option>
-                  <option value="Rich">Rich</option>
-                  <option value="Startup">Startup</option>
-                  <option value="Govt">Govt</option>
-                  <option value="Academia">Academia</option>
-                  <option value="Environment">Environment</option>
-                </select>
-              </label>
-            </div>
-
-            <label class="field" id="industry-other-wrap" hidden>
-              <span>Other industry</span>
-              <input id="industry-other" name="industryOther" type="text" />
-            </label>
-
             <div class="field">
               <span>Pay</span>
               <div
@@ -693,6 +646,116 @@
         </form>
       </section>
 
+      <section
+        class="form-pane company-form-pane"
+        id="company-form-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="company-form-title"
+        hidden
+      >
+        <header class="pane-header">
+          <div>
+            <p class="eyebrow">Company database</p>
+            <h1 id="company-form-title">Company Info</h1>
+          </div>
+          <button type="button" class="ghost-button" id="company-form-close-button">
+            Close
+          </button>
+        </header>
+
+        <form id="company-form" class="job-form">
+          <input type="hidden" id="company-record-id" name="companyRecordId" />
+
+          <fieldset class="form-section">
+            <legend>Company details</legend>
+
+            <label class="field">
+              <span>Name</span>
+              <input id="company-name" name="name" type="text" autocomplete="organization" required />
+            </label>
+
+            <div class="split-grid">
+              <label class="field">
+                <span>Industry</span>
+                <select id="company-industry" name="industry">
+                  <option value=""></option>
+                  <option value="Geospatial">Geospatial</option>
+                  <option value="Geopolitical Risk">Geopolitical Risk</option>
+                  <option value="Intl Development">Intl Development</option>
+                  <option value="MIC">MIC</option>
+                  <option value="Tech">Tech</option>
+                  <option value="Intl Government">Intl Government</option>
+                  <option value="Federal Government">Federal Government</option>
+                  <option value="Local Government">Local Government</option>
+                  <option value="NGO">NGO</option>
+                  <option value="Policy / Think Tank">Policy / Think Tank</option>
+                  <option value="Journalism / Media">Journalism / Media</option>
+                  <option value="Academia">Academia</option>
+                  <option value="Energy">Energy</option>
+                  <option value="Utilities / Telecommunications">Utilities / Telecommunications</option>
+                  <option value="Engineering / Construction">Engineering / Construction</option>
+                  <option value="Transportation">Transportation</option>
+                  <option value="Tourism / Leisure">Tourism / Leisure</option>
+                  <option value="Consumer Products">Consumer Products</option>
+                  <option value="Retail / Customer Experience">Retail / Customer Experience</option>
+                  <option value="Other">Other</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span>Sector</span>
+                <select id="company-sector" name="sector"></select>
+              </label>
+            </div>
+
+            <div class="split-grid">
+              <label class="field" id="company-industry-other-wrap" hidden>
+                <span>Other industry</span>
+                <input id="company-industry-other" name="industryOther" type="text" />
+              </label>
+
+              <label class="field" id="company-sector-other-wrap" hidden>
+                <span>Other sector</span>
+                <input id="company-sector-other" name="sectorOther" type="text" />
+              </label>
+            </div>
+
+            <label class="field">
+              <span>Mission — who is it helping?</span>
+              <select id="company-mission" name="mission" multiple size="6">
+                <option value="Poor">Poor</option>
+                <option value="Rich">Rich</option>
+                <option value="Startup">Startup</option>
+                <option value="Govt">Govt</option>
+                <option value="Academia">Academia</option>
+                <option value="Environment">Environment</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Website</span>
+              <input id="company-website" name="website" type="url" placeholder="https://" />
+            </label>
+
+            <div class="field">
+              <span>Rank</span>
+              <div class="segmented company-rank-group" role="radiogroup" aria-label="Company rank">
+                <label><input type="radio" name="companyRank" value="Favorite" /><span>Favorite</span></label>
+                <label><input type="radio" name="companyRank" value="Target" /><span>Target</span></label>
+                <label><input type="radio" name="companyRank" value="Normal" /><span>Normal</span></label>
+                <label><input type="radio" name="companyRank" value="Agency" /><span>Agency</span></label>
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="form-actions">
+            <button type="submit" class="primary-button" id="save-company-button">Save Company</button>
+            <button type="reset" class="ghost-button">Clear</button>
+          </div>
+        </form>
+      </section>
+
       <section class="board-pane" aria-labelledby="board-title">
         <header class="pane-header board-header">
           <div>
@@ -721,7 +784,10 @@
                 class="utility-button"
                 id="export-csv-button"
               >
-                Export CSV
+                Export Jobs
+              </button>
+              <button type="button" class="utility-button" id="export-companies-button">
+                Export Companies
               </button>
               <button
                 type="button"
@@ -735,9 +801,13 @@
                 class="utility-button"
                 id="import-csv-button"
               >
-                Import CSV
+                Import Jobs
               </button>
               <input id="csv-input" type="file" accept=".csv,text/csv" hidden />
+              <button type="button" class="utility-button" id="import-companies-button">
+                Import Companies
+              </button>
+              <input id="companies-csv-input" type="file" accept=".csv,text/csv" hidden />
             </div>
           </div>
         </header>
@@ -757,6 +827,9 @@
           </button>
           <button type="button" class="page-nav-button" data-page="favorites">
             Favorites
+          </button>
+          <button type="button" class="page-nav-button" data-page="companies">
+            Companies
           </button>
           <button type="button" class="page-nav-button" data-page="applied">
             Applied

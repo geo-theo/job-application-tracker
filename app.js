@@ -1,8 +1,9 @@
 "use strict";
 
 const DB_NAME = "job-application-tracker";
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 const JOB_STORE = "jobs";
+const COMPANY_STORE = "companies";
 const DESCRIPTION_STORE = "descriptions";
 const SETTINGS_STORE = "settings";
 
@@ -50,13 +51,12 @@ const ROLE_ICONS = {
   "Retail / Customer Service": "!",
 };
 
-const CSV_COLUMNS = [
+const JOB_CSV_COLUMNS = [
   "id",
   "createdAt",
   "updatedAt",
   "link",
-  "company",
-  "favoriteCompany",
+  "companyId",
   "title",
   "locationChoice",
   "locationOther",
@@ -90,12 +90,45 @@ const CSV_COLUMNS = [
   "jobTypes",
   "roles",
   "roleOther",
-  "industry",
-  "industryOther",
-  "helping",
   "descriptionFilename",
   "descriptionLength",
 ];
+
+const COMPANY_CSV_COLUMNS = [
+  "id",
+  "createdAt",
+  "updatedAt",
+  "name",
+  "industry",
+  "sector",
+  "mission",
+  "website",
+  "rank",
+];
+
+// Edit these lists to change the dependent Sector menu. Custom values are
+// stored directly in companies.csv and reopen through the Other option.
+const SECTOR_OPTIONS_BY_INDUSTRY = {
+  Geospatial: ["GIS Software", "Earth Observation", "Surveying / Mapping", "Location Intelligence"],
+  "Geopolitical Risk": ["Risk Intelligence", "Political Risk Consulting", "Due Diligence"],
+  "Intl Development": ["Humanitarian Aid", "Economic Development", "Global Health"],
+  MIC: ["Aerospace & Defense", "Defense Technology", "Government Contracting"],
+  Tech: ["Software", "Hardware", "Cloud Services"],
+  "Intl Government": ["Multilateral", "Foreign Government", "Intergovernmental"],
+  "Federal Government": ["Civilian Agency", "Defense", "Intelligence"],
+  "Local Government": ["City", "County", "Regional"],
+  NGO: ["Humanitarian", "Conservation", "Advocacy"],
+  "Policy / Think Tank": ["Public Policy", "Research", "Advocacy"],
+  "Journalism / Media": ["News", "Digital Media", "Publishing"],
+  Academia: ["Higher Education", "Research Institute", "K-12"],
+  Energy: ["Oil & Gas", "Renewable Energy", "Mining"],
+  "Utilities / Telecommunications": ["Electric", "Water", "Telecommunications"],
+  "Engineering / Construction": ["Civil Engineering", "Architecture", "Construction"],
+  Transportation: ["Aviation", "Rail", "Logistics"],
+  "Tourism / Leisure": ["Outdoor Recreation", "Hospitality", "Travel"],
+  "Consumer Products": ["Food & Beverage", "Apparel", "Consumer Packaged Goods"],
+  "Retail / Customer Experience": ["Retail", "E-commerce", "Customer Service"],
+};
 
 const PAGE_CONFIG = {
   all: { title: "All Jobs", empty: "No saved jobs yet." },
@@ -115,6 +148,7 @@ const PAGE_CONFIG = {
     title: "Favorites",
     empty: "No favorited jobs or companies yet.",
   },
+  companies: { title: "Companies", empty: "No companies saved yet." },
   applied: { title: "Applied", empty: "No applied jobs match this view." },
   reference: {
     title: "Reference",
@@ -139,7 +173,9 @@ const els = {
   editBannerText: document.querySelector("#edit-banner-text"),
   jobLink: document.querySelector("#job-link"),
   company: document.querySelector("#company"),
-  favoriteCompany: document.querySelector("#favorite-company"),
+  companyId: document.querySelector("#company-id"),
+  companyOptions: document.querySelector("#company-options"),
+  editCompanyInfoButton: document.querySelector("#edit-company-info-button"),
   jobTitle: document.querySelector("#job-title"),
   locationOther: document.querySelector("#location-other"),
   payMin: document.querySelector("#pay-min"),
@@ -170,10 +206,19 @@ const els = {
   roles: document.querySelector("#roles"),
   roleOtherWrap: document.querySelector("#role-other-wrap"),
   roleOther: document.querySelector("#role-other"),
-  industry: document.querySelector("#industry"),
-  industryOtherWrap: document.querySelector("#industry-other-wrap"),
-  industryOther: document.querySelector("#industry-other"),
-  helping: document.querySelector("#helping"),
+  companyFormDialog: document.querySelector("#company-form-dialog"),
+  companyFormCloseButton: document.querySelector("#company-form-close-button"),
+  companyForm: document.querySelector("#company-form"),
+  companyRecordId: document.querySelector("#company-record-id"),
+  companyName: document.querySelector("#company-name"),
+  companyIndustry: document.querySelector("#company-industry"),
+  companyIndustryOtherWrap: document.querySelector("#company-industry-other-wrap"),
+  companyIndustryOther: document.querySelector("#company-industry-other"),
+  companySector: document.querySelector("#company-sector"),
+  companySectorOtherWrap: document.querySelector("#company-sector-other-wrap"),
+  companySectorOther: document.querySelector("#company-sector-other"),
+  companyMission: document.querySelector("#company-mission"),
+  companyWebsite: document.querySelector("#company-website"),
   scrapeButton: document.querySelector("#scrape-button"),
   downloadDescriptionButton: document.querySelector(
     "#download-description-button",
@@ -209,11 +254,14 @@ const els = {
   boardControls: document.querySelector("#board-controls"),
   connectFolderButton: document.querySelector("#connect-folder-button"),
   exportCsvButton: document.querySelector("#export-csv-button"),
+  exportCompaniesButton: document.querySelector("#export-companies-button"),
   exportDescriptionsButton: document.querySelector(
     "#export-descriptions-button",
   ),
   importCsvButton: document.querySelector("#import-csv-button"),
   csvInput: document.querySelector("#csv-input"),
+  importCompaniesButton: document.querySelector("#import-companies-button"),
+  companiesCsvInput: document.querySelector("#companies-csv-input"),
   jobList: document.querySelector("#job-list"),
   recordCount: document.querySelector("#record-count"),
   toast: document.querySelector("#toast"),
@@ -221,12 +269,17 @@ const els = {
 
 let db;
 let jobs = [];
+let companies = [];
 let editingId = "";
+let editingCompanyId = "";
 let directoryHandle = null;
 let toastTimer = null;
 let isResettingForm = false;
+let isResettingCompanyForm = false;
 let activePage = getPageFromHash();
 let lastFocusedElement = null;
+let lastCompanyFocusedElement = null;
+let companyEditorOpenedFromJob = false;
 
 const filters = {
   type: "All",
@@ -241,6 +294,7 @@ document.addEventListener("DOMContentLoaded", init);
 
 async function init() {
   populateRoleOptions();
+  populateSectorOptions();
   bindEvents();
   syncPageFromHash();
   updateFilterControls();
@@ -267,7 +321,10 @@ function bindEvents() {
   });
   els.newRecordButton.addEventListener("click", openNewJobForm);
   els.formCloseButton.addEventListener("click", closeFormDialog);
-  els.formBackdrop.addEventListener("click", closeFormDialog);
+  els.formBackdrop.addEventListener("click", () => {
+    if (!els.companyFormDialog.hidden) closeCompanyFormDialog();
+    else closeFormDialog();
+  });
   els.cancelEditButton.addEventListener("click", () => {
     resetForm();
     closeFormDialog();
@@ -276,11 +333,30 @@ function bindEvents() {
   els.payMin.addEventListener("input", updatePayMidpoint);
   els.payMax.addEventListener("input", updatePayMidpoint);
   els.roles.addEventListener("change", syncConditionalFields);
-  els.industry.addEventListener("change", syncConditionalFields);
+  els.company.addEventListener("input", syncJobCompanySelection);
+  els.company.addEventListener("change", syncJobCompanySelection);
+  els.editCompanyInfoButton.addEventListener("click", () =>
+    openCompanyEditorFromJob(),
+  );
+  els.companyForm.addEventListener("submit", handleCompanySubmit);
+  els.companyForm.addEventListener("reset", (event) => {
+    if (isResettingCompanyForm) return;
+    event.preventDefault();
+    resetCompanyForm();
+  });
+  els.companyFormCloseButton.addEventListener("click", closeCompanyFormDialog);
+  els.companyIndustry.addEventListener("change", () => {
+    populateSectorOptions();
+    syncCompanyConditionalFields();
+  });
+  els.companyName.addEventListener("input", () =>
+    els.companyName.setCustomValidity(""),
+  );
+  els.companySector.addEventListener("change", syncCompanyConditionalFields);
   els.deadlineChoice.addEventListener("change", handleDeadlineChoiceChange);
   document
     .querySelectorAll(
-      "input[name='priority'], input[name='jobLevel'], input[name='appliedStatus'], input[name='responseStatus'], input[name='screenStatus'], input[name='interviewStatus'], input[name='assessmentStatus'], input[name='finalStatus']",
+      "input[name='priority'], input[name='jobLevel'], input[name='appliedStatus'], input[name='responseStatus'], input[name='screenStatus'], input[name='interviewStatus'], input[name='assessmentStatus'], input[name='finalStatus'], input[name='companyRank']",
     )
     .forEach((input) => {
       input.addEventListener("pointerdown", rememberRadioState);
@@ -292,6 +368,9 @@ function bindEvents() {
     ?.addEventListener("pointerdown", rememberToggleableGroupRadioState);
   document
     .querySelector(".level-group")
+    ?.addEventListener("pointerdown", rememberToggleableGroupRadioState);
+  document
+    .querySelector(".company-rank-group")
     ?.addEventListener("pointerdown", rememberToggleableGroupRadioState);
   document
     .querySelector(".applied-group")
@@ -408,9 +487,14 @@ function bindEvents() {
   els.connectFolderButton.addEventListener("click", connectFolder);
   els.folderGateButton.addEventListener("click", connectFolder);
   els.exportCsvButton.addEventListener("click", exportCsv);
+  els.exportCompaniesButton.addEventListener("click", exportCompaniesCsv);
   els.exportDescriptionsButton.addEventListener("click", exportDescriptions);
   els.importCsvButton.addEventListener("click", () => els.csvInput.click());
   els.csvInput.addEventListener("change", importCsv);
+  els.importCompaniesButton.addEventListener("click", () =>
+    els.companiesCsvInput.click(),
+  );
+  els.companiesCsvInput.addEventListener("change", importCompaniesCsv);
 
   document.querySelectorAll("input[name='locationChoice']").forEach((input) => {
     input.addEventListener("change", syncConditionalFields);
@@ -426,6 +510,16 @@ function populateRoleOptions() {
   });
   updateRoleFilterOptions([]);
   updateIndustryFilterOptions([]);
+}
+
+function populateSectorOptions(selectedValue = "") {
+  const industry = getCompanyIndustryFormValue();
+  const presets = SECTOR_OPTIONS_BY_INDUSTRY[industry] || [];
+  const current = selectedValue || els.companySector.value;
+  els.companySector.replaceChildren(new Option("", ""));
+  presets.forEach((sector) => els.companySector.append(new Option(sector, sector)));
+  els.companySector.append(new Option("Other", "Other"));
+  els.companySector.value = presets.includes(current) || current === "Other" ? current : "";
 }
 
 function ensureRoleOptions(roles) {
@@ -474,7 +568,9 @@ function updatePageControls() {
   const showAppliedStatusFilter = activePage === "applied";
   const showPriorityFilter = usesPriorityFilter(activePage);
   els.boardTitle.textContent = config.title;
-  els.boardControls.hidden = activePage === "viz";
+  const isCompanyPage = activePage === "companies";
+  els.boardControls.hidden = activePage === "viz" || isCompanyPage;
+  els.newRecordButton.textContent = isCompanyPage ? "Add Company" : "Add Job";
   els.pageTypeFilterWrap.hidden = !showScopedTypeFilter;
   if (!showScopedTypeFilter) {
     els.pageTypeFilterButton.setAttribute("aria-expanded", "false");
@@ -502,7 +598,7 @@ function usesScopedTypeFilter(page = activePage) {
 }
 
 function usesPriorityFilter(page = activePage) {
-  return !["applied", "reference"].includes(page);
+  return !["applied", "reference", "companies", "viz"].includes(page);
 }
 
 function setFolderGate(
@@ -520,6 +616,10 @@ function setFolderGate(
 }
 
 function openNewJobForm() {
+  if (activePage === "companies") {
+    openCompanyEditor();
+    return;
+  }
   resetForm();
   openFormDialog();
 }
@@ -546,14 +646,24 @@ function openFormDialog() {
 function closeFormDialog() {
   if (els.formDialog.hidden) return;
   els.formDialog.hidden = true;
-  els.formBackdrop.hidden = true;
-  document.body.classList.remove("modal-open");
+  if (els.companyFormDialog.hidden) {
+    els.formBackdrop.hidden = true;
+    document.body.classList.remove("modal-open");
+  }
   if (lastFocusedElement && document.contains(lastFocusedElement)) {
     lastFocusedElement.focus();
   }
 }
 
 function handleDocumentKeydown(event) {
+  if (!els.companyFormDialog.hidden) {
+    if (event.key === "Escape") {
+      closeCompanyFormDialog();
+      return;
+    }
+    if (event.key === "Tab") trapDialogFocus(event, els.companyFormDialog);
+    return;
+  }
   if (els.formDialog.hidden) return;
   if (event.key === "Escape") {
     closeFormDialog();
@@ -563,8 +673,12 @@ function handleDocumentKeydown(event) {
 }
 
 function trapFormDialogFocus(event) {
+  trapDialogFocus(event, els.formDialog);
+}
+
+function trapDialogFocus(event, dialog) {
   const focusable = [
-    ...els.formDialog.querySelectorAll(
+    ...dialog.querySelectorAll(
       "a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex='-1'])",
     ),
   ].filter((element) => element.offsetParent !== null);
@@ -580,6 +694,200 @@ function trapFormDialogFocus(event) {
   }
 }
 
+function updateCompanyOptions() {
+  els.companyOptions.replaceChildren(
+    ...companies.map((company) => {
+      const option = document.createElement("option");
+      option.value = company.name;
+      return option;
+    }),
+  );
+}
+
+function normalizeCompanyName(value) {
+  return normalizeWhitespace(String(value || "")).toLocaleLowerCase();
+}
+
+function findCompanyByName(name) {
+  const key = normalizeCompanyName(name);
+  return key
+    ? companies.find((company) => normalizeCompanyName(company.name) === key)
+    : null;
+}
+
+function getCompanyById(id) {
+  return id ? companies.find((company) => company.id === id) || null : null;
+}
+
+function syncJobCompanySelection() {
+  const selected = findCompanyByName(els.company.value);
+  els.companyId.value = selected?.id || "";
+}
+
+async function ensureCompanyForJob(name, preferredId = "") {
+  const normalizedName = normalizeWhitespace(String(name || ""));
+  if (!normalizedName) return null;
+
+  const preferred = getCompanyById(preferredId);
+  if (preferred && normalizeCompanyName(preferred.name) === normalizeCompanyName(normalizedName)) {
+    return preferred;
+  }
+
+  const existing = findCompanyByName(normalizedName);
+  if (existing) return existing;
+
+  const now = new Date().toISOString();
+  const company = normalizeCompanyRecord({
+    id: createId(),
+    createdAt: now,
+    updatedAt: now,
+    name: normalizedName,
+  });
+  await putCompany(company);
+  companies.push(company);
+  companies.sort(compareCompanies);
+  updateCompanyOptions();
+  els.companyId.value = company.id;
+  return company;
+}
+
+function openCompanyEditorFromJob() {
+  syncJobCompanySelection();
+  companyEditorOpenedFromJob = true;
+  openCompanyEditor(els.companyId.value, els.company.value.trim());
+}
+
+function openCompanyEditor(companyId = "", initialName = "") {
+  companyEditorOpenedFromJob = companyEditorOpenedFromJob && !els.formDialog.hidden;
+  const company = getCompanyById(companyId) || findCompanyByName(initialName);
+  loadCompanyIntoForm(company, company ? "" : initialName);
+  lastCompanyFocusedElement =
+    document.activeElement instanceof HTMLElement ? document.activeElement : null;
+  els.formBackdrop.hidden = false;
+  els.companyFormDialog.hidden = false;
+  document.body.classList.add("modal-open");
+  els.companyFormDialog.scrollTo({ top: 0 });
+  window.setTimeout(() => els.companyName.focus(), 0);
+}
+
+function loadCompanyIntoForm(company, initialName = "") {
+  editingCompanyId = company?.id || "";
+  isResettingCompanyForm = true;
+  els.companyForm.reset();
+  isResettingCompanyForm = false;
+  els.companyRecordId.value = editingCompanyId;
+  els.companyName.value = company?.name || initialName;
+  els.companyName.setCustomValidity("");
+
+  const industry = industryForForm(
+    { industry: company?.industry || "" },
+    [...els.companyIndustry.options].map((option) => option.value),
+  );
+  els.companyIndustry.value = industry.value;
+  els.companyIndustryOther.value = industry.other;
+  populateSectorOptions();
+
+  const sector = company?.sector || "";
+  const knownSectors = [...els.companySector.options].map((option) => option.value);
+  if (!sector) {
+    els.companySector.value = "";
+    els.companySectorOther.value = "";
+  } else if (knownSectors.includes(sector)) {
+    els.companySector.value = sector;
+    els.companySectorOther.value = "";
+  } else {
+    els.companySector.value = "Other";
+    els.companySectorOther.value = sector;
+  }
+
+  setMultiSelectValues(els.companyMission, company?.mission || []);
+  els.companyWebsite.value = company?.website || "";
+  setRadioValue("companyRank", company?.rank || "");
+  syncCompanyConditionalFields();
+}
+
+function resetCompanyForm() {
+  loadCompanyIntoForm(null, companyEditorOpenedFromJob ? els.company.value.trim() : "");
+}
+
+function closeCompanyFormDialog() {
+  if (els.companyFormDialog.hidden) return;
+  els.companyFormDialog.hidden = true;
+  if (els.formDialog.hidden) {
+    els.formBackdrop.hidden = true;
+    document.body.classList.remove("modal-open");
+  }
+  const focusTarget = companyEditorOpenedFromJob
+    ? els.editCompanyInfoButton
+    : lastCompanyFocusedElement;
+  companyEditorOpenedFromJob = false;
+  if (focusTarget && document.contains(focusTarget)) focusTarget.focus();
+}
+
+function getCompanyIndustryFormValue() {
+  return els.companyIndustry.value === "Other"
+    ? els.companyIndustryOther.value.trim()
+    : els.companyIndustry.value;
+}
+
+function getCompanySectorFormValue() {
+  return els.companySector.value === "Other"
+    ? els.companySectorOther.value.trim()
+    : els.companySector.value;
+}
+
+function syncCompanyConditionalFields() {
+  els.companyIndustryOtherWrap.hidden = els.companyIndustry.value !== "Other";
+  if (els.companyIndustryOtherWrap.hidden) els.companyIndustryOther.value = "";
+  els.companySectorOtherWrap.hidden = els.companySector.value !== "Other";
+  if (els.companySectorOtherWrap.hidden) els.companySectorOther.value = "";
+}
+
+async function handleCompanySubmit(event) {
+  event.preventDefault();
+  const name = normalizeWhitespace(els.companyName.value);
+  if (!name) {
+    els.companyName.setCustomValidity("Enter a company name.");
+    els.companyName.reportValidity();
+    return;
+  }
+  const duplicate = findCompanyByName(name);
+  if (duplicate && duplicate.id !== editingCompanyId) {
+    els.companyName.setCustomValidity("A company with this name already exists.");
+    els.companyName.reportValidity();
+    return;
+  }
+  els.companyName.setCustomValidity("");
+
+  const now = new Date().toISOString();
+  const existing = getCompanyById(editingCompanyId);
+  const company = normalizeCompanyRecord({
+    id: existing?.id || createId(),
+    createdAt: existing?.createdAt || now,
+    updatedAt: now,
+    name,
+    industry: getCompanyIndustryFormValue(),
+    sector: getCompanySectorFormValue(),
+    mission: getSelectedValues(els.companyMission),
+    website: els.companyWebsite.value.trim(),
+    rank: getRadioValue("companyRank"),
+  });
+
+  await putCompany(company);
+  if (companyEditorOpenedFromJob) {
+    els.company.value = company.name;
+    els.companyId.value = company.id;
+  }
+  await refreshJobs();
+  const syncStatus = await safeSyncToConnectedFolder();
+  closeCompanyFormDialog();
+  showToast(
+    syncStatus === "failed"
+      ? "Company saved locally. Folder export failed."
+      : "Company saved.",
+  );
+}
+
 function openDatabase() {
   return new Promise((resolve, reject) => {
     const request = indexedDB.open(DB_NAME, DB_VERSION);
@@ -587,6 +895,9 @@ function openDatabase() {
       const nextDb = request.result;
       if (!nextDb.objectStoreNames.contains(JOB_STORE)) {
         nextDb.createObjectStore(JOB_STORE, { keyPath: "id" });
+      }
+      if (!nextDb.objectStoreNames.contains(COMPANY_STORE)) {
+        nextDb.createObjectStore(COMPANY_STORE, { keyPath: "id" });
       }
       if (!nextDb.objectStoreNames.contains(DESCRIPTION_STORE)) {
         nextDb.createObjectStore(DESCRIPTION_STORE, { keyPath: "jobId" });
@@ -619,8 +930,16 @@ async function getAllJobs() {
   return idbRequest(getStore(JOB_STORE).getAll());
 }
 
+async function getAllCompanies() {
+  return idbRequest(getStore(COMPANY_STORE).getAll());
+}
+
 async function putJob(job) {
   return idbRequest(getStore(JOB_STORE, "readwrite").put(job));
+}
+
+async function putCompany(company) {
+  return idbRequest(getStore(COMPANY_STORE, "readwrite").put(company));
 }
 
 async function deleteJobRecord(id) {
@@ -658,15 +977,26 @@ function transactionDone(tx) {
 }
 
 async function refreshJobs() {
-  jobs = (await getAllJobs()).sort((a, b) =>
+  let storedJobs = await getAllJobs();
+  const legacyJobs = storedJobs.filter((job) => !job.companyId && job.company);
+  if (legacyJobs.length) {
+    await migrateLegacyCompanies(legacyJobs);
+    await Promise.all(
+      legacyJobs.map((job) => putJob(stripLegacyCompanyFields(job))),
+    );
+    storedJobs = await getAllJobs();
+  }
+  companies = (await getAllCompanies()).sort(compareCompanies);
+  jobs = joinJobsWithCompanies(storedJobs, companies).sort((a, b) =>
     (b.updatedAt || "").localeCompare(a.updatedAt || ""),
   );
+  updateCompanyOptions();
   updateRoleFilterOptions(jobs);
   updateIndustryFilterOptions(jobs);
   renderJobs();
 }
 
-function collectFormData() {
+function collectFormData(companyId = "") {
   const now = new Date().toISOString();
   const existing = editingId ? jobs.find((job) => job.id === editingId) : null;
   const id = editingId || createId();
@@ -679,8 +1009,6 @@ function collectFormData() {
   const roles = getSelectedValues(els.roles);
   const roleOther = els.roleOther.value.trim();
   const allRoles = rolesToSave(roles, roleOther);
-  const industry = els.industry.value;
-  const industryOther = els.industryOther.value.trim();
   const deadlineChoice = els.deadlineChoice.value;
   const appliedStatus = getRadioValue("appliedStatus");
   const priority =
@@ -719,8 +1047,7 @@ function collectFormData() {
       createdAt: existing?.createdAt || now,
       updatedAt: now,
       link: els.jobLink.value.trim(),
-      company: els.company.value.trim(),
-      favoriteCompany: els.favoriteCompany.checked,
+      companyId,
       title: els.jobTitle.value.trim(),
       locationChoice,
       locationOther,
@@ -762,9 +1089,6 @@ function collectFormData() {
       jobTypes,
       roles: allRoles,
       roleOther,
-      industry,
-      industryOther,
-      helping: getSelectedValues(els.helping),
       descriptionFilename: descriptionText
         ? existing?.descriptionFilename || makeDescriptionFilename(id)
         : "",
@@ -776,7 +1100,8 @@ function collectFormData() {
 
 async function handleSubmit(event) {
   event.preventDefault();
-  const { job, descriptionText } = collectFormData();
+  const company = await ensureCompanyForJob(els.company.value, els.companyId.value);
+  const { job, descriptionText } = collectFormData(company?.id || "");
 
   await putJob(job);
   if (descriptionText) {
@@ -822,6 +1147,7 @@ function resetForm() {
   els.form.reset();
   isResettingForm = false;
   els.recordId.value = "";
+  els.companyId.value = "";
   els.payMidpoint.value = "";
   els.scrapeStatus.textContent = "";
   els.saveButton.textContent = "Save Job";
@@ -840,7 +1166,7 @@ async function loadJobIntoForm(jobId) {
   els.recordId.value = job.id;
   els.jobLink.value = job.link || "";
   els.company.value = job.company || "";
-  els.favoriteCompany.checked = Boolean(job.favoriteCompany);
+  els.companyId.value = job.companyId || "";
   els.jobTitle.value = job.title || "";
   setRadioValue("locationChoice", job.locationChoice || "");
   els.locationOther.value = job.locationOther || "";
@@ -899,10 +1225,6 @@ async function loadJobIntoForm(jobId) {
   ensureRoleOptions(formRoles.filter((role) => role !== "Other"));
   setMultiSelectValues(els.roles, formRoles);
   els.roleOther.value = job.roleOther || "";
-  const industry = industryForForm(job, [...els.industry.options].map((option) => option.value));
-  els.industry.value = industry.value;
-  els.industryOther.value = industry.other;
-  setMultiSelectValues(els.helping, job.helping || []);
   els.jobDescription.value = await getDescription(job.id);
   els.scrapeStatus.textContent = "";
 
@@ -955,8 +1277,6 @@ function syncConditionalFields() {
   els.referenceCountWrap.hidden = !els.needsReferences.checked;
   if (els.referenceCountWrap.hidden) els.referenceCount.value = "";
 
-  els.industryOtherWrap.hidden = els.industry.value !== "Other";
-  if (els.industryOtherWrap.hidden) els.industryOther.value = "";
 }
 
 function handlePriorityChange(event) {
@@ -1047,8 +1367,13 @@ function calculateMidpoint(min, max) {
 function renderJobs() {
   updatePageControls();
   els.jobList.classList.toggle("viz-board", activePage === "viz");
+  els.jobList.classList.toggle("companies-board", activePage === "companies");
   if (activePage === "viz") {
     renderViz();
+    return;
+  }
+  if (activePage === "companies") {
+    renderCompanies();
     return;
   }
   const visibleJobs = getVisibleJobs();
@@ -1066,6 +1391,19 @@ function renderJobs() {
   visibleJobs.forEach((job) => {
     els.jobList.append(createJobCard(job));
   });
+}
+
+function renderCompanies() {
+  els.recordCount.textContent = `${companies.length} ${companies.length === 1 ? "company" : "companies"}`;
+  els.jobList.replaceChildren();
+  if (!companies.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty-state";
+    empty.textContent = PAGE_CONFIG.companies.empty;
+    els.jobList.append(empty);
+    return;
+  }
+  companies.forEach((company) => els.jobList.append(createCompanyCard(company)));
 }
 
 function getVisibleJobs() {
@@ -1359,6 +1697,114 @@ function syncFilterOptionButtons(container, selectedValues, dataKey) {
 
 function toKebabCase(value) {
   return value.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
+}
+
+function normalizeCompanyRecord(record) {
+  const rank = ["Favorite", "Target", "Normal", "Agency"].includes(record.rank)
+    ? record.rank
+    : "";
+  return {
+    id: record.id || createId(),
+    createdAt: record.createdAt || new Date().toISOString(),
+    updatedAt: record.updatedAt || record.createdAt || new Date().toISOString(),
+    name: normalizeWhitespace(String(record.name || "")),
+    industry: getIndustryDisplay({ industry: record.industry || "" }),
+    sector: normalizeWhitespace(String(record.sector || "")),
+    mission: Array.isArray(record.mission)
+      ? unique(record.mission)
+      : splitList(record.mission),
+    website: String(record.website || "").trim(),
+    rank,
+  };
+}
+
+function compareCompanies(a, b) {
+  const ranks = { Favorite: 0, Target: 1, Normal: 2, Agency: 3, "": 4 };
+  const rankDifference = (ranks[a.rank] ?? 4) - (ranks[b.rank] ?? 4);
+  return (
+    rankDifference || a.name.localeCompare(b.name, undefined, { sensitivity: "base" })
+  );
+}
+
+function joinJobsWithCompanies(records, companyRecords) {
+  const byId = new Map(companyRecords.map((company) => [company.id, company]));
+  return records.map((job) => {
+    const company = byId.get(job.companyId);
+    if (!company) return { ...job };
+    return {
+      ...job,
+      company: company.name,
+      favoriteCompany: company.rank === "Favorite",
+      industry: company.industry,
+      industryOther: "",
+      mission: company.mission,
+      companySector: company.sector,
+      companyWebsite: company.website,
+      companyRank: company.rank,
+    };
+  });
+}
+
+function createCompanyCard(company) {
+  const card = document.createElement("article");
+  card.className = `company-card${company.rank ? ` rank-${company.rank.toLowerCase()}` : ""}`;
+  card.append(
+    createCompanyLogo({
+      company: company.name,
+      favoriteCompany: company.rank === "Favorite",
+    }),
+  );
+
+  const main = document.createElement("div");
+  main.className = "company-card-main";
+  const name = document.createElement("p");
+  name.className = "job-title";
+  name.textContent = company.name;
+  const jobCount = jobs.filter((job) => job.companyId === company.id).length;
+  const count = document.createElement("span");
+  count.className = "company-job-count";
+  count.textContent = `${jobCount} ${jobCount === 1 ? "job" : "jobs"}`;
+  main.append(name, count);
+
+  const mission = cell((company.mission || []).join(" · "), "company-mission");
+  const rank = document.createElement("div");
+  rank.className = "chips company-rank";
+  if (company.rank) {
+    rank.append(chip(company.rank, `company-${company.rank.toLowerCase()}`));
+  }
+
+  const website = document.createElement("div");
+  website.className = "company-website";
+  if (company.website) {
+    const link = document.createElement("a");
+    link.className = "link-button";
+    link.href = company.website;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = "Website";
+    website.append(link);
+  }
+
+  const edit = document.createElement("button");
+  edit.type = "button";
+  edit.className = "edit-row-button";
+  edit.textContent = "Edit";
+  edit.setAttribute("aria-label", `Edit ${company.name}`);
+  edit.addEventListener("click", () => {
+    companyEditorOpenedFromJob = false;
+    openCompanyEditor(company.id);
+  });
+
+  card.append(
+    main,
+    cell(company.industry, "company-industry"),
+    cell(company.sector, "company-sector"),
+    mission,
+    rank,
+    website,
+    edit,
+  );
+  return card;
 }
 
 function createJobCard(job) {
@@ -1774,7 +2220,7 @@ function updateRoleFilterOptions(sourceJobs) {
 
 function updateIndustryFilterOptions(sourceJobs) {
   const selected = new Set(filters.industries);
-  const standardIndustries = [...els.industry.options]
+  const standardIndustries = [...els.companyIndustry.options]
     .map((option) => option.value)
     .filter((value) => value && value !== "Other");
   const knownIndustries = unique([
@@ -1894,9 +2340,18 @@ async function connectFolder() {
       return;
     }
     setFolderGate(false);
+    const importedParts = [];
+    if (importResult.jobs) {
+      importedParts.push(`${importResult.jobs} ${importResult.jobs === 1 ? "job" : "jobs"}`);
+    }
+    if (importResult.companies) {
+      importedParts.push(
+        `${importResult.companies} ${importResult.companies === 1 ? "company" : "companies"}`,
+      );
+    }
     showToast(
-      importResult.jobs
-        ? `Folder connected. ${importResult.jobs} ${importResult.jobs === 1 ? "job" : "jobs"} imported.`
+      importedParts.length
+        ? `Folder connected. ${importedParts.join(" and ")} imported.`
         : "Folder connected.",
     );
   } catch (error) {
@@ -1915,8 +2370,10 @@ async function syncToConnectedFolder(forceNotice = false) {
     return "failed";
   }
 
-  const csv = await buildCsv();
-  await writeFile(directoryHandle, "jobs.csv", csv);
+  const jobsCsv = await buildCsv();
+  const companiesCsv = buildCompaniesCsv();
+  await writeFile(directoryHandle, "jobs.csv", jobsCsv);
+  await writeFile(directoryHandle, "companies.csv", companiesCsv);
   const descriptionsDir = await directoryHandle.getDirectoryHandle(
     "job-descriptions",
     { create: true },
@@ -1928,7 +2385,7 @@ async function syncToConnectedFolder(forceNotice = false) {
       if (text) await writeFile(descriptionsDir, job.descriptionFilename, text);
     }),
   );
-  if (forceNotice) showToast("CSV and TXT files exported.");
+  if (forceNotice) showToast("Job, company, and description files exported.");
   return "synced";
 }
 
@@ -1979,8 +2436,11 @@ async function getDataDirectoryHandle(pickedHandle) {
   if (pickedHandle.name === "db") return pickedHandle;
   const dbHandle = await getExistingDirectoryHandle(pickedHandle, "db");
   if (!dbHandle) return pickedHandle;
-  const csv = await readTextFile(dbHandle, "jobs.csv");
-  if (csv !== null) return dbHandle;
+  const [jobsCsv, companiesCsv] = await Promise.all([
+    readTextFile(dbHandle, "jobs.csv"),
+    readTextFile(dbHandle, "companies.csv"),
+  ]);
+  if (jobsCsv !== null || companiesCsv !== null) return dbHandle;
   const descriptionsDir = await getExistingDirectoryHandle(
     dbHandle,
     "job-descriptions",
@@ -1991,16 +2451,32 @@ async function getDataDirectoryHandle(pickedHandle) {
 async function exportCsv() {
   const csv = await buildCsv();
   downloadBlob(csv, "jobs.csv", "text/csv");
-  showToast("CSV exported.");
+  showToast("Jobs CSV exported.");
 }
 
 async function buildCsv() {
   const rows = jobs.map((job) =>
-    CSV_COLUMNS.map((column) =>
+    JOB_CSV_COLUMNS.map((column) =>
       serializeCsvValue(getCsvColumnValue(job, column)),
     ),
   );
-  return [CSV_COLUMNS, ...rows]
+  return [JOB_CSV_COLUMNS, ...rows]
+    .map((row) => row.map(escapeCsv).join(","))
+    .join("\r\n");
+}
+
+function exportCompaniesCsv() {
+  downloadBlob(buildCompaniesCsv(), "companies.csv", "text/csv");
+  showToast("Companies CSV exported.");
+}
+
+function buildCompaniesCsv() {
+  const rows = [...companies]
+    .sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: "base" }))
+    .map((company) =>
+      COMPANY_CSV_COLUMNS.map((column) => serializeCsvValue(company[column])),
+    );
+  return [COMPANY_CSV_COLUMNS, ...rows]
     .map((row) => row.map(escapeCsv).join(","))
     .join("\r\n");
 }
@@ -2064,11 +2540,42 @@ async function importCsv(event) {
   }
 }
 
-async function importFromConnectedFolder(handle) {
-  const csv = await readTextFile(handle, "jobs.csv");
-  if (!csv) return { jobs: 0, descriptions: 0 };
+async function importCompaniesCsv(event) {
+  const file = event.target.files?.[0];
+  if (!file) return;
+  try {
+    const imported = parseCompaniesCsv(await file.text());
+    const result = await importCompanies(imported);
+    await refreshJobs();
+    const syncStatus = await safeSyncToConnectedFolder();
+    showToast(
+      syncStatus === "failed"
+        ? `${result.saved} companies imported locally. Folder export failed.`
+        : `${result.saved} ${result.saved === 1 ? "company" : "companies"} imported.`,
+    );
+  } catch (error) {
+    showToast("Companies CSV import failed.");
+  } finally {
+    event.target.value = "";
+  }
+}
 
-  const imported = parseJobsCsv(csv);
+async function importFromConnectedFolder(handle) {
+  const [jobsCsv, companiesCsv] = await Promise.all([
+    readTextFile(handle, "jobs.csv"),
+    readTextFile(handle, "companies.csv"),
+  ]);
+  if (!jobsCsv && !companiesCsv) {
+    return { jobs: 0, companies: 0, descriptions: 0 };
+  }
+
+  const companyImport = companiesCsv
+    ? await importCompanies(parseCompaniesCsv(companiesCsv))
+    : { saved: 0, idMap: new Map() };
+  const imported = jobsCsv ? parseJobsCsv(jobsCsv) : [];
+  imported.forEach((job) => {
+    job.companyId = companyImport.idMap.get(job.companyId) || job.companyId;
+  });
   const existingJobs = await getAllJobs();
   const existingById = new Map(existingJobs.map((job) => [job.id, job]));
   const jobsToImport = imported.filter((job) =>
@@ -2092,17 +2599,36 @@ async function importFromConnectedFolder(handle) {
   }
 
   const savedJobs = await importJobs(imported);
-  return { jobs: savedJobs, descriptions: descriptionCount };
+  return {
+    jobs: savedJobs,
+    companies: companyImport.saved,
+    descriptions: descriptionCount,
+  };
 }
 
 async function importFromRepositoryFiles() {
-  const csv = await fetchTextFile("db/jobs.csv");
-  if (!csv) return { jobs: 0, descriptions: 0 };
+  const [jobsCsv, companiesCsv] = await Promise.all([
+    fetchTextFile("db/jobs.csv"),
+    fetchTextFile("db/companies.csv"),
+  ]);
+  if (!jobsCsv && !companiesCsv) {
+    return { jobs: 0, companies: 0, descriptions: 0 };
+  }
 
-  const imported = parseJobsCsv(csv);
+  const companyImport = companiesCsv
+    ? await importCompanies(parseCompaniesCsv(companiesCsv))
+    : { saved: 0, idMap: new Map() };
+  const imported = jobsCsv ? parseJobsCsv(jobsCsv) : [];
+  imported.forEach((job) => {
+    job.companyId = companyImport.idMap.get(job.companyId) || job.companyId;
+  });
   const descriptionCount = await importDescriptionsFromRepository(imported);
   const savedJobs = await importJobs(imported);
-  return { jobs: savedJobs, descriptions: descriptionCount };
+  return {
+    jobs: savedJobs,
+    companies: companyImport.saved,
+    descriptions: descriptionCount,
+  };
 }
 
 async function importDescriptionsFromRepository(imported) {
@@ -2132,18 +2658,111 @@ async function fetchTextFile(path) {
 }
 
 async function importJobs(imported) {
+  await migrateLegacyCompanies(imported);
   const existingJobs = await getAllJobs();
   const existingById = new Map(existingJobs.map((job) => [job.id, job]));
   let savedJobs = 0;
   for (const job of imported) {
     if (!shouldImportJob(job, existingById.get(job.id))) continue;
-    await putJob(job);
+    await putJob(stripLegacyCompanyFields(job));
     savedJobs += 1;
   }
   return savedJobs;
 }
 
+async function importCompanies(imported) {
+  const existingCompanies = await getAllCompanies();
+  const byId = new Map(existingCompanies.map((company) => [company.id, company]));
+  const byName = new Map(
+    existingCompanies.map((company) => [normalizeCompanyName(company.name), company]),
+  );
+  const idMap = new Map();
+  let saved = 0;
+
+  for (const importedCompany of imported) {
+    const normalized = normalizeCompanyRecord(importedCompany);
+    if (!normalized.name) continue;
+    const existing =
+      byId.get(normalized.id) || byName.get(normalizeCompanyName(normalized.name));
+    const company = existing ? { ...normalized, id: existing.id } : normalized;
+    idMap.set(normalized.id, company.id);
+    if (existing && !shouldImportRecord(company, existing)) continue;
+    await putCompany(company);
+    byId.set(company.id, company);
+    byName.set(normalizeCompanyName(company.name), company);
+    saved += 1;
+  }
+  return { saved, idMap };
+}
+
+async function migrateLegacyCompanies(importedJobs) {
+  const existingCompanies = await getAllCompanies();
+  const byName = new Map(
+    existingCompanies.map((company) => [normalizeCompanyName(company.name), company]),
+  );
+
+  for (const job of importedJobs) {
+    if (job.companyId || !job.company) continue;
+    const key = normalizeCompanyName(job.company);
+    let company = byName.get(key);
+    const legacyIndustry = getIndustryDisplay(job);
+    const legacyMission = Array.isArray(job.helping)
+      ? job.helping
+      : splitList(job.helping);
+    const legacyRank = job.favoriteCompany ? "Favorite" : "";
+
+    if (!company) {
+      company = normalizeCompanyRecord({
+        id: createId(),
+        createdAt: job.createdAt,
+        updatedAt: job.updatedAt,
+        name: job.company,
+        industry: legacyIndustry,
+        mission: legacyMission,
+        rank: legacyRank,
+      });
+      await putCompany(company);
+      byName.set(key, company);
+    } else {
+      const merged = normalizeCompanyRecord({
+        ...company,
+        industry: company.industry || legacyIndustry,
+        mission: unique([...(company.mission || []), ...legacyMission]),
+        rank: company.rank || legacyRank,
+        updatedAt:
+          [company.updatedAt, job.updatedAt].filter(Boolean).sort().at(-1) ||
+          company.updatedAt,
+      });
+      if (JSON.stringify(merged) !== JSON.stringify(company)) {
+        company = merged;
+        await putCompany(company);
+        byName.set(key, company);
+      }
+    }
+    job.companyId = company.id;
+  }
+}
+
+function stripLegacyCompanyFields(job) {
+  const {
+    company,
+    favoriteCompany,
+    industry,
+    industryOther,
+    helping,
+    companySector,
+    companyWebsite,
+    companyRank,
+    ...record
+  } = job;
+  return record;
+}
+
 function shouldImportJob(imported, existing) {
+  return shouldImportRecord(imported, existing);
+}
+
+function shouldImportRecord(imported, existing) {
   if (!existing) return true;
   const importedUpdatedAt = Date.parse(imported.updatedAt || "");
   const existingUpdatedAt = Date.parse(existing.updatedAt || "");
@@ -2162,6 +2781,21 @@ function parseJobsCsv(text) {
   return rows
     .filter((row) => row.some((value) => value.trim()))
     .map((row) => csvRowToJob(header, row));
+}
+
+function parseCompaniesCsv(text) {
+  const rows = parseCsv(text);
+  const header = rows.shift() || [];
+  return rows
+    .filter((row) => row.some((value) => value.trim()))
+    .map((row) => {
+      const record = {};
+      header.forEach((column, index) => {
+        record[column] = row[index] ?? "";
+      });
+      return normalizeCompanyRecord(record);
+    })
+    .filter((company) => company.name);
 }
 
 function csvRowToJob(header, row) {
@@ -2216,6 +2850,7 @@ function csvRowToJob(header, row) {
     createdAt: record.createdAt || now,
     updatedAt: record.updatedAt || now,
     link: record.link || "",
+    companyId: record.companyId || "",
     company: record.company || "",
     favoriteCompany: parseBoolean(record.favoriteCompany),
     title: record.title || "",

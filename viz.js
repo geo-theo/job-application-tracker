@@ -81,7 +81,7 @@ function vizHasStage(job, key) {
 }
 
 function vizIsPublicPurpose(job) {
-  return (job.helping || []).some((tag) => ["Govt", "Poor"].includes(tag));
+  return (job.mission || []).some((tag) => ["Govt", "Poor"].includes(tag));
 }
 
 function vizPay(job, mode = "salary") {
@@ -560,7 +560,7 @@ function vizImpactPanel(records) {
   ring.setAttribute("aria-label", `${publicJobs.length} public-purpose jobs out of ${records.length}. Show jobs tagged Govt or Poor.`);
   ring.addEventListener("click", () => showJobs("Public purpose · Govt or Poor", publicJobs));
   const caption = vizElement("div");
-  caption.append(vizElement("h3", "", `${publicJobs.length} opportunities to serve`), vizElement("p", "viz-description", "Jobs you’ve tagged as helping government or people in poverty. Each job counts once in this total."));
+  caption.append(vizElement("h3", "", `${publicJobs.length} opportunities to serve`), vizElement("p", "viz-description", "Jobs whose company mission helps government or people in poverty. Each job counts once in this total."));
   hero.append(ring, caption);
   const groups = [
     ["Govt", "Government & public service", VIZ_COLORS.teal],
@@ -570,11 +570,11 @@ function vizImpactPanel(records) {
     ["Rich", "Wealthy beneficiaries", VIZ_COLORS.orange],
   ];
   const known = groups.map(([key]) => key);
-  [...new Set(records.flatMap((job) => job.helping || []))].filter((tag) => !known.includes(tag)).forEach((tag) => groups.push([tag, tag, VIZ_COLORS.gray]));
+  [...new Set(records.flatMap((job) => job.mission || []))].filter((tag) => !known.includes(tag)).forEach((tag) => groups.push([tag, tag, VIZ_COLORS.gray]));
   groups.push(["", "Not tagged yet", VIZ_COLORS.gray]);
   const bars = vizElement("div", "viz-impact-bars");
   groups.forEach(([tag, label, color]) => {
-    const matching = records.filter((job) => tag ? (job.helping || []).includes(tag) : !job.helping?.length);
+    const matching = records.filter((job) => tag ? (job.mission || []).includes(tag) : !job.mission?.length);
     const button = vizElement("button", "viz-impact-row");
     button.type = "button";
     const track = vizElement("span", "viz-impact-track");

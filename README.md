@@ -16,7 +16,7 @@ Each component of the tool should have the features listed below.
    -Include the following questions that the user can check/select/write-in:
    (a) Job Info
    (a)(i) Link (text entry)
-   (a)(ii) Company (text entry) (also allow user to check a box to save as a favorite target company)
+   (a)(ii) Company (text entry backed by `companies.csv`, with an **Edit Company Info** button for company details)
    (a)(iii) Job Title (text entry)
    (a)(iv) Location (multiple choice, select one: "Missoula, MT", "Remote", "Other" (text entry option))
    (a)(v) Pay (multiple choice, select one: "Hourly" or "Salary")(two empty text boxes side-by-side, one for Minimum and one for Maximum, and let user enter the values after selecting "Hourly" or "Salary")(once a min and max value has been entered, automatically calculate and display (and save to csv/database) the midpoint value between the min and max)
@@ -29,11 +29,12 @@ Each component of the tool should have the features listed below.
 (c) Job Attributes
 (c)(i) Favorite this job (checkbox for user to save this record as a favorite job)
 (c)(ii) Role (dropdown menu, select multiple:)
-(c)(iii) Area of Work (two drop-down menus side-by-side, first one for Industry, and second one for Helping)(Industry dropdown menu, select one: "Geospatial", "Geopolitical Risk", "Intl Development", "Defense & Security", "Local Government", "Outdoors", "Other" (text entry option))(Who is it helping? dropdown menu, select multiple: "Poor", "Rich", "Govt", "Startup", "Environment")
+(c)(iii) Company classifications such as Industry and Mission are managed once in the company editor and shared by every linked job.
 (c)(v) Job Description (two options side-by-side; first option is a button to "Scrape Job Description", second option is an empty text box for user to paste the job description manually in case webscraping is not possible for this job)
 
 2. Database or CSV
    -Save the job info that the user entered in the form, into a csv or other form of database. Each new submission gets a new record row.
+   -Save company details in `companies.csv`. Each job row stores `companyId`, which links to the company row's unique `id`.
    -If possible, when a user submits a link to a job, perhaps that link could be used to scrape the job description text from that job posting's webpage? If not possible the user can also paste the job description into a text box. Either way, these job descriptions should be saved as individual txt files (separate from the csv/database) in a subfolder.
 
 3. Personal Job Board
@@ -44,23 +45,25 @@ Each component of the tool should have the features listed below.
 
 ## Implementation notes
 
-This is a static GitHub Pages app, so it cannot write directly back to the GitHub repository without a separate backend service. The app uses browser IndexedDB as the live database, with one record per saved job and a separate description store for job descriptions.
+This is a static GitHub Pages app, so it cannot write directly back to the GitHub repository without a separate backend service. The app uses browser IndexedDB as the live database, with separate stores for jobs, companies, and job descriptions.
+
+`companies.csv` contains `id`, `createdAt`, `updatedAt`, `name`, `industry`, `sector`, `mission`, `website`, and `rank`. The timestamps are system-managed merge metadata. Company names are unique case-insensitively, custom Industry/Sector entries are stored directly in those columns, and Mission values use the same semicolon-separated convention as other multi-select fields. Company ranks are Favorite, Target, Normal, and Agency.
 
 Data controls in the board let you:
 
-- export all records to `jobs.csv`
-- import a previously exported CSV
+- export jobs to `jobs.csv` and companies to `companies.csv`
+- import previously exported job or company CSV files
 - export saved job descriptions as individual `.txt` files
-- connect a local folder in supported browsers so the app can write `jobs.csv` and `job-descriptions/*.txt`
+- connect a local folder in supported browsers so the app can write `jobs.csv`, `companies.csv`, and `job-descriptions/*.txt`
 
 ## Git sync workflow
 
 Use Git as the portable source of truth and the browser database as a local cache:
 
-1. Open the app through GitHub Pages or a local server, not directly from `index.html`, so it can read `db/jobs.csv`.
-2. Click **Connect Folder** and select either the repository folder or its `db` folder. After that, saved jobs are written to `db/jobs.csv` and descriptions are written to `db/job-descriptions/`.
+1. Open the app through GitHub Pages or a local server, not directly from `index.html`, so it can read `db/jobs.csv` and `db/companies.csv`.
+2. Click **Connect Folder** and select either the repository folder or its `db` folder. After that, saved jobs are written to `db/jobs.csv`, company records to `db/companies.csv`, and descriptions to `db/job-descriptions/`.
 3. Commit and push those changed files.
-4. On another device, pull the repo and reload the app. The app imports `db/jobs.csv` on startup and shows the pulled jobs.
+4. On another device, pull the repo and reload the app. The app imports both CSV files and joins jobs to companies by ID.
 
 To deploy, enable GitHub Pages for the repository root. Include `index.html`, `styles.css`, `app.js`, `viz.css`, `viz.js`, `viz-geography.js`, and the `img` directory. No build step or chart CDN is required.
 
@@ -77,8 +80,8 @@ The other summary cards show:
 - The proportion of applications tagged Govt or Poor, and this month's share versus the previous full calendar month. Relative change is `(current share − previous share) / previous share × 100`; the percentage-point difference is separate. A zero baseline or a month without applications produces an unavailable relative change rather than an infinite or invented percentage.
 
 - **Application flow:** proportional streams pass through recorded milestones and end in In progress, Accepted, Rejected, or Ghosted. A No response branch above Responded contains only in-progress applications with no recorded milestones. Closed applications never enter that branch. Other skipped milestones are not inferred. Columns follow the form's stage order, not event dates; each application reaches one current outcome.
-- **Pay explorer:** group by industry, role, or normalized location. The dot is the mean of each job's advertised midpoint, and the line spans the lowest to highest advertised pay in that group. A lone bound or saved midpoint can supply a value. Missing, invalid, nonpositive, and unknown-type pay are excluded. Annual salary and hourly pay stay separate by default; Annual equivalent uses the same 2,016-hour formula as the summary and map, including internships and part-time jobs as comparison equivalents. Role groups can overlap; the overall mean counts each job once.
-- **Impact:** public purpose means a Helping tag of Govt or Poor, counted once per job. All Helping tags are also shown individually, including Environment and untagged records.
+- **Pay explorer:** group by company-linked industry, role, or normalized location. The dot is the mean of each job's advertised midpoint, and the line spans the lowest to highest advertised pay in that group. A lone bound or saved midpoint can supply a value. Missing, invalid, nonpositive, and unknown-type pay are excluded. Annual salary and hourly pay stay separate by default; Annual equivalent uses the same 2,016-hour formula as the summary and map, including internships and part-time jobs as comparison equivalents. Role groups can overlap; the overall mean counts each job once.
+- **Impact:** public purpose means the linked company's Mission includes Govt or Poor, counted once per job. All Mission tags are also shown individually, including Environment and untagged records.
 - **Map:** Remote comes first, followed by USA, France, UK, and additional countries recognized in the applications. City lists are filtered to the selected tab. Remote and missing-location applications share one Missoula home-base pin, with separate list entries and counts. Known city/area aliases include DMV, Silicon Valley, Los Angeles, London, Paris, and Amsterdam. New countries are detected from country names/codes in the location; cities without a known coordinate stay in that country's list without guessed pins. Hover or focus a pin for mean annualized pay, pay coverage, and deduplicated role attributes; activate it to see the jobs.
 - **Activity:** daily, weekly, or monthly application cohorts, including quiet periods, colored by today's saved outcome. Automatic grouping uses daily bars for short windows, weekly bars for medium windows, and monthly bars for long or all-time views. Very long daily/weekly views are coarsened to keep the chart usable. Metrics show application count and change versus the preceding window of equal length, applications/week, milestone and interview rates, applications awaiting a first reply, mission-driven share, average annualized pay, and median days to the first dated reply. First reply includes recorded milestones or accepted/rejected decisions; undated or negative intervals are excluded. All-time application pace uses the first valid application date through today.
 

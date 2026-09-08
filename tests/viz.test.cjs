@@ -10,15 +10,15 @@ const context = vm.createContext({
 for (const filename of ["app.js", "viz-geography.js", "viz.js"]) {
   vm.runInContext(fs.readFileSync(path.join(__dirname, "..", filename), "utf8"), context);
 }
-const api = vm.runInContext("({ getVizJobs, vizPay, vizAveragePay, vizPaySummary, vizSalaryGroups, vizFlowModel, vizAwaitingReply, vizIsPublicPurpose, vizLocation, vizLocationGroups, vizMapCountries, vizCountryBounds, vizPlaceSummary, vizActivityModel, vizActivityMetrics, vizDate, vizToday, vizCalendarRange, vizPeriodRange, vizInRange, vizMissionChange, getIndustryDisplay, industryForForm, normalizeRolesForForm, splitList, parseJobsCsv, vizState })", context);
+const api = vm.runInContext("({ getVizJobs, vizPay, vizAveragePay, vizPaySummary, vizSalaryGroups, vizFlowModel, vizAwaitingReply, vizIsPublicPurpose, vizLocation, vizLocationGroups, vizMapCountries, vizCountryBounds, vizPlaceSummary, vizActivityModel, vizActivityMetrics, vizDate, vizToday, vizCalendarRange, vizPeriodRange, vizInRange, vizMissionChange, getIndustryDisplay, industryForForm, normalizeRolesForForm, splitList, parseJobsCsv, parseCompaniesCsv, joinJobsWithCompanies, SECTOR_OPTIONS_BY_INDUSTRY, vizState })", context);
 const plain = (value) => JSON.parse(JSON.stringify(value));
 
 test("reference definitions are excluded before all scopes and aggregations", () => {
   const rows = [
-    { id: "pending", payType: "Salary", payMin: "60000", helping: ["Govt"] },
+    { id: "pending", payType: "Salary", payMin: "60000", mission: ["Govt"] },
     { id: "applied", appliedStatus: "Yes", payType: "Salary", payMin: "80000" },
-    { id: "no", appliedStatus: "No", payType: "Salary", payMin: "9999999", helping: ["Govt"] },
-    { id: "future", priority: "Future", appliedStatus: "Yes", helping: ["Poor"] },
+    { id: "no", appliedStatus: "No", payType: "Salary", payMin: "9999999", mission: ["Govt"] },
+    { id: "future", priority: "Future", appliedStatus: "Yes", mission: ["Poor"] },
     { id: "legacy", appliedDate: "2026-08-01" },
   ];
   const all = api.getVizJobs(rows);
@@ -98,13 +98,32 @@ test("form values preserve legacy and custom classifications without inventing c
 
 test("classification option labels save the value shown to the user", () => {
   const html = fs.readFileSync(path.join(__dirname, "..", "index.html"), "utf8");
-  for (const id of ["industry", "helping"]) {
+  for (const id of ["company-industry", "company-mission"]) {
     const body = html.match(new RegExp(`<select[^>]*id="${id}"[^>]*>([\\s\\S]*?)<\\/select>`))[1];
     const options = [...body.matchAll(/<option value="([^"]*)">([\s\S]*?)<\/option>/g)]
       .map((match) => [match[1], match[2].replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim()])
       .filter(([value]) => value);
     options.forEach(([value, label]) => assert.equal(value, label, `${id}: ${label}`));
+    if (id === "company-industry") {
+      options
+        .filter(([value]) => value !== "Other")
+        .forEach(([value]) => assert.ok(api.SECTOR_OPTIONS_BY_INDUSTRY[value]?.length, `${value} needs sector presets`));
+    }
   }
+});
+
+test("job and company CSV schemas are relational and non-overlapping", () => {
+  const html = fs.readFileSync(path.join(__dirname, "..", "index.html"), "utf8");
+  const jobHeader = fs.readFileSync(path.join(__dirname, "..", "db", "jobs.csv"), "utf8").split(/\r?\n/, 1)[0].split(",");
+  const companyHeader = fs.readFileSync(path.join(__dirname, "..", "db", "companies.csv"), "utf8").split(/\r?\n/, 1)[0].split(",");
+  assert.ok(jobHeader.includes("companyId"));
+  for (const column of ["company", "favoriteCompany", "industry", "industryOther", "helping"]) {
+    assert.ok(!jobHeader.includes(column), `${column} should not remain in jobs.csv`);
+  }
+  assert.deepEqual(companyHeader, ["id", "createdAt", "updatedAt", "name", "industry", "sector", "mission", "website", "rank"]);
+  assert.match(html, /data-page="companies"/);
+  assert.match(html, /id="edit-company-info-button"/);
+  assert.doesNotMatch(html, /id="favorite-company"/);
 });
 
 test("flow conserves applications and never invents skipped stages or decisions", () => {
@@ -131,7 +150,7 @@ test("flow conserves applications and never invents skipped stages or decisions"
 });
 
 test("public purpose uses Govt or Poor, with overlaps counted once", () => {
-  const rows = [{ helping: ["Govt", "Poor"] }, { helping: ["Environment"] }, { helping: ["Rich"] }, {}, { helping: ["Poor"] }];
+  const rows = [{ mission: ["Govt", "Poor"] }, { mission: ["Environment"] }, { mission: ["Rich"] }, {}, { mission: ["Poor"] }];
   assert.equal(rows.filter(api.vizIsPublicPurpose).length, 2);
 });
 
@@ -195,9 +214,9 @@ test("rolling filters include today, have explicit day lengths, and custom dates
 test("mission comparison uses application-month shares, relative change and percentage points", () => {
   const now = new Date(2026, 8, 7, 12);
   const rows = [
-    { appliedDate: "2026-08-01", helping: ["Govt", "Poor"] }, { appliedDate: "2026-08-31" },
-    ...Array.from({ length: 3 }, () => ({ appliedDate: "2026-09-01", helping: ["Poor"] })),
-    { appliedDate: "2026-09-07" }, { appliedDate: "2026-09-08", helping: ["Govt"] }, { helping: ["Govt"] },
+    { appliedDate: "2026-08-01", mission: ["Govt", "Poor"] }, { appliedDate: "2026-08-31" },
+    ...Array.from({ length: 3 }, () => ({ appliedDate: "2026-09-01", mission: ["Poor"] })),
+    { appliedDate: "2026-09-07" }, { appliedDate: "2026-09-08", mission: ["Govt"] }, { mission: ["Govt"] },
   ];
   const result = api.vizMissionChange(rows, now);
   assert.equal(result.current.total, 4);
@@ -205,7 +224,7 @@ test("mission comparison uses application-month shares, relative change and perc
   assert.equal(result.previous.share, .5);
   assert.equal(result.relative, 50);
   assert.equal(result.points, 25);
-  assert.equal(api.vizMissionChange([{ appliedDate: "2026-08-01" }, { appliedDate: "2026-09-01", helping: ["Poor"] }], now).relative, null);
+  assert.equal(api.vizMissionChange([{ appliedDate: "2026-08-01" }, { appliedDate: "2026-09-01", mission: ["Poor"] }], now).relative, null);
   const noPrevious = api.vizMissionChange([{ appliedDate: "2026-09-01" }], now);
   assert.equal(noPrevious.relative, null);
   assert.equal(noPrevious.points, null);
@@ -254,7 +273,7 @@ test("activity metrics use matching cohorts, valid reply intervals and previous 
   const range = { start: Date.UTC(2026, 8, 1), end: Date.UTC(2026, 8, 8) };
   const rows = [
     { appliedDate: "2026-08-31" },
-    { appliedDate: "2026-09-01", responseDate: "2026-09-03", helping: ["Poor"] },
+    { appliedDate: "2026-09-01", responseDate: "2026-09-03", mission: ["Poor"] },
     { appliedDate: "2026-09-01", interviewDate: "2026-09-05" },
     { appliedDate: "2026-09-01", finalStatus: "Rejected", finalStatusDate: "2026-09-11" },
     { appliedDate: "2026-09-02", responseDate: "2026-09-01" },
@@ -274,7 +293,14 @@ test("activity metrics use matching cohorts, valid reply intervals and previous 
 });
 
 test("current CSV reconciles Section 02 group counts and annualized pay coverage", () => {
-  const records = api.parseJobsCsv(fs.readFileSync(path.join(__dirname, "..", "db", "jobs.csv"), "utf8"));
+  const rawJobs = api.parseJobsCsv(fs.readFileSync(path.join(__dirname, "..", "db", "jobs.csv"), "utf8"));
+  const companies = api.parseCompaniesCsv(fs.readFileSync(path.join(__dirname, "..", "db", "companies.csv"), "utf8"));
+  const records = api.joinJobsWithCompanies(rawJobs, companies);
+  assert.equal(new Set(companies.map((company) => company.id)).size, companies.length);
+  assert.equal(new Set(companies.map((company) => company.name.toLowerCase())).size, companies.length);
+  assert.ok(rawJobs.every((job) => companies.some((company) => company.id === job.companyId)));
+  assert.ok(records.some((job) => job.industry));
+  assert.ok(records.some((job) => job.mission.length));
   const applied = api.getVizJobs(records, "applied");
   const pay = api.vizPaySummary(applied);
   const independentlyAnnualized = applied.map((job) => {
