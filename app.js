@@ -42,7 +42,7 @@ const ROLE_ICONS = {
   "Supply Chain":"SC",
   "Researcher":"RSC",
   "Project Manager":"PM",
-  "Ops / Mgmt" "OPS",
+  "Ops / Mgmt": "OPS",
   "Business Development":"BD",
   "Technical Writer":"TW",
   "Technician":"TECH",
