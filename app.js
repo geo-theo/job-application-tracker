@@ -7,35 +7,44 @@ const DESCRIPTION_STORE = "descriptions";
 const SETTINGS_STORE = "settings";
 
 const ROLE_OPTIONS = [
-  "Cartographer", "Geospatial Analyst", "GIS Technician",
-  "Data Governance", "Data Engineer", "Data ",
-  "Geopolitcal Risk", "Intelligence",
+  "Cartographer",
+  "Geospatial Analyst",
+  "Data Analyst",
+  "Data Governance",
+  "Data Engineer",
+  "Product Engineer",
+  "Software Engineer",
+  "Geopolitcal Risk",
+  "Intelligence",
+  "Supply Chain",
   "Researcher",
-  "Data Analysis",
-  "Policy",
-  "Program Management",
-  "Community Engagement",
-  "Field Work",
-  "Writing / Editing",
-  "Operations",
+  "Project Manager",
+  "Ops / Mgmt",
   "Business Development",
-
+  "Technical Writer",
+  "Technician",
   "Retail / Customer Service",
   "Other",
 ];
 
 const ROLE_ICONS = {
-  "GIS / Geospatial": "GIS",
-  "Intelligence / Risk": "IR",
-  Research: "R",
-  "Data Analysis": "DA",
-  Policy: "P",
-  "Program Management": "PM",
-  "Community Engagement": "CE",
-  "Field Work": "FW",
-  "Writing / Editing": "WE",
-  Operations: "O",
-  "Business Development": "BD",
+  "Cartographer":"GIS",
+  "Geospatial Analyst":"GIS",
+  "Data Analyst":"DATA",
+  "Data Governance":"DATA",
+  "Data Engineer":"CODE",
+  "Product Engineer":"CODE",
+  "Software Engineer":"CODE",
+  "Geopolitcal Risk":"IR",
+  "Intelligence":"IR",
+  "Supply Chain":"SC",
+  "Researcher":"RSC",
+  "Project Manager":"PM",
+  "Ops / Mgmt" "OPS",
+  "Business Development":"BD",
+  "Technical Writer":"TW",
+  "Technician":"TECH",
+  "Retail / Customer Service":"!",
 };
 
 const CSV_COLUMNS = [
@@ -87,12 +96,27 @@ const CSV_COLUMNS = [
 
 const PAGE_CONFIG = {
   all: { title: "All Jobs", empty: "No saved jobs yet." },
-  "full-time": { title: "Full-time", empty: "No full-time jobs match this view." },
-  internship: { title: "Internships", empty: "No internships match this view." },
-  "part-time": { title: "Part-time", empty: "No part-time jobs match this view." },
-  favorites: { title: "Favorites", empty: "No favorited jobs or companies yet." },
+  "full-time": {
+    title: "Full-time",
+    empty: "No full-time jobs match this view.",
+  },
+  internship: {
+    title: "Internships",
+    empty: "No internships match this view.",
+  },
+  "part-time": {
+    title: "Part-time",
+    empty: "No part-time jobs match this view.",
+  },
+  favorites: {
+    title: "Favorites",
+    empty: "No favorited jobs or companies yet.",
+  },
   applied: { title: "Applied", empty: "No applied jobs match this view." },
-  reference: { title: "Reference", empty: "No reference jobs match this view." },
+  reference: {
+    title: "Reference",
+    empty: "No reference jobs match this view.",
+  },
   viz: { title: "Viz", empty: "" },
 };
 
@@ -148,7 +172,9 @@ const els = {
   industryOther: document.querySelector("#industry-other"),
   helping: document.querySelector("#helping"),
   scrapeButton: document.querySelector("#scrape-button"),
-  downloadDescriptionButton: document.querySelector("#download-description-button"),
+  downloadDescriptionButton: document.querySelector(
+    "#download-description-button",
+  ),
   scrapeStatus: document.querySelector("#scrape-status"),
   jobDescription: document.querySelector("#job-description"),
   saveButton: document.querySelector("#save-button"),
@@ -157,9 +183,15 @@ const els = {
   pageTypeFilterWrap: document.querySelector("#page-type-filter-wrap"),
   pageTypeFilterButton: document.querySelector("#page-type-filter-button"),
   pageTypeButtons: document.querySelectorAll("[data-page-type-filter]"),
-  appliedStatusFilterWrap: document.querySelector("#applied-status-filter-wrap"),
-  appliedStatusFilterButton: document.querySelector("#applied-status-filter-button"),
-  appliedStatusButtons: document.querySelectorAll("[data-applied-status-filter]"),
+  appliedStatusFilterWrap: document.querySelector(
+    "#applied-status-filter-wrap",
+  ),
+  appliedStatusFilterButton: document.querySelector(
+    "#applied-status-filter-button",
+  ),
+  appliedStatusButtons: document.querySelectorAll(
+    "[data-applied-status-filter]",
+  ),
   priorityFilterWrap: document.querySelector("#priority-filter-wrap"),
   priorityButtons: document.querySelectorAll("[data-priority-filter]"),
   sortButtons: document.querySelectorAll("[data-sort]"),
@@ -174,7 +206,9 @@ const els = {
   boardControls: document.querySelector("#board-controls"),
   connectFolderButton: document.querySelector("#connect-folder-button"),
   exportCsvButton: document.querySelector("#export-csv-button"),
-  exportDescriptionsButton: document.querySelector("#export-descriptions-button"),
+  exportDescriptionsButton: document.querySelector(
+    "#export-descriptions-button",
+  ),
   importCsvButton: document.querySelector("#import-csv-button"),
   csvInput: document.querySelector("#csv-input"),
   jobList: document.querySelector("#job-list"),
@@ -213,7 +247,10 @@ async function init() {
     db = await openDatabase();
     setFolderGate(true);
   } catch (error) {
-    setFolderGate(true, "The folder could not be opened. Try connecting again.");
+    setFolderGate(
+      true,
+      "The folder could not be opened. Try connecting again.",
+    );
     showToast("Local database could not be opened.");
   }
 }
@@ -247,22 +284,45 @@ function bindEvents() {
       input.addEventListener("click", toggleCheckedRadio);
       input.addEventListener("keydown", toggleCheckedRadioWithKeyboard);
     });
-  document.querySelector(".priority-group")?.addEventListener("pointerdown", rememberToggleableGroupRadioState);
-  document.querySelector(".level-group")?.addEventListener("pointerdown", rememberToggleableGroupRadioState);
-  document.querySelector(".applied-group")?.addEventListener("pointerdown", rememberToggleableGroupRadioState);
-  document.querySelectorAll(".lifecycle-toggle, .lifecycle-status-group").forEach((group) => {
-    group.addEventListener("pointerdown", rememberToggleableGroupRadioState);
-  });
-  els.priorityInputs.forEach((input) => input.addEventListener("change", handlePriorityChange));
-  els.appliedStatus.forEach((input) => input.addEventListener("change", handleAppliedStatusChange));
-  [...els.responseStatus, ...els.screenStatus, ...els.interviewStatus, ...els.assessmentStatus, ...els.finalStatus].forEach((input) => {
+  document
+    .querySelector(".priority-group")
+    ?.addEventListener("pointerdown", rememberToggleableGroupRadioState);
+  document
+    .querySelector(".level-group")
+    ?.addEventListener("pointerdown", rememberToggleableGroupRadioState);
+  document
+    .querySelector(".applied-group")
+    ?.addEventListener("pointerdown", rememberToggleableGroupRadioState);
+  document
+    .querySelectorAll(".lifecycle-toggle, .lifecycle-status-group")
+    .forEach((group) => {
+      group.addEventListener("pointerdown", rememberToggleableGroupRadioState);
+    });
+  els.priorityInputs.forEach((input) =>
+    input.addEventListener("change", handlePriorityChange),
+  );
+  els.appliedStatus.forEach((input) =>
+    input.addEventListener("change", handleAppliedStatusChange),
+  );
+  [
+    ...els.responseStatus,
+    ...els.screenStatus,
+    ...els.interviewStatus,
+    ...els.assessmentStatus,
+    ...els.finalStatus,
+  ].forEach((input) => {
     input.addEventListener("change", syncConditionalFields);
   });
   els.needsReferences.addEventListener("change", syncConditionalFields);
   els.scrapeButton.addEventListener("click", scrapeJobDescription);
-  els.downloadDescriptionButton.addEventListener("click", downloadCurrentDescription);
+  els.downloadDescriptionButton.addEventListener(
+    "click",
+    downloadCurrentDescription,
+  );
   els.pageButtons.forEach((button) => {
-    button.addEventListener("click", () => setActivePage(button.dataset.page || "all"));
+    button.addEventListener("click", () =>
+      setActivePage(button.dataset.page || "all"),
+    );
   });
   els.pageTypeButtons.forEach((button) => {
     button.addEventListener("click", () => {
@@ -282,7 +342,11 @@ function bindEvents() {
   });
   els.priorityButtons.forEach((button) => {
     button.addEventListener("click", (event) => {
-      filters.priorities = updateOptionSelection(filters.priorities, button.dataset.priorityFilter, event);
+      filters.priorities = updateOptionSelection(
+        filters.priorities,
+        button.dataset.priorityFilter,
+        event,
+      );
       updateFilterControls();
       if (!event.ctrlKey && !event.metaKey) closeFilterAccordions();
       renderJobs();
@@ -298,7 +362,9 @@ function bindEvents() {
   });
   els.accordionTriggers.forEach((button) => {
     button.addEventListener("click", () => {
-      const panel = document.querySelector(`#${button.getAttribute("aria-controls")}`);
+      const panel = document.querySelector(
+        `#${button.getAttribute("aria-controls")}`,
+      );
       const expanded = button.getAttribute("aria-expanded") === "true";
       const shouldExpand = !expanded;
       closeFilterAccordions(button);
@@ -307,17 +373,31 @@ function bindEvents() {
     });
   });
   els.roleFilter.addEventListener("click", (event) => {
-    const button = event.target instanceof Element ? event.target.closest("[data-role-filter]") : null;
+    const button =
+      event.target instanceof Element
+        ? event.target.closest("[data-role-filter]")
+        : null;
     if (!button) return;
-    filters.roles = updateOptionSelection(filters.roles, button.dataset.roleFilter, event);
+    filters.roles = updateOptionSelection(
+      filters.roles,
+      button.dataset.roleFilter,
+      event,
+    );
     updateFilterControls();
     if (!event.ctrlKey && !event.metaKey) closeFilterAccordions();
     renderJobs();
   });
   els.industryFilter.addEventListener("click", (event) => {
-    const button = event.target instanceof Element ? event.target.closest("[data-industry-filter]") : null;
+    const button =
+      event.target instanceof Element
+        ? event.target.closest("[data-industry-filter]")
+        : null;
     if (!button) return;
-    filters.industries = updateOptionSelection(filters.industries, button.dataset.industryFilter, event);
+    filters.industries = updateOptionSelection(
+      filters.industries,
+      button.dataset.industryFilter,
+      event,
+    );
     updateFilterControls();
     if (!event.ctrlKey && !event.metaKey) closeFilterAccordions();
     renderJobs();
@@ -412,7 +492,10 @@ function usesPriorityFilter(page = activePage) {
   return !["applied", "reference"].includes(page);
 }
 
-function setFolderGate(isVisible, statusMessage = "Folder connection is required to continue.") {
+function setFolderGate(
+  isVisible,
+  statusMessage = "Folder connection is required to continue.",
+) {
   els.folderGate.hidden = !isVisible;
   els.trackerApp.inert = isVisible;
   els.saveButton.disabled = isVisible;
@@ -434,7 +517,10 @@ async function openEditJobForm(jobId) {
 }
 
 function openFormDialog() {
-  lastFocusedElement = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+  lastFocusedElement =
+    document.activeElement instanceof HTMLElement
+      ? document.activeElement
+      : null;
   els.formBackdrop.hidden = false;
   els.formDialog.hidden = false;
   document.body.classList.add("modal-open");
@@ -464,9 +550,11 @@ function handleDocumentKeydown(event) {
 }
 
 function trapFormDialogFocus(event) {
-  const focusable = [...els.formDialog.querySelectorAll(
-    "a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex='-1'])",
-  )].filter((element) => element.offsetParent !== null);
+  const focusable = [
+    ...els.formDialog.querySelectorAll(
+      "a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex='-1'])",
+    ),
+  ].filter((element) => element.offsetParent !== null);
   if (!focusable.length) return;
   const first = focusable[0];
   const last = focusable[focusable.length - 1];
@@ -557,7 +645,9 @@ function transactionDone(tx) {
 }
 
 async function refreshJobs() {
-  jobs = (await getAllJobs()).sort((a, b) => (b.updatedAt || "").localeCompare(a.updatedAt || ""));
+  jobs = (await getAllJobs()).sort((a, b) =>
+    (b.updatedAt || "").localeCompare(a.updatedAt || ""),
+  );
   updateRoleFilterOptions(jobs);
   updateIndustryFilterOptions(jobs);
   renderJobs();
@@ -580,17 +670,32 @@ function collectFormData() {
   const industryOther = els.industryOther.value.trim();
   const deadlineChoice = els.deadlineChoice.value;
   const appliedStatus = getRadioValue("appliedStatus");
-  const priority = appliedStatus === "No" ? "Future" : getRadioValue("priority");
-  const responseStatus = getAppliedLifecycleChoice("responseStatus", appliedStatus);
+  const priority =
+    appliedStatus === "No" ? "Future" : getRadioValue("priority");
+  const responseStatus = getAppliedLifecycleChoice(
+    "responseStatus",
+    appliedStatus,
+  );
   const responseDate = responseStatus === "Yes" ? els.responseDate.value : "";
   const screenStatus = getAppliedLifecycleChoice("screenStatus", appliedStatus);
   const screenDate = screenStatus === "Yes" ? els.screenDate.value : "";
-  const interviewStatus = getAppliedLifecycleChoice("interviewStatus", appliedStatus);
-  const interviewDate = interviewStatus === "Yes" ? els.interviewDate.value : "";
-  const assessmentStatus = getAppliedLifecycleChoice("assessmentStatus", appliedStatus);
-  const assessmentDate = assessmentStatus === "Yes" ? els.assessmentDate.value : "";
-  const finalStatus = appliedStatus === "Yes" ? getRadioValue("finalStatus") : "";
-  const finalStatusDate = isDatedFinalStatus(finalStatus) ? els.finalStatusDate.value : "";
+  const interviewStatus = getAppliedLifecycleChoice(
+    "interviewStatus",
+    appliedStatus,
+  );
+  const interviewDate =
+    interviewStatus === "Yes" ? els.interviewDate.value : "";
+  const assessmentStatus = getAppliedLifecycleChoice(
+    "assessmentStatus",
+    appliedStatus,
+  );
+  const assessmentDate =
+    assessmentStatus === "Yes" ? els.assessmentDate.value : "";
+  const finalStatus =
+    appliedStatus === "Yes" ? getRadioValue("finalStatus") : "";
+  const finalStatusDate = isDatedFinalStatus(finalStatus)
+    ? els.finalStatusDate.value
+    : "";
   const jobLevel = getRadioValue("jobLevel");
   const jobTypes = getSelectedJobTypes(jobLevel);
   const descriptionText = els.jobDescription.value.trim();
@@ -618,7 +723,13 @@ function collectFormData() {
       appliedStatus,
       appliedDate: appliedStatus === "Yes" ? els.appliedDate.value : "",
       applicationStatus: getApplicationStatus(appliedStatus, finalStatus),
-      lastHeardFrom: getLastHeardFrom([responseDate, screenDate, interviewDate, assessmentDate, finalStatusDate]),
+      lastHeardFrom: getLastHeardFrom([
+        responseDate,
+        screenDate,
+        interviewDate,
+        assessmentDate,
+        finalStatusDate,
+      ]),
       responseStatus,
       responseDate,
       screenStatus,
@@ -630,7 +741,9 @@ function collectFormData() {
       finalStatus,
       finalStatusDate,
       applicationNeeds: getCheckedValues(els.applicationNeeds),
-      referenceCount: els.needsReferences.checked ? normalizeIntegerString(els.referenceCount.value) : "",
+      referenceCount: els.needsReferences.checked
+        ? normalizeIntegerString(els.referenceCount.value)
+        : "",
       jobLevel,
       favoriteJob: els.favoriteJob.checked,
       jobTypes,
@@ -665,7 +778,11 @@ async function handleSubmit(event) {
   setEditMode(job);
   closeFormDialog();
   const syncStatus = await safeSyncToConnectedFolder();
-  showToast(syncStatus === "failed" ? "Job saved locally. Folder export failed." : "Job saved.");
+  showToast(
+    syncStatus === "failed"
+      ? "Job saved locally. Folder export failed."
+      : "Job saved.",
+  );
 }
 
 async function handleDelete() {
@@ -679,7 +796,11 @@ async function handleDelete() {
   await refreshJobs();
   closeFormDialog();
   const syncStatus = await safeSyncToConnectedFolder();
-  showToast(syncStatus === "failed" ? "Job deleted locally. Folder export failed." : "Job deleted.");
+  showToast(
+    syncStatus === "failed"
+      ? "Job deleted locally. Folder export failed."
+      : "Job deleted.",
+  );
 }
 
 function resetForm() {
@@ -719,13 +840,41 @@ async function loadJobIntoForm(jobId) {
   els.deadline.value = job.deadline || "";
   setRadioValue("appliedStatus", getAppliedStatus(job));
   els.appliedDate.value = job.appliedDate || "";
-  setRadioValue("responseStatus", getLifecycleStatusForForm(job.responseStatus, job.responseDate, getAppliedStatus(job)));
+  setRadioValue(
+    "responseStatus",
+    getLifecycleStatusForForm(
+      job.responseStatus,
+      job.responseDate,
+      getAppliedStatus(job),
+    ),
+  );
   els.responseDate.value = job.responseDate || "";
-  setRadioValue("screenStatus", getLifecycleStatusForForm(job.screenStatus, job.screenDate, getAppliedStatus(job)));
+  setRadioValue(
+    "screenStatus",
+    getLifecycleStatusForForm(
+      job.screenStatus,
+      job.screenDate,
+      getAppliedStatus(job),
+    ),
+  );
   els.screenDate.value = job.screenDate || "";
-  setRadioValue("interviewStatus", getLifecycleStatusForForm(job.interviewStatus, job.interviewDate, getAppliedStatus(job)));
+  setRadioValue(
+    "interviewStatus",
+    getLifecycleStatusForForm(
+      job.interviewStatus,
+      job.interviewDate,
+      getAppliedStatus(job),
+    ),
+  );
   els.interviewDate.value = job.interviewDate || "";
-  setRadioValue("assessmentStatus", getLifecycleStatusForForm(job.assessmentStatus, job.assessmentDate, getAppliedStatus(job)));
+  setRadioValue(
+    "assessmentStatus",
+    getLifecycleStatusForForm(
+      job.assessmentStatus,
+      job.assessmentDate,
+      getAppliedStatus(job),
+    ),
+  );
   els.assessmentDate.value = job.assessmentDate || "";
   setRadioValue("finalStatus", getFinalStatusForForm(job));
   els.finalStatusDate.value = job.finalStatusDate || "";
@@ -733,7 +882,10 @@ async function loadJobIntoForm(jobId) {
   els.referenceCount.value = job.referenceCount || "";
   setRadioValue("jobLevel", getJobLevelForForm(job));
   els.favoriteJob.checked = Boolean(job.favoriteJob);
-  setMultiSelectValues(els.roles, normalizeRolesForForm(job.roles || [], job.roleOther));
+  setMultiSelectValues(
+    els.roles,
+    normalizeRolesForForm(job.roles || [], job.roleOther),
+  );
   els.roleOther.value = job.roleOther || "";
   els.industry.value = job.industry || "";
   els.industryOther.value = job.industryOther || "";
@@ -782,7 +934,9 @@ function syncConditionalFields() {
   syncLifecycleDateField("screenStatus", els.screenDate);
   syncLifecycleDateField("interviewStatus", els.interviewDate);
   syncLifecycleDateField("assessmentStatus", els.assessmentDate);
-  els.finalStatusDate.hidden = !isDatedFinalStatus(getRadioValue("finalStatus"));
+  els.finalStatusDate.hidden = !isDatedFinalStatus(
+    getRadioValue("finalStatus"),
+  );
   if (els.finalStatusDate.hidden) els.finalStatusDate.value = "";
 
   els.referenceCountWrap.hidden = !els.needsReferences.checked;
@@ -798,7 +952,11 @@ function handlePriorityChange(event) {
     setRadioValue("appliedStatus", "No");
   } else if (changedInput.checked && getRadioValue("appliedStatus") === "No") {
     setRadioValue("appliedStatus", "");
-  } else if (changedInput.value === "Future" && !changedInput.checked && getRadioValue("appliedStatus") === "No") {
+  } else if (
+    changedInput.value === "Future" &&
+    !changedInput.checked &&
+    getRadioValue("appliedStatus") === "No"
+  ) {
     setRadioValue("appliedStatus", "");
   }
   syncConditionalFields();
@@ -809,9 +967,16 @@ function handleAppliedStatusChange(event) {
   const appliedStatus = getRadioValue("appliedStatus");
   if (appliedStatus === "No") {
     setRadioValue("priority", "Future");
-  } else if (appliedStatus === "Yes" && getRadioValue("priority") === "Future") {
+  } else if (
+    appliedStatus === "Yes" &&
+    getRadioValue("priority") === "Future"
+  ) {
     setRadioValue("priority", "");
-  } else if (changedInput.value === "No" && !changedInput.checked && getRadioValue("priority") === "Future") {
+  } else if (
+    changedInput.value === "No" &&
+    !changedInput.checked &&
+    getRadioValue("priority") === "Future"
+  ) {
     setRadioValue("priority", "");
   }
   syncConditionalFields();
@@ -850,7 +1015,10 @@ function handleDeadlineChoiceChange() {
 }
 
 function updatePayMidpoint() {
-  const midpoint = calculateMidpoint(normalizeNumberString(els.payMin.value), normalizeNumberString(els.payMax.value));
+  const midpoint = calculateMidpoint(
+    normalizeNumberString(els.payMin.value),
+    normalizeNumberString(els.payMax.value),
+  );
   els.payMidpoint.value = midpoint ? formatCurrency(midpoint) : "";
 }
 
@@ -893,16 +1061,24 @@ function getVisibleJobs() {
     visible = visible.filter((job) => matchesJobType(job, filters.type));
   }
   if (activePage === "applied" && filters.applicationStatus !== "All") {
-    visible = visible.filter((job) => getApplicationStatusDisplay(job) === filters.applicationStatus);
+    visible = visible.filter(
+      (job) => getApplicationStatusDisplay(job) === filters.applicationStatus,
+    );
   }
   if (usesPriorityFilter() && filters.priorities.length) {
-    visible = visible.filter((job) => filters.priorities.includes(job.priority || ""));
+    visible = visible.filter((job) =>
+      filters.priorities.includes(job.priority || ""),
+    );
   }
   if (filters.roles.length) {
-    visible = visible.filter((job) => filters.roles.some((role) => (job.roles || []).includes(role)));
+    visible = visible.filter((job) =>
+      filters.roles.some((role) => (job.roles || []).includes(role)),
+    );
   }
   if (filters.industries.length) {
-    visible = visible.filter((job) => filters.industries.includes(getIndustryDisplay(job)));
+    visible = visible.filter((job) =>
+      filters.industries.includes(getIndustryDisplay(job)),
+    );
   }
   const sortBy = filters.sortBy || "deadline";
   if (sortBy === "deadline") {
@@ -915,11 +1091,17 @@ function getVisibleJobs() {
 
 function getPageJobs(page = activePage) {
   if (page === "reference") return jobs.filter(isReferenceJob);
-  if (page === "applied") return jobs.filter((job) => isAppliedJob(job) && !isReferenceJob(job));
-  const pendingJobs = jobs.filter((job) => !isAppliedJob(job) && !isReferenceJob(job));
-  if (page === "full-time") return pendingJobs.filter((job) => matchesJobType(job, "Full-time"));
-  if (page === "internship") return pendingJobs.filter((job) => matchesJobType(job, "Internship"));
-  if (page === "part-time") return pendingJobs.filter((job) => matchesJobType(job, "Part-time"));
+  if (page === "applied")
+    return jobs.filter((job) => isAppliedJob(job) && !isReferenceJob(job));
+  const pendingJobs = jobs.filter(
+    (job) => !isAppliedJob(job) && !isReferenceJob(job),
+  );
+  if (page === "full-time")
+    return pendingJobs.filter((job) => matchesJobType(job, "Full-time"));
+  if (page === "internship")
+    return pendingJobs.filter((job) => matchesJobType(job, "Internship"));
+  if (page === "part-time")
+    return pendingJobs.filter((job) => matchesJobType(job, "Part-time"));
   if (page === "favorites") return pendingJobs.filter(isFavoriteJob);
   return pendingJobs;
 }
@@ -927,7 +1109,11 @@ function getPageJobs(page = activePage) {
 function getEmptyMessage() {
   if (!jobs.length) return "No saved jobs yet.";
   const config = PAGE_CONFIG[activePage] || PAGE_CONFIG.all;
-  return (usesScopedTypeFilter() && filters.type !== "All") || (activePage === "applied" && filters.applicationStatus !== "All") || (usesPriorityFilter() && filters.priorities.length) || filters.roles.length || filters.industries.length
+  return (usesScopedTypeFilter() && filters.type !== "All") ||
+    (activePage === "applied" && filters.applicationStatus !== "All") ||
+    (usesPriorityFilter() && filters.priorities.length) ||
+    filters.roles.length ||
+    filters.industries.length
     ? "No jobs match the current filters."
     : config.empty;
 }
@@ -965,25 +1151,41 @@ function updateFilterControls() {
     const isSelected = button.dataset.pageTypeFilter === filters.type;
     button.classList.toggle("active", isSelected);
   });
-  els.pageTypeFilterButton.classList.toggle("active", usesScopedTypeFilter() && filters.type !== "All");
+  els.pageTypeFilterButton.classList.toggle(
+    "active",
+    usesScopedTypeFilter() && filters.type !== "All",
+  );
   els.pageTypeFilterButton.textContent = `Type: ${filters.type}`;
 
   els.appliedStatusButtons.forEach((button) => {
-    const isSelected = button.dataset.appliedStatusFilter === filters.applicationStatus;
+    const isSelected =
+      button.dataset.appliedStatusFilter === filters.applicationStatus;
     button.classList.toggle("active", isSelected);
   });
-  els.appliedStatusFilterButton.classList.toggle("active", activePage === "applied" && filters.applicationStatus !== "All");
+  els.appliedStatusFilterButton.classList.toggle(
+    "active",
+    activePage === "applied" && filters.applicationStatus !== "All",
+  );
   els.appliedStatusFilterButton.textContent = `Status: ${filters.applicationStatus}`;
 
   els.priorityButtons.forEach((button) => {
-    button.classList.toggle("active", filters.priorities.includes(button.dataset.priorityFilter));
+    button.classList.toggle(
+      "active",
+      filters.priorities.includes(button.dataset.priorityFilter),
+    );
   });
   els.sortButtons.forEach((button) => {
     button.classList.toggle("active", button.dataset.sort === filters.sortBy);
   });
 
-  els.priorityFilterButton.classList.toggle("active", Boolean(filters.priorities.length));
-  els.priorityFilterButton.textContent = getFilterButtonLabel("Priority", filters.priorities);
+  els.priorityFilterButton.classList.toggle(
+    "active",
+    Boolean(filters.priorities.length),
+  );
+  els.priorityFilterButton.textContent = getFilterButtonLabel(
+    "Priority",
+    filters.priorities,
+  );
 
   const sortLabels = {
     deadline: "Deadline",
@@ -991,15 +1193,33 @@ function updateFilterControls() {
     updated: "Last updated",
   };
   els.sortFilterButton.classList.toggle("active", Boolean(filters.sortBy));
-  els.sortFilterButton.textContent = filters.sortBy ? `Sort by: ${sortLabels[filters.sortBy]}` : "Sort by";
+  els.sortFilterButton.textContent = filters.sortBy
+    ? `Sort by: ${sortLabels[filters.sortBy]}`
+    : "Sort by";
 
-  els.roleFilterButton.classList.toggle("active", Boolean(filters.roles.length));
-  els.roleFilterButton.textContent = getFilterButtonLabel("Role", filters.roles);
+  els.roleFilterButton.classList.toggle(
+    "active",
+    Boolean(filters.roles.length),
+  );
+  els.roleFilterButton.textContent = getFilterButtonLabel(
+    "Role",
+    filters.roles,
+  );
   syncFilterOptionButtons(els.roleFilter, filters.roles, "roleFilter");
 
-  els.industryFilterButton.classList.toggle("active", Boolean(filters.industries.length));
-  els.industryFilterButton.textContent = getFilterButtonLabel("Industry", filters.industries);
-  syncFilterOptionButtons(els.industryFilter, filters.industries, "industryFilter");
+  els.industryFilterButton.classList.toggle(
+    "active",
+    Boolean(filters.industries.length),
+  );
+  els.industryFilterButton.textContent = getFilterButtonLabel(
+    "Industry",
+    filters.industries,
+  );
+  syncFilterOptionButtons(
+    els.industryFilter,
+    filters.industries,
+    "industryFilter",
+  );
 }
 
 function getFilterButtonLabel(label, values, emptyLabel = label) {
@@ -1011,7 +1231,9 @@ function getFilterButtonLabel(label, values, emptyLabel = label) {
 function closeFilterAccordions(exceptButton = null) {
   els.accordionTriggers.forEach((button) => {
     if (button === exceptButton) return;
-    const panel = document.querySelector(`#${button.getAttribute("aria-controls")}`);
+    const panel = document.querySelector(
+      `#${button.getAttribute("aria-controls")}`,
+    );
     button.setAttribute("aria-expanded", "false");
     if (panel) panel.hidden = true;
   });
@@ -1021,7 +1243,9 @@ function updateOptionSelection(values, value, event) {
   if (!value || value === "All") return [];
   const selected = values.includes(value);
   if (event.ctrlKey || event.metaKey) {
-    return selected ? values.filter((item) => item !== value) : [...values, value];
+    return selected
+      ? values.filter((item) => item !== value)
+      : [...values, value];
   }
   return selected ? [] : [value];
 }
@@ -1041,8 +1265,10 @@ function getSelectedJobTypes(jobLevel) {
 }
 
 function getJobTypes(job) {
-  if (Array.isArray(job.jobTypes) && job.jobTypes.length) return normalizeJobTypes(job.jobTypes);
-  if (typeof job.jobTypes === "string" && job.jobTypes.trim()) return normalizeJobTypes(splitList(job.jobTypes));
+  if (Array.isArray(job.jobTypes) && job.jobTypes.length)
+    return normalizeJobTypes(job.jobTypes);
+  if (typeof job.jobTypes === "string" && job.jobTypes.trim())
+    return normalizeJobTypes(splitList(job.jobTypes));
 
   const legacyTypes = [];
   const normalizedLevel = normalizeJobLevel(job.jobLevel);
@@ -1090,7 +1316,13 @@ function normalizeJobLevel(value) {
     sr: "Sr",
     senior: "Sr",
   };
-  return levels[String(value || "").trim().toLowerCase()] || "";
+  return (
+    levels[
+      String(value || "")
+        .trim()
+        .toLowerCase()
+    ] || ""
+  );
 }
 
 function getJobLevelForForm(job) {
@@ -1103,11 +1335,13 @@ function getJobLevelForForm(job) {
 
 function syncFilterOptionButtons(container, selectedValues, dataKey) {
   const selected = new Set(selectedValues);
-  container.querySelectorAll(`[data-${toKebabCase(dataKey)}]`).forEach((button) => {
-    const isSelected = selected.has(button.dataset[dataKey]);
-    button.classList.toggle("active", isSelected);
-    button.setAttribute("aria-selected", String(isSelected));
-  });
+  container
+    .querySelectorAll(`[data-${toKebabCase(dataKey)}]`)
+    .forEach((button) => {
+      const isSelected = selected.has(button.dataset[dataKey]);
+      button.classList.toggle("active", isSelected);
+      button.setAttribute("aria-selected", String(isSelected));
+    });
 }
 
 function toKebabCase(value) {
@@ -1141,8 +1375,14 @@ function createJobCard(job) {
   main.append(titleRow, company);
 
   const location = cell(job.location || "");
-  const pay = activePage === "applied" ? labelledDateCell("Date applied", job.appliedDate) : createPayCell(job);
-  const deadline = activePage === "applied" ? labelledDateCell("Last responded", getLastRespondedDate(job), true) : createDeadlineCell(job);
+  const pay =
+    activePage === "applied"
+      ? labelledDateCell("Date applied", job.appliedDate)
+      : createPayCell(job);
+  const deadline =
+    activePage === "applied"
+      ? labelledDateCell("Last responded", getLastRespondedDate(job), true)
+      : createDeadlineCell(job);
 
   const industry = cell(getIndustryDisplay(job), "job-industry");
 
@@ -1158,12 +1398,15 @@ function createJobCard(job) {
     levelChips.append(applicationStageChip(job));
   } else {
     const jobLevel = normalizeJobLevel(job.jobLevel);
-    if (jobLevel) levelChips.append(chip(jobLevel, `level-${jobLevel.toLowerCase()}`));
+    if (jobLevel)
+      levelChips.append(chip(jobLevel, `level-${jobLevel.toLowerCase()}`));
   }
 
   const priorityChips = document.createElement("div");
   priorityChips.className = "chips priority-chips";
-  priorityChips.append(activePage === "applied" ? applicationStatusChip(job) : statusChip(job));
+  priorityChips.append(
+    activePage === "applied" ? applicationStatusChip(job) : statusChip(job),
+  );
 
   const actions = document.createElement("div");
   actions.className = "job-actions";
@@ -1187,7 +1430,18 @@ function createJobCard(job) {
   edit.addEventListener("click", () => openEditJobForm(job.id));
   actions.append(link, edit);
 
-  card.append(logo, main, location, pay, deadline, industry, roleChips, levelChips, priorityChips, actions);
+  card.append(
+    logo,
+    main,
+    location,
+    pay,
+    deadline,
+    industry,
+    roleChips,
+    levelChips,
+    priorityChips,
+    actions,
+  );
   return card;
 }
 
@@ -1280,7 +1534,9 @@ function getCompanyLogoSources(company) {
   const trimmedCompany = (company || "").trim();
   const fileBase = trimmedCompany ? encodeURIComponent(trimmedCompany) : "";
   const sources = fileBase
-    ? [".jpg", ".png", ".jpeg"].map((extension) => `img/${fileBase}${extension}`)
+    ? [".jpg", ".png", ".jpeg"].map(
+        (extension) => `img/${fileBase}${extension}`,
+      )
     : [];
   return [...sources, "img/placeholder.jpg"];
 }
@@ -1352,7 +1608,8 @@ function getApplicationStatusDisplay(job) {
 }
 
 function getApplicationStage(job) {
-  if (isDecisionApplicationStatus(getFinalStatusForForm(job))) return "Decision";
+  if (isDecisionApplicationStatus(getFinalStatusForForm(job)))
+    return "Decision";
   if (job.assessmentDate || job.assessmentStatus === "Yes") return "Assessed";
   if (job.interviewDate || job.interviewStatus === "Yes") return "Interviewed";
   if (job.screenDate || job.screenStatus === "Yes") return "Screened";
@@ -1361,13 +1618,16 @@ function getApplicationStage(job) {
 }
 
 function getLastRespondedDate(job) {
-  return job.lastHeardFrom || getLastHeardFrom([
-    job.responseDate,
-    job.screenDate,
-    job.interviewDate,
-    job.assessmentDate,
-    job.finalStatusDate,
-  ]);
+  return (
+    job.lastHeardFrom ||
+    getLastHeardFrom([
+      job.responseDate,
+      job.screenDate,
+      job.interviewDate,
+      job.assessmentDate,
+      job.finalStatusDate,
+    ])
+  );
 }
 
 function isFavoriteJob(job) {
@@ -1375,7 +1635,9 @@ function isFavoriteJob(job) {
 }
 
 function isReferenceJob(job) {
-  return String(job.priority || "").toLowerCase() === "future" || isAppliedNo(job);
+  return (
+    String(job.priority || "").toLowerCase() === "future" || isAppliedNo(job)
+  );
 }
 
 function isAppliedJob(job) {
@@ -1404,7 +1666,8 @@ function getLifecycleStatusForForm(status, date, appliedStatus) {
 
 function getFinalStatusForForm(job) {
   if (isFinalApplicationStatus(job.finalStatus)) return job.finalStatus;
-  if (isFinalApplicationStatus(job.applicationStatus)) return job.applicationStatus;
+  if (isFinalApplicationStatus(job.applicationStatus))
+    return job.applicationStatus;
   return "";
 }
 
@@ -1426,9 +1689,7 @@ function isDatedFinalStatus(status) {
 }
 
 function getLastHeardFrom(dates) {
-  const sortedDates = dates
-    .filter(Boolean)
-    .sort();
+  const sortedDates = dates.filter(Boolean).sort();
   return sortedDates[sortedDates.length - 1] || "";
 }
 
@@ -1445,11 +1706,16 @@ function getPayDisplay(job) {
   if (Number.isFinite(min) && Number.isFinite(max)) {
     return {
       main: `${formatCurrency(min)} - ${formatCurrency(max)}`,
-      detail: midpoint ? `Mid ${formatCurrency(midpoint)}${suffix}` : job.payType || "",
+      detail: midpoint
+        ? `Mid ${formatCurrency(midpoint)}${suffix}`
+        : job.payType || "",
     };
   }
   if (Number.isFinite(midpoint)) {
-    return { main: `Avg ${formatCurrency(midpoint)}`, detail: job.payType || "" };
+    return {
+      main: `Avg ${formatCurrency(midpoint)}`,
+      detail: job.payType || "",
+    };
   }
   if (Number.isFinite(min)) {
     return { main: `Avg ${formatCurrency(min)}`, detail: job.payType || "" };
@@ -1469,7 +1735,9 @@ function updateRoleFilterOptions(sourceJobs) {
 
   els.roleFilter.replaceChildren();
   knownRoles.forEach((role) => {
-    els.roleFilter.append(createFilterOptionButton(role, "roleFilter", selected.has(role)));
+    els.roleFilter.append(
+      createFilterOptionButton(role, "roleFilter", selected.has(role)),
+    );
   });
 }
 
@@ -1485,7 +1753,13 @@ function updateIndustryFilterOptions(sourceJobs) {
 
   els.industryFilter.replaceChildren();
   knownIndustries.forEach((industry) => {
-    els.industryFilter.append(createFilterOptionButton(industry, "industryFilter", selected.has(industry)));
+    els.industryFilter.append(
+      createFilterOptionButton(
+        industry,
+        "industryFilter",
+        selected.has(industry),
+      ),
+    );
   });
 }
 
@@ -1516,12 +1790,14 @@ async function scrapeJobDescription() {
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const html = await response.text();
     const text = extractReadableText(html);
-    if (!text || text.length < 120) throw new Error("No readable description found");
+    if (!text || text.length < 120)
+      throw new Error("No readable description found");
     els.jobDescription.value = text;
     els.scrapeStatus.textContent = "Description scraped.";
     showToast("Description scraped.");
   } catch (error) {
-    els.scrapeStatus.textContent = "Scrape blocked. Paste the description manually.";
+    els.scrapeStatus.textContent =
+      "Scrape blocked. Paste the description manually.";
     showToast("This site blocked direct scraping.");
   } finally {
     els.scrapeButton.disabled = false;
@@ -1531,7 +1807,11 @@ async function scrapeJobDescription() {
 function extractReadableText(html) {
   const parser = new DOMParser();
   const doc = parser.parseFromString(html, "text/html");
-  doc.querySelectorAll("script, style, noscript, svg, iframe, nav, header, footer").forEach((node) => node.remove());
+  doc
+    .querySelectorAll(
+      "script, style, noscript, svg, iframe, nav, header, footer",
+    )
+    .forEach((node) => node.remove());
   const selectors = [
     "[data-testid*='description' i]",
     "[class*='description' i]",
@@ -1552,13 +1832,18 @@ function extractReadableText(html) {
 
 async function connectFolder() {
   if (!("showDirectoryPicker" in window)) {
-    setFolderGate(true, "This browser does not support folder access. Use a browser with File System Access support.");
+    setFolderGate(
+      true,
+      "This browser does not support folder access. Use a browser with File System Access support.",
+    );
     showToast("Folder writing is not supported in this browser.");
     return;
   }
 
   try {
-    const pickedHandle = await window.showDirectoryPicker({ mode: "readwrite" });
+    const pickedHandle = await window.showDirectoryPicker({
+      mode: "readwrite",
+    });
     const permission = await requestDirectoryPermission(pickedHandle);
     if (permission !== "granted") {
       directoryHandle = null;
@@ -1570,7 +1855,10 @@ async function connectFolder() {
     await refreshJobs();
     const syncStatus = await safeSyncToConnectedFolder();
     if (syncStatus === "failed") {
-      setFolderGate(true, "The folder connected, but synchronization failed. Try again.");
+      setFolderGate(
+        true,
+        "The folder connected, but synchronization failed. Try again.",
+      );
       showToast("Folder connected, but export failed.");
       return;
     }
@@ -1598,7 +1886,10 @@ async function syncToConnectedFolder(forceNotice = false) {
 
   const csv = await buildCsv();
   await writeFile(directoryHandle, "jobs.csv", csv);
-  const descriptionsDir = await directoryHandle.getDirectoryHandle("job-descriptions", { create: true });
+  const descriptionsDir = await directoryHandle.getDirectoryHandle(
+    "job-descriptions",
+    { create: true },
+  );
   await Promise.all(
     jobs.map(async (job) => {
       if (!job.descriptionFilename || !job.descriptionLength) return;
@@ -1625,7 +1916,9 @@ async function requestDirectoryPermission(handle) {
 }
 
 async function writeFile(parentHandle, fileName, contents) {
-  const fileHandle = await parentHandle.getFileHandle(fileName, { create: true });
+  const fileHandle = await parentHandle.getFileHandle(fileName, {
+    create: true,
+  });
   const writable = await fileHandle.createWritable();
   await writable.write(contents);
   await writable.close();
@@ -1657,7 +1950,10 @@ async function getDataDirectoryHandle(pickedHandle) {
   if (!dbHandle) return pickedHandle;
   const csv = await readTextFile(dbHandle, "jobs.csv");
   if (csv !== null) return dbHandle;
-  const descriptionsDir = await getExistingDirectoryHandle(dbHandle, "job-descriptions");
+  const descriptionsDir = await getExistingDirectoryHandle(
+    dbHandle,
+    "job-descriptions",
+  );
   return descriptionsDir || pickedHandle;
 }
 
@@ -1668,12 +1964,20 @@ async function exportCsv() {
 }
 
 async function buildCsv() {
-  const rows = jobs.map((job) => CSV_COLUMNS.map((column) => serializeCsvValue(getCsvColumnValue(job, column))));
-  return [CSV_COLUMNS, ...rows].map((row) => row.map(escapeCsv).join(",")).join("\r\n");
+  const rows = jobs.map((job) =>
+    CSV_COLUMNS.map((column) =>
+      serializeCsvValue(getCsvColumnValue(job, column)),
+    ),
+  );
+  return [CSV_COLUMNS, ...rows]
+    .map((row) => row.map(escapeCsv).join(","))
+    .join("\r\n");
 }
 
 async function exportDescriptions() {
-  const jobsWithDescriptions = jobs.filter((job) => job.descriptionFilename && job.descriptionLength);
+  const jobsWithDescriptions = jobs.filter(
+    (job) => job.descriptionFilename && job.descriptionLength,
+  );
   if (!jobsWithDescriptions.length) {
     showToast("No descriptions to export.");
     return;
@@ -1701,7 +2005,11 @@ async function downloadCurrentDescription() {
     showToast("No description saved for this job.");
     return;
   }
-  downloadBlob(text, job.descriptionFilename || makeDescriptionFilename(job.id), "text/plain");
+  downloadBlob(
+    text,
+    job.descriptionFilename || makeDescriptionFilename(job.id),
+    "text/plain",
+  );
 }
 
 async function importCsv(event) {
@@ -1732,8 +2040,13 @@ async function importFromConnectedFolder(handle) {
   const imported = parseJobsCsv(csv);
   const existingJobs = await getAllJobs();
   const existingById = new Map(existingJobs.map((job) => [job.id, job]));
-  const jobsToImport = imported.filter((job) => shouldImportJob(job, existingById.get(job.id)));
-  const descriptionsDir = await getExistingDirectoryHandle(handle, "job-descriptions");
+  const jobsToImport = imported.filter((job) =>
+    shouldImportJob(job, existingById.get(job.id)),
+  );
+  const descriptionsDir = await getExistingDirectoryHandle(
+    handle,
+    "job-descriptions",
+  );
   let descriptionCount = 0;
 
   if (descriptionsDir) {
@@ -1765,7 +2078,9 @@ async function importDescriptionsFromRepository(imported) {
   const counts = await Promise.all(
     imported.map(async (job) => {
       if (!job.descriptionFilename) return 0;
-      const text = await fetchTextFile(`db/job-descriptions/${encodeURIComponent(job.descriptionFilename)}`);
+      const text = await fetchTextFile(
+        `db/job-descriptions/${encodeURIComponent(job.descriptionFilename)}`,
+      );
       if (text === null) return 0;
       await putDescription(job.id, text);
       job.descriptionLength = text.length;
@@ -1801,7 +2116,10 @@ function shouldImportJob(imported, existing) {
   if (!existing) return true;
   const importedUpdatedAt = Date.parse(imported.updatedAt || "");
   const existingUpdatedAt = Date.parse(existing.updatedAt || "");
-  if (Number.isFinite(importedUpdatedAt) && Number.isFinite(existingUpdatedAt)) {
+  if (
+    Number.isFinite(importedUpdatedAt) &&
+    Number.isFinite(existingUpdatedAt)
+  ) {
     return importedUpdatedAt >= existingUpdatedAt;
   }
   return Boolean(imported.updatedAt && !existing.updatedAt);
@@ -1821,24 +2139,47 @@ function csvRowToJob(header, row) {
     record[column] = row[index] ?? "";
   });
   const now = new Date().toISOString();
-  const deadlineChoice = record.deadlineChoice || (record.deadline ? "Select Date" : "Blank");
+  const deadlineChoice =
+    record.deadlineChoice || (record.deadline ? "Select Date" : "Blank");
   const applicationNeeds = splitList(record.applicationNeeds);
   if (record.referenceCount && !applicationNeeds.includes("References")) {
     applicationNeeds.push("References");
   }
   const jobTypes = getImportedJobTypes(record);
-  const appliedStatus = record.appliedStatus || (record.appliedDate ? "Yes" : "");
+  const appliedStatus =
+    record.appliedStatus || (record.appliedDate ? "Yes" : "");
   const priority = appliedStatus === "No" ? "Future" : record.priority || "";
   const finalStatus = getImportedFinalStatus(record);
-  const finalStatusDate = isDatedFinalStatus(finalStatus) ? record.finalStatusDate || "" : "";
-  const responseStatus = getImportedLifecycleStatus(record.responseStatus, record.responseDate, appliedStatus);
-  const responseDate = responseStatus === "Yes" ? record.responseDate || "" : "";
-  const screenStatus = getImportedLifecycleStatus(record.screenStatus, record.screenDate, appliedStatus);
+  const finalStatusDate = isDatedFinalStatus(finalStatus)
+    ? record.finalStatusDate || ""
+    : "";
+  const responseStatus = getImportedLifecycleStatus(
+    record.responseStatus,
+    record.responseDate,
+    appliedStatus,
+  );
+  const responseDate =
+    responseStatus === "Yes" ? record.responseDate || "" : "";
+  const screenStatus = getImportedLifecycleStatus(
+    record.screenStatus,
+    record.screenDate,
+    appliedStatus,
+  );
   const screenDate = screenStatus === "Yes" ? record.screenDate || "" : "";
-  const interviewStatus = getImportedLifecycleStatus(record.interviewStatus, record.interviewDate, appliedStatus);
-  const interviewDate = interviewStatus === "Yes" ? record.interviewDate || "" : "";
-  const assessmentStatus = getImportedLifecycleStatus(record.assessmentStatus, record.assessmentDate, appliedStatus);
-  const assessmentDate = assessmentStatus === "Yes" ? record.assessmentDate || "" : "";
+  const interviewStatus = getImportedLifecycleStatus(
+    record.interviewStatus,
+    record.interviewDate,
+    appliedStatus,
+  );
+  const interviewDate =
+    interviewStatus === "Yes" ? record.interviewDate || "" : "";
+  const assessmentStatus = getImportedLifecycleStatus(
+    record.assessmentStatus,
+    record.assessmentDate,
+    appliedStatus,
+  );
+  const assessmentDate =
+    assessmentStatus === "Yes" ? record.assessmentDate || "" : "";
   return {
     id: record.id || createId(),
     createdAt: record.createdAt || now,
@@ -1853,15 +2194,27 @@ function csvRowToJob(header, row) {
     payType: record.payType || "",
     payMin: record.payMin || "",
     payMax: record.payMax || "",
-    payMidpoint: record.payMidpoint || calculateMidpoint(record.payMin || "", record.payMax || ""),
+    payMidpoint:
+      record.payMidpoint ||
+      calculateMidpoint(record.payMin || "", record.payMax || ""),
     priority,
     datePosted: record.datePosted || "",
     deadlineChoice,
     deadline: deadlineChoice === "Select Date" ? record.deadline || "" : "",
     appliedStatus,
     appliedDate: appliedStatus === "Yes" ? record.appliedDate || "" : "",
-    applicationStatus: record.applicationStatus || getApplicationStatus(appliedStatus, finalStatus),
-    lastHeardFrom: record.lastHeardFrom || getLastHeardFrom([responseDate, screenDate, interviewDate, assessmentDate, finalStatusDate]),
+    applicationStatus:
+      record.applicationStatus ||
+      getApplicationStatus(appliedStatus, finalStatus),
+    lastHeardFrom:
+      record.lastHeardFrom ||
+      getLastHeardFrom([
+        responseDate,
+        screenDate,
+        interviewDate,
+        assessmentDate,
+        finalStatusDate,
+      ]),
     responseStatus,
     responseDate,
     screenStatus,
@@ -1897,12 +2250,18 @@ function getImportedJobTypes(record) {
 
   const legacyTypes = [];
   const normalizedLevel = normalizeJobLevel(record.jobLevel);
-  const hasFullTimeColumn = Object.prototype.hasOwnProperty.call(record, "fullTime");
+  const hasFullTimeColumn = Object.prototype.hasOwnProperty.call(
+    record,
+    "fullTime",
+  );
   const internship = parseBoolean(record.internship);
   const partTime = parseBoolean(record.partTime);
   if (normalizedLevel === "PT") legacyTypes.push("Part-time");
   if (normalizedLevel === "Intern") legacyTypes.push("Internship");
-  if (parseBoolean(record.fullTime) || (!hasFullTimeColumn && !internship && !partTime && !legacyTypes.length)) {
+  if (
+    parseBoolean(record.fullTime) ||
+    (!hasFullTimeColumn && !internship && !partTime && !legacyTypes.length)
+  ) {
     legacyTypes.push("Full-time");
   }
   if (internship) legacyTypes.push("Internship");
@@ -1918,7 +2277,8 @@ function getImportedLifecycleStatus(status, date, appliedStatus) {
 
 function getImportedFinalStatus(record) {
   if (isFinalApplicationStatus(record.finalStatus)) return record.finalStatus;
-  if (isFinalApplicationStatus(record.applicationStatus)) return record.applicationStatus;
+  if (isFinalApplicationStatus(record.applicationStatus))
+    return record.applicationStatus;
   return "";
 }
 
@@ -1991,7 +2351,9 @@ function rememberRadioState(event) {
 }
 
 function rememberToggleableGroupRadioState(event) {
-  const input = event.target.closest("label")?.querySelector("input[type='radio']");
+  const input = event.target
+    .closest("label")
+    ?.querySelector("input[type='radio']");
   if (input) input.dataset.wasChecked = String(input.checked);
 }
 
@@ -2016,7 +2378,9 @@ function getSelectedValues(select) {
 }
 
 function getCheckedValues(inputs) {
-  return [...inputs].filter((input) => input.checked).map((input) => input.value);
+  return [...inputs]
+    .filter((input) => input.checked)
+    .map((input) => input.value);
 }
 
 function setMultiSelectValues(select, values) {
@@ -2074,7 +2438,10 @@ function formatCurrency(value) {
 function formatDate(value) {
   if (!value) return "";
   const date = new Date(`${value}T00:00:00`);
-  return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" }).format(date);
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+  }).format(date);
 }
 
 function makeDescriptionFilename(id) {
@@ -2084,11 +2451,13 @@ function makeDescriptionFilename(id) {
 }
 
 function slugify(value) {
-  return value
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .slice(0, 42) || "job";
+  return (
+    value
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 42) || "job"
+  );
 }
 
 function createId() {
