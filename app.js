@@ -412,6 +412,7 @@ function usesPriorityFilter(page = activePage) {
 function setFolderGate(isVisible, statusMessage = "Folder connection is required to continue.") {
   els.folderGate.hidden = !isVisible;
   els.trackerApp.inert = isVisible;
+  els.saveButton.disabled = isVisible;
   if (isVisible) {
     els.folderGateStatus.textContent = statusMessage;
     els.folderGateButton.disabled = !("showDirectoryPicker" in window);
