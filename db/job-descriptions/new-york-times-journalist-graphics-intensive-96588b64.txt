@@ -1,0 +1,64 @@
+More info about the Graphics Intensive fellowship: https://www.nytco.com/careers/early-career-opportunities/graphics-intensive/
+
+
+Journalist, Graphics Intensive
+New York, NY
+The mission of The New York Times is to seek the truth and help people understand the world. That means independent journalism is at the heart of all we do as a company. It’s why we have a world-renowned newsroom that sends journalists to report on the ground from nearly 160 countries. It’s why we focus deeply on how our readers will experience our journalism, from print to audio to a world-class digital and app destination. And it’s why our business strategy centers on making journalism so good that it’s worth paying for. 
+
+About the Role:
+
+The Graphics Intensive is a unique opportunity for mission-driven students and early career professionals with visual skills to work alongside journalists for a 12-week, full-time program. We seek individuals who bring their own inquisitive nature to develop creative approaches to storytelling, including those who may not have previously considered working in an independent newsroom. Prior journalism experience isn't required — many of our team members have embraced journalism's core fundamentals while at The Times — but you must have a desire to seek the truth and help people understand the world.
+
+The Graphics desk at The New York Times is composed of visual journalists from diverse creative backgrounds, including architecture, cartography, and computer science. We cover all topics across the news cycle, motivated by a shared curiosity. This position is designed to cultivate skills and judgment in the creation of visual stories, including training and regular feedback from team members. Many of our projects are a collective effort, so you will work with a range of people and skill sets.
+
+We are interested in applicants who want to learn how to apply creative and technical skills to a range of journalistic and storytelling assignments. Do you know how to write code to analyze data and produce visualizations? Are you a mapmaker or satellite imagery analyst? Do you use design and illustration to clearly convey complex information? These are the types of people that we seek to develop as potential graphics journalists.
+
+The graphics intensive position is available throughout the year, including winter, spring, summer and fall openings. This is an in-office position, based in New York City and includes regular attendance in the office four days each week. There may be some flexibility to work remotely per your departmental guidance.
+
+Responsibilities:
+
+Under close guidance and supervision of a senior editor, produce visual and data-based multimedia journalism in response to breaking or as ongoing news coverage
+Design and build graphics and other visual forms using web-based markup and coding languages with guidance from senior editors
+Participate in training sessions
+Collaborate with colleagues across the newsroom
+Complete work assignments based on team needs and news demands
+Demonstrate support and understanding of our value of journalistic independence and a strong commitment to our mission to seek the truth and help people understand the world.
+You will report to a Deputy Editor, Graphics.
+Basic Qualifications:
+
+1+ year of demonstrated strong performance toward an undergraduate degree, or relevant professional experience
+2+ years of experience working with graphics tools and software, like D3.js, R, JavaScript, Python, HTML/CSS, GIS, and 3-D modeling software
+Interest in data visualization, cartography or other forms of visual journalism and the skills to start producing work in these areas
+Skill in interface design and information graphic design
+Experience with Adobe Creative Suite, especially Illustrator, or with design tools like Figma
+A portfolio demonstrating experience with news graphics or interactive visualizations
+Preferred Qualifications:
+
+News or visual internships or equivalent experience
+Curiosity and interest in the news, and in finding innovative approaches to telling stories
+Experience working independently, meet deadlines, and being attentive to detail in an unpredictable news cycle and a high-pressure newsroom environment
+Experience working collaboratively with members of a team with diverse creative skills
+Available to work some nights, weekends and holidays as the news cycle demands
+Experience multitasking, prioritizing, and balancing multiple projects in a dynamic work environment
+Interest in professional growth and openness to professional feedback
+Applications should include links to a portfolio or work samples to demonstrate your skills and experience. Please attach a cover letter describing your role in specific projects and which periods of time you will be available for the Graphics intensive. Your cover letter should include any periods when you will be able to work full time in New York, such as, “Available: Winter (2026-27), Spring, Summer or Fall” — or any combination of these.
+
+This position is represented by the NewsGuild of NY.
+
+REQ-020564
+
+Additional Compensation and Benefits
+
+For roles in the U.S., dependent on your role, you may be eligible for variable pay, such as an annual bonus and restricted stock. Benefits may include medical, dental and vision benefits, Flexible Spending Accounts (F.S.A.s), a company-matching 401(k) plan, employee stock purchase plan, paid vacation, paid sick days, paid parental leave, tuition reimbursement and professional development programs.
+
+For roles outside of the U.S., information on benefits will be provided during the interview process.
+
+The annual base pay range for this role is between:
+
+$82,414.80 - $82,414.80 USD
+
+Candidate Use of GenAI Tools:
+
+We’re excited to learn more about you and your experience. To keep our hiring process as fair and authentic as possible, we ask that you submit your own work and not use GenAI tools to generate substantive content during the application and interview process.
+
+If you’re an engineering candidate, we’ll let you know what specific GenAI tools you are permitted to use for your technical assessment.

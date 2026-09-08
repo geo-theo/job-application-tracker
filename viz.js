@@ -1,7 +1,7 @@
 "use strict";
 
 // Charts use non-reference applications; only the ready-to-apply card uses pending jobs.
-const vizState = { salaryGroup: "industry", salaryMode: "salary", region: "remote", flowPeriod: "all", activityPeriod: "all", activityUnit: "auto", flowDates: {}, activityDates: {} };
+const vizState = { excludedJobTypes: [], salaryGroup: "industry", salaryMode: "salary", region: "remote", flowPeriod: "all", activityPeriod: "all", activityUnit: "auto", flowDates: {}, activityDates: {} };
 const VIZ_ANNUAL_HOURS = 8 * 21 * 12;
 const VIZ_DAY = 86400000;
 const VIZ_PERIODS = [["week", "Last week", 7], ["month", "Last month", 30], ["quarter", "Last quarter", 90], ["year", "Last year", 365], ["all", "All time", null]];
@@ -19,9 +19,34 @@ const VIZ_OUTCOMES = [
   { label: "Ghosted", color: VIZ_COLORS.gray },
 ];
 
-function getVizJobs(records, scope = "all") {
+function getVizJobs(records, scope = "all", excludedJobTypes = []) {
   return records.filter((job) => !isReferenceJob(job))
+    .filter((job) => !excludedJobTypes.some((type) => hasJobType(job, type)))
     .filter((job) => scope === "applied" ? isAppliedJob(job) : scope === "pending" ? !isAppliedJob(job) : true);
+}
+
+function vizJobTypeFilters(excludedCount) {
+  const fieldset = vizElement("fieldset", "viz-type-filters");
+  fieldset.append(vizElement("legend", "", "Exclude job types"));
+  const options = vizElement("div", "viz-type-options");
+  [["Internship", "Internships"], ["Part-time", "Part-time"]].forEach(([type, caption]) => {
+    const label = vizElement("label");
+    const input = vizElement("input");
+    input.type = "checkbox";
+    input.id = `viz-exclude-${type.toLowerCase()}`;
+    input.checked = vizState.excludedJobTypes.includes(type);
+    input.addEventListener("change", () => {
+      vizState.excludedJobTypes = input.checked ? [...vizState.excludedJobTypes, type] : vizState.excludedJobTypes.filter((value) => value !== type);
+      const scrollTop = els.jobList.scrollTop;
+      renderViz();
+      els.jobList.scrollTop = scrollTop;
+      document.getElementById(input.id).focus({ preventScroll: true });
+    });
+    label.append(input, vizElement("span", "", caption));
+    options.append(label);
+  });
+  fieldset.append(options, vizElement("p", "viz-type-note", `Applies to all figures and charts.${vizState.excludedJobTypes.length ? ` ${excludedCount} ${excludedCount === 1 ? "job" : "jobs"} excluded by type.` : ""}`));
+  return fieldset;
 }
 
 function vizElement(tag, className, text) {
@@ -293,8 +318,9 @@ function vizActivateSvg(element, label, onActivate) {
 
 function renderViz() {
   const all = getVizJobs(jobs);
-  const applied = getVizJobs(jobs, "applied");
-  const pending = getVizJobs(jobs, "pending");
+  const visible = getVizJobs(jobs, "all", vizState.excludedJobTypes);
+  const applied = visible.filter(isAppliedJob);
+  const pending = visible.filter((job) => !isAppliedJob(job));
   const publicPurpose = applied.filter(vizIsPublicPurpose);
   const pay = vizPaySummary(applied);
   const mission = vizMissionChange(applied);
@@ -315,7 +341,7 @@ function renderViz() {
   title.append(vizElement("p", "eyebrow", "YOUR SEARCH, IN PERSPECTIVE"),
     vizElement("h2", "viz-title", "Where could your next chapter lead?"),
     vizElement("p", "viz-description", `${applied.length} applications to explore. ${pending.length} jobs ready for a first move. ${jobs.length - all.length} references excluded. Select a chart to see its jobs.`));
-  intro.append(title);
+  intro.append(title, vizJobTypeFilters(all.length - visible.length));
   dashboard.append(intro);
   const stats = vizElement("div", "viz-stat-grid");
   stats.append(

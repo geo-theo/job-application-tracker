@@ -7,9 +7,10 @@ const DESCRIPTION_STORE = "descriptions";
 const SETTINGS_STORE = "settings";
 
 const ROLE_OPTIONS = [
-  "GIS / Geospatial",
-  "Intelligence / Risk",
-  "Research",
+  "Cartographer", "Geospatial Analyst", "GIS Technician",
+  "Data Governance", "Data Engineer", "Data ",
+  "Geopolitcal Risk", "Intelligence",
+  "Researcher",
   "Data Analysis",
   "Policy",
   "Program Management",
@@ -18,6 +19,8 @@ const ROLE_OPTIONS = [
   "Writing / Editing",
   "Operations",
   "Business Development",
+
+  "Retail / Customer Service",
   "Other",
 ];
 

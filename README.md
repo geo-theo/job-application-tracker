@@ -68,6 +68,8 @@ To deploy, enable GitHub Pages for the repository root. Include `index.html`, `s
 
 All Viz charts analyze applied jobs. References are excluded using the same rule as the board: Future priority or Applied = No. Board filters do not affect Viz. The first summary card is the exception: it shows pending jobs, broken down by priority, including an Unranked count when needed.
 
+The **Exclude job types** checkboxes at the top independently exclude Internships and Part-time jobs from every summary figure, chart, and drill-down, including the pending-jobs card. Both start unchecked. A job with multiple types is excluded if any selected type matches; selections remain in place while navigating within the app. Reference exclusions are counted separately.
+
 The other summary cards show:
 
 - Applications this calendar week, month, quarter, year, and all time. Weeks start Monday; calendar totals run through today in the user's timezone. Missing application dates count only in all time.

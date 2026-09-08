@@ -21,13 +21,19 @@
         <p class="eyebrow">Workspace access</p>
         <h1 id="folder-gate-title">Connect to your job folder</h1>
         <p id="folder-gate-description">
-          Connect the folder that contains your tracker data before opening the workspace.
-          This keeps new entries and edits synchronized with your CSV and description files.
+          Connect the folder that contains your tracker data before opening the
+          workspace. This keeps new entries and edits synchronized with your CSV
+          and description files.
         </p>
         <button type="button" class="primary-button" id="folder-gate-button">
           Connect to folder
         </button>
-        <p class="folder-gate-status" id="folder-gate-status" role="status" aria-live="polite">
+        <p
+          class="folder-gate-status"
+          id="folder-gate-status"
+          role="status"
+          aria-live="polite"
+        >
           Folder connection is required to continue.
         </p>
       </div>
@@ -237,7 +243,11 @@
                   <span>References</span>
                 </label>
               </div>
-              <label class="field inline-number-field" id="reference-count-wrap" hidden>
+              <label
+                class="field inline-number-field"
+                id="reference-count-wrap"
+                hidden
+              >
                 <span>Number of references</span>
                 <input
                   id="reference-count"
@@ -288,14 +298,18 @@
                       aria-label="Response"
                     >
                       <label
-                        ><input type="radio" name="responseStatus" value="Yes" /><span
-                          >Yes</span
-                        ></label
+                        ><input
+                          type="radio"
+                          name="responseStatus"
+                          value="Yes"
+                        /><span>Yes</span></label
                       >
                       <label
-                        ><input type="radio" name="responseStatus" value="No" /><span
-                          >No</span
-                        ></label
+                        ><input
+                          type="radio"
+                          name="responseStatus"
+                          value="No"
+                        /><span>No</span></label
                       >
                     </div>
                   </div>
@@ -317,14 +331,18 @@
                       aria-label="Screen"
                     >
                       <label
-                        ><input type="radio" name="screenStatus" value="Yes" /><span
-                          >Yes</span
-                        ></label
+                        ><input
+                          type="radio"
+                          name="screenStatus"
+                          value="Yes"
+                        /><span>Yes</span></label
                       >
                       <label
-                        ><input type="radio" name="screenStatus" value="No" /><span
-                          >No</span
-                        ></label
+                        ><input
+                          type="radio"
+                          name="screenStatus"
+                          value="No"
+                        /><span>No</span></label
                       >
                     </div>
                   </div>
@@ -346,14 +364,18 @@
                       aria-label="Interview"
                     >
                       <label
-                        ><input type="radio" name="interviewStatus" value="Yes" /><span
-                          >Yes</span
-                        ></label
+                        ><input
+                          type="radio"
+                          name="interviewStatus"
+                          value="Yes"
+                        /><span>Yes</span></label
                       >
                       <label
-                        ><input type="radio" name="interviewStatus" value="No" /><span
-                          >No</span
-                        ></label
+                        ><input
+                          type="radio"
+                          name="interviewStatus"
+                          value="No"
+                        /><span>No</span></label
                       >
                     </div>
                   </div>
@@ -375,14 +397,18 @@
                       aria-label="Assessment"
                     >
                       <label
-                        ><input type="radio" name="assessmentStatus" value="Yes" /><span
-                          >Yes</span
-                        ></label
+                        ><input
+                          type="radio"
+                          name="assessmentStatus"
+                          value="Yes"
+                        /><span>Yes</span></label
                       >
                       <label
-                        ><input type="radio" name="assessmentStatus" value="No" /><span
-                          >No</span
-                        ></label
+                        ><input
+                          type="radio"
+                          name="assessmentStatus"
+                          value="No"
+                        /><span>No</span></label
                       >
                     </div>
                   </div>
@@ -434,7 +460,6 @@
                 </div>
               </div>
             </div>
-
           </fieldset>
 
           <fieldset class="form-section">
@@ -528,11 +553,19 @@
                   <option value="Geospatial">Geospatial</option>
                   <option value="Geopolitical Risk">Geopolitical Risk</option>
                   <option value="Intl Development">Intl Development</option>
-                  <option value="Defense & Security">
-                    Defense &amp; Security
-                  </option>
+                  <option value="Defense & Security">MIC</option>
+                  <option value="Outdoors">Tech</option>
+                  <option value="Local Government">Federal Government</option>
                   <option value="Local Government">Local Government</option>
-                  <option value="Outdoors">Outdoors</option>
+                  <option value="Local Government">Energy</option>
+                  <option value="Local Government">
+                    Utilities & Telecommunications
+                  </option>
+                  <option value="Local Government">Transportation</option>
+                  <option value="Outdoors">Tourism / Leisure</option>
+                  <option value="Outdoors">Consumer Products</option>
+                  <option value="Outdoors">Academia</option>
+                  <option value="Outdoors">Retail</option>
                   <option value="Other">Other</option>
                 </select>
               </label>
@@ -541,7 +574,9 @@
                 <select id="helping" name="helping" multiple size="6">
                   <option value="Poor">Poor</option>
                   <option value="Rich">Rich</option>
+                  <option value="Startup">Startup</option>
                   <option value="Govt">Govt</option>
+                  <option value="Startup">Academia</option>
                   <option value="Startup">Startup</option>
                   <option value="Environment">Environment</option>
                 </select>
@@ -728,7 +763,11 @@
           </button>
         </nav>
 
-        <div class="board-controls" id="board-controls" aria-label="List filters">
+        <div
+          class="board-controls"
+          id="board-controls"
+          aria-label="List filters"
+        >
           <div class="control-row">
             <div class="filter-group" aria-label="List filters">
               <div
@@ -791,7 +830,11 @@
                 >
                   Status: All
                 </button>
-                <div class="accordion-panel" id="applied-status-filter-panel" hidden>
+                <div
+                  class="accordion-panel"
+                  id="applied-status-filter-panel"
+                  hidden
+                >
                   <button
                     type="button"
                     class="filter-button"
