@@ -1,0 +1,81 @@
+Graphics/Multimedia Editor, Elections Data Developer (Election Analytics)
+New York, NY; Washington, DC
+The mission of The New York Times is to seek the truth and help people understand the world. That means independent journalism is at the heart of all we do as a company. It’s why we have a world-renowned newsroom that sends journalists to report on the ground from nearly 160 countries. It’s why we focus deeply on how our readers will experience our journalism, from print to audio to a world-class digital and app destination. And it’s why our business strategy centers on making journalism so good that it’s worth paying for. 
+
+The Election Analytics team produces flagship, standard-setting elections coverage, including the live, election night statistical model known as the Needle and The New York Times/Siena Poll. The department is looking to hire an experienced data developer to contribute to data creation, management and architecture across our products.
+
+Underneath our poll and the Needle are massive amounts of data. This includes the voter file, as well as demographics for different localities, hundreds of scrapers collecting precinct data and countless pipelines for processing and cleaning data. Our understanding of the electorate is only as good as the data we have access to, including the data we create to test our systems and the election night model itself.
+
+You will have a central role in creating and cleaning these data sources for use in our products. You will help knit together data from different sections of the team to build our understanding of what may happen on election night throughout the year. And you will ensure we have proper observability into how data is being used.
+
+Election Analytics is a multidisciplinary team of reporters, developers, statisticians and modelers who work on written coverage, graphics, our polls and the election-night model. This is a highly collaborative role that will involve working with colleagues from Election Analytics, the Graphics department and Interactive News.
+
+This is an in-office position in New York City or Washington, D.C., and includes regular attendance in the office four days each week. There may be some flexibility to work remotely per your departmental guidance.
+
+To apply, you MUST include a cover letter of no more than 300 words that…
+
+Explains how you approached a specific instance where you had to balance engineering principles with the need to meet a deadline; and
+
+Explains specifically why you are interested in covering elections
+
+Responsibilities:
+
+Create test data for the election-night mathematical model and for live election-night Graphics
+
+Build and improve pipelines for ingesting, processing, and displaying large data sets, precinct data or absentee files.
+
+Build and maintain observability tools for the model that allow for fast debugging on election night and clear monitoring of precinct data entering the model
+
+Work with stakeholders to understand the data needs and schema requirements
+
+Develop and maintain libraries in R that form the basis of our apps
+
+Balance engineering principles with the need to move at the speed of news
+
+Demonstrate support and understanding of our value of journalistic independence and a strong commitment to our mission to seek the truth and help people understand the world
+
+You will report to the Director of Election Analytics
+
+Basic Qualifications:
+
+3+ years of relevant experience
+
+Familiarity working with large datasets and with best practices in data management
+
+Experience working with data-oriented programming languages, such as R or Python
+
+Experience working with cloud computing providers such as Google Cloud Platform or Amazon Web Services
+
+Experience working collaboratively with people of different skills and backgrounds
+
+Willingness to work a flexible schedule as needed to support coverage of elections and polls
+
+Preferred Qualifications:
+
+Experience working with election data
+
+Experience developing ETL pipelines, working with orchestration tooling, and ensuring reliability and observability
+
+Experience with Google BigQuery or other OLAP databases
+
+Experience building productionized apps
+
+This position is represented by the NewsGuild of NY.
+
+REQ- 020250
+
+Additional Compensation and Benefits
+
+For roles in the U.S., dependent on your role, you may be eligible for variable pay, such as an annual bonus and restricted stock. Benefits may include medical, dental and vision benefits, Flexible Spending Accounts (F.S.A.s), a company-matching 401(k) plan, employee stock purchase plan, paid vacation, paid sick days, paid parental leave, tuition reimbursement and professional development programs. 
+
+For roles outside of the U.S., information on benefits will be provided during the interview process.
+
+The annual base pay range for this role is between:
+
+$113,945.85 - $155,000 USD
+
+Candidate Use of GenAI Tools:
+
+We’re excited to learn more about you and your experience. To keep our hiring process as fair and authentic as possible, we ask that you submit your own work and not use GenAI tools to generate substantive content during the application and interview process.
+
+If you’re an engineering candidate, we’ll let you know what specific GenAI tools you are permitted to use for your technical assessment.

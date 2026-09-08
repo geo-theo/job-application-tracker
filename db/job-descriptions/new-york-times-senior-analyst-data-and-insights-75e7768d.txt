@@ -1,0 +1,49 @@
+Senior Analyst, Data and Insights
+New York, NY
+The mission of The New York Times is to seek the truth and help people understand the world. That means independent journalism is at the heart of all we do as a company. It’s why we have a world-renowned newsroom that sends journalists to report on the ground from nearly 160 countries. It’s why we focus deeply on how our readers will experience our journalism, from print to audio to a world-class digital and app destination. And it’s why our business strategy centers on making journalism so good that it’s worth paying for. 
+
+About the Role
+
+The New York Times is looking for a Senior Analyst to join the Data and Insights Group (DIG).
+
+As part of the Data and Insights Group (DIG), you will join a large community of talented analysts who partner with Product, Newsroom, Engineering, Design, Marketing, Strategy, Finance and PMO teams across the business. The ideal candidate will be curious and a collaborative team player. They are someone who understands the value of contribution to a greater whole and the importance of analytic delivery.
+
+Responsibilities:
+
+You woll formulate data-driven insights, champion them and drive them into action
+You will build and maintain centralized reporting dashboards and automated reports to expand access to data and analytics
+You will write SQL to build pipelines and analyze large datasets
+You will run A/B tests, deliver test analysis and insights and advise on future tests and next steps
+You will advise business stakeholders on areas of opportunity 
+You will demonstrate support and understanding of our value of journalistic independence and a strong commitment to our mission to seek the truth and help people understand the world.
+Basic Qualifications:
+
+2+ years of experience working with data analytics or data science teams to deliver reporting, analysis and insight
+1+ years of experience applying statistical methods to analytical problems
+Proficiency in SQL and experience working with relational databases
+Proficiency in at least one additional scripting language like R or Python
+Experience with data visualization and presenting insights from data
+Strong communication skills and proficiency working effectively with cross-functional teams
+A collaborative mindset and sense of curiosity 
+Preferred Qualifications:
+
+1+ years of experience working in big data environments such as BigQuery or AWS, querying 10M+ rows
+1+ years of experience working in dbt or other data transformation or scheduling tool
+1+ years of experience with version control (Github, code review)
+1+ years of experience with A/B testing.
+ 
+
+REQ-020506
+
+Compensation and Benefits For This Role:
+In addition to base salary, this role is also eligible for variable pay, such as an annual bonus and restricted stock. Benefits include medical, dental and vision benefits, Flexible Spending Accounts (F.S.A.s), a company-matching 401(k) plan, employee stock purchase plan, paid vacation, paid sick days, paid parental leave, tuition reimbursement and professional development programs.
+
+The annual base pay range for this role is between:
+
+$101,000 - $114,000 USD
+
+Candidate Use of GenAI Tools:
+
+We’re excited to learn more about you and your experience. To keep our hiring process as fair and authentic as possible, we ask that you submit your own work and not use GenAI tools to generate substantive content during the application and interview process.
+
+If you’re an engineering candidate, we’ll let you know what specific GenAI tools you are permitted to use for your technical assessment.
