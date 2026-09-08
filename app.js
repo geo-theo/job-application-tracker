@@ -1748,6 +1748,7 @@ function joinJobsWithCompanies(records, companyRecords) {
 function createCompanyCard(company) {
   const card = document.createElement("article");
   card.className = `company-card${company.rank ? ` rank-${company.rank.toLowerCase()}` : ""}`;
+  const companyJobs = jobs.filter((job) => job.companyId === company.id);
   card.append(
     createCompanyLogo({
       company: company.name,
@@ -1760,10 +1761,9 @@ function createCompanyCard(company) {
   const name = document.createElement("p");
   name.className = "job-title";
   name.textContent = company.name;
-  const jobCount = jobs.filter((job) => job.companyId === company.id).length;
   const count = document.createElement("span");
   count.className = "company-job-count";
-  count.textContent = `${jobCount} ${jobCount === 1 ? "job" : "jobs"}`;
+  count.textContent = `${companyJobs.length} ${companyJobs.length === 1 ? "job" : "jobs"}`;
   main.append(name, count);
 
   const mission = cell((company.mission || []).join(" · "), "company-mission");
@@ -1795,6 +1795,46 @@ function createCompanyCard(company) {
     openCompanyEditor(company.id);
   });
 
+  const jobsDetails = document.createElement("details");
+  jobsDetails.className = "company-jobs";
+  const jobsSummary = document.createElement("summary");
+  jobsSummary.textContent = companyJobs.length
+    ? `Show ${companyJobs.length === 1 ? "job" : "jobs"}`
+    : "No linked jobs";
+  jobsDetails.append(jobsSummary);
+  if (companyJobs.length) {
+    const jobsList = document.createElement("div");
+    jobsList.className = "company-job-list";
+    companyJobs.forEach((job) => {
+      const row = document.createElement("div");
+      row.className = "company-job-row";
+      const jobMain = document.createElement("div");
+      jobMain.className = "company-job-main";
+      const jobTitle = document.createElement("button");
+      jobTitle.type = "button";
+      jobTitle.className = "company-job-title";
+      jobTitle.textContent = job.title || "Untitled job";
+      jobTitle.addEventListener("click", () => openEditJobForm(job.id));
+      const jobMeta = document.createElement("span");
+      jobMeta.className = "company-job-meta";
+      const meta = [
+        job.location,
+        getApplicationStatusDisplay(job) || job.priority,
+        job.deadline && formatDate(job.deadline),
+      ].filter(Boolean);
+      jobMeta.textContent = meta.join(" · ");
+      jobMain.append(jobTitle, jobMeta);
+      const jobEdit = document.createElement("button");
+      jobEdit.type = "button";
+      jobEdit.className = "edit-row-button company-job-edit";
+      jobEdit.textContent = "Edit job";
+      jobEdit.addEventListener("click", () => openEditJobForm(job.id));
+      row.append(jobMain, jobEdit);
+      jobsList.append(row);
+    });
+    jobsDetails.append(jobsList);
+  }
+
   card.append(
     main,
     cell(company.industry, "company-industry"),
@@ -1803,6 +1843,7 @@ function createCompanyCard(company) {
     rank,
     website,
     edit,
+    jobsDetails,
   );
   return card;
 }

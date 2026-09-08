@@ -124,6 +124,8 @@ test("job and company CSV schemas are relational and non-overlapping", () => {
   assert.match(html, /data-page="companies"/);
   assert.match(html, /id="edit-company-info-button"/);
   assert.doesNotMatch(html, /id="favorite-company"/);
+  const nav = html.match(/<nav class="page-nav"[\s\S]*?<\/nav>/)?.[0] || "";
+  assert.ok(nav.indexOf('data-page="companies"') > nav.indexOf('data-page="viz"'), "Companies should follow Viz");
 });
 
 test("flow conserves applications and never invents skipped stages or decisions", () => {

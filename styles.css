@@ -808,16 +808,21 @@ button:focus-visible {
   align-items: center;
   min-height: 82px;
   padding: 12px;
-  border: 1px solid #d1c7b8;
+  border: 1px solid #958a7b;
   border-left: 5px solid transparent;
   border-radius: 8px;
-  background: rgba(255, 253, 248, 0.96);
-  box-shadow: 0 8px 24px rgba(59, 50, 38, 0.08);
+  background: #d8d1c5;
+  box-shadow: 0 8px 24px rgba(59, 50, 38, 0.14);
+  color: #2c2822;
 }
 
 .company-card:hover {
-  border-color: #a99d8b;
+  border-color: #6f665a;
   box-shadow: var(--shadow);
+}
+
+.company-card .job-title {
+  color: #29251f;
 }
 
 .company-card.rank-favorite {
@@ -872,6 +877,69 @@ button:focus-visible {
 
 .company-website {
   display: flex;
+}
+
+.company-jobs {
+  grid-column: 1 / -1;
+  border-top: 1px solid #aa9f90;
+  padding-top: 10px;
+}
+
+.company-jobs summary {
+  width: fit-content;
+  padding: 4px 0;
+  color: #3b352d;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 850;
+}
+
+.company-job-list {
+  display: grid;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.company-job-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 10px;
+  border: 1px solid #b3a89a;
+  border-radius: 6px;
+  background: rgba(255, 253, 248, 0.5);
+}
+
+.company-job-main {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.company-job-title {
+  width: fit-content;
+  padding: 0;
+  background: transparent;
+  color: #255b75;
+  font-size: 0.88rem;
+  font-weight: 850;
+  text-align: left;
+}
+
+.company-job-title:hover {
+  text-decoration: underline;
+}
+
+.company-job-meta {
+  color: #5c554b;
+  font-size: 0.75rem;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.company-job-edit {
+  flex: 0 0 auto;
 }
 
 .job-card {
@@ -1429,8 +1497,12 @@ button:focus-visible {
     grid-template-columns: 44px minmax(0, 1fr) max-content;
   }
 
-  .company-card > :not(.company-logo):not(.company-card-main):not(.edit-row-button) {
+  .company-card > :not(.company-logo):not(.company-card-main):not(.edit-row-button):not(.company-jobs) {
     display: none;
+  }
+
+  .company-job-row {
+    align-items: flex-start;
   }
 
   .job-actions {
