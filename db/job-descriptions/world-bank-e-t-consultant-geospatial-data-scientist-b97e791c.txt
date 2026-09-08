@@ -1,0 +1,86 @@
+E T Consultant- Geospatial Data Scientist
+Washington, DC, United States
+|
+req38183
+Apply Now
+Share
+ Save Job
+Posted on: 8/31/2026
+ Back to Search
+E T Consultant- Geospatial Data Scientist
+
+Job #:	req38183
+Organization:	World Bank
+Sector:	Disaster Risk Management
+Grade:	EC2
+Term Duration: 	1 year 0 months
+Recruitment Type:	Local Recruitment
+Location:	Washington, DC,United States
+Required Language(s):	English
+Preferred Language(s):	French, Spanish
+Closing Date:	9/14/2026 (MM/DD/YYYY) at 11:59pm UTC
+Description
+
+
+Do you want to build a career that is truly worthwhile? Working at the World Bank provides a unique opportunity for you to help our clients solve their greatest development challenges. The World Bank consists of two entities – the International Bank for Reconstruction and Development (IBRD) and the International Development Association (IDA). It is a global development cooperative owned by 189 member countries. As the largest development bank in the world, the World Bank provides loans, guarantees, risk management products, and advisory services to middle-income and creditworthy low-income countries, and coordinates responses to regional and global challenges. For more information, please visit www.worldbank.org.
+
+Infrastructure Vertical
+
+The WBG Infrastructure Vertical provides public and private solutions to operational teams and clients across the WBG to produce scalable impact. Its mandate is to deliver knowledge for impact to support the WBG to achieve its goals in support of our mission and specifically: providing guidance on creating more and better jobs by: (i) supporting foundational infrastructure and human capital, (ii) policy environment, and (iii) enabling and mobilizing private sector capital. With 60 years of experience, the WBG is poised to support the sector becoming an engine of growth and jobs through improving policies and governance, foundational infrastructure and private sector investments. The WBG lending in the sector is expected to grow substantially. The Infrastructure VPU’s objectives in driving outcomes include replicating and scaling effective solutions, enhancing thought leadership and innovation, and delivering timely knowledge to client teams.   For more information: https://www.worldbank.org/en/topic/infrastructure
+
+Disaster Management, Solutions & Impact Unit (KIUSD) supports low and middle-income countries to understand, manage, and reduce their risks from natural hazards and climate change. Within KIUSD, the Global Facility for Disaster Reduction and Recovery (GFDRR) umbrella trust fund is a global partnership that helps low- and middle-income countries better understand and reduce their vulnerability to natural hazards and climate change. GFDRR supports analytics and technical assistance to the most vulnerable countries and communities where it will have the greatest positive impact. As a donor-funded program, GFDRR consults regularly with donors and actively strives to maintain and develop new partnerships for increased impact. For more information: https://www.gfdrr.org/en
+
+Global Program on Nature-Based Solutions for Climate Resilience
+
+Housed within IDURM is the Global Program on Nature-Based Solutions for Climate Resilience. The Global Program has the objective to increasing investment in Nature-Based Solutions (NBS) for addressing climate resilience challenges across the World Bank portfolio. The Program aims to achieve the objective through the development of targeted knowledge, tools and operational support modalities for task teams and their government clients. The Program helps task teams and their counterparts at national and city level to identify, prepare, implement and finance NBS for climate resilience purposes as stand-alone interventions or as part of wider investment, policy and analytical engagements. The Program furthermore uses its position as a Global Program to support the development and transfer of knowledge on NBS within and outside the World Bank Group. In its objectives and approach, the Program is aligned with World Bank strategies including the Climate Change Action Plan 2021-2025 and the Green, Resilient and Inclusive Development (GRID) approach.
+
+The Program is structured along three pillars: Operations, Knowledge and Partnerships.
+
+Pillar 1: Operations
+
+Under this Pillar, the Program supports World Bank Task Teams and their Government counterparts in the identification, operational assessment, implementation and financing of NBS for Climate Resilience. The Program hosts a core team of technical experts, a curated pool of firms and consultants and key operational tools to assist in the mainstreaming of NBS for Climate Resilience across Global Practices.
+
+Pillar 2: Knowledge
+
+This Pillar strengthens the Bank’s knowledge position on NBS and aims to make the Global Program a hub for NBS knowledge both internally and externally, with a focus on climate resilience at urban, coastal and river basin level. Activities include developing and consolidating knowledge products and tools; training staff and clients in preparing and implementing NBS ensuring best practices are integrated into operations; and publishing operational reports and externally facing peer-reviewed articles. All knowledge products developed to date are available on the Program’s website.
+
+Pillar 3: Partnerships
+
+Under the Partnerships pillar, the Program strengthens internal and external partnerships needed to advance NBS in the World Bank portfolio. Internally, this includes relationships with other teams across the World Bank Group, including with other Global Practices as well as with IFC. Externally, partnerships are established with key knowledge and implementation partners, donors and co-financiers, in close coordination with GFDRR donors and partnership teams.
+
+Please note this position is financed by a Trust Fund and renewal is contingent upon availability of funding, in addition to other factors, including but not limited to business needs, staff performance and skills fit.
+
+ 
+Job Duties and Responsibilities
+The E T Consultant’s will support implementation of GPNBS, with a focus on the development and application of geospatial (and other quantitative) tools such as the NBS Opportunity Scan. Tasks include further development and automation of the urban, catchment and coastal NBS Opportunity Scans, supporting the delivery of country-level technical assistance applying the NBS Opportunity Scans, further development of cost-benefit analysis tools and their in-country application. The E T consultant will also be expected to contribute or lead knowledge products related to climate risk and NBS and support the other Pillars of the program where relevant. Additionally, the ET consultant will work on the harmonization and integration of geospatial and quantitative tools across the global disaster risk management units, including those focusing on disaster risk analytics, urban resilience and earth observation. The E T Consultant will work closely with the Task Team Leaders and core staff of the Global Program, under managerial supervision of the Practice Manager of KIUSD.
+
+Specific responsibilities and duties will include (but not be limited to) the following:
+• Take a leading role in the development and application of geospatial and other quantitative tools of GPNBS, including the NBSOS and BIOME.
+• Supporting, curating, and developing EO-data applications for longer term monitoring of NBS investments, by monitoring ecological indicators and natural capital.
+• Liaising with key partners inside and outside the World Bank that are managing/developing geospatial tools, EO-data, Geo-AI, VGI and other geographic information relevant to NBS, such as ESA, NASA, and many others.
+• With the wider NBS team, take up the role as a technical advisor supporting World Bank Task Teams on how to make effective use of EO-data and geospatial analytics when preparing, designing and implementing NBS operations.   
+• Advance collaboration and integration of geospatial and quantitative analytics & tools on risk management and resilience in KIUSD and other teams in the global urban and disaster risk management department. 
+• Lead and/or contribute to knowledge products related to NBS analytics developed under the Knowledge pillar of the Program. 
+• Illustrate Program advancements and contributions in the form of blogs, peer-reviewed papers, conference contributions, etc.
+• Contribute to programmatic outputs including results monitoring, reporting, budgeting, and branding
+• Deliver presentations and workshops at a variety of settings, including with Task Teams, government counterparts and at internal and external events
+
+Selection Criteria
+
+• A minimum of Master's degree and over 5 years’ experience, or equivalent combination of education and experience in a relevant field, such as: GIS-science; geo-IT; earth observation/remote sensing; quantitative/physical geography; applied spatial environmental science or ecology. A PhD is preferred. 
+• A strong quantitative geospatial skillset with advanced EO/remote sensing, Geo-AI and geospatial modeling & data science experience. Preferably this includes fluency in: Python geospatial packages (e.g., GDAL, Rasterio); cloud computing; Google Earth Engine; open-source GIS software (e.g. QGIS); processing and analyzing EO-data for applications in (landscape) ecology, environmental science, ecosystem services & nature-based solutions and/or natural hazard risk assessment; web-GIS development.        
+• Demonstrated experience in writing and coordinating peer-reviewed publications in a field relevant to the assignment. 
+• Working knowledge of World Bank operations, especially resilience, disaster risk management, urban development, environment and climate change mitigation and adaptation projects. Prior working experience in NBS within a World Bank project context is an advantage. 
+• Transdisciplinary skills – proven ability to link technical and academic innovation in GIS and EO to practical applications and audiences outside technical experts and academia.
+• Experience interfacing with and delivering high quality presentations and interactive workshops to government counterparts in developing countries and to donors.
+• Proven capacity to multi-task, deliver results, and respond quickly and effectively to requests; ability to work under pressure.
+• Strong oral, written, and visual presentation skills.
+• Strong creativity and problem-solving skills.
+• Excellent written and spoken English essential; knowledge in a second language is an advantage (French and Spanish preferred).
+• Ability to deal sensitively in a multicultural environment and build effective work relations with clients and colleagues as part of strong interpersonal, organizational, and team management skills to achieve results.
+
+WBG Culture Attributes:
+
+1. Sense of urgency: Anticipate and quickly respond to the needs of internal and external stakeholders.
+2. Thoughtful risk-taking: Challenge the status quo and push boundaries to achieve greater impact.
+3. Empowerment and accountability: Empower yourself and others to act and hold each other accountable for results.

@@ -1,0 +1,83 @@
+IDB. Intern to Support GIS Data and Documentation
+City:  Washington DC
+Company:  IDB
+Posting End Date:  9/25/2026 11:59 PM EST
+We improve lives
+The IDB Group is a community of diverse, versatile, and passionate people who come together on a journey to improve lives in Latin America and the Caribbean. Our people find purpose and do what they love in an inclusive, collaborative, agile, and rewarding environment.
+
+About this position
+The IDB Group is looking for an active graduate student to be hired as an intern under the Consultant modality.  
+
+The 2027 Winter Internship Program is a competitive paid opportunity, based in Headquarters, for university students from member countries to learn about development work and corporate management of the Bank, and to acquire work experience at the professional level through on-the-job learning.
+
+What you’ll do
+Geospatial Data Research & Cataloguing: Research and maintain a list of official geospatial data portals and open/free geospatial datasets by country, supporting the Environmental and Social Solutions Division (ESG).
+Geospatial Information System (GIS) Data Organization: Help organize, update, and document GIS data lists and catalogues so they are easy for the team to find and use.
+Documentation Support: Assist in drafting, reviewing, and updating internal GIS and data governance documents using existing guidelines and templates.
+Scripting & Automation Support: Support basic scripting and automation tasks using Python and JavaScript, preferably with ArcGIS tools (ArcPy, ArcGIS API for Python, ArcGIS JavaScript API), to help improve simple GIS workflows.
+What you'll need
+Education: An active graduate student in a relevant quantitative and computational field, such as Geography, GIS, Computer Science, Environmental Science, Environmental Engineering, Urban Planning, or a related area at an accredited University. The graduation date should be after the Internship period.
+Languages: Fluency in English with a working knowledge of one other Bank language (Spanish, French, or Portuguese) is a plus.
+Key Skills: Learn continuously, collaborate and share knowledge, focus on clients, communicate and influence, innovate and try new things.
+Soft Skills: Result-driven, collaborative, innovative, client-oriented, strong communicator, self-motivated, eager to learn, and excellent time management skills.
+Technical skills:
+Familiarity with analyzing geospatial data and creating maps using GIS software such as ArcGIS, QGIS, Google Earth Engine, or similar tools.
+Basic skills in organizing and managing geospatial data in databases.
+Ability to follow data management and governance guidelines.
+Willingness to assist in quantitative and qualitative analysis tasks.
+Interest in learning how to match the team’s needs with appropriate GIS tools and technologies.
+Good understanding of Microsoft Excel or willingness to learn and apply Excel for data management and analysis.
+Proficiency with other MS Office tools (Word, PowerPoint).
+Basic understanding of how GIS is applied in international development projects. 
+Requirements
+Citizenship: Be a national of an IDB member country.
+Active student: Enrolled in a graduate (master’s or Ph.D.) program as of the start date of the internship program. The graduation date should be after the Internship period.
+Consanguinity: You have no family members (up to the fourth degree of consanguinity and second degree of affinity, including spouse) working at the IDB or IDB Invest.
+First job at the IDB Group: Be a first-time participant in an Internship Program held by the Bank or Inter-American Investment Corporation (“Corporation” also known as “IDB Invest”). In addition, you have not been a former staff member, Complementary Workforce (“CW”), contractor for the Bank or the Corporation, or have previously provided services to the Bank or the Corporation through a contractor or under any other contractual modality.
+Notes
+Submit your resume, academic transcripts (official or unofficial), and university letter certifying your student status when applying.
+If you submit an unofficial academic transcript at the time of applying, you will be requested to present an official one if moving forward.
+Academic transcripts and university letters should be issued within the last three months.
+For graduate students, a minimum of 50% of coursework must be completed when applying.
+Applications without the requested documentation will be disqualified.
+Save each file in PDF format with your name and subject.
+DO NOT send copies of your degree certificates or other courses.
+You must be available to work full-time (40 hours per week) from January 16th to March 15th, 2027. These dates are fixed and cannot be modified. Interns must complete their assignments within this period.
+If you are an international student in the U.S.A., your work authorization is through CPT or OPT. Consult your school advisor before applying. You must be able to work 40 hours per week; many international students are limited to working part-time, depending on their academic standing.
+Type of contract and duration
+Type of contract: Intern Consultant
+Length of contract: Two (2) months
+Dates of the contract: January 16th to March 15th, 2027
+Location: Washington, D.C., United States of America
+*Internship dates may be adjusted slightly to accommodate holidays.  
+
+Our culture
+At the IDB Group, we work so everyone brings their best and authentic selves to work while finding their purpose. Our people consistently strive for excellence, and we recognize and celebrate the impact of their contributions. In our efforts to drive innovation, we intentionally include all voices, cultivate a sense of belonging and champion fairness. We welcome individuals from underrepresented groups to join us and share their unique perspectives. We ensure that individuals with disabilities are provided with reasonable accommodation to participate in the job interview process. If you require an accommodation to complete this application, please email us at accommodations@iadb.org.
+
+ 
+
+About the IDB Group  
+
+The IDB Group, composed of the Inter-American Development Bank (IDB), IDB Invest, and the IDB Lab offers flexible financing solutions to its member countries to finance economic and social development through lending and grants to public and private entities in Latin America and the Caribbean.   
+
+ 
+
+About IDB  
+
+We work to improve lives in Latin America and the Caribbean. Through financial and technical support for countries working to reduce poverty and inequality, we help improve health and education and advance infrastructure. Our aim is to achieve development in a sustainable, climate-friendly way. With a history dating back to 1959, today we are the leading source of development financing for Latin America and the Caribbean. We provide loans, grants, and technical assistance; and we conduct extensive research. We maintain a strong commitment to achieving measurable results and the highest standards of integrity, transparency, and accountability.  
+
+ 
+
+About IDB Invest
+
+IDB Invest, a member of the IDB Group, is a multilateral development bank committed to promoting the economic development of its member countries in Latin America and the Caribbean through the private sector. IDB Invest finances sustainable companies and projects to achieve financial results and maximize economic, social, and environmental development in the region. With a portfolio of $14.1 billion in asset management and 325 clients in 25 countries, IDB Invest provides innovative financial solutions and advisory services that meet the needs of its clients in a variety of industries.
+
+ 
+
+Follow us:  
+
+https://www.linkedin.com/company/inter-american-development-bank/
+
+https://www.facebook.com/IADB.org  
+
+https://twitter.com/the_IDB

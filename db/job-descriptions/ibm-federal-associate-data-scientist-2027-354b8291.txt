@@ -1,0 +1,104 @@
+Job Title
+Federal Associate Data Scientist 2027
+Date posted
+07-Aug-2026
+Job ID
+127790
+City / Township / Village
+Herndon
+State / Province
+Virginia
+Country
+United States
+Work arrangement
+Onsite
+Area of work
+Data & Analytics
+Employment type
+Regular
+Contract type
+Regular
+Projected Minimum Salary per year
+62,160.00
+Projected Maximum Salary per year
+93,240.00
+Position type
+Entry Level
+Travel required
+Up to 100% or 5 days a week (home on weekends - based on project requirements)
+Company
+(0147) International Business Machines Corporation
+Shift
+General (daytime)
+Is this role a commissionable/sales incentive based position?
+No
+
+Federal Associate Data Scientist 2027
+Herndon, Virginia, United States
+Entry Level
+Email
+X
+LinkedIn
+Apply now
+Introduction
+Come forge the future like an IBMer
+
+Ready to think boldly, work with some of the world's most recognized brands, and kick-start your career? Welcome to the IBM's Associate Program for university hires.
+
+ 
+
+From day one, you'll collaborate with global clients and contribute to projects that help organizations solve their toughest challenges across digital transformation, cloud strategy, AI adoption, and process redesign - working alongside a global cohort of diverse, ambitious peers. As an Associate, you'll have access to industry-recognized certifications, digital badges, and a minimum of 40 hours of structured learning per year on IBM's AI-driven learning platform - supported by coaches, mentors, and thriving professional communities across practices. IBM's culture of internal mobility means you'll have the freedom to explore new technologies, industries, and career paths as your interests evolve.
+
+Bring your curiosity. Grow your skills. Build what's next -  like an IBMer.
+
+ 
+
+About the Team
+
+In this role, you will join IBM's US Federal team to deliver secure, mission-critical technology solutions for government agencies. You'll work with federal, state, and local clients while developing specialized expertise in government compliance and security standards. This role offers unique career growth in a high-demand sector where your contributions directly impact public services and government missions.
+
+ 
+
+
+
+Your role and responsibilities
+As a Federal Associate Data Scientist 2027 at IBM, you will work to solve business problems using leading edge and open-source tools such as Python, R, and TensorFlow, combined with IBM tools and our AI application suites. You will prepare, analyze, and understand data to deliver insight, predict emerging trends, and provide recommendations to stakeholders.
+
+ 
+
+In your role, you may be responsible for:
+
+Implementing and validating predictive and prescriptive models and creating and maintaining statistical models with a focus on big data & incorporating machine learning techniques in your projects
+Writing programs to cleanse and integrate data in an efficient and reusable manner
+Working in an Agile, collaborative environment, partnering with other scientists, engineers, consultants and database administrators of all backgrounds and disciplines to bring analytical rigor and statistical methods to the challenges of predicting behaviors
+Communicating with internal and external clients to understand and define business needs and appropriate modelling techniques to provide analytical solutions.
+Evaluating modelling results and communicating the results to technical and non-technical audiences.
+ 
+
+These positions are anticipated to start between March and August of 2027. 
+
+ 
+
+Candidates must have the ability to obtain and maintain a Federal security clearance while in IBM Consulting-Federal.
+
+ 
+
+To give yourself the best opportunity for success, we advise applying only to roles that align with your skills and experience, rather than applying broadly across all entry-level positions. You’ll receive a status update email for each application, so be sure to check your IBM Careers account regularly — it’s the best way to get a centralized view of which roles you have active applications against.
+
+
+
+The below requirements are a guideline. If you have transferable skills we encourage you to apply to this role.
+
+Required education
+Bachelor's Degree
+Required technical and professional expertise
+
+
+Strong fundamentals in Mathematics and Computer Science (algorithms) 
+You're proficient in least one of the statistical programming languages, such as R, Python, Scala, SAS, SPSS, or Matlab 
+You have a basic understanding of predictive/prescriptive modeling skills 
+You have strong technical and analytical abilities, a knack for driving impact and growth, and familiarity with programming/scripting in a language such as Java or Python 
+You're great at solving problems by looking at things differently, debugging, troubleshooting, and designing and implementing solutions to complex technical issues.
+Willing to travel 100%.
+ABOUT BUSINESS UNIT
+IBM Consulting is IBM’s consulting and global professional services business, with market leading capabilities in business and technology transformation. With deep expertise in many industries, we offer strategy, experience, technology, and operations services to many of the most innovative and valuable companies in the world. Our people are focused on accelerating our clients’ businesses through the power of collaboration. We believe in the power of technology responsibly used to help people, partners and the planet.
