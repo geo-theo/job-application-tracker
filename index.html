@@ -664,7 +664,11 @@
             <p class="eyebrow">Company database</p>
             <h1 id="company-form-title">Company Info</h1>
           </div>
-          <button type="button" class="ghost-button" id="company-form-close-button">
+          <button
+            type="button"
+            class="ghost-button"
+            id="company-form-close-button"
+          >
             Close
           </button>
         </header>
@@ -677,7 +681,13 @@
 
             <label class="field">
               <span>Name</span>
-              <input id="company-name" name="name" type="text" autocomplete="organization" required />
+              <input
+                id="company-name"
+                name="name"
+                type="text"
+                autocomplete="organization"
+                required
+              />
             </label>
 
             <div class="split-grid">
@@ -694,16 +704,22 @@
                   <option value="Federal Government">Federal Government</option>
                   <option value="Local Government">Local Government</option>
                   <option value="NGO">NGO</option>
-                  <option value="Policy / Think Tank">Policy / Think Tank</option>
+                  <option value="Policy / Think Tank">
+                    Policy / Think Tank
+                  </option>
                   <option value="Journalism / Media">Journalism / Media</option>
                   <option value="Academia">Academia</option>
                   <option value="Energy">Energy</option>
-                  <option value="Utilities / Telecommunications">Utilities / Telecommunications</option>
-                  <option value="Engineering / Construction">Engineering / Construction</option>
+                  <option value="Utilities / Telecommunications">
+                    Utilities / Telecommunications
+                  </option>
+                  <option value="Engineering">Engineering</option>
                   <option value="Transportation">Transportation</option>
                   <option value="Tourism / Leisure">Tourism / Leisure</option>
                   <option value="Consumer Products">Consumer Products</option>
-                  <option value="Retail / Customer Experience">Retail / Customer Experience</option>
+                  <option value="Retail / Customer Experience">
+                    Retail / Customer Experience
+                  </option>
                   <option value="Other">Other</option>
                 </select>
               </label>
@@ -717,12 +733,20 @@
             <div class="split-grid">
               <label class="field" id="company-industry-other-wrap" hidden>
                 <span>Other industry</span>
-                <input id="company-industry-other" name="industryOther" type="text" />
+                <input
+                  id="company-industry-other"
+                  name="industryOther"
+                  type="text"
+                />
               </label>
 
               <label class="field" id="company-sector-other-wrap" hidden>
                 <span>Other sector</span>
-                <input id="company-sector-other" name="sectorOther" type="text" />
+                <input
+                  id="company-sector-other"
+                  name="sectorOther"
+                  type="text"
+                />
               </label>
             </div>
 
@@ -740,22 +764,55 @@
 
             <label class="field">
               <span>Website</span>
-              <input id="company-website" name="website" type="url" placeholder="https://" />
+              <input
+                id="company-website"
+                name="website"
+                type="url"
+                placeholder="https://"
+              />
             </label>
 
             <div class="field">
               <span>Rank</span>
-              <div class="segmented company-rank-group" role="radiogroup" aria-label="Company rank">
-                <label><input type="radio" name="companyRank" value="Favorite" /><span>Favorite</span></label>
-                <label><input type="radio" name="companyRank" value="Target" /><span>Target</span></label>
-                <label><input type="radio" name="companyRank" value="Normal" /><span>Normal</span></label>
-                <label><input type="radio" name="companyRank" value="Agency" /><span>Agency</span></label>
+              <div
+                class="segmented company-rank-group"
+                role="radiogroup"
+                aria-label="Company rank"
+              >
+                <label
+                  ><input
+                    type="radio"
+                    name="companyRank"
+                    value="Favorite"
+                  /><span>Favorite</span></label
+                >
+                <label
+                  ><input type="radio" name="companyRank" value="Target" /><span
+                    >Target</span
+                  ></label
+                >
+                <label
+                  ><input type="radio" name="companyRank" value="Normal" /><span
+                    >Normal</span
+                  ></label
+                >
+                <label
+                  ><input type="radio" name="companyRank" value="Agency" /><span
+                    >Agency</span
+                  ></label
+                >
               </div>
             </div>
           </fieldset>
 
           <div class="form-actions">
-            <button type="submit" class="primary-button" id="save-company-button">Save Company</button>
+            <button
+              type="submit"
+              class="primary-button"
+              id="save-company-button"
+            >
+              Save Company
+            </button>
             <button type="reset" class="ghost-button">Clear</button>
           </div>
         </form>
@@ -791,7 +848,11 @@
               >
                 Export Jobs
               </button>
-              <button type="button" class="utility-button" id="export-companies-button">
+              <button
+                type="button"
+                class="utility-button"
+                id="export-companies-button"
+              >
                 Export Companies
               </button>
               <button
@@ -809,10 +870,19 @@
                 Import Jobs
               </button>
               <input id="csv-input" type="file" accept=".csv,text/csv" hidden />
-              <button type="button" class="utility-button" id="import-companies-button">
+              <button
+                type="button"
+                class="utility-button"
+                id="import-companies-button"
+              >
                 Import Companies
               </button>
-              <input id="companies-csv-input" type="file" accept=".csv,text/csv" hidden />
+              <input
+                id="companies-csv-input"
+                type="file"
+                accept=".csv,text/csv"
+                hidden
+              />
             </div>
           </div>
         </header>

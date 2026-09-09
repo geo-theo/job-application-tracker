@@ -109,12 +109,29 @@ const COMPANY_CSV_COLUMNS = [
 // Edit these lists to change the dependent Sector menu. Custom values are
 // stored directly in companies.csv and reopen through the Other option.
 const SECTOR_OPTIONS_BY_INDUSTRY = {
-  Geospatial: ["GIS Software", "Earth Observation", "Surveying / Mapping", "Location Intelligence"],
-  "Geopolitical Risk": ["Risk Intelligence", "Political Risk Consulting", "Due Diligence"],
-  "Intl Development": ["Humanitarian Aid", "Economic Development", "Global Health"],
-  MIC: ["Aerospace & Defense", "Defense Technology", "Government Contracting"],
+  Geospatial: [
+    "GIS Software",
+    "Earth Observation",
+    "Surveying / Mapping",
+    "Location Intelligence",
+  ],
+  "Geopolitical Risk": [
+    "Risk Intelligence",
+    "Political Risk Consulting",
+    "Due Diligence",
+  ],
+  "Intl Development": [
+    "Humanitarian Aid",
+    "Economic Development",
+    "Global Health",
+  ],
+  MIC: ["Defense Technology", "Weapons", "Government Contracting"],
   Tech: ["Software", "Hardware", "Cloud Services"],
-  "Intl Government": ["Multilateral", "Foreign Government", "Intergovernmental"],
+  "Intl Government": [
+    "Multilateral",
+    "Foreign Government",
+    "Intergovernmental",
+  ],
   "Federal Government": ["Civilian Agency", "Defense", "Intelligence"],
   "Local Government": ["City", "County", "Regional"],
   NGO: ["Humanitarian", "Conservation", "Advocacy"],
@@ -123,10 +140,14 @@ const SECTOR_OPTIONS_BY_INDUSTRY = {
   Academia: ["Higher Education", "Research Institute", "K-12"],
   Energy: ["Oil & Gas", "Renewable Energy", "Mining"],
   "Utilities / Telecommunications": ["Electric", "Water", "Telecommunications"],
-  "Engineering / Construction": ["Civil Engineering", "Architecture", "Construction"],
+  Engineering: ["Civil Engineering", "Architecture", "Construction"],
   Transportation: ["Aviation", "Rail", "Logistics"],
   "Tourism / Leisure": ["Outdoor Recreation", "Hospitality", "Travel"],
-  "Consumer Products": ["Food & Beverage", "Apparel", "Consumer Packaged Goods"],
+  "Consumer Products": [
+    "Food & Beverage",
+    "Apparel",
+    "Consumer Packaged Goods",
+  ],
   "Retail / Customer Experience": ["Retail", "E-commerce", "Customer Service"],
 };
 
@@ -212,7 +233,9 @@ const els = {
   companyRecordId: document.querySelector("#company-record-id"),
   companyName: document.querySelector("#company-name"),
   companyIndustry: document.querySelector("#company-industry"),
-  companyIndustryOtherWrap: document.querySelector("#company-industry-other-wrap"),
+  companyIndustryOtherWrap: document.querySelector(
+    "#company-industry-other-wrap",
+  ),
   companyIndustryOther: document.querySelector("#company-industry-other"),
   companySector: document.querySelector("#company-sector"),
   companySectorOtherWrap: document.querySelector("#company-sector-other-wrap"),
@@ -517,14 +540,20 @@ function populateSectorOptions(selectedValue = "") {
   const presets = SECTOR_OPTIONS_BY_INDUSTRY[industry] || [];
   const current = selectedValue || els.companySector.value;
   els.companySector.replaceChildren(new Option("", ""));
-  presets.forEach((sector) => els.companySector.append(new Option(sector, sector)));
+  presets.forEach((sector) =>
+    els.companySector.append(new Option(sector, sector)),
+  );
   els.companySector.append(new Option("Other", "Other"));
-  els.companySector.value = presets.includes(current) || current === "Other" ? current : "";
+  els.companySector.value =
+    presets.includes(current) || current === "Other" ? current : "";
 }
 
 function ensureRoleOptions(roles) {
-  const existing = new Set([...els.roles.options].map((option) => option.value));
-  const otherOption = [...els.roles.options].find((option) => option.value === "Other") || null;
+  const existing = new Set(
+    [...els.roles.options].map((option) => option.value),
+  );
+  const otherOption =
+    [...els.roles.options].find((option) => option.value === "Other") || null;
   roles.filter(Boolean).forEach((role) => {
     if (existing.has(role)) return;
     els.roles.insertBefore(new Option(role, role), otherOption);
@@ -729,7 +758,11 @@ async function ensureCompanyForJob(name, preferredId = "") {
   if (!normalizedName) return null;
 
   const preferred = getCompanyById(preferredId);
-  if (preferred && normalizeCompanyName(preferred.name) === normalizeCompanyName(normalizedName)) {
+  if (
+    preferred &&
+    normalizeCompanyName(preferred.name) ===
+      normalizeCompanyName(normalizedName)
+  ) {
     return preferred;
   }
 
@@ -758,11 +791,14 @@ function openCompanyEditorFromJob() {
 }
 
 function openCompanyEditor(companyId = "", initialName = "") {
-  companyEditorOpenedFromJob = companyEditorOpenedFromJob && !els.formDialog.hidden;
+  companyEditorOpenedFromJob =
+    companyEditorOpenedFromJob && !els.formDialog.hidden;
   const company = getCompanyById(companyId) || findCompanyByName(initialName);
   loadCompanyIntoForm(company, company ? "" : initialName);
   lastCompanyFocusedElement =
-    document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    document.activeElement instanceof HTMLElement
+      ? document.activeElement
+      : null;
   els.formBackdrop.hidden = false;
   els.companyFormDialog.hidden = false;
   document.body.classList.add("modal-open");
@@ -788,7 +824,9 @@ function loadCompanyIntoForm(company, initialName = "") {
   populateSectorOptions();
 
   const sector = company?.sector || "";
-  const knownSectors = [...els.companySector.options].map((option) => option.value);
+  const knownSectors = [...els.companySector.options].map(
+    (option) => option.value,
+  );
   if (!sector) {
     els.companySector.value = "";
     els.companySectorOther.value = "";
@@ -807,7 +845,10 @@ function loadCompanyIntoForm(company, initialName = "") {
 }
 
 function resetCompanyForm() {
-  loadCompanyIntoForm(null, companyEditorOpenedFromJob ? els.company.value.trim() : "");
+  loadCompanyIntoForm(
+    null,
+    companyEditorOpenedFromJob ? els.company.value.trim() : "",
+  );
 }
 
 function closeCompanyFormDialog() {
@@ -853,7 +894,9 @@ async function handleCompanySubmit(event) {
   }
   const duplicate = findCompanyByName(name);
   if (duplicate && duplicate.id !== editingCompanyId) {
-    els.companyName.setCustomValidity("A company with this name already exists.");
+    els.companyName.setCustomValidity(
+      "A company with this name already exists.",
+    );
     els.companyName.reportValidity();
     return;
   }
@@ -1100,7 +1143,10 @@ function collectFormData(companyId = "") {
 
 async function handleSubmit(event) {
   event.preventDefault();
-  const company = await ensureCompanyForJob(els.company.value, els.companyId.value);
+  const company = await ensureCompanyForJob(
+    els.company.value,
+    els.companyId.value,
+  );
   const { job, descriptionText } = collectFormData(company?.id || "");
 
   await putJob(job);
@@ -1276,7 +1322,6 @@ function syncConditionalFields() {
 
   els.referenceCountWrap.hidden = !els.needsReferences.checked;
   if (els.referenceCountWrap.hidden) els.referenceCount.value = "";
-
 }
 
 function handlePriorityChange(event) {
@@ -1403,7 +1448,9 @@ function renderCompanies() {
     els.jobList.append(empty);
     return;
   }
-  companies.forEach((company) => els.jobList.append(createCompanyCard(company)));
+  companies.forEach((company) =>
+    els.jobList.append(createCompanyCard(company)),
+  );
 }
 
 function getVisibleJobs() {
@@ -1723,7 +1770,8 @@ function compareCompanies(a, b) {
   const ranks = { Favorite: 0, Target: 1, Normal: 2, Agency: 3, "": 4 };
   const rankDifference = (ranks[a.rank] ?? 4) - (ranks[b.rank] ?? 4);
   return (
-    rankDifference || a.name.localeCompare(b.name, undefined, { sensitivity: "base" })
+    rankDifference ||
+    a.name.localeCompare(b.name, undefined, { sensitivity: "base" })
   );
 }
 
@@ -2092,7 +2140,8 @@ function industryForForm(job, options) {
   const rawIndustry = String(job.industry || "").trim();
   const displayed = getIndustryDisplay(job);
   if (!displayed) return { value: "", other: "" };
-  if (rawIndustry === "Other" && job.industryOther) return { value: "Other", other: displayed };
+  if (rawIndustry === "Other" && job.industryOther)
+    return { value: "Other", other: displayed };
   if (options.includes(displayed)) return { value: displayed, other: "" };
   return { value: "Other", other: displayed };
 }
@@ -2385,7 +2434,9 @@ async function connectFolder() {
     setFolderGate(false);
     const importedParts = [];
     if (importResult.jobs) {
-      importedParts.push(`${importResult.jobs} ${importResult.jobs === 1 ? "job" : "jobs"}`);
+      importedParts.push(
+        `${importResult.jobs} ${importResult.jobs === 1 ? "job" : "jobs"}`,
+      );
     }
     if (importResult.companies) {
       importedParts.push(
@@ -2515,7 +2566,9 @@ function exportCompaniesCsv() {
 
 function buildCompaniesCsv() {
   const rows = [...companies]
-    .sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: "base" }))
+    .sort((a, b) =>
+      a.name.localeCompare(b.name, undefined, { sensitivity: "base" }),
+    )
     .map((company) =>
       COMPANY_CSV_COLUMNS.map((column) => serializeCsvValue(company[column])),
     );
@@ -2715,9 +2768,14 @@ async function importJobs(imported) {
 
 async function importCompanies(imported) {
   const existingCompanies = await getAllCompanies();
-  const byId = new Map(existingCompanies.map((company) => [company.id, company]));
+  const byId = new Map(
+    existingCompanies.map((company) => [company.id, company]),
+  );
   const byName = new Map(
-    existingCompanies.map((company) => [normalizeCompanyName(company.name), company]),
+    existingCompanies.map((company) => [
+      normalizeCompanyName(company.name),
+      company,
+    ]),
   );
   const idMap = new Map();
   let saved = 0;
@@ -2726,7 +2784,8 @@ async function importCompanies(imported) {
     const normalized = normalizeCompanyRecord(importedCompany);
     if (!normalized.name) continue;
     const existing =
-      byId.get(normalized.id) || byName.get(normalizeCompanyName(normalized.name));
+      byId.get(normalized.id) ||
+      byName.get(normalizeCompanyName(normalized.name));
     const company = existing ? { ...normalized, id: existing.id } : normalized;
     idMap.set(normalized.id, company.id);
     if (existing && !shouldImportRecord(company, existing)) continue;
@@ -2741,7 +2800,10 @@ async function importCompanies(imported) {
 async function migrateLegacyCompanies(importedJobs) {
   const existingCompanies = await getAllCompanies();
   const byName = new Map(
-    existingCompanies.map((company) => [normalizeCompanyName(company.name), company]),
+    existingCompanies.map((company) => [
+      normalizeCompanyName(company.name),
+      company,
+    ]),
   );
 
   for (const job of importedJobs) {
@@ -3108,7 +3170,8 @@ function setCheckedValues(inputs, values) {
 
 function normalizeRolesForForm(roles, roleOther) {
   const normalized = unique((roles || []).filter(Boolean));
-  if (roleOther && (!normalized.length || normalized.includes("Other"))) normalized.push("Other");
+  if (roleOther && (!normalized.length || normalized.includes("Other")))
+    normalized.push("Other");
   return unique(normalized);
 }
 
@@ -3183,10 +3246,12 @@ function hashString(value) {
 
 function splitList(value) {
   if (!value) return [];
-  return unique(value
-    .split(";")
-    .map((item) => item.trim())
-    .filter(Boolean));
+  return unique(
+    value
+      .split(";")
+      .map((item) => item.trim())
+      .filter(Boolean),
+  );
 }
 
 function parseBoolean(value) {
