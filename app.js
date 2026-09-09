@@ -1485,9 +1485,10 @@ function priorityRank(job) {
     High: 1,
     Medium: 2,
     Low: 3,
-    Future: 4,
+    Upcoming: 4,
+    Future: 5,
   };
-  return ranks[job.priority] ?? 4;
+  return ranks[job.priority] ?? 5;
 }
 
 function comparePriorityJobs(a, b) {
@@ -2106,6 +2107,7 @@ function statusChip(job) {
   if (priority === "High") return chip("High", "high");
   if (priority === "Medium") return chip("Medium", "medium");
   if (priority === "Low") return chip("Low", "low");
+  if (priority === "Upcoming") return chip("Upcoming", "upcoming");
   if (priority === "Future") return chip("Future", "future");
   if (isAppliedNo(job)) return chip("Reference", "reference");
   return chip("", "low");

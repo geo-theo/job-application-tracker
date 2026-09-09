@@ -423,6 +423,12 @@ button:focus-visible {
   color: #6c5200;
 }
 
+.priority-group input[value="Upcoming"]:checked + span {
+  border-color: #6b8d4f;
+  background: #e7f0df;
+  color: #49630f;
+}
+
 .priority-group input[value="Future"]:checked + span {
   border-color: var(--purple);
   background: #f1e8fb;
@@ -1267,6 +1273,11 @@ button:focus-visible {
 .chip.low {
   background: #fbf3cf;
   color: #6c5200;
+}
+
+.chip.upcoming {
+  background: #e7f0df;
+  color: #49630f;
 }
 
 .chip.future {
