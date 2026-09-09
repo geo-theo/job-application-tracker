@@ -1,0 +1,28 @@
+Job Title: Senior GIS Specialist
+Location:         Ashburn, VA Terms:              Fulltime, onsite position. About Chartis FederalChartis Federal is a premier systems engineering and integration firm specializing in mission-critical IT and communications solutions for law enforcement, homeland security, and defense. As a trusted prime contractor with over $160 million in task order awards, we operate across 22 states and support essential government missions worldwide.
+Our commitment to excellence has fueled our year-over-year growth, earning us recognition twice as a Washington Technology FAST 50 company and securing a place on the Inc. 5000 list for five consecutive years. At Chartis Federal, our mission is clear: keeping heroes safe and connected—on the battlefield, on the border, and in our backyards.
+Position OverviewChartis Federal is seeking a Senior GIS Specialist to support our customer. The Senior GIS Specialist will lead advanced geospatial analysis, mapping, and data integration efforts in support of our customer’s mission. This position plays a key role in ensuring the customer has accurate, reliable geospatial insights to plan operations, optimize communications coverage, and maintain consistent site and frequency data across the enterprise.
+Responsibilities
+Lead GIS analysis and provide technical guidance for mapping operational areas, coverage zones, and site configurations.
+Develop advanced models and workflows to support aviation/maritime mission planning, site data integrity, and coverage visualization.
+Oversee standards for site naming conventions, coverage layers, and data accessibility to ensure staff can efficiently manipulate and apply geospatial products.
+Mentor and guide junior GIS analysts, ensuring accuracy and consistency of deliverables.
+Collaborate with mission staff, engineers, and program stakeholders to deliver geospatial solutions that support operational readiness.
+Prepare technical reports, visualizations, and presentations for leadership.
+Support compliance, operational, and planning documentation with GIS-driven data products.
+
+Requirements
+Bachelor’s degree in Geography, Geospatial Sciences, Engineering, or related field (Master’s preferred). 
+Must have active DOD Secret clearance or DHS Tier 2 BI with up-to-date investigation.
+6–9 years of professional GIS experience supporting engineering, communications, or federal programs.
+Expert proficiency with ESRI ArcGIS, ArcGIS Pro, and geospatial databases.
+Experience managing coverage data, site naming conventions, and integration with operational tools highly desire. 
+Strong leadership, communication, and mentoring skills.
+
+Why Join Chartis Federal?We offer a competitive compensation and benefits package, including:
+Comprehensive health insurance (medical, dental, vision)
+Retirement plans with company contributions
+Professional development opportunities and career growth support
+A dynamic and collaborative work environment where your contributions are valued
+
+At Chartis Federal, we believe in fostering a culture of excellence, integrity, and innovation while supporting critical national security missions. Join us in shaping the future of government contracting and national security solutions.

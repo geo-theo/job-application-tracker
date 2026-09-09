@@ -1,0 +1,20 @@
+Our client is seeking a Data Governance Analyst to join their team! This position is located in Greenwood Village, Colorado.  Duties:
+Manage the end-to-end administration of the data catalog, ensuring metadata validation, process documentation, and the maintenance of a single source of truth
+Facilitate the onboarding of new data assets and oversee connector activities, token upkeep, and comprehensive metadata management
+Utilize the Microsoft Power Platform to design, implement, and maintain automated approval flows and governance workflows
+Serve as a primary liaison for end-user engagement, building strategic relationships across various external teams and departments
+Deliver consistent results in a high-stakes environment requiring frequent interaction with senior executive leadership
+Demonstrate exceptional communication skills and a no-nonsense professional demeanor while navigating complex organizational structures
+Execute advanced functions in Microsoft Excel and utilize Tableau or SQL to fulfill ad-hoc reporting and data visualization requests
+Lead discovery and strategy sessions to define new governance processes, forms, and project tracking mechanisms
+
+Desired Skills/Experience:
+Maintain a rigorous commitment to accuracy and detail, taking full ownership of project deliverables and performance metrics
+Adapt proactively to shifting priorities and workload demands within a structured, hybrid office model
+
+Benefits:
+Medical, Dental, & Vision Insurance Plans
+Employee-Owned Profit Sharing (ESOP)
+401K offered
+
+The approximate pay range for this position is between $38.00 and $46.00. Please note that the pay range provided is a good faith estimate. Final compensation may vary based on factors including but not limited to background, knowledge, skills, and location. We comply with local wage minimums.
