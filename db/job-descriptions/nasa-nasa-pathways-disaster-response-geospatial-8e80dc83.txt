@@ -1,0 +1,52 @@
+Disaster Response Geospatial Research
+ID: 025523 Course: Internships - LaRC
+
+Share
+Print
+Apply
+About this opportunity
+Internships are educational hands-on opportunities that provide unique NASA-related research and operational experiences for undergraduate and graduate students (age 16 and up). To learn more, visit https://intern.nasa.gov.
+NASA’s Disasters Response Coordination System (DRCS) is accepting applications for an internship at NASA Langley Research Center working with the DRCS team to explore topics such as:
+1) Geospatial analysis: support the DRCS in geospatial analysis and application of Earth observations for disaster response, creation of jupyter notebooks, and automation of geospatial production processes.
+2) Knowledge management: building dashboards and functionalities in Microsoft SharePoint for programmatic knowledge capture and sharing.
+3) Product communication: identify gaps in current communication products, support the development of new materials for building awareness in a variety of audiences, and identify opportunities for more plain language product descriptions.
+
+Interns will gain experience conducting research regarding Earth observation data products relevant to disaster response, GIS, general knowledge and information management, and communications as they work on projects to produce a variety of supporting materials including presentations, geospatial data visualizations, and communications materials. Additional skills to be cultivated are project management, communicating with both NASA and external organizations, exposure to post-disaster emergency response protocols, and leadership structures.
+
+Key Details
+Engagement Type
+Internships
+Eligible Applicant(s)
+Student
+Academic Level
+Undergraduate Senior;Graduate Master's;Graduate Doctoral;Post Doctoral
+Activity Format
+In-person
+Citizenship
+US Citizen Only
+Location
+Hampton, Virginia
+Center
+Langley Research Center (LaRC)
+Work Schedule
+Full-time
+Preferred Major
+Comm Techs/Techs & Sup Svcs - Graphic Communications, General;Computer & Info Sci & Sup Svcs - Data Processing and Data Processing Technology/Technician;Multi/Interdisciplinary Studies - Climate Science;Multi/Interdisciplinary Studies - Geography and Environmental Studies;Multi/Interdisciplinary Studies - Natural Sciences;Multi/Interdisciplinary Studies - Science, Technology and Society;Natural Resources and Conservation - Environmental Studies;Physical Sciences - Atmospheric Sciences and Meteorology, General;Physical Sciences - Geological and Earth Sciences/Geosciences, Other;Physical Sciences - Hydrology and Water Resources Science;Social Sciences - Demography and Population Studies;Social Sciences - Geographic Information Science and Cartography;Social Sciences - Sociology and Anthropology
+Skills
+Geographic Information System (GIS)
+Geographic Mapping
+Power BI
+Microsoft (MS) Power Automate
+Microsoft (MS) SharePoint
+Microsoft (MS) Office 365
+Earth Science & Geospatial Skills
+Geospatial Data
+Satellite Remote Sensing
+Scientific Writing
+Documentation / Technical Writing
+Languages
+Additional Information
+Engagement Contact
+nasa-internships@mail.nasa.gov
+Session
+Intern: Spring 2027

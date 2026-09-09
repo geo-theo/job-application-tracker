@@ -1,0 +1,35 @@
+Data Engineer, Google Maps
+corporate_fare
+Google
+place
+Mountain View, CA, USA
+Minimum qualifications:
+Bachelor's degree or equivalent practical experience.
+1 year of experience coding in one or more programming languages.
+1 year of experience designing data pipelines, and dimensional data modeling for synch and asynch system integration and implementation using internal (e.g., Flume, etc.) and external stacks (DataFlow, Spark, etc.).
+Experience working with data models by performing exploratory queries and scripts.
+Experience in Geographic Information Systems (GIS), including Esri software (ArcGIS) or FME for spatial data integration and analysis.
+
+Preferred qualifications:
+Master's degree in Geospatial Sciences, or a related field.
+Experience partnering with stakeholders (e.g., users, partners, customer), and managing stakeholders/customers.
+Experience developing project plans and delivering projects on time within budget and scope.
+Experience with statistical methodology and data consumption tools such as business intelligence tools, collabs, jupyter notebooks, Tableau, Power BI, DataStudio, and business intelligence platforms.
+About the job
+As The Data Engineer, Geo Operations, you will execute full-cycle processing pipelines of complex data, within the scope of a larger project with guidance from manager, team lead, or colleagues, within bounded time. You will have an additional focus on managing the team's Cloud infrastructure and the industry-standard geospatial platforms deployed within it.
+
+The Geo team is focused on building the most accurate, comprehensive, and useful maps for our users, through products like Maps, Earth, Street View, Google Maps Platform, and more. Every month, more than a billion people rely on Maps services to explore the world and navigate their daily lives.
+
+The Geo team also enables developers to use the power of Google Maps platforms to enhance their apps and websites. As they plot a course for the future of mapping, they are solving complex computer science problems, designing beautiful and intuitive product experiences, and improving our understanding of the real world.
+
+Individual pay is determined by factors including job-related skills, experience, and relevant education or training.
+
+US: $106000 - $150000 (USD) + 15% bonus target + equity + benefits
+
+Learn more about benefits at Google.
+Responsibilities
+Implement business infrastructure and solutions to build and scale common frameworks for use by Third-Party Developer Operations (3PDO) Data Engineers and Operations team members. Partner with data providers and consumers to establish new data pipelines.
+Develop and maintain data models, pipelines, and exchange formats to assist in the delivery, visualization, and analysis of geospatial data, with guidance.
+Provide ongoing support for client users through maintenance of reports, queries, and dashboards.
+Partner cross-functionally to analyze root-causes of process errors and deliver faster and better partner care experiences through automation and self service.
+Perform data analysis and profiling utilizing either established or custom tooling/infrastructure as needed.

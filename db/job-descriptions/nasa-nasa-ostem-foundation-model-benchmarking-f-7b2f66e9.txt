@@ -1,0 +1,48 @@
+Foundation Model Benchmarking for Irrigation Mapping
+ID: 025623 Course: Internships - GSFC
+
+Share
+Print
+Apply
+About this opportunity
+Internships are educational hands-on opportunities that provide unique NASA-related research and operational experiences for undergraduate and graduate students (age 16 and up). To learn more, visit https://intern.nasa.gov.
+This internship focuses on geospatial data curation and processing for irrigation mapping. The intern will coordinate with state agencies and other data providers, clean and harmonize vector and raster datasets, create label datasets, and prepare standardized satellite inputs to benchmark several geospatial foundation models, including Prithvi, TerraMind, Clay, Google AlphaEarth, TESSERA, And OlmoEarth. Desired skills, Python, geospatial libraries, GIS and remote sensing, data cleaning, and strong communication.
+Familiarity with machine learning and deep learning and experience training or fine-tuning machine learning or geospatial foundation models (for example with PyTorch/TerraTorch) is considered a plus.
+
+Key Details
+Engagement Type
+Internships
+Eligible Applicant(s)
+Student
+Academic Level
+Undergraduate Freshman;Undergraduate Sophomore;Undergraduate Junior;Undergraduate Senior;Graduate Master's;Graduate Doctoral
+Activity Format
+In-person
+Citizenship
+US Citizen Only
+Location
+Greenbelt, Maryland
+Center
+Goddard Space Flight Center (GSFC)
+Work Schedule
+Part-time
+Preferred Major
+Computer & Info Sci & Sup Svcs - Computer Programming/Programmer, General;Computer & Info Sci & Sup Svcs - Computer Science;Computer & Info Sci & Sup Svcs - Computer Software and Media Applications, Other;Computer & Info Sci & Sup Svcs - Data Processing and Data Processing Technology/Technician;Engineering - Agricultural Engineering;Engineering - Civil Engineering, General;Engineering - Computer Engineering, General;Multi/Interdisciplinary Studies - Geography and Environmental Studies;Physical Sciences - Geological and Earth Sciences/Geosciences, Other;Physical Sciences - Hydrology and Water Resources Science;Social Sciences - Geographic Information Science and Cartography
+Skills
+Effective Communicator
+Coding
+Jupyter
+Python
+PyTorch
+Progress Reporting
+Oral Presentations
+Data Science
+Machine Learning (ML)
+Deep Learning
+Languages
+English
+Additional Information
+Engagement Contact
+nasa-internships@mail.nasa.gov
+Session
+Intern: Spring 2027
