@@ -1,0 +1,100 @@
+Seeking EOIs and Recommendations for a GIS Specialist and Data Specialist for FEWS NET 8 Knowledge Base
+
+Chemonics' East and Southern Africa Business Unit’s FEWS NET 8 Knowledge Base team is conducting an internal and external recruit for a GIS Specialist and a Data Specialist for the newly awarded Famine Early Warning Systems Network (FEWS NET) 8 Knowledge Base project. These positions will be based within the Washington, DC-based home office (though U.S.-based remote options may be considered for well qualified candidates).
+
+Created in 1985 in response to famines in East and West Africa, FEWS NET is an integrated set of activities funded by the United States Agency for International Development (USAID) that provides timely, accurate, evidence-based, and transparent food security early warning information and analysis. FEWS NET makes reports available and distributes them globally to governments, relief agencies, and other organizations engaged in humanitarian response and development programs.   
+
+The eighth phase of FEWS NET began in 2024. The FEWS NET 8 Knowledge Base project will work in 30 countries over five years to create and update FEWS NET’s knowledge base about livelihood zones and market systems on which FEWS NET’s acute food insecurity early warning analyses are predicated, thereby ensuring that USAID’s Bureau for Humanitarian Assistance (BHA) can allocate emergency food assistance effectively and in accordance with humanitarian principles. 
+
+Responsibilities and Requirements for each of the positions are outlined below:
+
+GIS Specialist:
+
+The full-time DC-based (remote eligible) GIS Specialist for FEWS NET 8 KB will oversee formatting of geographic datasets, geo-referencing of data, and GIS shapefile management. The GIS Specialist will support ongoing and new initiatives in data collection and survey tools, production of high-quality visual analyses, and data visualization tools.  
+
+ 
+
+Responsibilities: 
+
+Create, maintain, and update core mapping products for different sectors of the project, including livelihoods maps, production and trade flow maps, and country-specific reference maps;  
+Locate and identify current and historical shapefiles for FEWS NET 8 KB target countries, ensuring that shapefiles have proper topology following FEWS NET and U.S Admin 0 boundaries; 
+Produce tables and flow charts documenting changes in administrative boundaries over time for eventual upload into the FEWS NET Datawarehouse (FDW); 
+Maintain FEWS NET 8 KB’s global geo-database of shapefiles and mapping files, and update relevant GIS mapping products and the FDW when needed;  
+Support the development and updates of new and historical livelihoods mapping products and shapefiles. Ensure all products are uploaded into the FDW and FEWS NET website; 
+Support ad-hoc requests for thematic maps for reports, presentations, and briefings, and other data visualization products such as PowerBI, and ArcGIS Online; 
+Work, as needed, with science team and FEWS NET Hub members to facilitate collaboration around jointly managed shapefiles and other GIS products; 
+Provide in-person and remote recurring and ad hoc capacity strengthening to FEWS NET 8 KB staff on GIS processes and tools; 
+Provide support to data processing tasks related to GIS mapping products across the project, as needed; and
+Assist in the management and supervision of subcontractor task orders associated with data processing and GIS deliverables, as requested. 
+ 
+
+Requirements: 
+
+Bachelor’s degree or equivalent work experience; 
+Minimum 3 years of relevant experience; experience in computer science, information systems, or a GIS-related field is preferred; 
+Demonstrated previous experience with statistical tools to perform analyses, such as Excel, PowerBI, or Tableau; 
+Technical skills and knowledge in Python programming language; 
+Proficiency in the use of GIS software, with particular experience in ESRI products -- including a demonstrated ability to handle and process non-standardized data;  
+Additional skills with databases, GIS platforms, scripting, data science, data curation, and use of cloud services are desired; 
+Demonstrated previous experience using large socioeconomic datasets for analyses is desired; 
+Familiarity with Agile framework and software development methods and processes is desired; 
+Excellent research skills and ability to focus on detail; 
+Demonstrated ability to communicate clearly and concisely both orally and in writing; 
+Demonstrated ability to provide guidance and capacity strengthening to adult learners;  
+Ability to work effectively both independently and as part of a multicultural team across numerous geographies; 
+Demonstrated leadership, versatility, and integrity; and 
+Fluency in English is required; Proficiency in French, Portuguese, Spanish, or Arabic language preferred.
+ 
+
+Interested internal candidates should apply here by November 18, 2024. 
+
+ 
+
+Data Specialist:
+
+The full-time DC-based (remote eligible) Data Specialist for FEWS NET 8 KB will support the data management lead in ensuring collation and validation of primary data collected by the FEWS NET 8 KB field enumerators and processing of secondary data used as input to markets and livelihoods deliverables.  
+
+ 
+
+Responsibilities: 
+
+Ensuring that primary and secondary data collected are prepared, cleaned and archived in a timely fashion, inline with FEWS NET Datawarehouse (FDW) protocols as necessary, for transmission to the FEWS NET Hub; 
+Ensuring that FEWS NET 8 KB data are delivered to relevant partners organizations based on agreements with these organizations; 
+Supporting the maintenance and updating of FEWS NET 8 KB’s baseline spreadsheets databases and work closely with FEWS NET Hub on standardizing the spreadsheets for eventual upload into the FDW. Contributing to the documentation and files of the project and updating essential datasets collected and used during the production of livelihood zone profiles and market fundamentals reports; 
+Support initiatives developing and maintaining data visualizations tools for internal analysis use and/or FEWS NET website; 
+Support data processing and cleaning of primary and secondary for eventual  
+Contributing to other FEWS NET data and information products required locally and by the Washington-based technical team; 
+Support KB collaboration with FEWS NET Hub on FDW and FEWS NET Data Explorer activities and related jira tickets;  
+Other related tasks that may be assigned by the Data Management Lead or Chief of Party.  
+ 
+
+Requirements: 
+
+Bachelor’s degree or equivalent work experience; 
+Minimum 3 years of relevant administrative or professional work experience; 
+Experience in computer science, information systems, data analytics a related field, or other discipline that is directly relevant to socio-economic data collection and management is desirable; 
+Experience relevant to the work of FEWS NET, such as economics, agricultural economics, agronomy, nutrition, climatology, anthropology, or social geography is desirable.  
+Previous experience with data quality control is highly desirable; 
+Ability to maintain database standards, guidelines, and procedures; process non-standard data; and ability to balance multiple tasks; 
+Proven experience in data manipulation and analysis software such as R, Python, PowerBi, or similar tool; 
+Demonstrated ability in handling and processing non-standardized data;  
+Excellent computer skills with an expert level in Microsoft Excel; 
+Excellent planning and organizational skills; 
+Strong data management skills and attention to detail; 
+Excellent communication and interpersonal skills; 
+Demonstrated ability to interact positively with various food security stakeholders; 
+Demonstrated ability to work and coordinate effectively with remote colleagues; 
+Fluency in English is required; Proficiency in French, Portuguese, Spanish, or Arabic language is desirable.   
+ 
+
+Interested internal candidates should apply here
+
+ by November 18, 2024.
+
+ 
+
+All internal applicants are required to notify their supervisor(s) before applying.
+
+ 
+
+Chemonics is an equal opportunity/Affirmative Action employer and does not discriminate in its selection and employment practices. All qualified applicants will receive consideration for employment without regard to race, color, religion, sex, national origin, political affiliation, sexual orientation, gender identity, marital status, disability, protected veteran status, genetic information, age, or other legally protected characteristics. Military veterans, AmeriCorps, Peace Corps, and other national service alumni are encouraged to apply.
