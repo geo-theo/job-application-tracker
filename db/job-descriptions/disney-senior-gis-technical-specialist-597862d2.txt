@@ -1,0 +1,96 @@
+Senior GIS Technical Specialist
+Job ID 10159626
+Location Anaheim, California, United States
+Business Disneyland Resort
+Date posted Sep. 02, 2026
+Apply Now
+
+Job Summary:
+Architecture & Facilities Engineering (A&FE) is seeking a Senior GIS Technical Specialist — a senior-level individual contributor — to operationalize and enforce enterprise geospatial standards, governance, and system integrations across Disneyland Resort. Our department supports a wide range of project types including Attractions, Maintenance, Foods, Merchandise, and Entertainment. Projects range from minor renovations to new facilities, and you will also support immediate response efforts with reactionary projects.
+
+In this role, you will be a senior-level geospatial technical contributor within the Resort’s A&FE GIS discipline — working collaboratively with the A&FE Staff GIS Technical Specialist, administering the ArcGIS Portal environment, enforcing enterprise data governance and integration frameworks, building automated data workflows, and leading facility data reconciliation efforts within assigned project areas and data domains across GIS, CAD, BIM, and enterprise business systems. You will also provide technical oversight to junior GIS staff and non-GIS contributors, and author project scopes and technical requirements for assigned geospatial initiatives.
+
+This role also involves close collaboration with architecture and engineering disciplines, as well as multiple Disney project teams including FAM, WDI, Environmental Affairs, Safety, Entertainment, Sustainability, Maintenance teams, and Operations.
+
+You will report to the Senior Manager, Civil/Structural Engineering, DLR Architecture & Facilities Engineering.
+
+Responsibilities/You Will
+
+Administer the ArcGIS Portal environment — including content organization and user management — within enterprise standards and direction established by the Staff GIS Technical Specialist.
+
+Enforce and maintain the enterprise data governance framework established by the Staff GIS Technical Specialist and department leadership — including attribute rules, Data Reviewer workflows, template-driven editing, and QA/QC tooling
+
+Design, build, and maintain automated data workflows using FME, ArcPy, ModelBuilder, and other related tools for ETL processing and data validation.
+
+Support the enterprise GIS system integration framework across platforms such as Microsoft 365, Airtable, and Autodesk Construction Cloud, executing integration configuration and troubleshooting tasks as needed in support of broader data pipeline goals.
+
+Lead asset data reconciliation efforts across authoritative and legacy data sources within assigned project areas and data domains, contributing toward a single source of truth
+
+Apply utilities GIS expertise to support underground and above-ground utility data initiatives, including Esri Utility Network concepts.
+
+Build and maintain geospatial products, such as dashboards and self-service applications, that enable DLR staff to contribute directly to authoritative datasets.
+
+Provide technical oversight and quality review of GIS data contributions from junior GIS staff, non-GIS subject-matter experts, and third-party vendors.
+
+Serve as primary author of project scopes, technical requirements, and RFP scope language for assigned geospatial initiatives, coordinating with the Staff GIS Technical Specialist on scope and technical direction for larger or cross-platform efforts.
+
+Coordinate directly with subject-matter experts, business units, and vendors on data collection, cleanup, and delivery efforts, escalating cross-line-of-business or sensitive items as appropriate.
+
+Support the development of presentations for operational updates.
+
+Maintain up-to-date knowledge of industry geospatial products, services, and best practices.
+
+Mentor and support the technical growth of junior team members through day-to-day technical guidance, code and workflow review, and data quality oversight.
+
+Basic Qualifications/You Will Have
+
+8+ years of progressive geospatial experience with demonstrated technical proficiency across data automation, governance, and project management.
+
+Strong expertise in data automation workflows, scripting languages, and tools (e.g., FME, Power Automate, Python, ArcGIS Arcade), particularly in building and maintaining ETL processes and data validation pipelines.
+
+Demonstrated knowledge and technical proficiency with Esri desktop and web products (e.g., ArcGIS Pro, ArcGIS Enterprise, ArcGIS Online, ArcGIS Server), including Portal content and user administration, with proficiency in Safe Software FME products (e.g. FME Form, FME Flow).
+
+Experience with utilities GIS, including underground or above-ground utility data and infrastructure, with familiarity with Esri’s Utility Network extension strongly preferred.
+
+Experience utilizing data governance tools such as ArcGIS Attribute Rules and Data Reviewer workflows, and FME workbenches aimed towards QA/QC.
+
+Experience authoring project scopes, technical requirements, and RFP language for geospatial or technology services.
+
+Strong sense of accountability with the ability to take ownership of work, ensuring tasks are completed accurately, on time, and with minimal oversight. Exercises independent technical judgment on assigned work within established standards and governance frameworks.
+
+Effective verbal and written communication skills with the ability to translate between technical and operational needs across internal and external stakeholders.
+
+Experience providing technical guidance or quality review to junior staff or non-technical contributors.
+
+Strong problem-solving skills with the ability to critically evaluate problems and develop effective solutions.
+
+Experience working collaboratively across multiple concurrent initiatives in an interdisciplinary environment.
+
+Demonstrated ability to independently manage competing priorities and shifting deadlines across multiple concurrent geospatial initiatives of moderate-to-high complexity, while maintaining data quality and accountability.
+
+Preferred Qualifications
+
+Experience supporting project-based geospatial services in engineering, infrastructure, utilities, or construction environments.
+
+Experience with CAD and BIM data standards and workflows.
+
+Experience with Esri’s Utility Network extension in a production environment.
+
+Familiarity with cloud or hybrid infrastructure (e.g., AWS, Azure, Entra).
+
+Experience supporting or maintaining integrations between GIS and enterprise business systems (e.g., Maximo, Microsoft 365, Airtable, Autodesk Construction Cloud).
+
+Familiarity with CI/CD workflows (e.g., GitLab, GitHub) and modern development environments.
+
+Required Education and Licensure
+
+Bachelor’s degree in GIS, Geography, Geomatics, Computer Science, Engineering, or related field.
+
+Geospatial professional licensure (e.g., GISP, CGeog GIS) preferred.
+
+Additional Information
+
+Benefits and Perks: Disney offers a rewards package to help you live your best life. This includes health and savings benefits, educational opportunities, and special extras that only Disney can provide. Learn more about our benefits and perks at https://jobs.disneycareers.com/benefits.
+
+
+The hiring range for this position in Anaheim, CA is $95,500.00 to $128,000.00 per year. The base pay actually offered will take into account internal equity and also may vary depending on the candidate’s geographical region, job-related knowledge, skills, and experience among other factors. A bonus and/or long-term incentive units may be provided as part of the compensation package, in addition to the full range of medical, financial, and/or other benefits, dependent on the level and position offered.

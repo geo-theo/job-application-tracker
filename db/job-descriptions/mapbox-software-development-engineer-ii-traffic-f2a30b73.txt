@@ -1,0 +1,106 @@
+Software Development Engineer II, Traffic
+Location
+Mapbox US
+
+Employment Type
+Full time
+
+Department
+Navigation
+
+Overview
+Application
+Mapbox is the leading real-time location platform for a new generation of location-aware businesses. Mapbox is the only platform that equips organizations with the full set of tools to power the navigation of people, packages, and vehicles everywhere. More than 4 million registered developers have chosen Mapbox because of the platform’s flexibility, security and privacy compliance. Organizations use Mapbox applications, data, SDKs and APIs to create customized and immersive experiences that delight their customers. 
+
+What We Do
+Mapbox is looking to hire motivated, curious, and innovative Software Development Engineers for the Navigation, Traffic team. We develop and maintain the web services powering virtually all of Mapbox’s strategic navigation initiatives in consumer, automotive, and logistics. This is a highly multidisciplinary team, with work spanning distributed systems on AWS to geospatial localization, traffic telemetry, and mapping.
+
+As AI becomes embedded in modern engineering workflows, we value engineers who can thoughtfully integrate AI into design, development, and decision-making. Our interview process will include discussion of how you use AI in your engineering workflow.
+
+What You'll Do
+As a Software Development Engineer II on the Navigation Traffic team, you will be responsible for balancing rapid development of new navigation solutions against the reliability of our services as they scale into new request volumes, markets, and use cases. In a single week, you might write application code robust to a world’s worth of data, build and deploy microservices, diagnose complex system behavior as global markets drive traffic in unexpected ways, or facilitate continuous delivery at Mapbox.
+
+In this role, you can expect to:
+
+Collaborate with your team to identify and scope out well-defined tasks
+
+Execute on the scope and be accountable for delivering on time with quality
+
+Design systems and make decisions that will keep pace with the rapid growth of Mapbox’s customer base
+
+Promote a culture of operational excellence by meticulously testing and monitoring our systems and code, writing documentation, and being on-call to support the health of our services
+
+Participate in an on-call rotation to ensure our systems remain available to customers 24/7. Team members alternate as the on-call primary responder, which may require immediate response outside normal working hours, including weekends
+
+Reduce technical debt, share your knowledge, and invest in your teammates’ health and happiness, while optimizing application performance and accelerating feature velocity
+
+Uphold a culture of collaboration, transparency, creativity, inclusion, and data-driven decisions
+
+What We Believe are Important Traits for This Role
+5+ years of experience building scalable high volume low latency backend services
+
+Experience with modern programming languages (Python, Rust, Typescript, Java, Go, C++)
+
+Proficiency with cloud services (preferably AWS) in implementing monitoring instrumentation, operational diagnostics, resolving customer issues, and continuous product improvement
+
+Experience integrating AI into design, development, and decision-making. Our interview process will include discussion of how you use AI in your engineering workflow.
+
+Familiarity with code versioning tools, such as GitHub
+
+Ability to engage, learn and contribute quickly to the initiatives
+
+Able to perform independently all the development tasks, based on designs and specs.
+
+Self-starter who is communication and outcomes-oriented
+
+An empirical analytical approach. You develop strong hypotheses, conduct spikes, and clearly communicate your findings
+
+A desire to share your expertise through documentation, mentorship, pairing and both written and verbal discussion
+
+A desire to work with individuals with diverse backgrounds, perspectives, and experiences
+
+High quality mindset — write unit tests, proactively remedy defects and follow through to production
+
+Nice to Have Traits for This Role
+Experience and knowledge within the navigation domain
+
+Experience with Amazon Elasticache
+
+Experience with SQL
+
+Experience with Big Data/ML
+
+Experience with various security standards and associated technical knowledge
+
+What We Value
+In addition to our core values, which are not unique to this position and are necessary for Mapbox leaders:
+
+We value high-performing creative individuals who dig into problems and opportunities.
+
+We believe in individuals being their whole selves at work. We commit to this through supportive health care, parental leave, flexibility for the things that come up in life, and innovating on how we think about supporting our people.
+
+We emphasize an environment of teaching and learning to equip employees with the tools needed to be successful in their function and the company.
+
+We strongly believe in the value of growing a diverse team and encourage people of all backgrounds, genders, ethnicities, abilities, and sexual orientations to apply.
+
+How We Support You
+Hybrid/Remote Options: Enjoy flexibility to work comfortably from home or periodically from an office where applicable.
+
+Comprehensive Healthcare: Private medical coverage for you and your dependents.
+
+Family-First Support: Generous maternity and paternity leave policies to support your growing family.
+
+Fertility & Family Building: Inclusive fertility support. Grow your family on your terms.
+
+Lifestyle Spending Account: Contributions to support your health, wellness, and personal growth.
+
+Balance & Brainpower: Mental health support for you and your dependents.
+
+Rest & Recharge: Flexible paid time away, company holidays, and generous absence policies.
+
+Time Off to Give Back: Dedicated paid volunteering time in addition to your standard PTO.
+
+Invest & Grow: Retirement plans with competitive matching.
+
+ 
+Our annual base compensation for this role ranges from $160,650 - $217,350 for most US locations and 5% to 10% higher for US locations with a higher cost of labor. Job level and actual compensation will be decided based on factors including, but not limited to, individual qualifications objectively assessed during the interview process (including skills and prior relevant experience, potential impact, and scope of role), market demands, and specific work location. Please discuss your specific work location with your recruiter for more information.

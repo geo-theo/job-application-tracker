@@ -1,0 +1,59 @@
+Data Analytics Apprenticeship, February 2027 Start
+corporate_fare
+Google
+place
+New York, NY, USA
+; Atlanta, GA, USA
+; +2 more
+bar_chart
+Intern & Apprentice
+info_outline
+X
+Please complete your application before September 21, 2026.
+Participation in the Apprenticeship program requires that you are located in the United States for the duration of the apprenticeship program.
+
+This apprenticeship is intended for individuals who want to learn and develop entry-level technical and professional skills in data analytics.  If you are currently pursuing or hold a degree in data analytics (or a related field), or bring more than a year of relevant experience, we encourage you to browse our University Graduate and Internship opportunities instead.
+To start the application process, you will need an updated CV or resume  in English. Click on the “Apply” button on this page and provide the required material in the appropriate section (PDFs preferred):
+
+In the “Resume Section:” attach one single document that contains an updated resume 
+
+This role may also be located in our Playa Vista, CA campus.
+
+Applicants in the County of Los Angeles: Qualified applications with arrest or conviction records will be considered for employment in accordance with the Los Angeles County Fair Chance Ordinance for Employers and the California Fair Chance Act.
+
+Note: By applying to this position you will have an opportunity to share your preferred working location from the following: New York, NY, USA; Atlanta, GA, USA; Chicago, IL, USA; Los Angeles, CA, USA.
+
+Minimum qualifications:
+High School Diploma, GED equivalent, or practical experience.
+Not currently enrolled in or completed a Bachelor's, Master's, or PhD degree program in an analytics-related field.
+Less than 1 year of relevant data analytics experience.
+
+Preferred qualifications:
+Experience using Google Workspace or a similar suite of productivity tools.
+Ability to navigate ambiguous tasks, find suitable solutions, and seek help/advice where appropriate.
+Ability to work independently and within a team framework.
+Ability to be proactive and have a positive attitude.
+Enthusiasm and passion for new technologies, demonstrated through personal projects and commitment to learning.
+Excellent communication, organizational, and problem solving skills, customer service capabilities, and critical thinking abilities.
+About the job
+
+The Google Data Analytics Apprenticeship is a Department of Labor Registered Apprenticeship Program and a structured learning and development opportunity. During the 18 month program, apprentices will participate in on-the-job training, related technical instruction, and career development workshops to develop professional and durable skills. Upon completion, apprentices receive a nationally-recognized credential, certified by the U.S. Department of Labor.
+As a Data Analytics Apprentice at Google, you will develop the skills you need to pursue an entry-level career in data analytics.
+
+You will learn and apply core data analysis skills, navigating the data lifecycle from collection to impactful insights. You will also use tools like SQL, Tableau, R, and AI-powered methods (where applicable) for data cleaning, analysis, and visualization. You'll drive data-driven decisions by designing experiments, analyzing impact, and presenting findings to cross-functional stakeholders.
+
+Apprentices are paid hourly for their time split between on-the-job training and related technical instruction, and are required to dedicate 40 hours each week to the program. Apprenticeships begin with an immersive virtual onboarding experience to build a foundational understanding of the profession. Apprentices will then join a Google team to train on-the-job, while continuing to engage in track-specific learnings and career workshops throughout the program. As part of the program, apprentices receive holistic career readiness support, and towards the end of the program will have the time and space to prepare for their next endeavor.
+
+Find more details about apprenticeships and a list of FAQs on goo.gle/apprenticeships.
+
+Individual pay is determined by factors including job-related skills, experience, and relevant education or training.
+
+US: $47500 - $63500 (USD) + 0% bonus target
+
+Learn more about benefits at Google.
+Responsibilities
+Analyze data, identify trends and insights to drive business impact.
+Use statistical methods, code, and AI tools (where applicable) for robust analysis.
+Conduct statistical analysis and design experiments to identify insights.
+Design tests and present data-driven findings and solutions to partners.
+Practice responsible, effective, and innovative use of AI.

@@ -1,0 +1,152 @@
+Data Scientist
+Atlanta, GA, United States
+Trending
+Job Description
+
+Data Scientist I
+
+ 
+
+The Data Scientist I provides data science, statistical, and advanced analytical support to CDC programs. This role focuses on extracting knowledge from structured and unstructured public health data to support analysis, research, surveillance, improved understanding and communication, visualization, health services delivery, and data-driven decision-making.
+
+ 
+
+The Data Scientist I develops, implements, and monitors advanced analytic, computational, and predictive modeling tools and applies machine learning and artificial intelligence (AI) to public health data. The position works with data from multiple surveillance systems and programs and collaborates with Data Engineering, Product Management, User Experience, subject-matter experts, and other business units to develop innovative data science solutions.
+
+ 
+
+This is a scientific position requiring strong analytical and technical skills, methodological expertise, and the ability to translate complex public health data into meaningful findings, visualizations, reports, and solutions that support CDC programs and public health decision-making.  This is an onsite 5 days a week CDC position, 1600 Clifton Rd NE, Atlanta, GA 30329.
+
+ 
+
+Compensation & Benefits:
+
+Estimated Starting Salary Range for Data Scientist I: $90,000.00-95,000.00/yr.
+
+Pay commensurate with experience.
+
+Full-time benefits include Medical, Dental, Vision, 401K, and other possible benefits as provided.  Benefits are subject to change with or without notice.
+
+ 
+
+Data Scientist I Responsibilities Include: 
+
+Define and develop statistical and advanced analytic methods and solutions for complex data science projects.
+
+Gather, integrate, process, and analyze data from multiple public health surveillance, research, and administrative sources.
+
+Conduct exploratory data analysis, anomaly detection, measurement, and structured and unstructured data analysis.
+
+Apply machine learning, artificial intelligence (AI), predictive modeling, and prescriptive modeling to public health data.
+
+Interpret findings and translate analytical results into actionable insights for public health programs and decision-making.
+
+Develop, implement, and monitor advanced analytic and computational tools for CDC programs.
+
+Provide technical consultation on health science, data science, programming, and advanced analytical methods as applied to public health.
+
+Collaborate with epidemiologists, statisticians, computer scientists, economists, policy analysts, public health professionals, and other subject-matter experts on surveillance, research, and analytical studies.
+
+Provide methodological support and innovative solutions for complex analytical projects.
+
+Develop data visualizations and other approaches to communicate findings and support understanding of public health data.
+
+Support system automation and processes that improve health services delivery and decision-making.
+
+Prepare comprehensive reports describing data quality, analytical methodology, results, and relevance to the public health issue under study.
+
+Present and disseminate analytical findings to technical and non-technical audiences.
+
+Perform other duties as assigned.
+
+ 
+
+Data Scientist I Experience, Education, Skills, Abilities requested: 
+
+Bachelor’s degree in data science, statistics, computer science, health science, public health, epidemiology, or a related field; master’s degree preferred.
+
+Experience conducting statistical or advanced data analysis using multiple data sources, including public health surveillance, research, or administrative data.
+
+Experience with data processing, exploratory analysis, anomaly detection, structured and unstructured data, and interpretation of findings.
+
+Experience with predictive or prescriptive modeling, machine learning, artificial intelligence (AI), data visualization, or related advanced analytics.
+
+Knowledge of health science, data science, programming, and analytical methodologies as applied to public health.
+
+Ability to assess data quality, select appropriate analytical methods, and communicate results and their public health relevance.
+
+Experience collaborating with multidisciplinary scientific, technical, and public health professionals.
+
+Strong written and verbal communication skills, including the ability to explain complex analytical concepts and findings to diverse audiences.
+
+Ability to develop innovative solutions and manage complex data science projects.
+
+Must pass pre-employment qualifications of Cherokee Federal.
+
+ 
+
+Data Scientist I Preferred Qualifications requested: 
+
+Experience applying advanced analytics, machine learning, artificial intelligence, predictive modeling, or computational methods to public health data.
+
+Experience working with large, complex, structured, and unstructured datasets or public health surveillance systems.
+
+Experience developing automated analytical processes or data visualizations.
+
+ 
+
+Company Information:
+
+Cherokee Nation Integrated Health (CNIH) is a part of Cherokee Federal – the division of tribally owned federal contracting companies owned by Cherokee Nation Businesses. As a trusted partner for more than 60 federal clients, Cherokee Federal LLCs are focused on building a brighter future, solving complex challenges, and serving the government’s mission with compassion and heart. To learn more about CNIH, visit cherokee-federal.com.
+
+ 
+
+#CherokeeFederal #LI-CK1
+
+ 
+
+Cherokee Federal is a military friendly employer. Veterans and active military transitioning to civilian status are encouraged to apply.
+
+ 
+
+Similar Searchable Job Titles:
+
+Public Health Data Analyst
+
+Program Evaluation Analyst
+
+Epidemiology Analyst I
+
+Health Data Analyst
+
+Monitoring & Evaluation Analyst
+
+ 
+
+Keywords:
+
+Data Science
+
+Statistical Analysis
+
+Advanced Analytics
+
+Public Health Data
+
+Public Health Surveillance
+
+Machine Learning
+
+Artificial Intelligence (AI)
+
+Predictive & Prescriptive Modeling
+
+Data Visualization
+
+Data Quality
+
+System Automation
+
+Data Quality
+
+System Automation

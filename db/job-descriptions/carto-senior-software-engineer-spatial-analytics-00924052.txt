@@ -1,0 +1,43 @@
+Senior Software Engineer — Spatial Analytics & Open Formats
+Everything happens somewhere — which is why spatial analytics is fundamental to companies trying to understand the "where" and the "why" of their business. CARTO is the world's leading cloud-native spatial analysis platform, trusted by data scientists, analysts, and developers from global brands like IKEA, Coca-Cola, T-Mobile, Swiss Re, and AXA to run scalable spatial analysis directly on their cloud data warehouses and lakehouses.
+
+Built by a diverse team of over 150 people across the US, APAC, and Europe (backed by Insight Partners, Accel Partners, Salesforce Ventures, and Earlybird Ventures), CARTO is fundamentally changing how location data is analyzed — making it an integrated, accessible, AI-native part of modern data infrastructure.
+
+The role
+Spatial analytics is moving out of the GIS silo. It's moving into the warehouse, then into the lakehouse, then into Iceberg and open formats, and increasingly into agentic workflows where the consumer is no longer always a human. We're looking for an engineer who has been part of building that shift, to come help us lead where it goes next at CARTO.
+
+This role sits across CARTO's Analytics Toolbox and Workflows — the two surfaces through which our spatial analytics runs on partner engines (BigQuery, Snowflake, Redshift, Databricks, Postgres, Oracle) and, increasingly, on open formats consumed by external agents and applications. You'll define how the Toolbox framework evolves, how analytics capabilities are deployed across heterogeneous engines, and how CARTO plugs into the cloud-native geospatial stack — GeoParquet, STAC, Arrow, Iceberg, RaQuet, and what comes next.
+
+We don't think of this as a feature-shipping role. We think of it as a vision-and-execution role: someone who can write the strategy doc and own the PR that proves it works.
+
+Where you'd sit
+You'd work alongside the Workflows team (backend, frontend, data engineering, QA — six people today, growing) and the broader Spatial Analytics group, with significant scope to shape the technical direction of both.
+
+This is a remote-first role open to candidates based anywhere in EU or USA. 
+What you'll lead
+The Analytics Toolbox framework. Shape how spatial analytics is packaged, versioned, and pushed down into partner engines — and what it looks like when the consumer is an LLM agent, not a UI.
+Partner-engine SQL strategy. Every engine has its own dialect, optimizer, and idioms. You'll set the direction for how CARTO writes once and runs everywhere, without losing warehouse-native performance.
+The Iceberg / open-format play. CARTO organized the 2021 meeting with BigQuery, Snowflake, Redshift, and Oracle that catalyzed GeoParquet, and authored RaQuet for raster in Parquet. Iceberg is next. You'll define what spatial-first Iceberg looks like — for CARTO and for the ecosystem.
+Community and standards presence. This work happens in the open. OGC working groups, the Cloud Native Geospatial community, FOSS4G, conference talks, RFCs. You'll represent CARTO externally and help move the standards forward.
+AI as a native execution surface. Agentic GIS is where we're going. The Toolbox isn't just a SQL library — it's the substrate AI agents call into. You'll help define that interface.
+
+Who you are
+You've spent a serious chunk of your career in the cloud-native geospatial world. You've built with — and ideally helped shape — some combination of DuckDB, GeoParquet, STAC, Arrow, Iceberg, point cloud formats, MobilityDB, or similar. You don't just use these tools; you have opinions about where they're going.
+You know SQL at the engine level. You can read an execution plan across BigQuery, Snowflake, Redshift, and Databricks, and you have a clear view on what each one does well and badly for spatial workloads — partitioning, clustering, file pruning, pushdown, cost.
+You build with AI seriously. You've shipped LLM-powered features in production, you've worked with agentic patterns, and you have a point of view on what this changes for analytics.
+You're visible in the community — a FOSS4G or CNG talk, a maintained OSS project, a standards working group, a blog post people keep citing. Not vanity; this is how the role gets done.
+You're a low-ego technical leader. You set direction by being right and being persuasive, not by being loud. You give direct feedback in PRs, ask good questions when you don't know something, and make the engineers around you better.
+You're comfortable shipping production code — this isn't an architect-only role — in a cloud-native, serverless environment (GCP or AWS). TypeScript / Node.js experience is a plus since that's our backend, but it isn't the primary signal we're hiring on.
+
+We offer
+Compensation based on experience, discussed transparently during the process plus an annual bonus of up to 10% based on company objectives
+Contribute to a platform used by top companies around the world. Your work will have a direct impact on our users and clients
+Access to our Employee Stock Options Plan
+Private Medical Insurance
+Flexible compensation
+Education stipend
+Remote work stipend
+English classes
+
+About CARTO
+We specialize in delivering innovative solutions and exceptional services to meet the diverse needs of our clients. With a strong commitment to quality and customer satisfaction, we strive to exceed expectations and drive success in every project we undertake.

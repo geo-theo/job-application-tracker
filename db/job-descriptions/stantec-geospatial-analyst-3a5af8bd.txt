@@ -1,0 +1,85 @@
+Geospatial Analyst
+Richmond, VA, United States and 1 more (Hybrid)
+Trending
+About Us
+Grounded in safety, quality, and ethics, our experts lead their fields with dedication, a creative spirit, and a vision for growth. We draw from more than 20 technical specialties worldwide and are devoted to fostering a community of diverse talents, backgrounds, and expertise. Here, you can apply your passion and collaborate with top environmental professionals on work that’s vital to our clients and the communities they serve.
+
+Join a team that’s naturally committed to the environment.
+
+Job Description
+We are seeking a talented GIS Technician / Geospatial Analyst to join our team. You will be part of a collaborative group of GIS Specialists and Data Services professionals who deliver innovative solutions to both internal and external clients within an ESRI Enterprise environment.
+
+As a member of our Environmental Services Geospatial team—comprising over 160 geospatial professionals, you will help identify client needs and recommend optimal geospatial technologies and solutions to meet business objectives. Our team is solid and experienced, with an average of 15 years of professional expertise. We’re proud to say that our department has a strong retention rate, with employees staying with the company for an average of 10 years
+
+As a Geospatial Analyst with Stantec you will provide technical support which includes mapping applications, spatial analysis, and map production; as well as project support for assigned projects. This is a full-time position working with our Mid-Atlantic Region Environmental Services (ES) group.
+
+Your Key Responsibilities
+
+Compile, create and maintain spatial and non-spatial information for a variety of platforms primarily involving ESRI ArcGIS Software (ArcGIS Pro and ArcGIS Online (AGO)).
+Work in Windows 11 Enterprise and using MS Office suite of applications (Teams, Outlook, Word, Access, Excel, SharePoint).
+Produce custom thematic map products and carry out data analysis/summaries to support multidisciplinary project deliverables.
+Prepare web maps, online dashboards, and manage data for field survey crews, using applications and platforms which include Survey 123, Field Maps, and ArcGIS Online.
+Supporting geospatial field data collection efforts. Typical collected features include wetlands, waterways and rare, threatened, or endangered species occurrences or habitats.
+Adhering to established cartographic standards and Quality Assurance / Quality Control processes.
+Managing a wide variety of project-specific and reference geospatial data in accordance with defined data management standards.
+Recognizes when technical problems are developing and initiates appropriate corrective actions.
+Collaborating with existing GIS staff members working in other Stantec offices.
+Report to the Mid-Atlantic Geospatial Team Lead.
+Qualifications
+Your Capabilities and Credentials
+
+Educated knowledge and experience working with Esri ArcGIS software suite, primarily ArcPro and ArcGIS Online, as well as ArcGIS Experience Builder, ArcGIS Field Maps, ArcGIS Survey123.
+Experience building and using a GIS to solve problems, present results, and graphically report analytical data for multi-disciplinary teams.
+Technical training and experience in GIS mapping, geospatial analysis, and geographic principles (e.g., map projections and coordinate systems).
+Demonstrates a knowledge of cartography and at least some understanding of graphic design.
+Ability to thrive in a fast-paced, collaborative environment.
+Ability to meet project deadlines and understand how assigned tasks relate to project goals.
+Ability to maintain and establish effective working relationships.
+Ability to perform work accurately in a detail-oriented environment.
+Exceptional visual, written, and verbal communication skills, problem-solving abilities, and attention to detail.
+Understands how to convert data from older sources such as maps and books into accurate digital formats.
+Valid state driver’s license
+Preferred
+
+Knowledge of Arcade, Python, and other GIS Programming languages.
+Working knowledge CAD software, such as AutoCAD or MicroStation platforms.
+Experience performing environmental fieldwork using a GPS and post-processing data is beneficial but not required.
+Experience working with LiDAR data.
+Education and Experience
+
+Bachelors’ degree or equivalent in GIS, Geography, Geoscience, Environmental Science, or related field with demonstrated GIS training or coursework.
+Will consider a recent graduate, however 1-3 years of experience providing professional (non-coursework) related GIS Services is preferred.
+Prior experience in the delivery of GIS products and analytical solutions as they relate to Environmental Assessments, site assessments, and the Environmental Regulatory Process is an asset.
+This description is not a comprehensive listing of activities, duties or responsibilities that may be required of the employee and other duties, responsibilities and activities may be assigned or may be changed at any time with or without notice.
+
+About Stantec
+
+Stantec is a global leader in sustainable engineering, architecture, and environmental consulting. The diverse perspectives of our partners and interested parties drive us to think beyond what’s previously been done on critical issues like climate change, digital transformation, and future-proofing our cities and infrastructure. We innovate at the intersection of community, creativity, and client relationships to advance communities everywhere, so that together we can redefine what’s possible. #StayInquisitive
+
+About the Team
+Pay Transparency: In compliance with pay transparency laws, pay ranges are provided for positions in locations where required. Please note, the final agreed upon compensation is based on individual education, qualifications, experience, and work location. At Stantec certain roles are bonus eligible. Actual compensation for part-time roles will be pro-rated based on the agreed number of working hours per week.
+
+Benefits Summary: Regular full-time and part-time employees (working at least 20 hours per week) have access to medical, dental, and vision plans, a wellness program, health saving accounts, flexible spending accounts, 401(k) plan, employee stock purchase program, life and accidental death & dismemberment (AD&D) insurance, short-term/long-term disability plans, emergency travel benefits, tuition reimbursement, professional membership fee coverage and paid family leave. Regular full-time and part-time employees will receive ten paid holidays in each calendar year. In addition, employees will be eligible to accrue vacation between 10 and 20 days per year and eligible for paid sick leave (and if more generous, in accordance with state and local law).
+
+Temporary/casual employees have access to 401(k) plans, employee stock purchase program, and paid leave, in accordance with state and local law.
+
+The benefits information listed above may not apply to union positions because benefits for such positions are governed by applicable collective bargaining agreements
+Apply Now
+Job Info
+Job Identification
+1007338
+Posting Date
+08/21/2026, 11:33 AM
+Locations
+ 1011 Boulder Springs Drive Suite 225, Richmond, VA, 23225, US
+(Hybrid)
+Job Schedule
+Full time
+Job Shift
+Day
+Staff Type Category
+HE - Hourly Exempt
+Minimum Experience (Total Years)
+1
+Pay Range 2
+US2.C.03 - Locations in MN, OH, VT, & Various CA, ME, NY, VA Areas-$53,600.00 - $75,000.00 Annually

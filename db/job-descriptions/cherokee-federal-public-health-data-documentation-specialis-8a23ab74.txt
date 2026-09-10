@@ -1,0 +1,106 @@
+Public Health Data & Documentation Specialist
+Atlanta, GA, United States
+Trending
+Job Description
+Public Health Data & Documentation Specialist (Data Manager)
+
+ 
+
+This position supports public health data and documentation activities focused on program and surveillance system maintenance, data processing, quality assurance, documentation generation, reporting, and workflow improvement. The Public Health Data & Documentation Specialist maintains accurate and complete program records and supports data-driven public health activities through the management, validation, and documentation of structured data and related products.
+
+ 
+
+The successful candidate will update and maintain program, surveillance, and tracking systems; process and validate structured data files; generate individualized letters, status summaries, documentation packets, and other program products; and conduct data cleaning, merging, deduplication, and quality assurance. This role also supports reproducible workflows, documentation standards, project coordination, discrepancy resolution, and the secure handling of personally identifiable and health information.
+
+ 
+
+Compensation & Benefits:
+
+Estimated Starting Salary Range for Public Health Data & Documentation Specialist (Data Manager):  $70,000.00-72,000.00/yr.
+
+ 
+
+Pay commensurate with experience.
+
+ 
+
+Full-time benefits include Medical, Dental, Vision, 401K, and other possible benefits as provided.  Benefits are subject to change with or without notice.
+
+ 
+
+Public Health Data & Documentation Specialist (Data Manager) Responsibilities Include: 
+
+Pilot new or revised workflows using test, historical, or otherwise approved data; document issues and unresolved decisions; and prepare workflows for routine implementation.
+Update and maintain program, surveillance, and tracking systems to ensure records are current, complete, and accurate.
+Ingest structured data files and apply program-defined business rules to generate individualized letters, status summaries, documentation packets, and other products for system attachment, partner review, and public health follow-up. Validate generated documentation products against source records before release, upload, or attachment.
+Manage data files, documentation packets, generated letters, issue logs, partner submissions, and final records in approved systems and secure storage locations.
+Develop and maintain reproducible workflows in R, R Markdown, Power BI, Excel, Microsoft Access, or comparable tools to support data processing, documentation generation, quality assurance, and reporting.
+Track workflow volume, outstanding records, exceptions, completeness, turnaround time, and other program-defined measures and provide routine status summaries.
+Conduct data cleaning, merging, deduplication, validation, quality assurance, and preliminary descriptive analyses in R, SAS, or comparable packages to support program monitoring, presentations, publications, inquiry responses, partner communications, and leadership requests.
+Prepare and maintain data dictionaries, codebooks, templates, standard operating procedures (SOPs), workflow documentation, and version-control procedures
+Identify data, documentation, workflow, or system discrepancies; research anomalies; coordinate corrections with program staff, system users, informatics staff, and internal or external partners; and recommend process improvements.
+Provide routine project management and coordination support, including tracking timelines, milestones, deliverables, risks, decisions, meeting notes, follow-up items, and action items.
+Handle personally identifiable information and health information in accordance with applicable privacy, information security, records management, and data-use requirements.
+Perform other duties as assigned.
+ 
+
+Public Health Data & Documentation Specialist (Data Manager) Experience, Education, Skills, Abilities requested: 
+
+Bachelor’s degree in public health, epidemiology, health informatics, data science, information systems, statistics, or a related field; master’s degree preferred.
+ Using R, SAS, Excel, and PowerBI  daily. 
+Experience maintaining program, surveillance, tracking, or health information systems and managing structured data and documentation.
+Experience with data cleaning, merging, deduplication, validation, quality assurance, and preliminary descriptive analysis using R, SAS, Excel, Microsoft Access, or comparable tools.
+Experience developing or maintaining reproducible workflows, automated documentation processes, reports, or data products using R, R Markdown, Power BI, Excel, Microsoft Access, or comparable tools.
+Experience preparing data dictionaries, codebooks, templates, SOPs, workflow documentation, or version-control procedures.
+Experience identifying data or system discrepancies, researching anomalies, coordinating corrections, and implementing process improvements.
+Strong organizational, analytical, and problem-solving skills, with attention to data accuracy, documentation quality, and process consistency.
+Strong written and verbal communication skills and ability to coordinate effectively with program staff, informatics personnel, system users, and internal or external partners.
+Ability to manage multiple tasks, timelines, deliverables, and follow-up activities in a structured public health environment.
+Knowledge of privacy, information security, records management, and data-use requirements applicable to personally identifiable and health information.
+Must pass pre-employment qualifications of Cherokee Federal.
+ 
+
+Preferred Qualifications:
+
+Experience supporting public health surveillance, program monitoring, or health information systems.
+Experience generating individualized letters, status summaries, documentation packets, or other data-driven products from structured source files.
+Experience developing quality assurance processes and reproducible workflows for public health data and documentation.
+Experience providing project coordination support, including tracking milestones, risks, decisions, deliverables, and action items.
+Experience in R, SAS, Excel, and PowerBI required.
+ 
+
+Company Information:
+
+Cherokee Nation Integrated Health (CNIH) is a part of Cherokee Federal – the division of tribally owned federal contracting companies owned by Cherokee Nation Businesses. As a trusted partner for more than 60 federal clients, Cherokee Federal LLCs are focused on building a brighter future, solving complex challenges, and serving the government’s mission with compassion and heart. To learn more about CNIH, visit cherokee-federal.com.
+
+ 
+
+#CherokeeFederal #LI-RN1
+
+ 
+
+Cherokee Federal is a military friendly employer. Veterans and active military transitioning to civilian status are encouraged to apply.
+
+ 
+
+Similar Searchable Job Titles:
+
+Public Health Data Analyst 
+Epidemiology Analyst I 
+Health Data Analyst 
+Monitoring & Evaluation Analyst
+ 
+
+Keywords:
+
+Public Health Data
+Surveillance
+Data Validation
+Documentation
+Data Management
+Quality Assurance
+R / R Markdown
+Power BI
+Excel / Microsoft Access
+Workflow Development
+Public Health Reporting
