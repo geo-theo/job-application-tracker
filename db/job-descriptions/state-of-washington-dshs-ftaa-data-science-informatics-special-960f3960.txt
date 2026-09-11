@@ -1,0 +1,80 @@
+DSHS FTAA Data Science & Informatics Specialist 1
+    
+﻿
+Salary
+$86,688.00 - $116,544.00 Annually
+
+Location 
+Thurston County – Olympia, WA
+
+Job Type
+Full Time - Permanent
+
+Job Number
+2026-07396
+
+Department
+Dept. of Social and Health Services
+
+Division
+FTAA
+
+Opening Date
+09/10/2026
+
+Closing Date
+9/24/2026 11:59 PM Pacific
+
+Salary Information
+The high end of the salary range, Step M is typically a longevity step
+
+Description
+Benefits
+Questions
+Description
+DSHS FTAA – Data Science & Informatics Specialist 1
+Join our team as a Data Science & Informatics Specialist 1 and help turn complex data into meaningful insights that improve social and health services for more than 2.6 million DSHS clients. The Research and Data Analysis (RDA) Division within the Finance, Technology, and Analytics Administration (FTAA) provides data, analytics, and decision-support tools that help DSHS and its partner agencies evaluate programs, measure performance, and identify opportunities to improve services. 
+
+In this role, you’ll integrate data from multiple state systems, develop statistical analyses and dashboards, and collaborate with researchers, program staff, and leaders to make data more useful and actionable. Your work will help support informed decision-making, program innovation, and better outcomes for the people we serve.
+
+Some of what you'll do:
+
+Design, develop, document, and maintain complex data structures, integrated databases, and analytic applications that support research, evaluation, and program performance measurement.
+Integrate and manage data from multiple systems and sources across DSHS, the Health Care Authority, and the Department of Children, Youth & Families to create meaningful, policy-relevant datasets and measures, with a focus on substance use and mental health conditions and related social health needs.
+Develop and perform complex statistical analyses, data validation, quality assurance, and testing using tools such as SAS and SQL.
+Analyze and transform data into accurate reports, performance measures, dashboards, presentations, and other products that clearly communicate findings to stakeholders.
+Collaborate with researchers, program teams, managers, and senior leadership to define data needs, solve complex problems, identify opportunities for improvement and automation, and guide strategic data integration decisions.
+Provide technical expertise and consultation on data systems, data sharing, research methods, dashboards, and the appropriate use of service, cost, and outcome data.
+Support data governance and security by developing and maintaining data-sharing practices that meet applicable confidentiality, privacy, and security requirements, including HIPAA and FERPA.
+
+Desired skills, knowledge, and abilities:
+Strong data analysis and programming skills, including experience with SAS, SQL, R, Python, or similar tools, as well as data extraction, manipulation, transformation, and statistical analysis.
+Knowledge of database design, data systems, and integration, including data structures, algorithms, informatics, interoperability, and principles of data system development.
+Experience with data visualization and communication, including tools such as Power BI, Tableau, or similar applications, and the ability to clearly communicate complex information to technical and non-technical audiences.
+Knowledge of data governance, privacy, security, and ethical data practices, including requirements related to the collection, management, sharing, and use of sensitive data.
+Research and problem-solving skills, including the ability to identify complex problems, evaluate data, recognize opportunities for process improvement and automation, and develop solutions that meet user needs.
+Strong collaboration and consultation skills, including the ability to work with diverse teams, understand business and data requirements, provide technical assistance or training, and build effective partnerships across organizations.
+Adaptability and a commitment to continuous learning, including the ability to learn new technologies, tools, and methods and apply them to evolving research, data, and business needs.
+
+Who should apply?
+We are searching for professionals with:
+A bachelor’s degree in informatics, data science, mathematics, computer science, statistics, biostatistics, epidemiology, or a related technical or quantitative field and one (1) year of experience performing data science or informatics work.
+OR
+An equivalent combination of education and experience totaling five (5) years.
+
+Additional required experience:
+In addition to the requirements above, applicants must have at least two (2) of the following experiences. These experiences may have been gained concurrently:
+One (1) year of experience using SAS or SQL for data management and analysis.
+One (1) year of experience preparing statistical analyses and data tabulations for reports involving social and/or health services or other large, person-level statewide databases.
+One (1) year of experience creating metrics or indicators from transactions, medical claims or encounters, service records, or similar data sources.
+One (1) year of experience creating dashboards using Excel, Power BI, Tableau, or similar data visualization tools.
+One (1) year of experience using REDCap for data administration and survey design.
+One (1) year of experience with federal GPRA data collection for Center for Substance Abuse Treatment grants, including providing technical assistance to sub-grantee recipients.
+
+Ready to start a rewarding career? Apply today!
+Along with your application, please include:
+An updated resume
+Three professional references with contact information
+
+Questions? 
+Please reach out to DSHS Recruiter Ricky Luna at ricky.luna@dshs.wa.gov and reference job number #07396.

@@ -1,0 +1,134 @@
+Geospatial Research Specialist
+Date:  Sep 8, 2026
+Location:  AUSTIN, TX
+Join the Texas Health and Human Services Commission (HHSC) and be part of a team committed to creating a positive impact in the lives of fellow Texans. At HHSC, your contributions matter, and we support you at each stage of your life and work journey. Our comprehensive benefits package includes 100% paid employee health insurance for full-time eligible employees, a defined benefit pension plan, generous time off benefits, numerous opportunities for career advancement and more. Explore more details on the Benefits of Working at HHS webpage.
+
+ 
+
+Functional Title: Geospatial Research Specialist 
+Job Title: Research Specialist V 
+Agency: Health & Human Services Comm 
+Department: Medicaid/CHIP Data Analytics 
+Posting Number: 21061 
+Closing Date: 09/22/2026 
+Posting Audience: Internal and External 
+Occupational Category: Computer and Mathematical 
+Salary Range: $5,425.33 - $7,155.75 
+Pay Frequency: Monthly
+Salary Group: TEXAS-B-24 
+Shift: Day 
+Additional Shift:  
+Telework: Eligible for Telework 
+Travel: Up to 5% 
+Regular/Temporary: Regular 
+Full Time/Part Time: Full time 
+FLSA Exempt/Non-Exempt: Nonexempt 
+Facility Location:  
+Job Location City: AUSTIN 
+Job Location Address: 4601 W GUADALUPE ST 
+Other Locations: Austin 
+MOS Codes: 0231,0531,4505,4591,8051,8825,8850,15AX,35F,38A,49A,683X,783X,CYB14,IS,ISS,OSS 
+ 
+ 
+ 
+
+
+
+
+Brief Job Description:
+
+The Research Specialist V performs highly advanced (senior-level) research and data dissemination work under minimal supervision, with extensive latitude for the use of independent initiative and judgment. This position designs and implements research and analytical studies; assesses the validity of statistical methods for appropriate application; plans and/or conducts highly advanced research on Medicaid, CHIP; and other agency programs, and applies advanced statistical and/or spatial data analyses techniques to health and human services related data.
+
+Provides consultation and assistance to HHSC staff and other HHS agencies to develop methods and strategies for more effective reporting of data and analyses. Designs, builds, and maintains advanced scripts and code for computer based spatial analysis applications including data acquisition and cleaning. Prepares and presents a variety of reports, studies, and other deliverables containing analyses of health and human services data to agency management, policy analysts, the Legislature, and external customers to provide an understanding of health and human service agencies' programs and issues, including evaluating Managed Care Organizations compliance with contractual and regulatory requirements. Evaluates available spatial datasets and determines which are most appropriate for specific research projects.
+
+Essential Job Functions (EJFs):
+
+Attends work on a regular and predictable schedule in accordance with agency leave policy and performs other duties as assigned.
+
+EJF 1: Designs and conducts advanced research and analysis projects specific to Medicaid, CHIP, and other agency programs. Gathers data from multiple sources and performs transformation or pre-analytic processing as required. Ensures location data is accurately geocoded and/or configured for spatial analysis. Types of analyses include spatial distribution of clients, Medicaid providers and licensed practioners, assessing provider network adequacy, evaluating contract compliance, trend and anomaly detection and program change evaluation. (25%)
+
+EJF 2: Works with MCDA Data Management staff to develop and maintain information systems to support ongoing research and analysis. Investigates and validates available reliable data sources, acquires, cleans, and transforms data as needed, reviews, plans and designs research and analyses requiring specialized methods to relate Medicaid/CHIP program and service area objectives to location-based information data and sources. Operates and maintains spatial data systems and programs in Windows and other environments, including evaluation, selection, installation, updates, and upgrades. This includes geocoding, editing, creating, maintaining, displaying, updating, and overlaying a wide variety of data and geographic layers to display the most appropriate and intuitive interpretation of Medicaid/chip related data. Documentation and database management for  geospatial purposes are involved. (25%)
+
+EJF 3: Effective professional consultation and collaboration with Medicaid/CHIP division and agency staff and researchers, governmental entities, and other stakeholders for the creation of high-quality research reports, including professional maps. Leads and participates in workgroups to identify the needs in the program areas, and review, develop and design spatial analyses to answer the questions and provide analysis. Communicates effectively with other analysts to share work details, develop plans, devise clear instructions, and formulates cogent inquiries. Presents a variety of graphs, maps, reports, and studies to Medicaid/CHIP staff, agency policy and executive decision makers, the Texas Legislature, and other stakeholders to demonstrate the patterns, trends, and anomalies on provider networks, clients’ services, and program utilization. The information is presented to Medicaid/CHIP leadership and is communicated to stakeholders and managed care organizations to improve program management and service delivery. (20%)
+
+EJF 4: Performs project management functions. Leads and participates in meetings with customers to establish and clarify research and analytical goals, questions, and requirements. Ensures data sources and processes are well documented; that they include accurate technical details for analysts as well as non-technical descriptions appropriate for customers. (20%)
+
+EFJ 5: Evaluates and monitors developments and advancements in GIS and statistical software and recommends the most appropriate software and solutions for research projects and analyses. Designs, develops, implements, and maintains custom-coded applications for data management, cleaning, transformations, and improvements that add efficiencies and accuracy to research and analyses projects. (10%)
+
+ 
+
+Knowledge, Skills and Abilities (KSAs):
+
+List the knowledge, skills, and abilities critical to performance in this position:
+
+Knowledge of advanced research concepts and methodologies.
+
+Knowledge of advanced geospatial analysis and geographic information system concepts and
+
+methods.
+
+Knowledge of cartographic principles, techniques, and procedures.
+
+Knowledge of advanced database management and query methods and systems.
+
+Knowledge of structured programing concepts.
+
+Knowledge of techniques for developing applications and publications for the Internet.
+
+Knowledge of appropriate surveillance techniques for population-based research.
+
+Skill in the use of ArcGIS software.
+
+Skill in the use of Office365 software programs.
+
+Skill in the use of personal computers.
+
+Skill in the use of global positioning systems.
+
+Skill in the use of large format plotters.
+
+Skill in map composition.
+
+Skill in the use of database systems, including SQL Server and Oracle.
+
+Skill in building datasets for use with visualization software such as Tableau and Power BI.
+
+Skill using statistical analysis software such as SAS and R
+
+Skill in programming and scripting languages, such as Python, Visual Basic or PowerShell.
+
+Skill in written and verbal communication for private, public, and professional group interactions.
+
+Skill applying programming techniques to the analysis of large data sets.
+
+Skill in designing, building, implementing and maintain automatic computer processes for data
+
+acquisition, cleaning, transformation, loading and querying.
+
+Skill and experience in the use of Structured Query Language (SQL) and reporting tools.
+
+Ability to establish and maintain effective working relationships, set priorities, and manage time
+
+efficiently.
+
+Ability to exercise good judgment, efficiently organize information and effectively solve problems.
+
+Ability to communicate both verbal and written technical and analytical information to audiences from
+
+diverse backgrounds with a wide range in levels of expertise.
+
+Registrations, Licensure Requirements or Certifications:
+
+ N/A
+
+Initial Screening Criteria:
+
+Bachelor's degree or equivalent in epidemiology, statistics, public health, data science, social or natural sciences, or other discipline which requires data management and analysis skills.
+
+Four years’ experience with data acquisition, data collection, management, analyses, visualization and presentation of health and human services-related data or large datasets.
+
+Four years’ experience in writing queries and using statistical software (e.g. SAS or SPSS)
+
+Experience with collecting, managing, and analyzing geospatial data
+
+Excellent written communications as observed by detail and completeness of information provided on the state application.

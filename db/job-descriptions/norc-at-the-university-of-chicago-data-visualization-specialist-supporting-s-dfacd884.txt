@@ -1,0 +1,74 @@
+Data Visualization Specialist supporting social science research projects
+Apply nowJob no: 503952 Work type: Regular Full-Time Location: Chicago - 300 E Randolph St Capability Area: Methodology and Quantitative Social Sciences
+
+JOB SUMMARY:	
+NORC at the University of Chicago is seeking a qualified Data Visualization Specialist (internally called Research Methodologist I) to join the Methodology and Quantitative Social Sciences (MQSS) department and support a diverse range of research projects. At NORC, Research Methodologists are early-career researchers who work with subject matter experts, statisticians, data scientists, and other methodologists throughout the research lifecycle, including study design, data collection, data quality assessment, quantitative analysis, and dissemination of results.
+
+Research Methodologists specializing in data visualization transform complex data into clear, actionable products for clients, policymakers, researchers, and the public. They design and develop dashboards, interactive tools, maps, reports, and other visualizations that communicate research findings and methodological insights. They apply principles of data visualization, information design, and user-centered design to ensure products are accurate, accessible, and impactful.
+
+These staff collaborate with project teams to identify key metrics, develop analytic approaches, translate statistical findings into compelling visual narratives, and support data preparation, analysis, and quality assessment. They may work with survey, administrative, geospatial, and other data sources while contributing to reports, presentations, publications, and innovative approaches to communicating research findings. Research Methodologists are expected to manage multiple assignments, contribute to projects and proposals, stay current with emerging visualization and analytic tools, and work effectively in a collaborative, interdisciplinary environment.
+
+Include in cover letter or resume, please include two examples of static or interactive data visualizations that you have created.
+
+Location: This is a hybrid role based in our Chicago Loop office, with a minimum of six days per month in the office.
+
+Qualified applicants must be eligible to work in the U.S. We regret that we are unable to offer visa sponsorship for this position.
+
+DEPARTMENT:   Methodology and Quantitative Social Sciences(MQSS)	
+The Methodology and Quantitative Social Sciences department implements state-of-the-art methodologies and develops innovations to deliver reliable data and rigorous analysis to guide critical programmatic, business and policy decisions for NORC clients. The department provides leadership throughout the project lifecycle on study design, data collection, assessment of data quality, quantitative analysis, and dissemination of results.
+
+The Methodological and Quantitative Social Sciences department also conducts its own research and is a leader in designing and implementing rigorous, efficient methods for gathering, evaluating, and analyzing data from primary and secondary sources. The department provides expertise and leads NORC strategy on the use of a broad range of methods and techniques, including research and experimental design, recruitment and retention, instrument design and testing, assessing data quality, evaluating measurement properties of new measures, causal inference methods, machine learning, analysis of clustered data, data visualization and use of novel data sources and technologies to improve data gathering. The department collaborates with the Statistics and Data Science Department on areas of synergy and intersection and with all NORC subject matter departments, in addition to leading its own projects.
+
+RESPONSIBILITIES:	
+Develop data visualization products, including completing design, data preparation, and technical implementation tasks for both static and interactive visuals.
+Collaborate with team members to develop data processing and visualization code, utilizing version control best practices and implementing code review as needed.
+Provide technical advice and serve as an internal consultant on social science methodological and analytic issues to Project Directors and Task Leaders.
+Conduct quantitative and/or qualitative analyses and visualizations for projects, including writing and/or implementing programs to extract and manipulate data and conduct analysis.
+Assist with methodological and analytic tasks relevant to the project, including user interface development, user experience testing, dashboard design, and creation of static charts and report graphics.
+Perform day-to-day project activities, including executing project tasks, preparing or reviewing deliverables, monitoring task budget and schedule, resolving technical and management problems, and communicating with a client and subcontractor(s).
+Contribute to and review the methodological/analytical sections of reports, tables/graphics, presentations, dashboards, and other deliverables.
+Assist with proposal and business development activities related to methodological, analytic, data visualization, and/or study design tasks.
+Design, conduct, analyze, and prepare reports on experimental/methodological studies.
+Present research papers at professional conferences, and submit articles for publication in journals.
+REQUIRED SKILLS:	
+Master’s degree in social science with a quantitative emphasis such as Computational Social Science, Geography, Sociology, Environmental Studies, Economics, or Bachelor’s degree and 2 years of experience performing quantitative analysis and data visualization. 
+Experience with data visualization platforms such as Tableau and Power BI.
+Proficient in the data manipulation software used for statistical analysis (R, Python, or SAS).
+Experience with interactive data visualization and mapping libraries such as R Shiny, D3.js or other JavaScript data visualization libraries and HTML/CSS. (have you coded in HTML or build tools using RShiny)
+Strong foundation in areas of social science research, analytic methods, data engineering, machine learning, and scientific methods of inquiry.
+Must be detail and quality-oriented, with demonstrated written and oral communication skills.
+Strong interpersonal communication, analytic capability, technical writing, problem identification and resolution, and task management.
+Ability to work on multiple projects simultaneously, effectively organize and manage time, including ability to set priorities to meet all project, proposal, and administrative needs in a timely fashion.
+Enthusiasm for teamwork and collaboration across disciplinary boundaries.
+PREFERRED SKILLS:
+
+Demonstrated ability to design and create clear and accurate visualizations of quantitative data.
+Experience in survey methodology, including sample design, weighting, and related analyses.
+Ability to develop dashboard wireframes in Figma or related software.
+Familiarity with dashboard deployment software such as Posit Connect, AWS, Docker, and Tableau Server.
+Experience with GIS Software such as ArcGIS, the sf package in R, the GeoPandas package in Python, or Leaflet.js.
+Skills in supervision, leadership, team building, time management, personal organization, and ability to set priorities to meet all project, proposal, and administrative needs in a timely fashion. 
+Qualified applicants must be eligible to work in the U.S. We regret that we are unable to offer visa sponsorship for this position.
+
+SALARY AND BENEFITS:	
+The pay range for this position is $93,000-$100,000.
+
+This position is classified as regular. Regular staff are eligible for NORC’s comprehensive benefits program. Benefits include, but are not limited to:  
+
+Generously subsidized health insurance, effective on the first day of employment 
+
+Dental and vision insurance  
+
+A defined contribution retirement program, along with a separate voluntary 403(b) retirement program  
+
+Group life insurance, long-term and short-term disability insurance 
+
+Benefits that promote work/life balance, including generous paid time off, holidays; paid parental leave, bereavement leave, tuition assistance, and an Employee Assistance Program (EAP). 
+
+NORC is committed to equity and transparency in its pay practices. We publish salary ranges and benefit information for every job. The listed hiring range reflects what we, in good faith, expect to pay at the time of posting, though actual compensation may vary and may be adjusted over time. A candidate’s placement within the range depends on factors such as competencies, education, qualifications, experience, skills, performance, and organizational needs.
+
+WHAT WE DO:	
+NORC at the University of Chicago is an objective, non-partisan research institution that delivers reliable data and rigorous analysis to guide critical programmatic, business, and policy decisions. Since 1941, our teams have conducted groundbreaking studies, created and applied innovative methods and tools, and advanced principles of scientific integrity and collaboration. Today, government, corporate, and nonprofit clients around the world partner with us to transform increasingly complex information into useful knowledge.
+
+WHO WE ARE:	
+For over 80 years, NORC has evolved in many ways, moving the needle with research methods, technical applications and groundbreaking research findings. But our tradition of excellence, passion for innovation, and commitment to collegiality have remained constant components of who we are as a brand, and who each of us is as a member of the NORC team. With world-class benefits, a business casual environment, and an emphasis on continuous learning, NORC is a place where people join for the stellar research and analysis work for which we’re known, and stay for the relationships they form with their colleagues who take pride in the impact their work is making on a global scale.

@@ -1,0 +1,288 @@
+Associate Geospatial Analyst/Geospatial Analyst/Senior Geospatial Analyst
+    
+﻿
+Salary
+See Position Description
+
+Location 
+El Paso County, Colorado Springs, CO
+
+Job Type
+Full-Time
+
+Job Number
+2600401
+
+Department
+Department of Public Works
+
+Division
+Engineering
+
+Opening Date
+08/31/2026
+
+Closing Date
+9/14/2026 11:59 PM Mountain
+
+FLSA
+Non-Exempt
+
+Description
+Benefits
+Questions
+Need help with applying? Visit our Talent Acquisition page here for application guidance and resources. 
+
+ 
+
+VISION
+
+El Paso County will be a trusted regional leader known for excellence in county service delivery. 
+
+PURPOSE
+
+We provide essential public services to the Pikes Peak Region in support of our residents, businesses, and communities, enhancing the freedom for all to thrive. 
+
+VALUES
+
+Service Focused • Collaborative • Accountable • Trustworthy • Transparent
+
+Job Summary
+Associate Geospatial Analyst / Geospatial Analyst / Senior Geospatial Analyst
+
+Map Data. Drive Decisions. Shape the Future.
+
+
+
+Are you someone who sees the world in layers—of data, design, and discovery? Do you enjoy transforming information into robust planning, infrastructure, and public service tools? El Paso County is seeking a talented Geospatial Professional to join our Department of Public Works team and help build smarter, more connected communities through innovative GIS and asset management.
+
+
+This is a career progression opportunity, with openings at the Associate, Analyst, and Senior Analyst levels. Whether you're just starting your geospatial journey or are a seasoned GIS pro, there’s a place for you here to grow and make an impact.
+
+What You’ll Do:
+
+As part of the Geospatial Analyst team, you’ll be key in maintaining and analyzing asset data for transportation systems, public infrastructure, and County resources. You’ll support everything from road maintenance planning and crash data analysis to field data collection and custom map development.
+Your work will support day-to-day operations, long-term infrastructure planning, and innovative solutions that make our county run more efficiently. From scripting and database development to GIS app creation and stakeholder collaboration, your expertise will help power decisions that matter.
+What Makes You a Great Fit:
+
+You have strong technical skills in GIS, asset management systems, and data analysis.
+You’re fluent in tools like ArcGIS, SQL, Python, ModelBuilder, and GIS dashboards.
+You can turn raw spatial data into actionable insights, maps, and visuals.
+You’re a collaborative problem-solver who enjoys working with cross-functional teams.
+You have a passion for public service and building tools that improve communities.
+You're adaptable, self-motivated, and thrive in a fast-paced, detail-driven environment.
+
+
+Why Join El Paso County?
+
+Your Work Has Meaning – Help plan and maintain the infrastructure that residents rely on every day.
+Room to Grow – Our career progression path means your role grows as your skills do.
+Use the Latest Tools – Get hands-on experience with cutting-edge GIS, programming, and asset management systems.
+Collaborate Across Departments – Work closely with engineers, planners, field staff, and local agencies.
+Be Part of a Mission-Driven Team – We’re passionate about service, innovation, and supporting each other.
+
+We want to hear from you if you’re ready to map your career forward and contribute to impactful projects that shape El Paso County’s future.
+
+
+
+Apply today to be part of a geospatial team where your skills and ideas truly make a difference!
+
+
+
+Associate Geospatial Analyst
+
+Full Salary Range: $75,870.00 – $113,760.00 annually
+
+Hiring Range: $80,450.00 - $88,000.00 annually
+
+
+
+Geospatial Analyst
+
+Full Salary Range: $75,870.00 – $113,760.00 annually
+
+Hiring Range: $80,450.00 - $88,000.00 annually
+
+
+
+Senior Geospatial Analyst
+
+Full Salary Range: $90,350.00 – $135,520.00 annually
+
+Hiring Range: $95,804.00 - $104,000.00 annually 
+
+This position has an anticipated work schedule of Monday – Thursday, 7:00 am – 5:30 pm or Monday – Friday, 7:00 am – 3:30 pm; subject to change.
+
+Please be advised this position may close without advance notice, should we receive a sufficient number of qualified applications.
+
+Job Posting - Employment Benefits - Non Exempt.png
+Assists in the management and maintenance of various Geographical Information System (GIS) related asset datasets stored in a variety of enterprise-level asset databases. Participates in the development of strategic and tactical plans and programs in maximizing El Paso County’s transportation infrastructure. Conducts data analysis and provides various deliverables such as reports, maps, and other related documents. This position is part of the Geospatial Analyst career progression series, which includes Associate Geospatial Analyst, Geospatial Analyst, and Senior Geospatial Analyst. An employee is eligible to advance to the next position within the series when the employee has met the criteria for advancement as notated within the job description and has received a recommendation from the Hiring Authority. Employment is subject to the terms, conditions, and policies detailed in the Personnel Policies Manual (PPM). This position requires regular in-person presence as an essential job function.
+Essential Duties/Responsibilities
+Assists in maintaining Department of Public Works (DPW) asset data dictionary standards.
+Creates, maintains, and modifies asset data inventories in various enterprise-level and siloed asset management systems (AMS).
+Prepares geospatial datasets through digitization, data conversion, and manual data entry of electronic and paper-based records into GIS. 
+Conducts continuous refinement and quality control of Asset Management data; generates reports and conducts data analysis as needed to arrive at results.
+Utilizes geospatial analysis techniques to provide a better understanding of certain variables in given geographic locations.
+Provides digital and hard copy maps, tabular datasets, reports, graphics, and other asset data products in support of daily operations, planning, engineering, and maintenance operations,
+Creates GIS asset data from coordinate geometry (COGO) legal descriptions.
+Organizes, documents, and provides backup material for a variety of design projects and engineering studies.
+Researches County documents and plans across various County databases and archives.
+Provides review and interpretation of subdivision plats and land surveys for County assets.
+Prepares DPW asset acceptance submittals for public infrastructure.
+Provides research for public right-of-way in support of daily operations and customer service.
+Prepares, coordinates, and manages County road name change petitions to the BOCC.
+Interacts with County staff to develop custom map project requirements.
+Facilitates the implementation efforts for transportation GIS and asset management applications.
+Independently evaluates, develops, and programs GIS applications to automate and convert data using approved software and protocols.
+Gathers geographic data through field observations, maps, photographs, satellite imagery, censuses, and other sources; analyzes the geographic distribution of physical and cultural characteristics and occurrences.
+Maintains and analyzes crash data as required.
+Reviews, evaluates, and verifies GIS data provided by other government agencies or private sector contractors for accuracy.
+Develops graphical models and provides data of analysis results for committees and the public.
+Coordinates with governmental agencies for data collection and transfer.
+Assists DPW employees in the use of GIS applications.
+Performs other duties as required.
+Geospatial Analyst
+Assists in maintaining Department of Public Works (DPW) asset data dictionary standards.
+Creates, maintains, and modifies asset data inventories in various enterprise-level and siloed asset management systems (AMS).
+Prepares geospatial datasets through digitization, data conversion, and manual data entry of electronic and paper-based records into GIS. 
+Conducts continuous refinement and quality control of Asset Management data; generates reports and conducts data analysis as needed to arrive at results.
+Utilizes geospatial analysis techniques to provide a better understanding of certain variables in given geographic locations.
+Provides digital and hard copy maps, tabular datasets, reports, graphics, and other asset data products in support of daily operations, planning, engineering, and maintenance operations,
+Creates GIS asset data from coordinate geometry (COGO) legal descriptions.
+Organizes, documents, and provides backup material for a variety of design projects and engineering studies.
+Researches County documents and plans across various County databases and archives.
+Provides review and interpretation of subdivision plats and land surveys for County assets.
+Prepares DPW asset acceptance submittals for public infrastructure.
+Provides research for public right-of-way in support of daily operations and customer service.
+Prepares, coordinates, and manages County road name change petitions to the BOCC.
+Interacts with County staff to develop custom map project requirements.
+Facilitates the implementation efforts for transportation GIS and asset management applications.
+Independently evaluates, develops, and programs GIS applications to automate and convert data using approved software and protocols.
+Gathers geographic data through field observations, maps, photographs, satellite imagery, censuses, and other sources; analyzes the geographic distribution of physical and cultural characteristics and occurrences.
+Maintains and analyzes crash data as required.
+Reviews, evaluates, and verifies GIS data provided by other government agencies or private sector contractors for accuracy.
+Develops graphical models and provides data of analysis results for committees and the public.
+Coordinates with governmental agencies for data collection and transfer.
+Assists DPW employees in the use of GIS applications.
+Utilizes creativity, ingenuity, and resourcefulness in providing GIS support to County staff, outside organizations, stakeholders, and the public.
+Assists with land use and travel demand model data upkeep and verification as assigned.
+Provides traffic count program support, data management, and analysis.
+Provides basic asset management database support, troubleshooting, backup, and archiving.         
+Maintains regular contact with DPW personnel, answering questions, solving problems, and implementing and supporting applications from vendors.
+Provides training and support to DPW employees on AMS software, principles, and processes.
+Designs and develops complex ESRI ModelBuilder scripts and templates as needed.
+Develops web-based, end-user asset data dashboards through custom programming, as required.
+Develops ArcGIS Online applications in support of field data collection, asset inspections, and engineering activities.
+Assists in field data collection by DPW staff from GPS data collection, data conversion, and integration into GIS and asset inventories.
+Provides training and support to DPW staff in the use of field data collection equipment.
+Utilizes programming skills to write basic and advanced queries in generating datasets and reports.
+Refines and documents asset database schema changes and modifications.
+Refines and documents asset database data dictionary changes and modifications.
+Performs other duties as required.
+Senior Geospatial Analyst
+Assists in maintaining Department of Public Works (DPW) asset data dictionary standards.
+Creates, maintains, and modifies asset data inventories in various enterprise-level and siloed asset management systems (AMS).
+Prepares geospatial datasets through digitization, data conversion, and manual data entry of electronic and paper-based records into GIS. 
+Conducts continuous refinement and quality control of Asset Management data; generates reports and conducts data analysis as needed to arrive at results.
+Utilizes geospatial analysis techniques to provide a better understanding of certain variables in given geographic locations.
+Provides digital and hard copy maps, tabular datasets, reports, graphics, and other asset data products in support of daily operations, planning, engineering, and maintenance operations,
+Creates GIS asset data from coordinate geometry (COGO) legal descriptions.
+Organizes, documents, and provides backup material for a variety of design projects and engineering studies.
+Researches County documents and plans across various County databases and archives.
+Provides review and interpretation of subdivision plats and land surveys for County assets.
+Prepares DPW asset acceptance submittals for public infrastructure.
+Provides research for public right-of-way in support of daily operations and customer service.
+Prepares, coordinates, and manages County road name change petitions to the BOCC.
+Interacts with County staff to develop custom map project requirements.
+Facilitates the implementation efforts for transportation GIS and asset management applications.
+Independently evaluates, develops, and programs GIS applications to automate and convert data using approved software and protocols.
+Gathers geographic data through field observations, maps, photographs, satellite imagery, censuses, and other sources; analyzes the geographic distribution of physical and cultural characteristics and occurrences.
+Maintains and analyzes crash data as required.
+Reviews, evaluates, and verifies GIS data provided by other government agencies or private sector contractors for accuracy.
+Develops graphical models and provides data of analysis results for committees and the public.
+Coordinates with governmental agencies for data collection and transfer.
+Assists DPW employees in the use of GIS applications.
+Utilizes creativity, ingenuity, and resourcefulness in providing GIS support to County staff, outside organizations, stakeholders, and the public.
+Assists with land use and travel demand model data upkeep and verification as assigned.
+Provides traffic count program support, data management, and analysis.
+Provides basic asset management database support, troubleshooting, backup, and archiving.         
+Maintains regular contact with DPW personnel, answering questions, solving problems, and implementing and supporting applications from vendors.
+Provides training and support to DPW employees on AMS software, principles, and processes.
+Designs and develops complex ESRI ModelBuilder scripts and templates as needed.
+Develops web-based, end-user asset data dashboards through custom programming, as required.
+Develops ArcGIS Online applications in support of field data collection, asset inspections, and engineering activities.
+Assists in field data collection by DPW staff from GPS data collection, data conversion, and integration into GIS and asset inventories.
+Provides training and support to DPW staff in the use of field data collection equipment.
+Utilizes programming skills to write basic and advanced queries in generating datasets and reports.
+Refines and documents asset database schema changes and modifications.
+Refines and documents asset database data dictionary changes and modifications.
+Performs other duties as required.
+
+Supervision Exercised: This classification does not have supervisory authority; however, may be required to provide expertise or limited guidance or direction to employees, such as overseeing work quality, training, and guidance. Typically serves as a subject matter expert on the scope of functional area.
+
+Supervision Received: Receives general supervision. This classification typically performs job duties by following established standard operating procedures and/or policies. Regular direction, guidance, and coaching from supervisor may be expected. There is a choice of the appropriate procedure or policy to apply to duties. Performance reviewed periodically.
+Qualifications
+Knowledge, Skills, and Abilities
+
+Knowledgeable of GIS software and technology.
+Must have strong analytical and troubleshooting skills and a high degree of technical competence in geospatial development, analysis, and design.
+Broad range of skills and responsiveness to changing priorities and directives.
+Ability to produce timely and accurate reports; ability to make correct mathematical calculations.
+Ability to work independently and in a team environment; collaborative team player with attention to detail and good communication skills.
+Must be able to establish and maintain effective working relationships with co-workers, other County personnel, vendors, and the public. Ability to provide excellent customer service.
+Ability to use standard office equipment, including telephone, computer, and copier. Proficiency with Microsoft Office programs to include Access, Word, Excel, Outlook, and Teams.
+Maintain regular and punctual attendance.
+Geospatial Analyst
+Working Knowledge of GIS software and technology.
+Emerging proficiency with ArcGIS Online, including development of web maps, field applications, shared layer services and user management.
+Emerging proficiency in programming languages such as VB Script, Python, SQL, and PL/SQL, and dashboard programming languages such as HTML/CSS, and JavaScript.
+Strong analytical and troubleshooting skills and a high degree of technical competence in geospatial development, analysis, and design.
+Broad range of skills and responsiveness to changing priorities and directives.
+Ability to produce timely and accurate reports; ability to make correct mathematical calculations.
+Ability to work independently and in a team environment; collaborative team player with attention to detail and strong communication skills.
+Must be able to establish and maintain effective working relationships with co-workers, other County personnel, vendors, and the public. Ability to provide excellent customer service. 
+Ability to use standard office equipment, including telephone, computer, Microsoft Office applications, and copier. Proficiency with Microsoft Office programs including Access, Word, Excel, Outlook, and Teams.
+Senior Geospatial Analyst
+Knowledgeable of GIS software and technology.
+Demonstrated proficiency in programming languages such as VB Script, Python, SQL, PL/SQL, and dashboard programming languages such as HTML/CSS, and JavaScript.
+Demonstrated proficiency in ArcGIS Online, including the development of web maps, field applications, shared layer services, and user management.
+Demonstrated proficiency with relational databases such as Access, SQL, PostgreSQL, and Oracle.
+Must have strong analytical and troubleshooting skills and a high degree of technical competence in geospatial development, analysis, and design.
+Broad range of skills and responsiveness to changing priorities and directives.
+Ability to mentor and train co-workers.
+Ability to produce timely and accurate reports; ability to make correct mathematical calculations.
+Ability to work independently and in a team environment; collaborative team player with attention to detail and strong communication skills.
+Must be able to establish and maintain effective working relationships with co-workers, other County personnel, vendors, and the public. Ability to provide excellent customer service.
+Ability to use standard office equipment, including telephone, computer, Microsoft Office applications, and copier. Proficiency with Microsoft Office programs, including Access, Word, Excel, Outlook, and Teams.
+Maintain regular and punctual attendance.
+Required Education and Experience
+Bachelor's degree in GIS, Geography, Cartography, Computer Science, IT, or other science-related field.
+Associate Geospatial Analyst
+One year of GIS or related experience.
+Master’s degree in a related field may substitute for the required experience.
+Geospatial Analyst
+Three years of GIS or related experience.
+Master’s degree in a related field may substitute for one year of the required experience. 
+Prior asset management experience.
+Senior Geospatial Analyst
+Six years of GIS or related experience.
+Master’s degree in a related field may substitute for one year of the required experience. 
+Prior asset management experience.
+Preferred Education & Experience
+Experience in configuring and supporting a GPS data collection solution.
+Licenses/Certificates
+Must possess and maintain a valid driver's license.
+Pre-Employment Requirements
+Must pass conditional post-offer background investigation, motor vehicle record check, and drug screen.
+Work Conditions
+Duties are primarily performed in an office and remote work environment dependent upon Department discretion and business needs. Some travel is required; occasionally will be required to perform work in the field under adverse weather conditions.
+
+The classification specification above is intended to describe the general nature of work, key responsibilities, and minimum qualifications. Minimum qualifications reflect the baseline experience required for the classification. Departments may establish additional or preferred qualifications to address operational needs, assignment complexity, and specialized functions, provided such qualifications are job-related, consistent with the intent of the classification, and as approved by the Human Resources department. Specific job assignments, duties, education, experience, licenses/certifications, and working conditions may vary based on the department or office's needs and the requirements of the assigned position. Changes to this classification specification may only be made by the Human Resources Department.
+
+ 
+
+ 
+
+El Paso County is an E-Verify and Equal Opportunity Employer.
+
+El Paso County adheres to Federal drug screening guidelines and requires a pre-employment drug screen.

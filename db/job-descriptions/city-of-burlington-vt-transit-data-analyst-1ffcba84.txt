@@ -1,0 +1,49 @@
+Transit Data Analyst
+Summary
+Title:	Transit Data Analyst
+ID:	1164
+Location:	Burlington, VT
+Department:	Planning
+Salary Range:	Starting wage is $53,500 to $63,500 annually, and dependent on experience
+Description
+Description and Essential Functions
+
+Responsible for collecting, analyzing, and managing transit data to support service planning, operational performance, and organizational decision-making across GMT. This includes but is not limited to:
+
+Collaborates with staff, board members, and community partners to identify data needs and develop performance measures.
+Analyzes transit data and provide recommendations to improve service planning and operations.
+Develops and maintains performance metrics, dashboards, automated workflows, and open data resources.
+Ensures data quality, integrity, and timely reporting for internal and external stakeholders.
+Designs, administers, and analyzes transit surveys.
+Monitors trends, legislation, and technology related to transit data management.
+Prepares reports, plans, presentations, and public-facing materials.
+Supports board, community, and public outreach activities.
+Maintains data management policies, procedures, and standard operating procedures.
+Performs other duties as assigned.
+
+Qualifications
+
+Education and/or Experience: Bachelor’s Degree in Mathematics, Planning, Public Administration, Computer Science, or a related field; experience writing comprehensive documents and reports; ability to analyze large data sets and an analytical mind and inclination for problem-solving
+
+Essential Job Skills and Abilities: To perform this job successfully, an individual must be able to perform each essential duty satisfactorily. The requirements listed are representative of the knowledge, skill, and/or ability required. Essential duties are performed with or without reasonable accommodation.
+
+Must have demonstrated experience processing and analyzing data using statistical programming languages such as R (tidyverse) and/or Python (pandas).
+Must have demonstrated experience creating data visualizations and dashboards using tools such as ggplot2, Plotly, and Datawrapper.
+Must have demonstrated experience in accessing and integrating data through APIs using R or Python.
+Must have demonstrated experience working with spatial data and geographic information systems (GIS).
+Must have demonstrated experience creating static and interactive maps using ArcGIS or QGIS.
+Must have proficiency with version control tools such as Git and GitHub.
+Must have familiarity with developing and publishing web-based content using HTML, CSS, Quarto, or similar tools.
+Must possess excellent written and verbal communication skills.
+Must possess organizational skills and be detail-oriented.
+Must be able to maintain effective working relationships with a diverse group of people to include staff, board members, the general public, employees, and external partners/stakeholders.
+Must be able to effectively use office technology. This includes but is not limited to standard office equipment such as computers, phones, photocopiers, and fax machines. For computers, the incumbent must be well-versed in email, word processing software, spreadsheet software, and using shared resources, such as Google Documents.
+
+Benefits
+
+Wage: Starting wage is $53,500 to $63,500 annually depending on experience
+Time Off: 8.67 hours of paid time off accrued per pay period; equivalent to 5+ weeks off.
+Health: 100% paid health care coverage by GMT, including medical, dental, vision, and prescription. 100% paid premiums for Short-Term Disability and Long-Term Disability by GMT.
+Savings: GMT offers 457 Retirement Plans. After one year of service, employees who contribute 3% will be matched by GMT at 5%, and employees who contribute 5% will be matched by GMT at 7%.
+Wellness: Discounted membership to The Edge Sports & Fitness Centers.
+Dog Friendly: Administrative staff are welcome to bring their dogs to work.

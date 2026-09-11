@@ -1,0 +1,78 @@
+Sr. Geospatial Analyst
+Job LocationsUS-MA-Boston, MA or Hampton, NH
+Job ID 2026-20529 Category Strategy Type Full Time Name Boston, MA (preferred) or Hampton, NH Zip: Postal Code 02210
+About Us
+Founded in 1992 in Dover, NH, Planet Fitness is one of the largest and fastest-growing franchisors and operators of fitness centers in the world by number of members and locations. As of March 31, 2026, Planet Fitness had approximately 21.5 million members and 2,909 clubs in all 50 states, the District of Columbia, Puerto Rico, Canada, Panama, Mexico, Australia and Spain. The Company’s mission is to enhance people’s lives by providing a high-quality fitness experience in a welcoming, non-intimidating environment, which we call the Judgement Free Zone®. Approximately 90% of Planet Fitness clubs are owned and operated by independent business owners.
+
+ 
+
+At Planet Fitness, our unique mission has always been to enhance people’s lives by providing a high-quality fitness experience in a welcoming, non-intimidating environment. And we’re proud of the amazing Planet Fitness team that supports our clubs and team members. They are comprised of dynamic, dedicated, and talented individuals who represent our values of integrity, transparency, passion, respect, and excellence (while having fun!) in everything they do.
+
+ 
+
+Joining the PF family means being part of a company that cares about bettering the health and wellbeing of our communities. It means being a part of a supportive, engaging workforce with an inclusive culture that values diversity and creates an environment where everyone can feel they belong. It means encouraging professional growth and development. It means making true, lasting connections with your co-workers with celebrations, team building activities and engaging corporate events! It means creating a positive impact in our local communities through our Judgement Free Generation® philanthropic initiative. It means being part of a brand that you can be proud of!
+
+ 
+
+For the past 30 years, we’ve helped millions of people in their fitness journey and revolutionized the industry along the way. And we’re just getting started!
+
+Overview
+Reporting to the Director, Geospatial Analytics & Data Science, the Senior Geospatial Analyst is responsible for supporting location strategy and business decision-making through geospatial analysis, market intelligence, predictive insights, and performance reporting.
+
+ 
+
+This role partners with Development, Real Estate, Franchise Development, Operations, Finance, Marketing, and Enterprise Analytics to evaluate markets, identify growth opportunities, and deliver actionable insights that support site selection, market optimization, and long-term business growth.
+
+ 
+
+The Senior Geospatial Analyst will analyze demographic, competitive, member, and market data; develop location intelligence that drives strategic real estate decisions; build and maintain geospatial dashboards and analytical tools; support market modeling and forecasting initiatives; and provide senior leaders with clear, data-driven recommendations through compelling storytelling.
+
+ 
+
+The ideal candidate combines strong analytical capabilities, business acumen, intellectual curiosity, and a passion for translating complex geospatial data into actionable business insights and growth strategies.
+
+ 
+
+This role follows a hybrid schedule and requires regular, in-person work at our Boston, MA or Hampton, NH office. Our hybrid model is M/T/W in office and TH/F are optional work-from-home. Candidates must reside within commuting distance of one of these locations. Fully remote work is not available for this role.
+
+Responsibilities
+Geospatial Analytics & Market Intelligence
+
+Analyzes markets, trade areas, demographics, competitive landscapes, and member behavior to identify growth opportunities and support strategic decision-making.
+Develops geospatial analyses, market assessments, and location intelligence that support site selection, market optimization, and long-term growth planning.
+Creates analytical recommendations that identify opportunities to improve market performance, development strategy, and member accessibility.
+Supports forecasting, market sizing, cannibalization analysis, white-space analysis, and other location-based analytical initiatives.
+Develops and maintains geospatial dashboards, scorecards, KPI reporting, maps, and analytical tools that provide visibility into market performance.
+Monitors key market and development metrics, identifies trends, and communicates insights to business stakeholders.
+Ensures data accuracy, consistency, and integrity across geospatial reporting and analysis.
+Cross-Functional Partnership
+
+Co-owns the design, development, and execution of geospatial analytics and market intelligence strategies with Development and Real Estate leadership.
+Partners with Strategy, Finance, Marketing, Operations, Franchise Development, and Technology teams to support enterprise initiatives through geospatial analysis.
+Translates analytical findings into clear, actionable recommendations for technical and non-technical audiences.
+Supports ad hoc analyses and business requests related to market expansion, site selection, territory planning, and strategic growth initiatives.
+Qualifications
+Bachelor's degree in Geography, GIS, Business, Analytics, Economics, Statistics, Urban Planning, Computer Science, Mathematics, or a related quantitative field.
+3+ years of experience in geospatial analytics, GIS, location intelligence, market analytics, business intelligence, real estate analytics, or a related analytical discipline.
+Demonstrated experience partnering with business leaders to deliver geospatial analysis, reporting, and actionable recommendations that influence strategic and operational decisions.
+Experience analyzing demographic, competitive, consumer, market, and location data to support site selection, market planning, and business growth.
+Strong understanding of geospatial analysis methodologies including trade area analysis, drive-time analysis, market segmentation, white-space analysis, and territory optimization.
+Experience developing executive dashboards, maps, KPI scorecards, reporting solutions, and self-service analytics that improve visibility into market performance.
+Strong analytical skills with the ability to synthesize large, complex datasets into clear business insights and recommendations.
+Proficiency with SQL and business intelligence tools such as Power BI, Tableau, Looker, or similar reporting platforms.
+Experience with GIS and geospatial platforms such as ArcGIS, Alteryx, CARTO, MapInfo, ESRI products, or similar location intelligence technologies.
+Experience working with modern cloud data platforms such as Snowflake or similar enterprise analytics environments.
+Excellent problem-solving skills with the ability to identify trends, evaluate market opportunities, and recommend data-driven solutions.
+Extremely detail-oriented, efficient, and organized with an exceptional ability to establish priorities and objectives
+Excellent presentation and written and oral communication skills along with the ability to communicate effectively across all levels of the organization
+Able to establish and maintain effective, collaborative work relationships with diverse individuals, internally and externally
+Dedicated learner with a natural curiosity for consistent growth
+Cooperative team player with an upbeat, positive, “can-do” attitude!
+Perks
+Planet Fitness cares about you and your well-being. We offer a comprehensive benefits package to eligible employees which includes the core medical, dental, vision, life and disability as well as supplemental accident, hospital and critical illness coverage options. In addition, we are proud to offer eligible employees a generous time off program (including volunteer time), childcare reimbursement, paid parental leave, pet care reimbursement, tuition reimbursement, free Black Card membership, learning and development programs and a whole host of engagement activities. We offer a 401(k) Plan with safe harbor employer matching and an employee stock purchase plan. This role is also eligible to participate in an annual corporate bonus incentive program based on company financial and personal performance.
+
+ 
+
+The salary for MA-based and NH-based employees hired into this role will be aligned with the range below. This is a good faith estimate, and the amount of base salary will correspond with a candidate’s professional experience, qualifications and internal equity.
+
+Annual Base Salary Range: $110,000-$135,000

@@ -1,0 +1,69 @@
+Data Scientist I supporting social science research, analytics, and AI initiatives
+Apply nowJob no: 503928 Work type: Regular Full-Time Location: Chicago - 300 E Randolph St Capability Area: Methodology and Quantitative Social Sciences
+
+JOB SUMMARY:	
+NORC at the University of Chicago is seeking a qualified Data Scientist I to join the Methodology and Quantitative Social Sciences department and support innovative research, analytics, and AI initiatives.
+
+The Data Scientist I works collaboratively with methodologists, researchers, statisticians, software developers, and subject matter experts to develop data science and artificial intelligence solutions that improve research, operational efficiency, and decision-making. This role combines strong foundations in data management, statistical modeling, machine learning, and computational social science with emerging capabilities in generative AI and large language models (LLMs).
+
+The Data Scientist I will contribute to projects involving structured and unstructured data, survey data, administrative records, commercial data, text data, and other novel data sources. Responsibilities may include developing analytical workflows, building machine learning models, creating AI-powered applications, fine-tuning foundation models, implementing retrieval-augmented generation (RAG) systems, and supporting deployment of AI solutions in secure cloud environments.
+
+The ideal candidate possesses strong Python programming skills, experience building reproducible analytical workflows, and a demonstrated interest in applying modern AI technologies to solve complex research and business problems.
+
+Location: This is a hybrid role based in our Washington, DC and Chicago downtown offices, with a minimum of six days per month in the office.
+
+Qualified applicants must be eligible to work in the U.S. We regret that we are unable to offer visa sponsorship for this position.
+
+DEPARTMENT:  Methodology and Quantitative Social Sciences	
+The Methodology and Quantitative Social Sciences department implements state-of-the-art methodologies and develops innovations to deliver reliable data and rigorous analysis to guide critical programmatic, business and policy decisions for NORC clients. The department provides leadership throughout the project lifecycle on study design, data collection, assessment of data quality, quantitative analysis, and dissemination of results. The Methodological and Quantitative Social Sciences department also conducts its own research and is a leader in designing and implementing rigorous, efficient methods for gathering, evaluating, and analyzing data from primary and secondary sources. The department provides expertise and leads NORC strategy on the use of a broad range of methods and techniques, including research and experimental design, recruitment and retention, instrument design and testing, assessing data quality, evaluating measurement properties of new measures, causal inference methods, machine learning, analysis of clustered data, data visualization, use of novel data sources and technologies to improve data gathering, and building AI solutions that support NORC’s research. The department collaborates with the Statistics and Data Science Department on areas of synergy and intersection and with all NORC subject matter departments, in addition to leading its own projects.
+
+RESPONSIBILITIES:	
+Collaborate with methodologists and subject matter experts to design, develop, evaluate, and deploy AI-enabled applications that support research and operational objectives.
+Fine-tune, adapt, or customize machine learning and language models for domain-specific tasks.
+Build and evaluate retrieval-augmented generation (RAG) solutions using vector databases and semantic search techniques for data and analysis projects in NORC’s research focus areas.
+Develop prompt engineering strategies and evaluation frameworks for generative AI systems.
+Implement model monitoring, testing, validation, and performance optimization processes.
+Apply natural language processing techniques for text classification, information extraction, summarization, and content analysis.
+Support experimentation with AI agents, tool calling, and workflow automation.
+Perform other duties as assigned.
+REQUIRED SKILLS:	
+Bachelor's degree in computational social science, data science, computer science or a related quantitative field with social science emphasis.
+At least 4 years of relevant experience (graduate research, internships, and applied professional experience may be considered).
+Advanced proficiency in Python.
+Strong experience with SQL and relational databases.
+Experience developing software, data pipelines, or analytical applications.
+Experience conducting statistical analysis and machine learning using real-world datasets.
+Knowledge of supervised and unsupervised machine learning methods.
+Experience working with Git and collaborative development workflows.
+Strong problem-solving and analytical skills.
+Excellent communication and technical writing skills.
+Ability to explain technical concepts to diverse audiences.
+Preferred Skills:              
+
+Familiarity with AI agents and workflow orchestration frameworks.
+Additional expertise in large and small language models, and machine learning, in working in cloud environments (e.g., AWS, Azure, GCP), and with command-line workflows (e.g., in bash).
+Developing machine learning models, data pipelines, and AI-powered applications, as described above, to support social science research.
+Qualified applicants must be eligible to work in the U.S. We regret that we are unable to offer visa sponsorship for this position.
+
+SALARY AND BENEFITS:	
+The pay range for this position is $90,000-$100,000.
+
+This position is classified as regular. Regular staff are eligible for NORC’s comprehensive benefits program. Benefits include, but are not limited to:  
+
+Generously subsidized health insurance, effective on the first day of employment 
+
+Dental and vision insurance  
+
+A defined contribution retirement program, along with a separate voluntary 403(b) retirement program  
+
+Group life insurance, long-term and short-term disability insurance 
+
+Benefits that promote work/life balance, including generous paid time off, holidays; paid parental leave, bereavement leave, tuition assistance, and an Employee Assistance Program (EAP). 
+
+NORC is committed to equity and transparency in its pay practices. We publish salary ranges and benefit information for every job. The listed hiring range reflects what we, in good faith, expect to pay at the time of posting, though actual compensation may vary and may be adjusted over time. A candidate’s placement within the range depends on factors such as competencies, education, qualifications, experience, skills, performance, and organizational needs.
+
+WHAT WE DO:	
+NORC at the University of Chicago is an objective, non-partisan research institution that delivers reliable data and rigorous analysis to guide critical programmatic, business, and policy decisions. Since 1941, our teams have conducted groundbreaking studies, created and applied innovative methods and tools, and advanced principles of scientific integrity and collaboration. Today, government, corporate, and nonprofit clients around the world partner with us to transform increasingly complex information into useful knowledge.
+
+WHO WE ARE:	
+For over 80 years, NORC has evolved in many ways, moving the needle with research methods, technical applications and groundbreaking research findings. But our tradition of excellence, passion for innovation, and commitment to collegiality have remained constant components of who we are as a brand, and who each of us is as a member of the NORC team. With world-class benefits, a business casual environment, and an emphasis on continuous learning, NORC is a place where people join for the stellar research and analysis work for which we’re known, and stay for the relationships they form with their colleagues who take pride in the impact their work is making on a global scale.

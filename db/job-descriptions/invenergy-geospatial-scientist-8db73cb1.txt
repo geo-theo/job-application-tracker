@@ -1,0 +1,94 @@
+Geospatial Scientist
+Apply
+locations
+Chicago, IL
+time type
+Full time
+posted on
+Posted 22 Days Ago
+job requisition id
+R11049
+Invenergy is North America’s largest privately held developer, owner, and operator of power infrastructure. With 25 years of trusted execution, we deliver reliable, affordable energy through a diverse portfolio that includes natural gas, solar, land-based wind, energy storage, transmission, and domestic manufacturing. Headquartered in Chicago, we develop, own, and operate large scale projects that power communities and support the energy future.
+
+This position will be open for application for at least 3 calendar days from the posting date. This position will remain open for application based on business need, which may be before or after the 3-day posting window.
+
+Job Description
+
+Position Overview
+
+Invenergy is seeking a Geospatial Scientist to support the development of thermal energy projects through geospatial analysis, site evaluation, routing and siting assessments, and technical research. Reporting to the Senior Manager, Routing & Siting, this role will partner closely with engineering, development, permitting, and project teams to identify opportunities, constraints, and risks throughout the project lifecycle. The ideal candidate combines strong GIS and analytical capabilities with a curiosity for learning, a problem-solving mindset, and the ability to communicate technical findings to both technical and non-technical audiences.
+
+Responsibilities
+
+Geospatial Analysis & Site Evaluation
+
+Conduct geospatial analyses to support project development, routing, siting, and due diligence activities.
+
+Assess environmental, physical, permitting, and operational constraints that may impact project development and execution.
+
+Utilize GIS tools and spatial datasets to identify project opportunities, risks, and potential fatal flaws.
+
+Analyze raster datasets, geophysical information, and other technical data to support project evaluations.
+
+Develop maps, GIS products, technical memorandums, and presentations to communicate findings and recommendations.
+
+Cross-Functional Project Support
+
+Collaborate with engineering, development, permitting, and project management teams throughout the project lifecycle.
+
+Support site layout development and optimization of project infrastructure and equipment placement.
+
+Monitor project progress and communicate risks, recommendations, and key findings to stakeholders and management.
+
+Support preparation of technical documentation, RFPs, RFIs, scopes of work, and contractor deliverables.
+
+Data Management & Process Improvement
+
+Maintain geospatial data quality, governance, and documentation standards.
+
+Support continuous improvement initiatives, including evaluation of new tools, technologies, and workflows.
+
+Assist with project execution through research, documentation, data organization, and coordination across project teams.
+
+Minimum Qualifications
+
+Bachelor's degree in Civil Engineering, Geography, Cartography, Geology, Environmental Science, GIS, or a related field.
+
+4+ years of relevant experience in geospatial analysis, engineering, environmental planning, or related disciplines.
+
+Experience working with ESRI products, including ArcGIS Pro, ArcGIS Online/Portal, and ArcMap.
+
+Ability to perform spatial analyses and interpret environmental, technical, and geophysical datasets.
+
+Strong communication, analytical, and problem-solving skills.
+
+Experience working effectively across multiple stakeholders and disciplines.
+
+Proficiency with Microsoft Office applications.
+
+Ability to travel occasionally as business needs require.
+
+Eligible to work in the United States without the need for employer visa sponsorship now or in the future.
+
+Preferred Qualifications
+
+Experience supporting thermal, renewable energy, infrastructure, transmission, or other large-scale development projects.
+
+Experience working with raster datasets and geophysical data products.
+
+Familiarity with routing, siting, permitting, or project development processes.
+
+Experience with Python, GIS automation, or workflow optimization tools.
+
+Base Pay
+
+$80,000.00 - $95,000.00 USD Annual
+Bonus: 20% - 30%
+
+The base pay range reflects the minimum and maximum target salary for the position. Invenergy considers a number of factors when determining base pay offers such as the scope and responsibilities of the position and the candidate's experience, education and skills.
+ 
+In addition to base pay, the total annual compensation package may also include eligibility to participate in our bonus program(s) which are designed to reward individual and company performance. Your recruiter can share more about bonus eligibility for this position during the hiring process.
+ 
+Invenergy offers a variety of other benefits including medical, dental and vision insurance, 401k, paid time off, etc.
+
+Invenergy LLC is an equal opportunity employer. All qualified applicants will receive consideration for employment without regard to, among other things, race, color, religion, sex, sexual orientation, gender identity, national origin, age, status as a protected veteran, or disability.

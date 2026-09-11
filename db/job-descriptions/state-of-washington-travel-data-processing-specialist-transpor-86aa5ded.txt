@@ -1,0 +1,121 @@
+Travel Data Processing Specialist - Transportation Planning Specialist 3
+    
+﻿
+Salary
+$72,900.00 - $98,064.00 Annually
+
+Location 
+Thurston County – Tumwater, WA
+
+Job Type
+Full Time - Permanent
+
+Remote Employment
+Flexible/Hybrid
+
+Job Number
+26DOT-HQ-00600
+
+Department
+Dept. of Transportation
+
+Division
+Headquarters
+
+Opening Date
+08/31/2026
+
+Closing Date
+9/14/2026 11:59 PM Pacific
+
+Description
+Benefits
+Questions
+Description
+An image without description
+
+
+About WSDOT
+
+The Washington State Department of Transportation (WSDOT) is a multimodal agency with a global reputation for excellence. Our dedicated workforce plans, designs, builds, and operates an integrated transportation system that safely and efficiently moves people and goods throughout the state. In addition to maintaining over 20,000 lane miles of state highway and 4,100 bridges, WSDOT leads an award-winning Active Transportation Plan, manages the world's longest floating bridge, and operates the largest ferry system in the nation!
+
+
+
+The Opportunity
+
+WSDOT is currently seeking a Travel Data Processing Specialist to serve as a technical lead for processing, analyzing, and maintaining traffic data. In this role, you will use data analysis, databases, and programming skills to identify and resolve data quality issues, improve processing methods, support reporting, and respond to complex data requests. You will also serve as a resource for other staff by providing training, maintaining procedures, and identifying opportunities to improve accuracy, efficiency, and customer service. The data you work with helps WSDOT, local agencies, research institutions, and federal partners inform policy and planning, improve roadway safety, support research, and guide roadway design.
+
+
+
+What to Expect
+
+Among the varied range of responsibilities held within this role, you will:
+
+Serve as a subject matter expert and lead for travel data processing techniques and procedures, including training staff, monitoring work quality, maintaining procedures, and championing process improvements.
+Design and create SQL database queries to address new and recurring data analysis needs.
+Process short-duration traffic counts and permanent traffic recorder data by reviewing documentation, estimating traffic volumes, merging data, identifying data issues, and evaluating data accuracy and completeness.
+Provide direction to field technicians on data processing procedures and coding requirements, and coordinate resolution of permanent traffic recorder data issues.
+Compile traffic data from other WSDOT organizations and incorporate it into office databases.
+Extract, compile, format, validate, and document data for internal processes and recurring external reporting.
+Maintain data tracking workbooks that provide timely information about permanent traffic recorder status and identified issues.
+Coordinate and fulfill internal and external traffic data requests accurately, efficiently, and professionally.
+Evaluate data requests, identify available WSDOT resources, develop SQL queries when needed, and document responses.
+Support special projects and data analyses that contribute to the goals of the Data Processing and Analysis Section.
+
+
+Qualifications
+
+To be considered for this opportunity, the following competencies are required:
+
+Data Analysis: Demonstrated ability to analyze large or complex datasets to answer questions, identify trends or anomalies, and clearly summarize findings.
+Problem Solving: Experience using critical thinking and troubleshooting skills to identify data errors and inconsistencies, determine root causes, and resolve issues.
+Data Programming: Proven skills to use SQL, R, SAS, SPSS, or similar programming languages to extract, transform, and summarize data.
+Microsoft Excel: Uses advanced Excel functions, including nested formulas, lookup functions, charts, conditional formatting, and importing data from text files.
+Statistical Reasoning: Accurately performs basic algebraic calculations, growth-rate calculations, and statistical calculations and presents results in tables and graphs.
+Communication: Ability to communicate clearly and effectively in writing and verbally, including developing procedures and professional analytical reports.
+Organization: Prioritizes work, manages competing assignments, and delivers accurate and timely results.
+Independence: Performs work with limited supervision while maintaining productivity, accuracy, and attention to detail.
+Collaboration: Works effectively with others to support shared data-related goals.
+Process Improvement: Evaluates existing processes and recommends improvements that increase efficiency or better meet customer needs.
+Computer Skills: Uses databases, internet resources, Microsoft Office, and other standard computer applications effectively.
+Growth Mindset: Actively demonstrates a commitment to learning and growth.
+Service-Oriented: Takes action to meet the needs of others.
+
+
+It is preferred that qualified candidates also demonstrate:
+
+Linear Referencing: Experience applying WSDOT's linear referencing system to code or analyze transportation data.
+Quality Assurance: Experience evaluating data against defined standards for accuracy, completeness, and consistency.
+Geographic Information Systems: Experience using GIS tools to analyze or present transportation data.
+Dashboarding: Uses tools such as Tableau or Power BI to develop or support data dashboards.
+Leadership and Mentoring: Skills to provide effective guidance, feedback, and support to others through active listening, flexibility, goal-setting, and constructive conflict resolution.
+
+
+Important Notes 
+
+This recruitment may also be used to fill additional positions per business needs.
+This position is eligible for remote work up to 100%, per supervisor approval.
+In addition to base salary, employees may be entitled to other forms of compensation depending on the type, duties, or location of the position. For union-represented positions, more information on other forms of compensation can be found in the applicable Collective Bargaining Agreements. Information on other compensation types for non-represented positions can be found in Chapter 357-28 of the Washington Administrative Code. 
+WSDOT does not use the E-Verify system, therefore we are not eligible to extend STEM Optional Practical Training (OPT). For more information, please visit www.uscis.gov
+
+
+Why WSDOT 
+
+Work-Life Balance – We are committed to ensure that our staff experience the reward of public service, while also sustaining a routine that suits each individuals’ lifestyle. As such, there are a number of flexible schedule options available, including telework options for eligible positions.  
+Paid Leave – In addition to 12 paid holidays, full-time employees may earn up to 25 paid vacation days per year!
+Tuition Assistance – Permanent employees have several options for assistance with education expenses, including tuition reimbursement programs, government discounts at participating colleges throughout the state, and eligibility for federal student loan forgiveness.  
+Plan For Your Future – WSDOT offers a comprehensive benefits package that includes a variety of healthcare options. Employees also have their choice of state retirement programs, and much more. Go to State Benefits for more information. 
+
+
+Check out this video to learn more: Why WSDOT?
+
+
+How to Apply
+
+Applications for this recruitment will be accepted electronically. Your relevant experience may be evaluated to determine salary. Therefore, it is very important that the “Work Experience” portion of the application be completed in as much detail as possible. 
+
+In order to be considered for this opportunity, please include the following with your online application:
+
+An attached Resume outlining (in reverse chronological order) your experience to date.
+An attached Cover Letter that further explains your qualifications and indicates why you believe you are a viable candidate for this role.
+Contact details for a minimum three (3) individuals who can attest to your work performance, technical skills, and job-related competencies. This information can be entered in the “References” section of the online application; does not require an additional attachment.

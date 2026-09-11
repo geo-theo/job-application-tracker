@@ -1,5 +1,5 @@
 id,createdAt,updatedAt,name,industry,sector,mission,website,rank
-d7687978-32b2-484b-bb4b-ed1dcfaeb088,2026-07-26T23:34:20.179Z,2026-08-25T05:50:32.777Z,Accenture,Consulting,,Rich,,
+d7687978-32b2-484b-bb4b-ed1dcfaeb088,2026-07-26T23:34:20.179Z,2026-09-11T09:18:16.662Z,Accenture,Consulting,,Rich,,Target
 0749aa70-c090-427e-a832-cc8afccb64a1,2026-08-30T07:23:48.058Z,2026-09-10T23:47:45.767Z,ACLED,NGO,War & Conflict,Poor,,Favorite
 1cde1baf-9bb2-4230-b516-14207c5f2edd,2026-08-31T00:32:00.100Z,2026-09-06T05:53:46.639Z,Amazon,Tech,,Rich,,
 678707ad-ae95-46ae-8f46-bd0f9f81d1ee,2026-09-08T07:51:17.817Z,2026-09-08T11:29:55.843Z,Anheuser Busch,Consumer Products,,Rich,,
@@ -12,13 +12,19 @@ a1ee3fe5-69b4-4eb2-8516-0d43577d74e4,2026-09-09T10:16:20.594Z,2026-09-09T10:16:2
 85b18b0e-4a94-4449-a034-c93967f5bbae,2026-07-26T23:24:51.699Z,2026-08-25T05:49:59.058Z,Chevron,Energy,,Rich,,
 33acbb3c-b735-47eb-8e9a-d82ca8193c88,2026-08-15T05:34:05.988Z,2026-08-25T05:50:56.674Z,CIA,MIC,,Govt,,
 bb568595-8fe8-4784-9038-37591497dfd6,2026-08-04T12:59:11.170Z,2026-08-31T01:33:01.581Z,City of Bozeman,Local Government,,Govt,,
+225d6c58-4a46-4808-80df-03113c8c2627,2026-09-11T10:18:02.447Z,2026-09-11T10:18:02.447Z,City of Burlington VT,Local Government,City,Govt,,
 6f3fd425-d53a-446a-b64f-d9232d3e5fab,2026-09-08T09:17:49.754Z,2026-09-08T10:05:25.084Z,City of Missoula,Retail / Customer Experience,,Govt,,
+6a935b2b-d4a8-474c-a12c-31188bcaab1e,2026-09-11T10:14:18.566Z,2026-09-11T10:14:18.566Z,City of Phoenix,Local Government,City,Govt,,
 b6c59867-28ff-4901-ba09-96d7366c61da,2026-07-26T04:40:37.905Z,2026-08-25T05:51:28.554Z,Connected Nation,NGO,,Poor,,
 6322b19b-017c-4e09-b7fc-6c95323a8db5,2026-09-09T08:45:21.925Z,2026-09-09T08:45:21.925Z,Control Risks,Geopolitical Risk,Political Risk Consulting,Rich,,Target
+55971bbb-70f0-484e-990a-25515a492dec,2026-09-11T10:16:54.400Z,2026-09-11T10:16:54.400Z,County of El Paso,,,,,
+f1cf7fec-6ad8-431e-be7e-d08c639dee80,2026-09-01T18:13:13.218Z,2026-09-11T10:19:29.023Z,County of King WA,Local Government,County,Govt,,
+3ff49903-d136-4fa4-a79c-eb6155356676,2026-08-31T00:42:30.917Z,2026-09-11T10:20:02.758Z,County of Missoula,Local Government,County,Govt,,
 041ea9d7-9652-46f2-9cf0-9d43600ae6f5,2026-08-15T05:20:49.549Z,2026-08-25T05:13:46.834Z,Dept of Interior,Federal Government,,Govt,,
 a4a37859-757f-4226-90e5-c08818fb019a,2026-09-10T07:32:40.912Z,2026-09-10T07:32:40.912Z,Disney,,,,,
 715fd96c-a476-4e0c-85b1-2c4121e8f28f,2026-09-10T07:47:20.855Z,2026-09-10T07:47:20.855Z,Empower,,,,,
 ceb09f22-6a2c-4dcb-8356-67bdd8daf154,2026-08-11T22:35:01.450Z,2026-09-08T10:00:24.530Z,Esri,Geospatial,,Rich,,Favorite
+04f529e5-b1a4-48bd-95c1-8daa71d915a0,2026-09-11T09:47:17.366Z,2026-09-11T09:47:17.366Z,Garmin,Geospatial,GPS Technology,Rich,,Target
 eec6f02a-190a-4202-9588-d2b39f871bad,2026-08-22T06:20:02.894Z,2026-09-08T11:31:22.763Z,Geo Owl,MIC,,Govt,,
 ce8e0ed2-6315-4782-9340-dfed6a36db51,2026-07-26T04:52:47.449Z,2026-09-09T08:19:33.172Z,Google,Tech,Big Tech,Rich,https://www.google.com/about/careers/applications/,Favorite
 6f3c4d3c-8718-4a8d-9adf-d9959221c477,2026-08-22T06:42:20.430Z,2026-08-25T05:51:15.937Z,Heineken,F&B,,Rich,,
@@ -27,34 +33,41 @@ f84b2d04-a59e-4d86-81ea-e854fdb41e27,2026-08-14T01:08:35.157Z,2026-09-07T04:54:4
 82f8790a-fa6f-4f90-9b86-657f2c9f0168,2026-07-23T03:46:48.916Z,2026-08-25T05:52:31.914Z,Institute for the Study of War,MIC,,Govt,,
 92dfecc0-69d8-4a71-a3ad-b3eb53d09f12,2026-09-08T12:18:24.709Z,2026-09-08T12:18:39.494Z,Inter-American Development Bank,Intl Development,,Poor,,Favorite
 70174f73-69ee-44f1-a76b-b2b1fabc993f,2026-07-26T04:36:30.266Z,2026-08-25T05:51:05.994Z,International Association of Fire Fighters,IGO,,Govt,,
+96282d47-7532-4c44-b795-b6d497ee424a,2026-09-11T10:12:30.743Z,2026-09-11T10:12:30.743Z,Invenergy,Utilities / Telecommunications,Energy,Rich,,
 26c56e4b-7b19-40cf-99be-14e205bd7293,2026-08-28T05:26:55.940Z,2026-08-31T01:32:45.926Z,IRC,NGO,,Poor,,
 b8000b16-cc56-49e7-92b9-284f25c6ba60,2026-09-09T09:58:54.186Z,2026-09-09T10:10:21.170Z,John Deere,Engineering,AgTech,Rich,,Normal
 27f5ee2d-e7f7-49a6-99ed-f912094bec02,2026-09-10T23:58:17.286Z,2026-09-10T23:58:17.286Z,JPAL Poverty Action Lab,,,,,
 9489bb7a-3900-40ee-8b22-c46197a8f4c5,2026-07-26T04:44:29.759Z,2026-08-25T05:51:52.322Z,Kaukahi,NGO,,Poor,,
 2a5c3346-ecaf-470b-8d30-5a030989615a,2026-09-09T10:09:15.217Z,2026-09-09T10:11:41.713Z,Kelly Mitchell Group,None - staffing agency,,,,Agency
-f1cf7fec-6ad8-431e-be7e-d08c639dee80,2026-09-01T18:13:13.218Z,2026-09-06T05:54:05.160Z,King County Washington,Local Government,,Govt,,
 5151482b-4232-49fc-9400-8e1f0e26ba71,2026-08-11T22:47:16.354Z,2026-08-25T05:55:06.641Z,Liberty Mutual,Insurance,,Rich,,
 d7ee9216-82c1-4a96-adc7-15beed903ba0,2026-09-10T07:18:44.751Z,2026-09-10T07:18:44.751Z,Mapbox,Geospatial,GIS Software,Rich,,Favorite
 cb49c952-e2e3-47a3-a4c6-5b42d35e1b67,2026-08-22T06:15:34.190Z,2026-09-08T10:03:39.633Z,Meta,Tech,,Rich,,
 1f57d56a-2b8f-4b12-ba19-16eb0be18ea7,2026-08-11T23:16:08.896Z,2026-09-08T09:23:52.314Z,Michaels,Retail / Customer Experience,,Rich,,
 38f2533e-00f0-47da-81a0-19e7a963698f,2026-09-09T08:11:27.949Z,2026-09-09T08:16:03.132Z,Microsoft,Tech,,Rich,https://careers.microsoft.com/v2/global/en/home.html,Target
 715b751c-1783-4e84-bfd1-69fe0902216c,2026-09-09T08:38:57.268Z,2026-09-09T08:38:57.268Z,Mission Essential,MIC,Intelligence,Govt,,Normal
-3ff49903-d136-4fa4-a79c-eb6155356676,2026-08-31T00:42:30.917Z,2026-09-08T11:28:06.827Z,Missoula County,Local Government,,Govt,,
 b647c7de-36b7-4740-b922-9e3004075aaf,2026-09-09T07:28:10.829Z,2026-09-09T08:04:07.582Z,NASA,Engineering / Construction,Aerospace,Govt,https://www.nasa.gov/learning-resources/internship-programs/,Target
 846fb23c-19c1-446d-b7fd-628f6e546572,2026-09-09T07:11:31.854Z,2026-09-09T07:50:36.301Z,National Geographic,Journalism / Media,Travel Writing,Poor,https://ngs.wd1.myworkdayjobs.com/en-US/ngs_external_career_site_intern,Favorite
 472fea42-2486-4a45-b71b-0c2143df3cd3,2026-09-09T08:29:47.885Z,2026-09-09T08:33:07.276Z,National Geospatial Intelligence Agency,MIC,Intelligence,,https://www.nga.mil/careers/Student_Opportunities.html,Target
 02c62d97-10a6-4aee-8344-6a4ee0d94aa4,2026-09-11T00:29:41.830Z,2026-09-11T00:29:41.830Z,NBC Universal,Journalism / Media,News,Poor,,Target
-b14bf2a9-0263-40ca-b00d-832ab4d726e7,2026-09-08T07:45:36.753Z,2026-09-08T09:31:59.666Z,New York Times,Journalism / Media,,Poor,,
+b14bf2a9-0263-40ca-b00d-832ab4d726e7,2026-09-08T07:45:36.753Z,2026-09-11T08:55:17.574Z,New York Times,Journalism / Media,News,Poor,,
+dd15193b-f0a9-4c77-9e21-23b6750c5101,2026-09-11T09:26:21.894Z,2026-09-11T09:26:21.894Z,NORC at the University of Chicago,Policy / Think Tank,Research,Academia,https://www.norc.org/about/careers.html,Target
+4b522965-1fa6-40e9-b74a-541cfd512cb5,2026-09-11T10:07:16.791Z,2026-09-11T10:07:16.791Z,Oceaneering,Engineering,Manufacturing,Rich,,
 7824f226-18cb-42bc-8776-a40577f1d554,2026-09-10T05:48:42.241Z,2026-09-10T05:48:42.241Z,OnX Maps,Tech,Geospatial,Startup,,Favorite
-e53281ee-c15a-4f3c-979a-85699883dd10,2026-09-08T12:21:56.435Z,2026-09-09T08:16:51.028Z,PWC,Consulting,,Rich,,Target
+87c84fc3-897d-43f4-bca4-2e694e80ccf1,2026-09-11T10:10:12.006Z,2026-09-11T10:10:12.006Z,Pacific Northwest National Laboratory,,,,,
+2a1e2be8-363c-43b1-8f15-66f1557ed1f2,2026-09-11T08:45:04.853Z,2026-09-11T08:46:10.549Z,Planet Fitness,Tourism / Leisure,Ftiness,Rich,,
+ad63f659-ea39-42ba-baf9-0cf5d63e706b,2026-09-11T08:53:25.596Z,2026-09-11T09:51:49.645Z,Planet Labs,Geospatial,Earth Observation,Rich,,Favorite
+e53281ee-c15a-4f3c-979a-85699883dd10,2026-09-08T12:21:56.435Z,2026-09-11T10:00:06.126Z,PWC,Consulting,,Rich,,Target
 e960d95b-e94e-43bc-bb0a-c441d6b6e9bf,2026-08-04T12:51:03.077Z,2026-08-19T22:02:00.215Z,RANE Stratfor,Geopolitical Risk,,Rich,,Favorite
 dc2aedb7-469e-4aa0-b49a-661c6badc9dd,2026-07-23T03:41:12.404Z,2026-09-08T23:10:56.019Z,Rocky Mountain Elk Foundation,NGO,Conservation,Environment,https://rmef.org/,Favorite
 f78070d4-c4cf-4893-92fc-89134deff13b,2026-08-22T06:43:46.150Z,2026-09-09T08:26:44.812Z,Salomon,Consumer Products,Outdoors,Rich,,Favorite
 d99c6dca-9a4a-4775-b12f-1ca2568988ad,2026-07-23T03:50:53.916Z,2026-08-25T05:17:54.945Z,Sibylline,Geopolitical Risk,,Rich,,
 3f90992e-6b45-4f19-9f4f-98705c83bc85,2026-09-10T08:38:46.967Z,2026-09-10T08:38:46.967Z,Stantec,,,,,
+3c3f2483-f1bf-4aec-abd2-bf4ee04a4b4c,2026-09-11T10:02:34.157Z,2026-09-11T10:02:34.157Z,State of Minnesota,Local Government,Health,Govt,,
 94ac752d-1ea1-40c7-a134-18a5d3a91acc,2026-07-26T04:20:02.417Z,2026-08-25T05:49:36.962Z,State of Montana,Local Government,,Govt,,Favorite
+a065e272-4301-4dbb-b4bf-94343eb5dda2,2026-09-11T09:38:03.294Z,2026-09-11T09:39:49.221Z,State of Washington,Local Government,Regional,Govt,,Normal
 72a3f2ee-d979-4fdf-81cf-9c94a3eead53,2026-08-22T06:10:36.222Z,2026-09-05T07:13:58.870Z,StepRanger,Utilities / Telecommunications,,Startup,,
 2431b23f-368d-49b9-8333-5641748ea8e3,2026-08-11T21:18:39.818Z,2026-09-08T07:52:30.632Z,Submittable,Tech,,Rich,,
+3d501d10-7e88-41d1-b041-622e87cc728c,2026-09-11T09:55:58.854Z,2026-09-11T10:02:47.686Z,Texas Health and Human Services Commission,Local Government,Health,Govt,,
 c0e57801-2dbf-4540-8fee-982010e645d6,2026-09-09T10:01:46.298Z,2026-09-09T10:01:46.298Z,Texas Legislative Council,Local Government,Regional,Govt,,Normal
 f0bf646e-e339-49e9-8854-ae09a12f1807,2026-08-22T06:38:49.846Z,2026-08-25T05:51:44.369Z,Thales,MIC,,Rich,,
 a5ac0b25-0a52-4e95-b0bf-ed40cd6d9bbf,2026-09-02T05:54:52.478Z,2026-09-08T09:33:27.178Z,The Impact Project,Policy / Think Tank,,Poor,,

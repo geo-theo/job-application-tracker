@@ -1,0 +1,50 @@
+GIS Developer
+Washington, DC
+ 
+At Accenture Federal Services, nothing matters more than helping the US federal government make the nation stronger and safer and life better for people. Our 13,000+ people are united in a shared purpose to pursue the limitless potential of technology and ingenuity for clients across defense, national security, public safety, civilian, and military health organizations. 
+ 
+Join Accenture Federal Services, a technology company within global Accenture. Recognized as a Glassdoor Top 100 Best Place to Work, we offer a collaborative and caring community where you feel like you belong and are empowered to grow, learn and thrive through hands-on experience, certifications, industry training and more. 
+ 
+Join us to drive positive, lasting change that moves missions and the government forward!
+ 
+The work:
+
+Develop, maintain, and update ArcGIS Online (AGOL) dashboards, map services, web layers, and reporting tools for coverage reinvestment activities.
+Design and build web‑based GIS applications and visualization tools using JavaScript GIS frameworks (e.g., ArcGIS API for JavaScript, Leaflet, Mapbox, OpenLayers).
+Implement GIS functionality within web applications, ensuring responsive, user-friendly, and accessible interfaces that support program reporting and operational needs.
+Import, export, and organize large ArcGIS datasets and associated metadata while ensuring integrity, consistency, and adherence to geospatial data standards.
+Process and analyze crowdsourced datasets and geospatial information to generate insights that inform AOI analysis, investment decisions, and program reporting.
+Support creation of geospatial products such as maps, layers, attribute tables, dashboards, and documentation that meet FirstNet Authority accuracy and traceability requirements.
+Assist senior GIS personnel with workflows, model runs, data preparation, and version control tasks for nationwide coverage planning.
+Conduct routine validation and quality checks on GIS datasets to ensure completeness, accuracy, and compliance with program standards.
+Maintain repository structures, file catalogs, and AGOL content for efficient retrieval and use of spatial products across engineering, business and program teams.
+Provide day‑to‑day support for geospatial documentation needs, including updating SOPs, workflow diagrams, and materials for executive, technical, and program reviews.
+ 
+
+Here’s what you need:
+
+Must be a U.S. citizen with the ability to obtain Public Trust required.
+Bachelor’s degree required.
+Minimum of 6+ years of experience as a Geographic Information Systems (GIS) Analyst or Developer.
+A graduate certification or advanced degree may offset one year of experience.
+Experience establishing and maintaining ArcGIS Online (AGOL) mapping and reporting dashboards.
+Professional experience developing GIS applications using JavaScript-based web mapping tools (ArcGIS API for JS preferred, but other JavaScript GIS platforms are acceptable).
+GIS development experience must include creating, modifying, and deploying web GIS components such as maps, layers, widgets, and interactive geospatial tools.
+Experience importing and exporting large ArcGIS datasets and associated information.
+Experience using crowdsourced data to produce actionable insights for investment activities.
+ 
+
+Preferred Qualifications:
+
+Demonstrated knowledge and experience with a multi‑state or national public safety communications program or project.
+Experience integrating GIS visualizations into web-based operational dashboards or enterprise applications.
+Experience ensuring cross-platform compatibility and performance optimization of web GIS applications.
+ 
+
+As required by local law, Accenture Federal Services provides reasonable ranges of compensation for hired roles based on labor costs in the states of California, Colorado, Hawaii, Illinois, Maine, Maryland, Massachusetts, Minnesota, New Jersey, New York, Vermont, Virginia, Washington, and the District of Columbia, and the city of Cleveland. The base pay range for this position in these locations is shown below. Compensation for roles at Accenture Federal Services varies depending on a wide array of factors, including but not limited to office location, role, skill set, and level of experience. Accenture Federal Services offers a wide variety of benefits. You can find more information on benefits here. We accept applications on an on-going basis and there is no fixed deadline to apply.
+
+ 
+
+The pay range for the states of California, Colorado, Hawaii, Illinois, Maine, Maryland, Massachusetts, Minnesota, New Jersey, New York, Vermont, Virginia, Washington, and the District of Columbia, and the city of Cleveland is:
+
+$70,500 - $136,700 USD
