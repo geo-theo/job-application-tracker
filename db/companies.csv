@@ -1,6 +1,6 @@
 id,createdAt,updatedAt,name,industry,sector,mission,website,rank
 d7687978-32b2-484b-bb4b-ed1dcfaeb088,2026-07-26T23:34:20.179Z,2026-08-25T05:50:32.777Z,Accenture,Consulting,,Rich,,
-0749aa70-c090-427e-a832-cc8afccb64a1,2026-08-30T07:23:48.058Z,2026-09-08T21:55:13.697Z,ACLED,Geopolitical Risk,,Startup,,Favorite
+0749aa70-c090-427e-a832-cc8afccb64a1,2026-08-30T07:23:48.058Z,2026-09-10T23:47:45.767Z,ACLED,NGO,War & Conflict,Poor,,Favorite
 1cde1baf-9bb2-4230-b516-14207c5f2edd,2026-08-31T00:32:00.100Z,2026-09-06T05:53:46.639Z,Amazon,Tech,,Rich,,
 678707ad-ae95-46ae-8f46-bd0f9f81d1ee,2026-09-08T07:51:17.817Z,2026-09-08T11:29:55.843Z,Anheuser Busch,Consumer Products,,Rich,,
 5c3a7b53-9119-4789-95bc-91cf95f79c8f,2026-09-09T08:08:18.100Z,2026-09-09T08:08:18.100Z,Apple,,,,,
@@ -29,6 +29,7 @@ f84b2d04-a59e-4d86-81ea-e854fdb41e27,2026-08-14T01:08:35.157Z,2026-09-07T04:54:4
 70174f73-69ee-44f1-a76b-b2b1fabc993f,2026-07-26T04:36:30.266Z,2026-08-25T05:51:05.994Z,International Association of Fire Fighters,IGO,,Govt,,
 26c56e4b-7b19-40cf-99be-14e205bd7293,2026-08-28T05:26:55.940Z,2026-08-31T01:32:45.926Z,IRC,NGO,,Poor,,
 b8000b16-cc56-49e7-92b9-284f25c6ba60,2026-09-09T09:58:54.186Z,2026-09-09T10:10:21.170Z,John Deere,Engineering,AgTech,Rich,,Normal
+27f5ee2d-e7f7-49a6-99ed-f912094bec02,2026-09-10T23:58:17.286Z,2026-09-10T23:58:17.286Z,JPAL Poverty Action Lab,,,,,
 9489bb7a-3900-40ee-8b22-c46197a8f4c5,2026-07-26T04:44:29.759Z,2026-08-25T05:51:52.322Z,Kaukahi,NGO,,Poor,,
 2a5c3346-ecaf-470b-8d30-5a030989615a,2026-09-09T10:09:15.217Z,2026-09-09T10:11:41.713Z,Kelly Mitchell Group,None - staffing agency,,,,Agency
 f1cf7fec-6ad8-431e-be7e-d08c639dee80,2026-09-01T18:13:13.218Z,2026-09-06T05:54:05.160Z,King County Washington,Local Government,,Govt,,
@@ -42,6 +43,7 @@ cb49c952-e2e3-47a3-a4c6-5b42d35e1b67,2026-08-22T06:15:34.190Z,2026-09-08T10:03:3
 b647c7de-36b7-4740-b922-9e3004075aaf,2026-09-09T07:28:10.829Z,2026-09-09T08:04:07.582Z,NASA,Engineering / Construction,Aerospace,Govt,https://www.nasa.gov/learning-resources/internship-programs/,Target
 846fb23c-19c1-446d-b7fd-628f6e546572,2026-09-09T07:11:31.854Z,2026-09-09T07:50:36.301Z,National Geographic,Journalism / Media,Travel Writing,Poor,https://ngs.wd1.myworkdayjobs.com/en-US/ngs_external_career_site_intern,Favorite
 472fea42-2486-4a45-b71b-0c2143df3cd3,2026-09-09T08:29:47.885Z,2026-09-09T08:33:07.276Z,National Geospatial Intelligence Agency,MIC,Intelligence,,https://www.nga.mil/careers/Student_Opportunities.html,Target
+02c62d97-10a6-4aee-8344-6a4ee0d94aa4,2026-09-11T00:29:41.830Z,2026-09-11T00:29:41.830Z,NBC Universal,Journalism / Media,News,Poor,,Target
 b14bf2a9-0263-40ca-b00d-832ab4d726e7,2026-09-08T07:45:36.753Z,2026-09-08T09:31:59.666Z,New York Times,Journalism / Media,,Poor,,
 7824f226-18cb-42bc-8776-a40577f1d554,2026-09-10T05:48:42.241Z,2026-09-10T05:48:42.241Z,OnX Maps,Tech,Geospatial,Startup,,Favorite
 e53281ee-c15a-4f3c-979a-85699883dd10,2026-09-08T12:21:56.435Z,2026-09-09T08:16:51.028Z,PWC,Consulting,,Rich,,Target
@@ -61,6 +63,7 @@ a5ac0b25-0a52-4e95-b0bf-ed40cd6d9bbf,2026-09-02T05:54:52.478Z,2026-09-08T09:33:2
 09663008-7cb3-48e8-acd9-3a656ac627f0,2026-08-19T01:51:27.774Z,2026-08-25T05:12:54.322Z,USGS,Federal Government,,Govt,,Favorite
 cc92addf-62b8-4250-ac7b-2aac8e371d70,2026-08-11T22:49:03.481Z,2026-08-25T05:55:13.881Z,USPS,Post,,Govt,,
 914421a6-4d33-4f60-9b8a-afb6306b3189,2026-07-27T09:14:11.678Z,2026-09-05T07:13:52.061Z,VINCI,Transportation,,Govt,,
+d809ad98-ce7b-4439-9fd7-54537718229c,2026-09-11T00:02:22.622Z,2026-09-11T00:04:19.807Z,Washington Post,Journalism / Media,News,Poor,https://careers.washingtonpost.com/,Target
 902fa283-82b2-47c4-940c-a04b73b35eaa,2026-07-26T04:30:09.889Z,2026-08-25T05:50:43.993Z,WBI Energy,Energy,,Rich,,
 2f73ef77-0f1c-40de-8b1b-d7b05510bf1a,2026-09-08T12:14:20.524Z,2026-09-08T12:14:20.524Z,World Bank,Intl Development,,Poor,,Favorite
 0b3d87b2-df3d-4af5-ab68-8087f96831a9,2026-08-31T00:48:43.108Z,2026-08-31T00:48:43.108Z,Young Innovations,Manufacturing,,Rich,,
