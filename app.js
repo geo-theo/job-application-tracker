@@ -165,6 +165,10 @@ const PAGE_CONFIG = {
     title: "Part-time",
     empty: "No part-time jobs match this view.",
   },
+  upcoming: {
+    title: "Upcoming",
+    empty: "No upcoming jobs match this view.",
+  },
   favorites: {
     title: "Favorites",
     empty: "No favorited jobs or companies yet.",
@@ -251,6 +255,25 @@ const els = {
   saveButton: document.querySelector("#save-button"),
   deleteButton: document.querySelector("#delete-button"),
   pageButtons: document.querySelectorAll("[data-page]"),
+  jobFilterControls: document.querySelector("#job-filter-controls"),
+  companyFilterControls: document.querySelector("#company-filter-controls"),
+  companyNameFilter: document.querySelector("#company-name-filter"),
+  companyIndustryFilterButton: document.querySelector(
+    "#company-industry-filter-button",
+  ),
+  companyIndustryFilter: document.querySelector("#company-industry-filter"),
+  companySectorFilterButton: document.querySelector(
+    "#company-sector-filter-button",
+  ),
+  companySectorFilter: document.querySelector("#company-sector-filter"),
+  companyMissionFilterButton: document.querySelector(
+    "#company-mission-filter-button",
+  ),
+  companyMissionFilter: document.querySelector("#company-mission-filter"),
+  companyRankFilterButton: document.querySelector(
+    "#company-rank-filter-button",
+  ),
+  companyRankFilter: document.querySelector("#company-rank-filter"),
   pageTypeFilterWrap: document.querySelector("#page-type-filter-wrap"),
   pageTypeFilterButton: document.querySelector("#page-type-filter-button"),
   pageTypeButtons: document.querySelectorAll("[data-page-type-filter]"),
@@ -311,6 +334,11 @@ const filters = {
   sortBy: "deadline",
   roles: [],
   industries: [],
+  companyName: "",
+  companyIndustries: [],
+  companySectors: [],
+  companyMissions: [],
+  companyRanks: [],
 };
 
 document.addEventListener("DOMContentLoaded", init);
@@ -507,6 +535,48 @@ function bindEvents() {
     if (!event.ctrlKey && !event.metaKey) closeFilterAccordions();
     renderJobs();
   });
+  els.companyNameFilter.addEventListener("input", () => {
+    filters.companyName = els.companyNameFilter.value;
+    renderCompanies();
+  });
+  [
+    {
+      container: els.companyIndustryFilter,
+      key: "companyIndustries",
+      dataKey: "companyIndustryFilter",
+    },
+    {
+      container: els.companySectorFilter,
+      key: "companySectors",
+      dataKey: "companySectorFilter",
+    },
+    {
+      container: els.companyMissionFilter,
+      key: "companyMissions",
+      dataKey: "companyMissionFilter",
+    },
+    {
+      container: els.companyRankFilter,
+      key: "companyRanks",
+      dataKey: "companyRankFilter",
+    },
+  ].forEach(({ container, key, dataKey }) => {
+    container.addEventListener("click", (event) => {
+      const button =
+        event.target instanceof Element
+          ? event.target.closest(`[data-${toKebabCase(dataKey)}]`)
+          : null;
+      if (!button) return;
+      filters[key] = updateOptionSelection(
+        filters[key],
+        button.dataset[dataKey],
+        event,
+      );
+      updateFilterControls();
+      if (!event.ctrlKey && !event.metaKey) closeFilterAccordions();
+      renderCompanies();
+    });
+  });
   els.connectFolderButton.addEventListener("click", connectFolder);
   els.folderGateButton.addEventListener("click", connectFolder);
   els.exportCsvButton.addEventListener("click", exportCsv);
@@ -598,7 +668,9 @@ function updatePageControls() {
   const showPriorityFilter = usesPriorityFilter(activePage);
   els.boardTitle.textContent = config.title;
   const isCompanyPage = activePage === "companies";
-  els.boardControls.hidden = activePage === "viz" || isCompanyPage;
+  els.boardControls.hidden = activePage === "viz";
+  els.jobFilterControls.hidden = isCompanyPage || activePage === "viz";
+  els.companyFilterControls.hidden = !isCompanyPage;
   els.newRecordButton.textContent = isCompanyPage ? "Add Company" : "Add Job";
   els.pageTypeFilterWrap.hidden = !showScopedTypeFilter;
   if (!showScopedTypeFilter) {
@@ -1034,8 +1106,10 @@ async function refreshJobs() {
     (b.updatedAt || "").localeCompare(a.updatedAt || ""),
   );
   updateCompanyOptions();
+  updateCompanyFilterOptions();
   updateRoleFilterOptions(jobs);
   updateIndustryFilterOptions(jobs);
+  updateFilterControls();
   renderJobs();
 }
 
@@ -1439,18 +1513,68 @@ function renderJobs() {
 }
 
 function renderCompanies() {
-  els.recordCount.textContent = `${companies.length} ${companies.length === 1 ? "company" : "companies"}`;
+  const visibleCompanies = getVisibleCompanies();
+  const companyLabel = companies.length === 1 ? "company" : "companies";
+  els.recordCount.textContent = hasCompanyFilters()
+    ? `${visibleCompanies.length} of ${companies.length} ${companyLabel}`
+    : `${companies.length} ${companyLabel}`;
   els.jobList.replaceChildren();
-  if (!companies.length) {
+  if (!visibleCompanies.length) {
     const empty = document.createElement("div");
     empty.className = "empty-state";
-    empty.textContent = PAGE_CONFIG.companies.empty;
+    empty.textContent = companies.length
+      ? "No companies match the current filters."
+      : PAGE_CONFIG.companies.empty;
     els.jobList.append(empty);
     return;
   }
-  companies.forEach((company) =>
+  visibleCompanies.forEach((company) =>
     els.jobList.append(createCompanyCard(company)),
   );
+}
+
+function hasCompanyFilters() {
+  return Boolean(
+    filters.companyName.trim() ||
+      filters.companyIndustries.length ||
+      filters.companySectors.length ||
+      filters.companyMissions.length ||
+      filters.companyRanks.length,
+  );
+}
+
+function getVisibleCompanies() {
+  const search = filters.companyName.trim().toLocaleLowerCase();
+  return companies.filter((company) => {
+    if (search && !company.name.toLocaleLowerCase().includes(search)) {
+      return false;
+    }
+    if (
+      filters.companyIndustries.length &&
+      !filters.companyIndustries.includes(company.industry)
+    ) {
+      return false;
+    }
+    if (
+      filters.companySectors.length &&
+      !filters.companySectors.includes(company.sector)
+    ) {
+      return false;
+    }
+    if (
+      filters.companyMissions.length &&
+      !filters.companyMissions.some((mission) =>
+        (company.mission || []).includes(mission),
+      )
+    ) {
+      return false;
+    }
+    if (filters.companyRanks.length) {
+      const rank = company.rank || "Unranked";
+      if (!filters.companyRanks.includes(rank)) return false;
+    }
+    return true;
+  });
 }
 
 function getVisibleJobs() {
@@ -1500,6 +1624,8 @@ function getPageJobs(page = activePage) {
     return pendingJobs.filter((job) => matchesJobType(job, "Internship"));
   if (page === "part-time")
     return pendingJobs.filter((job) => matchesJobType(job, "Part-time"));
+  if (page === "upcoming")
+    return pendingJobs.filter((job) => job.priority === "Upcoming");
   if (page === "favorites") return pendingJobs.filter(isFavoriteJob);
   return pendingJobs;
 }
@@ -1618,6 +1744,63 @@ function updateFilterControls() {
     els.industryFilter,
     filters.industries,
     "industryFilter",
+  );
+
+  els.companyNameFilter.value = filters.companyName;
+  els.companyIndustryFilterButton.classList.toggle(
+    "active",
+    Boolean(filters.companyIndustries.length),
+  );
+  els.companyIndustryFilterButton.textContent = getFilterButtonLabel(
+    "Industry",
+    filters.companyIndustries,
+  );
+  syncFilterOptionButtons(
+    els.companyIndustryFilter,
+    filters.companyIndustries,
+    "companyIndustryFilter",
+  );
+
+  els.companySectorFilterButton.classList.toggle(
+    "active",
+    Boolean(filters.companySectors.length),
+  );
+  els.companySectorFilterButton.textContent = getFilterButtonLabel(
+    "Subsector",
+    filters.companySectors,
+  );
+  syncFilterOptionButtons(
+    els.companySectorFilter,
+    filters.companySectors,
+    "companySectorFilter",
+  );
+
+  els.companyMissionFilterButton.classList.toggle(
+    "active",
+    Boolean(filters.companyMissions.length),
+  );
+  els.companyMissionFilterButton.textContent = getFilterButtonLabel(
+    "Who it helps",
+    filters.companyMissions,
+  );
+  syncFilterOptionButtons(
+    els.companyMissionFilter,
+    filters.companyMissions,
+    "companyMissionFilter",
+  );
+
+  els.companyRankFilterButton.classList.toggle(
+    "active",
+    Boolean(filters.companyRanks.length),
+  );
+  els.companyRankFilterButton.textContent = getFilterButtonLabel(
+    "Rank",
+    filters.companyRanks,
+  );
+  syncFilterOptionButtons(
+    els.companyRankFilter,
+    filters.companyRanks,
+    "companyRankFilter",
   );
 }
 
@@ -1848,7 +2031,7 @@ function createCompanyCard(company) {
   jobsDetails.className = "company-jobs";
   const jobsSummary = document.createElement("summary");
   jobsSummary.textContent = companyJobs.length
-    ? `Show ${companyJobs.length === 1 ? "job" : "jobs"}`
+    ? `Jobs · ${companyJobs.length} ${companyJobs.length === 1 ? "job" : "jobs"}`
     : "No linked jobs";
   jobsDetails.append(jobsSummary);
   if (companyJobs.length) {
@@ -1882,6 +2065,32 @@ function createCompanyCard(company) {
       jobsList.append(row);
     });
     jobsDetails.append(jobsList);
+  }
+
+  if (companyJobs.length) {
+    card.classList.add("company-card-expandable");
+    card.tabIndex = 0;
+    card.setAttribute("aria-label", `${company.name}, ${companyJobs.length} linked jobs`);
+    const toggleJobs = () => {
+      jobsDetails.open = !jobsDetails.open;
+    };
+    card.addEventListener("click", (event) => {
+      const target = event.target instanceof Element ? event.target : null;
+      if (
+        (target && jobsDetails.contains(target)) ||
+        target?.closest("button, a, summary")
+      ) {
+        return;
+      }
+      toggleJobs();
+    });
+    card.addEventListener("keydown", (event) => {
+      if (event.target !== card || (event.key !== "Enter" && event.key !== " ")) {
+        return;
+      }
+      event.preventDefault();
+      toggleJobs();
+    });
   }
 
   card.append(
@@ -2329,6 +2538,47 @@ function updateIndustryFilterOptions(sourceJobs) {
         selected.has(industry),
       ),
     );
+  });
+}
+
+function updateCompanyFilterOptions() {
+  const optionGroups = [
+    {
+      container: els.companyIndustryFilter,
+      key: "companyIndustries",
+      dataKey: "companyIndustryFilter",
+      values: companies.map((company) => company.industry),
+    },
+    {
+      container: els.companySectorFilter,
+      key: "companySectors",
+      dataKey: "companySectorFilter",
+      values: companies.map((company) => company.sector),
+    },
+    {
+      container: els.companyMissionFilter,
+      key: "companyMissions",
+      dataKey: "companyMissionFilter",
+      values: companies.flatMap((company) => company.mission || []),
+    },
+    {
+      container: els.companyRankFilter,
+      key: "companyRanks",
+      dataKey: "companyRankFilter",
+      values: ["Favorite", "Target", "Normal", "Agency", "Unranked"],
+    },
+  ];
+
+  optionGroups.forEach(({ container, key, dataKey, values }) => {
+    const knownValues = unique(values);
+    const selected = new Set(filters[key]);
+    filters[key] = filters[key].filter((value) => knownValues.includes(value));
+    container.replaceChildren();
+    knownValues.forEach((value) => {
+      container.append(
+        createFilterOptionButton(value, dataKey, selected.has(value)),
+      );
+    });
   });
 }
 

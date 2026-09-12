@@ -900,6 +900,9 @@
           <button type="button" class="page-nav-button" data-page="part-time">
             Part-time
           </button>
+          <button type="button" class="page-nav-button" data-page="upcoming">
+            Upcoming
+          </button>
           <button type="button" class="page-nav-button" data-page="favorites">
             Favorites
           </button>
@@ -922,7 +925,7 @@
           id="board-controls"
           aria-label="List filters"
         >
-          <div class="control-row">
+          <div class="control-row" id="job-filter-controls">
             <div class="filter-group" aria-label="List filters">
               <div
                 class="filter-accordion scoped-type-filter"
@@ -1162,6 +1165,121 @@
                     Priority
                   </button>
                 </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="company-filter-controls"
+            id="company-filter-controls"
+            hidden
+          >
+            <label class="company-filter-search">
+              <span class="sr-only">Search companies by name</span>
+              <input
+                id="company-name-filter"
+                type="search"
+                placeholder="Search companies by name"
+                autocomplete="off"
+              />
+            </label>
+
+            <div class="filter-accordion">
+              <button
+                type="button"
+                class="filter-button accordion-trigger"
+                id="company-industry-filter-button"
+                aria-expanded="false"
+                aria-controls="company-industry-filter-panel"
+              >
+                Industry
+              </button>
+              <div
+                class="accordion-panel select-panel"
+                id="company-industry-filter-panel"
+                hidden
+              >
+                <div
+                  id="company-industry-filter"
+                  class="filter-option-list"
+                  aria-label="Company industry filter"
+                  aria-multiselectable="true"
+                  role="listbox"
+                ></div>
+              </div>
+            </div>
+
+            <div class="filter-accordion">
+              <button
+                type="button"
+                class="filter-button accordion-trigger"
+                id="company-sector-filter-button"
+                aria-expanded="false"
+                aria-controls="company-sector-filter-panel"
+              >
+                Subsector
+              </button>
+              <div
+                class="accordion-panel select-panel"
+                id="company-sector-filter-panel"
+                hidden
+              >
+                <div
+                  id="company-sector-filter"
+                  class="filter-option-list"
+                  aria-label="Company subsector filter"
+                  aria-multiselectable="true"
+                  role="listbox"
+                ></div>
+              </div>
+            </div>
+
+            <div class="filter-accordion">
+              <button
+                type="button"
+                class="filter-button accordion-trigger"
+                id="company-mission-filter-button"
+                aria-expanded="false"
+                aria-controls="company-mission-filter-panel"
+              >
+                Who it helps
+              </button>
+              <div
+                class="accordion-panel select-panel"
+                id="company-mission-filter-panel"
+                hidden
+              >
+                <div
+                  id="company-mission-filter"
+                  class="filter-option-list"
+                  aria-label="Company mission filter"
+                  aria-multiselectable="true"
+                  role="listbox"
+                ></div>
+              </div>
+            </div>
+
+            <div class="filter-accordion">
+              <button
+                type="button"
+                class="filter-button accordion-trigger"
+                id="company-rank-filter-button"
+                aria-expanded="false"
+                aria-controls="company-rank-filter-panel"
+              >
+                Rank
+              </button>
+              <div
+                class="accordion-panel select-panel"
+                id="company-rank-filter-panel"
+                hidden
+              >
+                <div
+                  id="company-rank-filter"
+                  class="filter-option-list"
+                  aria-label="Company rank filter"
+                  aria-multiselectable="true"
+                  role="listbox"
+                ></div>
               </div>
             </div>
           </div>
