@@ -65,7 +65,15 @@ Use Git as the portable source of truth and the browser database as a local cach
 3. Commit and push those changed files.
 4. On another device, pull the repo and reload the app. The app imports both CSV files and joins jobs to companies by ID.
 
-To deploy, enable GitHub Pages for the repository root. Include `index.html`, `styles.css`, `app.js`, `viz.css`, `viz.js`, `viz-geography.js`, and the `img` directory. No build step or chart CDN is required.
+To deploy, enable GitHub Pages for the repository root. Include `index.html`, `styles.css`, `app.js`, `viz.css`, `viz.js`, `viz-geography.js`, `research.css`, `research.js`, and the `img` directory. No build step or chart CDN is required.
+
+## Research dashboard
+
+Research analyzes the saved market rather than application outcomes. Its default sample includes every job not marked Applied plus anything deliberately kept as a Reference. The Source control can narrow that sample to active prospects or the Reference library, and Job type, Role, and Industry filters apply to every summary and chart on the page.
+
+The description panel reads locally saved job-description text and creates a collective brief plus ranked resume signals for tools and technology, core capabilities, domain knowledge, and qualifications. A separate Frequent words view derives terms directly from the selected descriptions after removing common job-posting language. Percentages show the share of descriptions containing a signal; repeated mentions within one description do not inflate coverage. Selecting a signal opens the matching jobs, while Copy brief copies the current market summary for drafting notes.
+
+The remaining panels quantify roles, industries, advertised salary, company mission tags, and location for the same selected sample. All chart rows open their underlying jobs. The Research dashboard is read-only and performs all text analysis locally in the browser.
 
 ## Viz dashboard
 

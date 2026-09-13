@@ -179,6 +179,7 @@ const PAGE_CONFIG = {
     title: "Reference",
     empty: "No reference jobs match this view.",
   },
+  research: { title: "Research", empty: "" },
   viz: { title: "Viz", empty: "" },
 };
 
@@ -673,8 +674,9 @@ function updatePageControls() {
   const showPriorityFilter = usesPriorityFilter(activePage);
   els.boardTitle.textContent = config.title;
   const isCompanyPage = activePage === "companies";
-  els.boardControls.hidden = activePage === "viz";
-  els.jobFilterControls.hidden = isCompanyPage || activePage === "viz";
+  const isDashboardPage = ["research", "viz"].includes(activePage);
+  els.boardControls.hidden = isDashboardPage;
+  els.jobFilterControls.hidden = isCompanyPage || isDashboardPage;
   els.companyFilterControls.hidden = !isCompanyPage;
   els.newRecordButton.textContent = isCompanyPage ? "Add Company" : "Add Job";
   els.pageTypeFilterWrap.hidden = !showScopedTypeFilter;
@@ -704,7 +706,14 @@ function usesScopedTypeFilter(page = activePage) {
 }
 
 function usesPriorityFilter(page = activePage) {
-  return !["upcoming", "applied", "reference", "companies", "viz"].includes(
+  return ![
+    "upcoming",
+    "applied",
+    "reference",
+    "companies",
+    "research",
+    "viz",
+  ].includes(
     page,
   );
 }
@@ -1495,9 +1504,14 @@ function calculateMidpoint(min, max) {
 function renderJobs() {
   updatePageControls();
   els.jobList.classList.toggle("viz-board", activePage === "viz");
+  els.jobList.classList.toggle("research-board", activePage === "research");
   els.jobList.classList.toggle("companies-board", activePage === "companies");
   if (activePage === "viz") {
     renderViz();
+    return;
+  }
+  if (activePage === "research") {
+    renderResearch();
     return;
   }
   if (activePage === "companies") {

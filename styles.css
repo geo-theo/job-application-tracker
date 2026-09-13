@@ -707,6 +707,7 @@ button:focus-visible {
 .page-nav-button[data-page="applied"],
 .page-nav-button[data-page="reference"],
 .page-nav-button[data-page="companies"],
+.page-nav-button[data-page="research"],
 .page-nav-button[data-page="viz"] {
   border-color: #d2c7b7;
   background: #ded8ce;
@@ -716,6 +717,7 @@ button:focus-visible {
 .page-nav-button[data-page="applied"].active,
 .page-nav-button[data-page="reference"].active,
 .page-nav-button[data-page="companies"].active,
+.page-nav-button[data-page="research"].active,
 .page-nav-button[data-page="viz"].active {
   border-color: #315c9b;
   background: #d6e0eb;
