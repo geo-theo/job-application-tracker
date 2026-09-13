@@ -332,6 +332,7 @@ const filters = {
   applicationStatus: "All",
   priorities: [],
   sortBy: "deadline",
+  appliedSortBy: "applied-date",
   roles: [],
   industries: [],
   companyName: "",
@@ -487,7 +488,11 @@ function bindEvents() {
   });
   els.sortButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      filters.sortBy = button.dataset.sort || "deadline";
+      if (activePage === "applied") {
+        filters.appliedSortBy = button.dataset.sort || "applied-date";
+      } else {
+        filters.sortBy = button.dataset.sort || "deadline";
+      }
       updateFilterControls();
       closeFilterAccordions();
       renderJobs();
@@ -699,7 +704,9 @@ function usesScopedTypeFilter(page = activePage) {
 }
 
 function usesPriorityFilter(page = activePage) {
-  return !["applied", "reference", "companies", "viz"].includes(page);
+  return !["upcoming", "applied", "reference", "companies", "viz"].includes(
+    page,
+  );
 }
 
 function setFolderGate(
@@ -1129,7 +1136,9 @@ function collectFormData(companyId = "") {
   const deadlineChoice = els.deadlineChoice.value;
   const appliedStatus = getRadioValue("appliedStatus");
   const priority =
-    appliedStatus === "No" ? "Future" : getRadioValue("priority");
+    appliedStatus === "No"
+      ? "Future"
+      : normalizePriority(getRadioValue("priority"));
   const responseStatus = getAppliedLifecycleChoice(
     "responseStatus",
     appliedStatus,
@@ -1293,7 +1302,7 @@ async function loadJobIntoForm(jobId) {
   setRadioValue("payType", job.payType || "");
   els.payMin.value = job.payMin || "";
   els.payMax.value = job.payMax || "";
-  setRadioValue("priority", job.priority || "");
+  setRadioValue("priority", normalizePriority(job.priority));
   els.datePosted.value = job.datePosted || "";
   els.deadlineChoice.value = getDeadlineChoice(job);
   els.deadline.value = job.deadline || "";
@@ -1589,7 +1598,7 @@ function getVisibleJobs() {
   }
   if (usesPriorityFilter() && filters.priorities.length) {
     visible = visible.filter((job) =>
-      filters.priorities.includes(job.priority || ""),
+      filters.priorities.includes(normalizePriority(job.priority)),
     );
   }
   if (filters.roles.length) {
@@ -1602,11 +1611,21 @@ function getVisibleJobs() {
       filters.industries.includes(getIndustryDisplay(job)),
     );
   }
-  const sortBy = filters.sortBy || "deadline";
+  const sortBy = getActiveSortBy();
   if (sortBy === "deadline") {
     visible.sort((a, b) => deadlineRank(a) - deadlineRank(b));
   } else if (sortBy === "priority") {
     visible.sort(comparePriorityJobs);
+  } else if (sortBy === "applied-date") {
+    visible.sort((a, b) => compareDatesNewestFirst(a.appliedDate, b.appliedDate));
+  } else if (sortBy === "last-responded") {
+    visible.sort((a, b) =>
+      compareDatesNewestFirst(getLastRespondedDate(a), getLastRespondedDate(b)),
+    );
+  } else if (sortBy === "application-stage") {
+    visible.sort(compareApplicationStages);
+  } else if (sortBy === "application-status") {
+    visible.sort(compareApplicationStatuses);
   }
   return visible;
 }
@@ -1625,7 +1644,9 @@ function getPageJobs(page = activePage) {
   if (page === "part-time")
     return pendingJobs.filter((job) => matchesJobType(job, "Part-time"));
   if (page === "upcoming")
-    return pendingJobs.filter((job) => job.priority === "Upcoming");
+    return pendingJobs.filter(
+      (job) => normalizePriority(job.priority) === "Upcoming",
+    );
   if (page === "favorites") return pendingJobs.filter(isFavoriteJob);
   return pendingJobs;
 }
@@ -1661,13 +1682,67 @@ function priorityRank(job) {
     Upcoming: 4,
     Future: 5,
   };
-  return ranks[job.priority] ?? 5;
+  return ranks[normalizePriority(job.priority)] ?? 5;
 }
 
 function comparePriorityJobs(a, b) {
   const priorityDifference = priorityRank(a) - priorityRank(b);
   if (priorityDifference) return priorityDifference;
   return deadlineRank(a) - deadlineRank(b);
+}
+
+function getActiveSortBy() {
+  return activePage === "applied"
+    ? filters.appliedSortBy || "applied-date"
+    : filters.sortBy || "deadline";
+}
+
+function compareDatesNewestFirst(firstDate, secondDate) {
+  const firstTimestamp = dateTimestamp(firstDate);
+  const secondTimestamp = dateTimestamp(secondDate);
+  if (firstTimestamp === null && secondTimestamp === null) return 0;
+  if (firstTimestamp === null) return 1;
+  if (secondTimestamp === null) return -1;
+  return secondTimestamp - firstTimestamp;
+}
+
+function dateTimestamp(value) {
+  if (!value) return null;
+  const timestamp = new Date(`${value}T00:00:00`).getTime();
+  return Number.isFinite(timestamp) ? timestamp : null;
+}
+
+function compareApplicationStages(a, b) {
+  const ranks = {
+    Decision: 0,
+    Assessed: 1,
+    Interviewed: 2,
+    Screened: 3,
+    Responded: 4,
+    Applied: 5,
+  };
+  const difference =
+    (ranks[getApplicationStage(a)] ?? 6) -
+    (ranks[getApplicationStage(b)] ?? 6);
+  if (difference) return difference;
+  return compareDatesNewestFirst(
+    getLastRespondedDate(a) || a.appliedDate,
+    getLastRespondedDate(b) || b.appliedDate,
+  );
+}
+
+function compareApplicationStatuses(a, b) {
+  const ranks = {
+    "In-progress": 0,
+    Accepted: 1,
+    Rejected: 2,
+    Ghosted: 3,
+  };
+  const difference =
+    (ranks[getApplicationStatusDisplay(a)] ?? 4) -
+    (ranks[getApplicationStatusDisplay(b)] ?? 4);
+  if (difference) return difference;
+  return compareApplicationStages(a, b);
 }
 
 function updateFilterControls() {
@@ -1699,8 +1774,11 @@ function updateFilterControls() {
       filters.priorities.includes(button.dataset.priorityFilter),
     );
   });
+  const activeSortBy = getActiveSortBy();
   els.sortButtons.forEach((button) => {
-    button.classList.toggle("active", button.dataset.sort === filters.sortBy);
+    const isAppliedSort = button.dataset.sortScope === "applied";
+    button.hidden = activePage === "applied" ? !isAppliedSort : isAppliedSort;
+    button.classList.toggle("active", button.dataset.sort === activeSortBy);
   });
 
   els.priorityFilterButton.classList.toggle(
@@ -1715,11 +1793,14 @@ function updateFilterControls() {
   const sortLabels = {
     deadline: "Deadline",
     priority: "Priority",
-    updated: "Last updated",
+    "applied-date": "Date applied",
+    "last-responded": "Last responded",
+    "application-stage": "Stage",
+    "application-status": "Status",
   };
-  els.sortFilterButton.classList.toggle("active", Boolean(filters.sortBy));
-  els.sortFilterButton.textContent = filters.sortBy
-    ? `Sort by: ${sortLabels[filters.sortBy]}`
+  els.sortFilterButton.classList.toggle("active", Boolean(activeSortBy));
+  els.sortFilterButton.textContent = activeSortBy
+    ? `Sort by: ${sortLabels[activeSortBy]}`
     : "Sort by";
 
   els.roleFilterButton.classList.toggle(
@@ -2360,7 +2441,7 @@ function statusChip(job) {
     const applicationStatus = getApplicationStatusDisplay(job);
     return chip(applicationStatus, applicationStatus.toLowerCase());
   }
-  const priority = job.priority || "";
+  const priority = normalizePriority(job.priority);
   if (priority === "Urgent") return chip("Urgent", "urgent");
   if (priority === "High") return chip("High", "high");
   if (priority === "Medium") return chip("Medium", "medium");
@@ -2414,8 +2495,22 @@ function isFavoriteJob(job) {
 
 function isReferenceJob(job) {
   return (
-    String(job.priority || "").toLowerCase() === "future" || isAppliedNo(job)
+    normalizePriority(job.priority) === "Future" || isAppliedNo(job)
   );
+}
+
+function normalizePriority(value) {
+  const original = String(value || "").trim();
+  const normalized = original.toLowerCase().replace(/[\s_-]+/g, "");
+  const priorities = {
+    urgent: "Urgent",
+    high: "High",
+    medium: "Medium",
+    low: "Low",
+    upcoming: "Upcoming",
+    future: "Future",
+  };
+  return priorities[normalized] || original;
 }
 
 function isAppliedJob(job) {
@@ -3168,7 +3263,8 @@ function csvRowToJob(header, row) {
   const jobTypes = getImportedJobTypes(record);
   const appliedStatus =
     record.appliedStatus || (record.appliedDate ? "Yes" : "");
-  const priority = appliedStatus === "No" ? "Future" : record.priority || "";
+  const priority =
+    appliedStatus === "No" ? "Future" : normalizePriority(record.priority);
   const finalStatus = getImportedFinalStatus(record);
   const finalStatusDate = isDatedFinalStatus(finalStatus)
     ? record.finalStatusDate || ""

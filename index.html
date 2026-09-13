@@ -909,14 +909,14 @@
           <button type="button" class="page-nav-button" data-page="applied">
             Applied
           </button>
+          <button type="button" class="page-nav-button" data-page="companies">
+            Companies
+          </button>
           <button type="button" class="page-nav-button" data-page="reference">
             Reference
           </button>
           <button type="button" class="page-nav-button" data-page="viz">
             Viz
-          </button>
-          <button type="button" class="page-nav-button" data-page="companies">
-            Companies
           </button>
         </nav>
 
@@ -1154,6 +1154,7 @@
                     type="button"
                     class="filter-button"
                     data-sort="deadline"
+                    data-sort-scope="jobs"
                   >
                     Deadline
                   </button>
@@ -1161,8 +1162,45 @@
                     type="button"
                     class="filter-button"
                     data-sort="priority"
+                    data-sort-scope="jobs"
                   >
                     Priority
+                  </button>
+                  <button
+                    type="button"
+                    class="filter-button"
+                    data-sort="applied-date"
+                    data-sort-scope="applied"
+                    hidden
+                  >
+                    Date applied
+                  </button>
+                  <button
+                    type="button"
+                    class="filter-button"
+                    data-sort="last-responded"
+                    data-sort-scope="applied"
+                    hidden
+                  >
+                    Last responded
+                  </button>
+                  <button
+                    type="button"
+                    class="filter-button"
+                    data-sort="application-stage"
+                    data-sort-scope="applied"
+                    hidden
+                  >
+                    Stage
+                  </button>
+                  <button
+                    type="button"
+                    class="filter-button"
+                    data-sort="application-status"
+                    data-sort-scope="applied"
+                    hidden
+                  >
+                    Status
                   </button>
                 </div>
               </div>

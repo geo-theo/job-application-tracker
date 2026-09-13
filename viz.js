@@ -325,8 +325,8 @@ function renderViz() {
   const pay = vizPaySummary(applied);
   const mission = vizMissionChange(applied);
   const priorityFigures = [["Urgent", "urgent"], ["High", "high"], ["Medium", "medium"], ["Low", "low"], ["Upcoming", "teal"]]
-    .map(([priority, tone]) => ({ label: priority, tone, value: pending.filter((job) => job.priority === priority).length }));
-  const unranked = pending.filter((job) => !["Urgent", "High", "Medium", "Low", "Upcoming"].includes(job.priority)).length;
+    .map(([priority, tone]) => ({ label: priority, tone, value: pending.filter((job) => normalizePriority(job.priority) === priority).length }));
+  const unranked = pending.filter((job) => !["Urgent", "High", "Medium", "Low", "Upcoming"].includes(normalizePriority(job.priority))).length;
   if (unranked) priorityFigures.push({ label: "Unranked", tone: "gray", value: unranked });
   const timelines = [["week", "This week"], ["month", "This month"], ["quarter", "This quarter"], ["year", "This year"]]
     .map(([period, label]) => ({ label, value: vizInRange(applied, vizCalendarRange(period)).length, title: `${label}: ${vizRangeLabel(vizCalendarRange(period))}. Weeks start Monday.` }));
