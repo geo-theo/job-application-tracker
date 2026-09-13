@@ -1,0 +1,162 @@
+TWDB - 26-132 - Python Web Programmer (Programmer III)
+Next Job
+Apply for Job
+Job ID103222
+Location
+Austin
+Other Recruiting LocationAustin
+Number of Openings1
+State Job Code(s)0243
+Close Date11/01/2026
+CompanyTexas Water Development Board
+Full/Part TimeFull-Time
+Regular/TemporaryRegular
+Salary Admin Plan(s)B
+Salary Admin Grade(s)24
+Salary Range$5425.34 - 8187.50 per Month
+Add to Favorite Jobs
+Email this Job
+  
+Job Description
+**Must meet agency in-office requirements**
+***Salary commensurate with experience and qualifications***
+ 
+
+TEXAS WATER DEVELOPMENT BOARD'S MISSION
+
+Leading the state's efforts in ensuring a secure water future for Texas.
+
+WORKING AT THE TWDB
+
+See why our work makes an impact!
+
+Find out why the TWDB is a great place to work.
+
+Make a positive difference for the state of Texas. We encourage you to apply for positions that match your qualifications.
+
+The Texas Water Development Board (TWDB) offers a competitive compensation and benefits package including medical, dental, vision, 401(k), flexible spending, and flexible work alternatives so you can have a work/life balance! For more information about these benefits and more visit: http://www.twdb.texas.gov/jobs/benefits.asp. 
+
+Please visit TWDB Career Page: http://www.twdb.texas.gov/jobs/ for more information.
+
+MILITARY EMPLOYMENT PREFERENCE
+
+Veterans, Reservists or Guardsmen with an MOS or additional duties that fall in the fields of 25B Information Technology Specialist, IT Information System Technician, 8846 Data Systems Specialist, or other related fields pertaining to the minimum experience requirements may meet the minimum qualifications for this position and are highly encouraged to apply.
+
+Additional Military Crosswalk information can be accessed at https://hr.sao.texas.gov/Compensation/MilitaryCrosswalk/MOSC_InformationTechnology.pdf.
+
+GENERAL DESCRIPTION
+
+Performs highly complex (senior-level) software development work. Work involves supporting the development and maintenance of advanced applications and data analytics for critical water-related data, and providing technical assistance to internal and external customers. May train others. Works under limited supervision, with considerable latitude for the use of initiative and independent judgment. Reports to the Manager of the Development team.
+
+ESSENTIAL JOB FUNCTIONS
+
+Defines requirements, develops effort estimates, and determines resource requirements to support the successful planning, implementation, and completion of projects. 
+Collaborates with team members to schedule work and coordinate programming projects.
+Assists in the identification and scheduling of project deliverables, milestones and required tasks.
+Documents and analyzes technical and functional requirements.
+Designs, codes, tests, and debugs applications and/or geospatial viewers as outlined by technical and functional requirements.
+Maintains applications and/or geospatial viewers using current software design and development methodologies and techniques.
+Prepares test data and assists end users with testing.
+Prepares and develops instructions or manuals for end users.
+Prepares instructions for use during production runs.
+Documenst standards, best practices and procedures for programming.
+May train others.
+Maintains confidential and sensitive information.
+Ensures individual and team files (electronic and hard versions) are appropriately maintained and timely disposed of in accordance with the agency's records retention procedures and schedule. 
+Maintains required certifications and licenses and meets the continuing education needs and requirements of the position to include, attending mandatory training courses.
+May be required to operate a state or personal vehicle for business purposes. 
+Perform other duties as assigned.
+MINIMUM QUALIFICATIONS
+
+Graduation from an accredited four-year college or university with a bachelor's degree in Computer Science, Information Science, Information Technology, Geographic Information Systems, or a related field.
+Seven years of relevant work experience in developing and deploying software applications using HTML, CSS, JavaScript, Python, SQL, Linux, Docker and Kubernetes.
+Relevant education and experience can be substituted for each other on a year-for-year basis.
+PREFERRED QUALIFICATIONS
+
+Experience in the development and analysis of geospatial, engineering and/or scientific data.
+Experience in the development and analysis of time-series data.
+Experience with the graphical display of engineering and/or scientific data.
+Experience with numerical and statistical methods.
+Experience with groundwater and/or surface water modeling.
+Experience with Geographic Information Systems and developing GIS web applications.
+KNOWLEDGE, SKILLS, AND ABILITIES (KSAs)
+
+Knowledge of local, state, and federal laws and regulations relevant to Application Development Department.
+Knowledge of the principles and practices of public administration.
+Knowledge of the principles, practices, and techniques of computer programming and systems analysis.
+Knowledge of the Software Development Life Cycle (SDLC).
+Knowledge of relational databases and data management, with PostgreSQL experience preferred.
+Knowledge of the State of Texas environmental and natural resources, particularly water resources management. 
+Knowledge of technologies such as HTML, CSS, JavaScript and related framework/libraries, with React.js, jQuery and Node.js preferred.
+Skills in using Microsoft Office programs such as Word, Excel, and Access.
+Skills in use of internet, email, word processing, spreadsheet, presentation, and database software.
+Skills in the development of unit tested software.
+Skills in the development of web applications and/or web services using Python, with experience in Flask or Django preferred.
+Skills in the development of scientific Python applications, with experience in NumPy, SciPy or Pandas preferred.
+Skills in the use of UNIX/Linux operating systems, with experience in systems administration preferred.
+Skills in the use of distributed version control systems, with experience in GitHub or Azure DevOps preferred.
+Skills in the use of automated CI/CD pipelines, with experience in GitHub Actions preferred.
+Skills in the use and deployment of Cloud services, with experience in AWS preferred.
+Skills in providing excellent customer service both internally and externally.
+Skills in decision making and problem solving. 
+Ability to maintain the security or integrity of critical infrastructure within Texas.
+Ability to meet agency in-office requirements.
+Ability to adhere to work schedules, follow procedures with respect to leave and submit accurate timesheets by prescribed deadlines. 
+Ability to make mature, objective decisions and identify areas of potential problems. 
+Ability to perform effectively and willingly when changes occur in scope and nature of the work and work environment.
+Ability to perform routine and non-routine work assignments accurately and on-time with little or no supervision. 
+Ability to perform assigned duties and improve work habits and/or output. 
+Ability to complete assigned work, on time, neatly and with infrequent errors. 
+Ability to interpret policies, procedures, and regulations.
+Ability to provide prompt, courteous and accurate assistance and clear and concise communication to all stakeholders both verbally and in writing. 
+Ability to work and cooperate with others in a team environment.
+Ability to manage multiple tasks.
+Ability to stand/sit/move to perform activities such as retrieve/replace files in a large file system for boxes up to 30 lbs.
+Ability to operate a vehicle (state or personal) for state business and maintain a driver's license and driving record that complies with state and agency requirements.
+Ability to work shifts that may exceed 8 hours, including early mornings, nights, and weekends.
+Ability to train others.
+REMARKS
+
+A copy of required academic transcripts and/or licensures and driving record must be submitted at the time of hire. Failure to provide required documentation will result in no further consideration for employment.
+Important Notice: Otherwise qualified candidates who are ultimately considered for potential employment with the Texas Water Development Board may be the subject of a request for any criminal history record information maintained by the Texas Department of Public Safety (DPS). Evidence of a criminal conviction or other relevant information obtained from the DPS shall not automatically disqualify an individual from employment with the Texas Water Development Board.
+APPLICATIONS SUBMITTED THROUGH WORK IN TEXAS
+
+Work In Texas (WIT) applicants must complete the supplemental questions to be considered for the posting. To complete the supplemental questions please go to CAPPS Recruit to register or login and access your profile.
+REFERENCE CHECKS
+
+Reference checks will be conducted on top candidate for the position and may include outreach to current and/or former supervisors. Reference checks for top candidates currently employed by the TWDB will include outreach to current supervisors.
+EQUAL OPPORTUNITY 
+
+The Texas Water Development Board does not discriminate on basis of race, color, national origin, sex, religion, sexual orientation, age, or disability in employment or provision of services, programs, or activities.
+SELECTIVE SERVICE
+
+Males born on or after January 1, 1960, will be required to present proof of Selective Service registration on the first day of employment or proof of exemption from Selective Service registration requirement. 
+FINAL EMPLOYMENT OFFERS 
+
+All offers of employment are contingent upon the candidate having legal authorization to work in the United States. Failure to present such authorization within the time specified by the U.S. Department of Labor will result in the offer being rescinded. 
+FOREIGN CREDENTIALS
+
+An evaluation of your coursework must be uploaded if you have obtained a degree(s) from a school outside of the United States; otherwise, you will not receive credit for degree progress and completion.
+SPONSORSHIP
+
+Candidates must be eligible to work in the United States without requiring sponsorship. 
+STATE OF TEXAS APPLICATION
+
+Resumes will not be accepted in place of a completed State of Texas application unless indicated.
+E-VERIFY
+
+TWDB participates in E-Verify! Information from each new employee's Form I-9 will be provided to the Social Security Administration (SSA) and, if necessary, the Department of Homeland Security (DHS) to confirm work authorization. 
+EMPLOYMENT AT-WILL
+
+Employment with the Texas Water Development Board (TWDB) is on an at- will basis.
+AMERICANS WITH DISABILITIES ACT
+
+The TWDB is in compliance with the Americans with Disabilities Act and makes reasonable accommodations for applicants and employees with disabilities. If a reasonable accommodation is needed to participate in the job application or interview process, to perform essential job functions, and/or to receive other benefits of employment, please contact the Human Resources Division for assistance at (512) 475-2142. Deaf and hard of hearing applicants may contact our office via Relay Texas at 1-800-735-2989 (TTY/TDD).
+HEADQUARTERS LOCATION AND CONTACT INFORMATION
+
+Texas Water Development Board
+Stephen F. Austin Building
+1700 North Congress Avenue
+Austin, Texas 78701
+hr@twdb.texas.gov
+Phone: (512) 475-2142
