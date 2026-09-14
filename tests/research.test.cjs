@@ -11,7 +11,7 @@ const context = vm.createContext({
 for (const filename of ["app.js", "viz-geography.js", "viz.js", "research.js"]) {
   vm.runInContext(fs.readFileSync(path.join(__dirname, "..", filename), "utf8"), context);
 }
-const api = vm.runInContext("({ getResearchJobs, researchAnalyzeDescriptions, researchGroups, researchSummaryText, researchNormalizeText, parseJobsCsv, parseCompaniesCsv, joinJobsWithCompanies, isAppliedJob, isReferenceJob })", context);
+const api = vm.runInContext("({ getResearchJobs, researchAnalyzeDescriptions, researchGroups, researchDescriptionSections, researchCandidateCorpus, researchDescriptionGroups, researchCandidateMetrics, researchRankedMetrics, researchEvidenceSnippets, researchNormalizeText, parseJobsCsv, parseCompaniesCsv, joinJobsWithCompanies, isAppliedJob, isReferenceJob })", context);
 const plain = (value) => JSON.parse(JSON.stringify(value));
 
 test("research defaults to unapplied and reference market evidence", () => {
@@ -27,30 +27,61 @@ test("research defaults to unapplied and reference market evidence", () => {
   assert.deepEqual(plain(api.getResearchJobs(rows, { role: "Researcher", industry: "Tech" }).map((job) => job.id)), ["active", "reference"]);
 });
 
-test("description signals use job coverage instead of inflated repetitions", () => {
+test("description signals use job coverage, expanded skills, and automatic phrases", () => {
   const jobs = [{ id: "one" }, { id: "two" }, { id: "empty" }];
-  const analysis = api.researchAnalyzeDescriptions([
-    { job: jobs[0], text: "Python, Python and SQL support data analysis and stakeholder engagement." },
-    { job: jobs[1], text: "Use Python for spatial analysis and communicate effectively with stakeholders." },
+  const entries = [
+    { job: jobs[0], text: "Requirements: Python, Python, Spark and route optimization support data analysis and stakeholder engagement." },
+    { job: jobs[1], text: "Required experience: Python, Spark and route optimization. Communicate effectively with stakeholders." },
     { job: jobs[2], text: "" },
-  ]);
+  ];
+  const analysis = api.researchAnalyzeDescriptions(entries);
   const python = analysis.signals.find((signal) => signal.label === "Python");
+  const spark = analysis.signals.find((signal) => signal.label === "Spark / Hadoop");
   const stakeholder = analysis.signals.find((signal) => signal.label === "Stakeholder engagement");
   assert.equal(analysis.described.length, 2);
   assert.equal(python.jobCount, 2);
   assert.equal(python.mentions, 3);
+  assert.equal(spark.jobCount, 2);
   assert.equal(stakeholder.jobCount, 2);
-  assert.ok(analysis.frequent.some((term) => term.label === "python" && term.jobCount === 2));
+  const corpus = api.researchCandidateCorpus(entries, "requirements");
+  assert.ok(corpus.candidates.some((term) => term.label === "route optimization" && term.jobCount === 2));
 });
 
-test("collective brief and grouped counts remain traceable", () => {
-  const jobs = [{ id: "a", roles: ["Data Analyst", "Researcher"], industry: "Tech" }, { id: "b", roles: ["Researcher"], industry: "Tech" }];
-  const entries = jobs.map((job, index) => ({ job, text: index ? "Python and project management." : "Python, SQL, and data analysis." }));
-  const analysis = api.researchAnalyzeDescriptions(entries);
-  assert.match(api.researchSummaryText(jobs, analysis), /Across 2 descriptions/);
+test("role profiles calculate within-group coverage and lift against the market", () => {
+  const jobs = [
+    { id: "a", roles: ["Data Analyst", "Researcher"], industry: "Tech" },
+    { id: "b", roles: ["Data Analyst"], industry: "Tech" },
+    { id: "c", roles: ["Researcher"], industry: "Policy / Think Tank" },
+  ];
+  const entries = [
+    { job: jobs[0], text: "Requirements: Python and SQL." },
+    { job: jobs[1], text: "Qualifications: SQL and Tableau." },
+    { job: jobs[2], text: "Required: qualitative research methods." },
+  ];
+  const corpus = api.researchCandidateCorpus(entries, "requirements");
+  const analyst = api.researchDescriptionGroups(corpus.analyzed, "role").find((group) => group.label === "Data Analyst");
+  const metrics = api.researchCandidateMetrics(corpus, analyst.entries);
+  const sql = metrics.find((metric) => metric.label === "SQL");
+  assert.equal(sql.jobCount, 2);
+  assert.equal(sql.coverage, 1);
+  assert.ok(sql.lift > 10);
+  assert.equal(api.researchRankedMetrics(metrics)[0].label, "SQL");
   assert.equal(api.researchGroups(jobs, "role").find((group) => group.label === "Researcher").jobs.length, 2);
-  assert.equal(api.researchGroups(jobs, "industry")[0].jobs.length, 2);
+  assert.equal(api.researchGroups(jobs, "industry").reduce((sum, group) => sum + group.jobs.length, 0), 3);
   assert.equal(api.researchNormalizeText("Bachelor’s"), "bachelor's");
+});
+
+test("requirement and responsibility extraction keeps source evidence traceable", () => {
+  const job = { id: "one", company: "Example", title: "GIS Analyst" };
+  const text = "Responsibilities\nBuild maps and maintain spatial databases.\nQualifications\nExperience with ArcGIS Pro and Python is required.";
+  const sections = api.researchDescriptionSections(text);
+  assert.ok(sections.responsibilities.some((line) => /Build maps/.test(line)));
+  assert.ok(sections.requirements.some((line) => /ArcGIS Pro/.test(line)));
+  const corpus = api.researchCandidateCorpus([{ job, text }], "requirements");
+  const arcgis = corpus.candidates.find((candidate) => candidate.label === "ArcGIS");
+  const evidence = api.researchEvidenceSnippets({ ...arcgis, groupSize: 1 }, [{ job, text }], "requirements");
+  assert.equal(evidence.length, 1);
+  assert.match(evidence[0].snippet, /ArcGIS Pro/);
 });
 
 test("current repository data reconciles with Research scope and descriptions", () => {

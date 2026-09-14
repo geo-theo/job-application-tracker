@@ -7,21 +7,14 @@ const researchState = {
   jobType: "All",
   role: "All",
   industry: "All",
-  keywordView: "all",
+  analysisDimension: "role",
+  analysisGroup: "",
+  analysisSection: "requirements",
   salaryGroup: "industry",
   salaryMode: "annualized",
 };
 
 let researchRenderRequest = 0;
-
-const RESEARCH_SIGNAL_VIEWS = [
-  ["all", "Resume signals"],
-  ["technology", "Tools & technology"],
-  ["capability", "Core capabilities"],
-  ["domain", "Domain knowledge"],
-  ["qualification", "Qualifications"],
-  ["frequent", "Frequent words"],
-];
 
 // Aliases are matched case-insensitively and each job counts once per signal.
 // The display label stays resume-friendly while common spelling variants are
@@ -40,7 +33,38 @@ const RESEARCH_SIGNALS = [
   ["postgis", "PostGIS / PostgreSQL", "technology", ["postgis", "postgresql", "postgres"]],
   ["qgis", "QGIS", "technology", ["qgis"]],
   ["fme", "FME", "technology", ["safe software fme", "fme"]],
-  ["git", "Git", "technology", ["github", "gitlab", "git version control"]],
+  ["git", "Git", "technology", ["git", "github", "gitlab", "version control"]],
+  ["sas", "SAS", "technology", ["sas"]],
+  ["spark", "Spark / Hadoop", "technology", ["apache spark", "spark", "hadoop", "hdfs", "mapreduce", "hive"]],
+  ["snowflake", "Snowflake", "technology", ["snowflake"]],
+  ["bigquery", "BigQuery", "technology", ["bigquery", "google bigquery"]],
+  ["modern-data-stack", "Modern data stack", "technology", ["modern data stack", "fivetran", "dbt", "looker", "sigma computing"]],
+  ["jupyter", "Jupyter", "technology", ["jupyter", "jupyter notebook", "jupyter notebooks"]],
+  ["python-data", "Python data libraries", "technology", ["pandas", "numpy", "scipy", "geopandas"]],
+  ["ml-frameworks", "ML frameworks", "technology", ["tensorflow", "pytorch", "scikit-learn", "sklearn"]],
+  ["docker", "Docker", "technology", ["docker", "containerization", "containerized"]],
+  ["kubernetes", "Kubernetes", "technology", ["kubernetes", "k8s"]],
+  ["linux", "Linux / Unix", "technology", ["linux", "unix"]],
+  ["cicd", "CI/CD", "technology", ["ci/cd", "continuous integration", "github actions", "azure devops"]],
+  ["html-css", "HTML / CSS", "technology", ["html", "html5", "css", "css3"]],
+  ["java", "Java", "technology", ["java"]],
+  ["cpp", "C / C++", "technology", ["c++", "cplusplus", "c programming"]],
+  ["csharp", "C# / .NET", "technology", ["c#", ".net", "dotnet"]],
+  ["go-rust-scala", "Go / Rust / Scala", "technology", ["golang", "go language", "rust", "scala"]],
+  ["frontend", "React / Angular", "technology", ["react", "react.js", "angular", "angularjs"]],
+  ["python-web", "Django / Flask", "technology", ["django", "flask"]],
+  ["mapbox-carto", "Mapbox / CARTO", "technology", ["mapbox", "carto"]],
+  ["web-mapping-libraries", "Web mapping libraries", "technology", ["leaflet", "openlayers", "cesium", "maplibre"]],
+  ["earth-engine", "Google Earth Engine", "technology", ["google earth engine", "earth engine"]],
+  ["gdal", "GDAL", "technology", ["gdal", "ogr"]],
+  ["alteryx", "Alteryx", "technology", ["alteryx"]],
+  ["creative-tools", "Adobe / Figma", "technology", ["adobe creative suite", "adobe illustrator", "adobe photoshop", "figma"]],
+  ["sap", "SAP", "technology", ["sap"]],
+  ["esri-field", "Esri field apps", "technology", ["survey123", "field maps", "arcgis field apps", "quickcapture"]],
+  ["esri-story", "StoryMaps / Experience Builder", "technology", ["storymaps", "story maps", "experience builder", "web appbuilder"]],
+  ["esri-dev", "ArcPy / Arcade / ModelBuilder", "technology", ["arcpy", "arcade", "modelbuilder", "arcgis api for python"]],
+  ["gps", "GPS / GNSS", "technology", ["gps", "gnss", "global positioning system"]],
+  ["cad-bim", "CAD / BIM", "technology", ["cad", "autocad", "bim", "revit"]],
   ["api", "APIs", "technology", ["api", "apis", "application programming interface", "restful"]],
   ["etl", "ETL / data pipelines", "technology", ["etl", "data pipeline", "data pipelines"]],
   ["machine-learning", "Machine learning", "technology", ["machine learning", "deep learning"]],
@@ -51,7 +75,7 @@ const RESEARCH_SIGNALS = [
   ["data-analysis", "Data analysis", "capability", ["data analysis", "data analytics", "analyze data", "analyse data"]],
   ["spatial-analysis", "Spatial analysis", "capability", ["spatial analysis", "geospatial analysis", "geographic analysis"]],
   ["project-management", "Project management", "capability", ["project management", "program management", "manage projects"]],
-  ["communication", "Communication", "capability", ["communication skills", "written and verbal communication", "written communication", "verbal communication", "communicate effectively"]],
+  ["communication", "Communication", "capability", ["communication skills", "written and verbal communication", "written communication", "verbal communication", "communicate effectively", "explain technical concepts", "explain technical"]],
   ["collaboration", "Cross-functional collaboration", "capability", ["cross-functional", "cross functional", "collaborative environment", "collaborate with"]],
   ["stakeholders", "Stakeholder engagement", "capability", ["stakeholder management", "stakeholder engagement", "stakeholders", "clients"]],
   ["problem-solving", "Problem solving", "capability", ["problem-solving", "problem solving", "analytical thinking", "critical thinking"]],
@@ -60,12 +84,50 @@ const RESEARCH_SIGNALS = [
   ["leadership", "Leadership", "capability", ["leadership", "lead teams", "team lead", "mentor"]],
   ["requirements", "Requirements gathering", "capability", ["requirements gathering", "business requirements", "user requirements", "requirements analysis"]],
   ["quality", "Quality assurance", "capability", ["quality assurance", "quality control", "data quality", "qa/qc"]],
+  ["attention-detail", "Attention to detail", "capability", ["attention to detail", "detail-oriented", "detail oriented"]],
+  ["presentation", "Presentation / storytelling", "capability", ["presentation skills", "present findings", "present insights", "data storytelling", "storytelling"]],
+  ["customer-service", "Customer service", "capability", ["customer service", "customer-facing", "client service"]],
+  ["independent-work", "Independent work", "capability", ["work independently", "independent worker", "self-directed", "self directed", "self-starter"]],
+  ["time-management", "Time management", "capability", ["time management", "manage competing priorities", "multiple priorities", "meet deadlines"]],
+  ["process-improvement", "Process improvement", "capability", ["process improvement", "continuous improvement", "workflow optimization"]],
+  ["agile", "Agile / Scrum", "capability", ["agile", "scrum", "sprint planning"]],
+  ["reporting", "Reporting", "capability", ["develop reports", "create reports", "reporting tools", "analytical reports"]],
+  ["active-listening", "Active listening", "capability", ["active listening", "listen actively"]],
   ["cartography", "Cartography", "domain", ["cartography", "cartographic", "map production", "map design"]],
   ["statistics", "Statistics", "domain", ["statistics", "statistical analysis", "quantitative analysis", "quantitative methods"]],
   ["data-governance", "Data governance", "domain", ["data governance", "metadata management", "data stewardship"]],
   ["supply-chain", "Supply chain", "domain", ["supply chain", "logistics", "demand planning"]],
   ["intelligence", "Intelligence analysis", "domain", ["intelligence analysis", "geospatial intelligence", "geopolitical analysis", "open source intelligence", "osint"]],
   ["policy", "Policy analysis", "domain", ["policy analysis", "public policy", "policy research"]],
+  ["data-modeling", "Data modeling", "domain", ["data modeling", "data modelling", "database design", "dimensional modeling"]],
+  ["data-cleaning", "Data cleaning", "domain", ["data cleaning", "cleaning data", "data wrangling", "data munging", "deduplication"]],
+  ["data-management", "Data management", "domain", ["data management", "manage data", "data administration"]],
+  ["data-integration", "Data integration", "domain", ["data integration", "integrating data", "data interoperability"]],
+  ["data-collection", "Data collection", "domain", ["data collection", "collecting data", "data acquisition"]],
+  ["data-processing", "Data processing", "domain", ["data processing", "processing data", "analyzing data", "analysing data"]],
+  ["data-science", "Data science", "domain", ["data science", "data scientist"]],
+  ["business-intelligence", "Business intelligence", "domain", ["business intelligence", "bi tools", "bi platform"]],
+  ["predictive-modeling", "Predictive modeling", "domain", ["predictive modeling", "predictive analytics", "prescriptive modeling", "forecasting models"]],
+  ["experimental-design", "Experimental design / A-B testing", "domain", ["experimental design", "a/b testing", "ab testing", "randomized controlled trial"]],
+  ["survey-methods", "Survey methods", "domain", ["survey methodology", "survey design", "sample design", "survey research"]],
+  ["web-development", "Web development", "domain", ["web development", "web applications", "web application development", "frontend development", "back-end development", "backend development"]],
+  ["software-development", "Software development", "domain", ["software development", "software engineering", "application development"]],
+  ["web-mapping", "Web mapping", "domain", ["web mapping", "interactive mapping", "web gis", "geospatial web applications"]],
+  ["geoprocessing", "Geoprocessing", "domain", ["geoprocessing", "geospatial processing", "spatial processing"]],
+  ["raster-vector", "Raster / vector data", "domain", ["raster and vector", "raster data", "vector data", "geotiff", "shapefile"]],
+  ["projections", "Coordinate systems / projections", "domain", ["coordinate systems", "coordinate reference systems", "map projections", "spatial reference"]],
+  ["imagery", "Imagery analysis", "domain", ["imagery analysis", "image analysis", "image processing", "geospatial imagery"]],
+  ["lidar-sar", "LiDAR / SAR", "domain", ["lidar", "synthetic aperture radar", "sar imagery", "hyperspectral imagery"]],
+  ["geodatabase", "Geodatabases", "domain", ["geodatabase", "geodatabases", "enterprise geodatabase", "sde database"]],
+  ["metadata", "Metadata", "domain", ["metadata", "data catalog", "data lineage"]],
+  ["location-intelligence", "Location intelligence", "domain", ["location intelligence", "location analytics", "site selection"]],
+  ["asset-management", "Asset management", "domain", ["asset management", "infrastructure assets", "utility network"]],
+  ["economics", "Economic analysis", "domain", ["economic analysis", "econometrics", "socioeconomic data", "economic research"]],
+  ["public-health", "Public health", "domain", ["public health", "health data", "epidemiology", "population health"]],
+  ["transportation", "Transportation analysis", "domain", ["transportation planning", "transportation data", "traffic analysis", "transit data"]],
+  ["conservation", "Conservation / environment", "domain", ["conservation", "environmental planning", "natural resources", "wildlife management"]],
+  ["computer-science", "Computer science", "qualification", ["computer science", "computer engineering", "information science"]],
+  ["social-science", "Social science / public administration", "qualification", ["social science", "social sciences", "public administration"]],
   ["bachelors", "Bachelor’s degree", "qualification", ["bachelor's degree", "bachelors degree", "baccalaureate degree", "undergraduate degree"]],
   ["masters", "Master’s degree", "qualification", ["master's degree", "masters degree", "graduate degree"]],
   ["experience-years", "Years of experience", "qualification", ["years of experience", "years experience", "year of experience"]],
@@ -73,24 +135,49 @@ const RESEARCH_SIGNALS = [
   ["drivers-license", "Driver’s license", "qualification", ["driver's license", "drivers license", "driving licence", "valid license"]],
   ["travel", "Travel", "qualification", ["willingness to travel", "ability to travel", "travel required", "domestic travel", "international travel"]],
   ["work-authorization", "Work authorization", "qualification", ["work authorization", "authorized to work", "sponsorship", "right to work"]],
+  ["certification", "Professional certification", "qualification", ["gis certificate", "professional certification", "gisp", "pmp certification", "certified professional"]],
+  ["citizenship", "Citizenship requirement", "qualification", ["u.s. citizen", "us citizen", "united states citizen", "citizenship required"]],
+  ["background-check", "Background check", "qualification", ["background check", "criminal background", "pre-employment screening"]],
 ].map(([key, label, category, aliases]) => ({ key, label, category, aliases }));
 
-const RESEARCH_STOP_WORDS = new Set(`
-  about above across after again against all also among and any are because been
-  before being below between both but can company could day each employer equal
-  etc for from further had has have having here how into its itself job jobs just
-  may more most must new not now only other our out over per position preferred
-  provide required requirements role same should such than that the their them
-  then there these they this those through under use used using very want was were
-  what when where which while who will with within would you your years work working
-  ability experience including include includes knowledge opportunity responsibilities
-  responsible qualified qualifications candidate candidates employment employee
-  employees support team teams duties status time full part information related
-  based ensure develop help needs level strong excellent demonstrated minimum
-  please apply applications applicant perform performing successful equivalent
-  various well make maintain benefits salary range location organization service
-  services program programs project projects management data analysis skills
+const RESEARCH_PHRASE_EDGE_WORDS = new Set(`
+  about above across after again against all also among an and any are as at be
+  because been before being below between both but by can could each either for
+  from further had has have having here how if in into is it its itself may more
+  most must no nor not of on only or other our out over per same should so some
+  such than that the their them then there these they this those through to under
+  up very was we were what when where which while who will with within would you
+  your job jobs role position candidate candidates company employer opportunity
+  preferred required requirements responsibility responsibilities qualification
+  qualifications duties include includes including related equivalent various
+  a s experience degree field relevant working using knowledge ability minimum
+  meet conditions employment desired desirable years year one two three four five
+  six seven eight nine ten team teams member members support helping help successful
+  best practices following areas high plus considered demonstrated strong excellent
+  application applications applicant applicants apply cover letter time off salary
+  pay compensation benefit benefits insurance leave vacation bonus page pages
+  percent probationary federal united states dependent upon advanced new similar
+  proficiency source sources tool tools technology technologies
 `.trim().split(/\s+/));
+
+const RESEARCH_PHRASE_REJECT = [
+  /equal opportunity/,
+  /qualified applicants?/,
+  /terms and conditions/,
+  /sexual orientation/,
+  /gender identity/,
+  /national origin/,
+  /reasonable accommodation/,
+  /without regard/,
+  /benefits package/,
+  /apply for this/,
+  /click here/,
+  /privacy policy/,
+  /minimum qualifications?/,
+  /preferred qualifications?/,
+  /years? of experience/,
+  /data sources?/,
+];
 
 function researchRoleLabels(job) {
   const roles = job.roles?.length ? job.roles : job.roleOther ? ["Other"] : [];
@@ -132,41 +219,159 @@ function researchPhraseCount(text, aliases) {
   return aliases.reduce((total, alias) => total + (text.match(researchPhrasePattern(alias)) || []).length, 0);
 }
 
-function researchFrequentTerms(entries) {
-  const terms = new Map();
-  entries.forEach(({ job, text }) => {
-    const seen = new Set();
-    const words = researchNormalizeText(text).match(/[a-z][a-z+#.]{2,}/g) || [];
-    words.forEach((word) => {
-      const normalized = word.replace(/^www\.?$/, "").replace(/\.$/, "");
-      if (normalized.length < 4 || RESEARCH_STOP_WORDS.has(normalized) || /^https?$/.test(normalized)) return;
-      if (!terms.has(normalized)) terms.set(normalized, { key: normalized, label: normalized, mentions: 0, jobs: [] });
-      const term = terms.get(normalized);
-      term.mentions += 1;
-      if (!seen.has(normalized)) term.jobs.push(job);
-      seen.add(normalized);
+function researchDescriptionSections(text) {
+  const sections = { all: [], requirements: [], responsibilities: [] };
+  let active = "";
+  const requirementHeading = /^(?:(?:minimum|required|preferred|basic|desired|job|key)\s*)?(?:qualifications?|requirements?|skills(?:\s+and\s+(?:competencies|abilities))?|education(?:\s+and\s+experience)?|what\s+you(?:'ll)?\s+bring|who\s+you\s+are)/i;
+  const responsibilityHeading = /^(?:(?:essential|key|primary|job)\s*)?(?:responsibilities|duties|what\s+you(?:'ll)?\s+do|what\s+you\s+will\s+do|the\s+role|day.to.day)/i;
+  const neutralHeading = /^(?:benefits|compensation|salary|about\s+(?:us|the\s+company|our)|equal\s+opportunity|physical\s+(?:demands|requirements)|working\s+conditions)/i;
+  const lines = String(text || "")
+    .replace(/\r/g, "")
+    .replace(/[•●▪◦]/g, "\n")
+    .split(/\n+/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+  lines.forEach((line) => {
+    let forced = "";
+    if (requirementHeading.test(line)) forced = active = "requirements";
+    else if (responsibilityHeading.test(line)) forced = active = "responsibilities";
+    else if (neutralHeading.test(line)) active = "";
+    const units = line.split(/(?<=[.!?;])\s+(?=[A-Z0-9])/).map((unit) => unit.trim()).filter((unit) => unit.length > 3);
+    units.forEach((unit) => {
+      sections.all.push(unit);
+      const normalized = researchNormalizeText(unit);
+      const inferred = forced || (/\b(?:required|requirements?|qualifications?|proficien|experience (?:with|in|using)|knowledge of|familiarity with|ability to|must be|degree|certification)\b/.test(normalized)
+        ? "requirements"
+        : /\b(?:responsib|duties|you will|you'll|design|build|develop|create|analy[sz]e|manage|lead|coordinate|prepare|produce|maintain|implement|support)\b/.test(normalized)
+          ? "responsibilities"
+          : active);
+      if (inferred) sections[inferred].push(unit);
     });
   });
-  return [...terms.values()]
-    .map((term) => ({ ...term, jobCount: term.jobs.length, category: "frequent" }))
-    .filter((term) => term.jobCount >= Math.min(2, entries.length))
-    .sort((a, b) => b.jobCount - a.jobCount || b.mentions - a.mentions || a.label.localeCompare(b.label));
+  return sections;
 }
 
-function researchAnalyzeDescriptions(entries) {
+function researchSectionUnits(entry, section = "all") {
+  const sections = entry.sections || researchDescriptionSections(entry.text);
+  return sections[section] || [];
+}
+
+function researchAnalyzeDescriptions(entries, section = "all") {
   const described = entries.filter((entry) => String(entry.text || "").trim());
-  const normalized = described.map((entry) => ({ ...entry, normalizedText: researchNormalizeText(entry.text) }));
+  const withSections = described.map((entry) => ({ ...entry, sections: researchDescriptionSections(entry.text) }));
+  const analyzed = withSections
+    .map((entry) => ({ ...entry, normalizedText: researchNormalizeText(researchSectionUnits(entry, section).join(" ")) }))
+    .filter((entry) => entry.normalizedText.trim());
   const signals = RESEARCH_SIGNALS.map((signal) => {
-    const matches = normalized.map((entry) => ({ entry, count: researchPhraseCount(entry.normalizedText, signal.aliases) })).filter(({ count }) => count);
+    const matches = analyzed.map((entry) => ({ entry, count: researchPhraseCount(entry.normalizedText, signal.aliases) })).filter(({ count }) => count);
     return {
       ...signal,
+      source: "recognized",
       mentions: matches.reduce((sum, match) => sum + match.count, 0),
       jobCount: matches.length,
       jobs: matches.map(({ entry }) => entry.job),
     };
   }).filter((signal) => signal.jobCount)
     .sort((a, b) => b.jobCount - a.jobCount || b.mentions - a.mentions || a.label.localeCompare(b.label));
-  return { described, signals, frequent: researchFrequentTerms(described) };
+  return { described: withSections, analyzed, signals };
+}
+
+function researchMinePhrases(analyzed) {
+  const phrases = new Map();
+  const recognized = new Set(RESEARCH_SIGNALS.flatMap((signal) => [signal.label, ...signal.aliases]).map(researchNormalizeText));
+  const recognizedPhrases = [...recognized].filter((phrase) => phrase.length > 2 && !["api", "apis", "gis", "sql", "sas", "git", "java", "linux", "unix", "aws", "gcp", "cad", "bim", "gps", "gnss"].includes(phrase));
+  analyzed.forEach((entry) => {
+    const seen = new Set();
+    researchSectionUnits(entry, "all").forEach((unit) => {
+      // Do not build phrases across commas, colons, parentheticals, or list
+      // separators; those boundary-spanning n-grams are usually nonsense.
+      researchNormalizeText(unit).split(/[,:;()[\]{}|/]+|\s+[–—]\s+/).forEach((segment) => {
+        const tokens = segment.replace(/'s\b/g, "").match(/[a-z0-9][a-z0-9+#.-]*/g) || [];
+        for (const size of [2, 3]) {
+          for (let index = 0; index <= tokens.length - size; index += 1) {
+            const slice = tokens.slice(index, index + size);
+            const phrase = slice.join(" ").replace(/\.$/, "");
+            if (slice.some((word) => RESEARCH_PHRASE_EDGE_WORDS.has(word) || /\d/.test(word))) continue;
+            if (phrase.length < 7 || phrase.length > 58) continue;
+            if (recognized.has(phrase) || recognizedPhrases.some((known) => phrase.includes(known)) || RESEARCH_PHRASE_REJECT.some((pattern) => pattern.test(phrase))) continue;
+            if (!phrases.has(phrase)) phrases.set(phrase, { key: `phrase:${phrase}`, label: phrase, aliases: [phrase], category: "discovered", source: "discovered", mentions: 0, jobs: [] });
+            const candidate = phrases.get(phrase);
+            candidate.mentions += 1;
+            if (!seen.has(phrase)) candidate.jobs.push(entry.job);
+            seen.add(phrase);
+          }
+        }
+      });
+    });
+  });
+  const minimum = analyzed.length >= 5 ? 2 : 1;
+  return [...phrases.values()]
+    .map((phrase) => ({ ...phrase, jobCount: phrase.jobs.length }))
+    .filter((phrase) => phrase.jobCount >= minimum)
+    .sort((a, b) => b.jobCount - a.jobCount || b.mentions - a.mentions || a.label.localeCompare(b.label));
+}
+
+function researchCandidateCorpus(entries, section = "requirements") {
+  const analysis = researchAnalyzeDescriptions(entries, section);
+  // Mine only the selected requirement/responsibility sentences, already stored
+  // as `all` on these reduced entries, so discovered phrases share the same scope.
+  const reduced = analysis.analyzed.map((entry) => ({
+    ...entry,
+    sections: { all: researchSectionUnits(entry, section) },
+  }));
+  return { ...analysis, candidates: [...analysis.signals, ...researchMinePhrases(reduced)] };
+}
+
+function researchDescriptionGroups(entries, dimension) {
+  const groups = new Map();
+  entries.forEach((entry) => {
+    const labels = dimension === "role"
+      ? researchRoleLabels(entry.job).length ? researchRoleLabels(entry.job) : ["Unspecified role"]
+      : [getIndustryDisplay(entry.job) || "Unspecified industry"];
+    labels.forEach((label) => {
+      if (!groups.has(label)) groups.set(label, { label, entries: [] });
+      groups.get(label).entries.push(entry);
+    });
+  });
+  return [...groups.values()].sort((a, b) => b.entries.length - a.entries.length || a.label.localeCompare(b.label));
+}
+
+function researchCandidateMetrics(corpus, groupEntries) {
+  const groupIds = new Set(groupEntries.map((entry) => entry.job.id));
+  const allIds = new Set(corpus.analyzed.map((entry) => entry.job.id));
+  const restSize = Math.max(0, allIds.size - groupIds.size);
+  return corpus.candidates.map((candidate) => {
+    const groupJobs = candidate.jobs.filter((job) => groupIds.has(job.id));
+    const restJobs = candidate.jobs.filter((job) => allIds.has(job.id) && !groupIds.has(job.id));
+    const coverage = groupIds.size ? groupJobs.length / groupIds.size : 0;
+    const restCoverage = restSize ? restJobs.length / restSize : 0;
+    return {
+      ...candidate,
+      jobs: groupJobs,
+      jobCount: groupJobs.length,
+      coverage,
+      restCoverage,
+      lift: restSize ? (coverage + 0.025) / (restCoverage + 0.025) : null,
+      groupSize: groupIds.size,
+    };
+  }).filter((candidate) => candidate.jobCount);
+}
+
+function researchRankedMetrics(metrics, source = "recognized") {
+  const weights = { technology: 1.3, domain: 1.18, capability: 0.92, qualification: 0.82, discovered: 1 };
+  return metrics.filter((metric) => metric.source === source)
+    .map((metric) => ({ ...metric, score: metric.coverage * (weights[metric.category] || 1) * (1 + Math.min(Math.max((metric.lift || 1) - 1, 0), 3) * 0.12) }))
+    .sort((a, b) => b.score - a.score || b.jobCount - a.jobCount || a.label.localeCompare(b.label));
+}
+
+function researchDistinctPhrases(metrics, limit = 14) {
+  const selected = [];
+  metrics.forEach((metric) => {
+    if (selected.length >= limit) return;
+    if (selected.some((existing) => existing.label.includes(metric.label) || metric.label.includes(existing.label))) return;
+    selected.push(metric);
+  });
+  return selected;
 }
 
 function researchGroups(records, dimension) {
@@ -185,21 +390,6 @@ function researchGroups(records, dimension) {
     });
   });
   return [...groups.values()].sort((a, b) => b.jobs.length - a.jobs.length || a.label.localeCompare(b.label));
-}
-
-function researchSummaryText(records, analysis) {
-  if (!analysis.described.length) return "Add job descriptions to turn this market sample into a resume and cover-letter brief.";
-  const top = (category, count) => analysis.signals.filter((signal) => signal.category === category).slice(0, count).map((signal) => signal.label);
-  const technologies = top("technology", 3);
-  const capabilities = top("capability", 3);
-  const domains = top("domain", 2);
-  const qualifications = top("qualification", 2);
-  const clauses = [];
-  if (technologies.length) clauses.push(`tool demand centers on ${researchJoin(technologies)}`);
-  if (capabilities.length) clauses.push(`employers repeatedly emphasize ${researchJoin(capabilities)}`);
-  if (domains.length) clauses.push(`the strongest domain signals are ${researchJoin(domains)}`);
-  if (qualifications.length) clauses.push(`common screening language includes ${researchJoin(qualifications)}`);
-  return `Across ${analysis.described.length} descriptions in this ${records.length}-job market view, ${clauses.length ? clauses.join("; ") : "the postings do not yet share enough recognized signals for a reliable pattern"}.`;
 }
 
 function researchJoin(items) {
@@ -330,7 +520,7 @@ async function renderResearch() {
   dashboard.append(
     intro,
     stats,
-    researchKeywordPanel(records, entries, analysis),
+    researchKeywordPanel(entries),
     researchDistributionPanel(records, "role", "02", "Roles in demand", "See which role families recur across the market sample.", "research-role-panel"),
     researchDistributionPanel(records, "industry", "03", "Industries represented", "Compare the industries contributing opportunities to this view.", "research-industry-panel"),
     researchSalaryPanel(records),
@@ -340,67 +530,48 @@ async function renderResearch() {
   els.jobList.replaceChildren(dashboard);
 }
 
-function researchKeywordPanel(records, entries, analysis) {
-  const panel = vizPanel("01", "What are employers asking for?", "A collective read of the descriptions, ranked by the share of postings that mention each signal.", "research-keyword-panel research-wide");
-  const brief = vizElement("div", "research-brief");
-  const briefText = researchSummaryText(records, analysis);
-  const briefCopy = vizElement("button", "research-copy", "Copy brief");
-  briefCopy.type = "button";
-  briefCopy.addEventListener("click", async () => {
-    try {
-      await navigator.clipboard.writeText(briefText);
-      showToast("Market brief copied.");
-    } catch (error) {
-      showToast("Copy was blocked by the browser.");
-    }
-  });
-  const briefHeading = vizElement("div");
-  briefHeading.append(vizElement("span", "research-brief-label", "COLLECTIVE BRIEF"), vizElement("p", "", briefText));
-  brief.append(briefHeading, briefCopy);
-
-  const controls = vizElement("div", "viz-controls");
-  controls.append(vizSelect("Show", RESEARCH_SIGNAL_VIEWS, researchState.keywordView, (value) => {
-    researchState.keywordView = value;
-    draw();
-  }));
+function researchKeywordPanel(entries) {
+  const panel = vizPanel("01", "What does each part of the market ask for?", "Compare role- or industry-specific skill profiles instead of flattening unlike jobs into one generic list.", "research-keyword-panel research-wide");
+  const controls = vizElement("div", "research-analysis-controls");
   const content = vizElement("div", "research-keywords");
-  panel.append(brief, controls, content);
+  panel.append(controls, content);
   const showJobs = vizDrilldown(panel);
+
   function draw() {
     content.replaceChildren();
     panel.querySelector(".viz-drilldown").hidden = true;
-    const source = researchState.keywordView === "frequent"
-      ? analysis.frequent
-      : analysis.signals.filter((signal) => researchState.keywordView === "all" || signal.category === researchState.keywordView);
-    const visible = source.slice(0, 18);
-    if (!analysis.described.length) {
-      content.append(vizElement("p", "viz-empty", "No saved descriptions in this view. Add or import description text to reveal shared language."));
+    const corpus = researchCandidateCorpus(entries, researchState.analysisSection);
+    const groups = researchDescriptionGroups(corpus.analyzed, researchState.analysisDimension);
+    if (researchState.analysisGroup && !groups.some((group) => group.label === researchState.analysisGroup)) researchState.analysisGroup = "";
+    const groupLabel = researchState.analysisDimension === "role" ? "roles" : "industries";
+    controls.replaceChildren(
+      vizSelect("Compare descriptions by", [["role", "Role"], ["industry", "Industry"]], researchState.analysisDimension, (value) => {
+        researchState.analysisDimension = value;
+        researchState.analysisGroup = "";
+        draw();
+      }),
+      vizSelect("Focus", [["", `Compare top ${groupLabel}`], ...groups.map((group) => [group.label, group.label])], researchState.analysisGroup, (value) => {
+        researchState.analysisGroup = value;
+        draw();
+      }),
+      vizSelect("Read from", [["requirements", "Requirements & qualifications"], ["responsibilities", "Responsibilities & duties"], ["all", "Whole descriptions"]], researchState.analysisSection, (value) => {
+        researchState.analysisSection = value;
+        draw();
+      }),
+    );
+    if (!corpus.described.length) {
+      content.append(vizElement("p", "viz-empty", "No saved descriptions in this view. Add or import description text to build role and industry profiles."));
       return;
     }
-    if (!visible.length) {
-      content.append(vizElement("p", "viz-empty", "No recognized signals in this category for the current filters."));
+    if (!corpus.analyzed.length) {
+      content.append(vizElement("p", "viz-empty", "No matching requirement or responsibility sections were detected. Try Whole descriptions."));
       return;
     }
-    const list = vizElement("div", "research-signal-list");
-    const max = Math.max(...visible.map((signal) => signal.jobCount), 1);
-    visible.forEach((signal) => {
-      const button = vizElement("button", "research-signal-row");
-      button.type = "button";
-      const term = vizElement("span", "research-signal-name", signal.label);
-      const count = vizElement("strong", "", `${signal.jobCount} · ${vizPercent(signal.jobCount, analysis.described.length)}`);
-      const track = vizElement("span", "research-signal-track");
-      const fill = vizElement("span");
-      fill.style.width = `${signal.jobCount / max * 100}%`;
-      track.append(fill);
-      button.append(term, count, track);
-      button.title = `${signal.label} appears in ${signal.jobCount} of ${analysis.described.length} descriptions (${signal.mentions} total mentions). Show matching jobs.`;
-      button.setAttribute("aria-label", button.title);
-      button.addEventListener("click", () => showJobs(signal.label, signal.jobs));
-      list.append(button);
-    });
-    content.append(list, vizElement("p", "viz-note", researchState.keywordView === "frequent"
-      ? "Frequent words are computed directly from the selected descriptions after common job-posting language is removed. Each percentage is description coverage, not raw repetition."
-      : "Signals use a transparent local phrase dictionary and count a job once even when the phrase repeats. Select a row to inspect the evidence; use Frequent words to see uncategorized language."));
+    content.append(vizElement("p", "research-analysis-coverage", `${corpus.analyzed.length} of ${corpus.described.length} descriptions contain language classified as ${researchSectionLabel(researchState.analysisSection)}. Percentages below use that evidence set.`));
+    const focused = groups.find((group) => group.label === researchState.analysisGroup);
+    if (focused) researchFocusedProfile(content, focused, corpus, showJobs, draw);
+    else researchProfileOverview(content, groups, corpus, draw);
+
     const missing = entries.filter((entry) => !String(entry.text || "").trim()).map((entry) => entry.job);
     if (missing.length) {
       const missingButton = vizElement("button", "research-missing", `${missing.length} ${missing.length === 1 ? "job has" : "jobs have"} no description text →`);
@@ -411,6 +582,179 @@ function researchKeywordPanel(records, entries, analysis) {
   }
   draw();
   return panel;
+}
+
+function researchSectionLabel(section) {
+  return section === "requirements" ? "requirements" : section === "responsibilities" ? "responsibilities" : "the selected descriptions";
+}
+
+function researchProfileOverview(content, groups, corpus, redraw) {
+  const intro = vizElement("div", "research-analysis-intro");
+  intro.append(
+    vizElement("strong", "", `Skill profiles for ${researchState.analysisDimension === "role" ? "each role" : "each industry"}`),
+    vizElement("span", "", "Coverage shows how often a skill appears inside that group. Distinctive signals appear more often there than in the rest of the selected market."),
+  );
+  const grid = vizElement("div", "research-profile-grid");
+  groups.slice(0, 12).forEach((group) => {
+    const metrics = researchCandidateMetrics(corpus, group.entries);
+    const common = researchRankedMetrics(metrics).filter((metric) => metric.category !== "qualification").slice(0, 6);
+    const distinctive = researchDistinctiveMetric(metrics);
+    const card = vizElement("article", "research-profile-card");
+    const open = vizElement("button", "research-profile-open");
+    open.type = "button";
+    open.append(
+      vizElement("strong", "", group.label),
+      vizElement("span", "", `${group.entries.length} ${group.entries.length === 1 ? "description" : "descriptions"} →`),
+    );
+    open.addEventListener("click", () => {
+      researchState.analysisGroup = group.label;
+      redraw();
+      content.scrollIntoView({ block: "start" });
+    });
+    const skills = vizElement("div", "research-profile-skills");
+    common.forEach((metric) => skills.append(researchProfileChip(metric)));
+    card.append(open, skills);
+    if (distinctive) card.append(vizElement("p", "research-distinctive", `${researchLiftLabel(distinctive)}: ${distinctive.label}`));
+    if (!common.length) card.append(vizElement("p", "viz-note", "Not enough repeated skill language yet."));
+    grid.append(card);
+  });
+  content.append(intro, grid);
+  if (groups.length > 12) content.append(vizElement("p", "viz-note", `Showing the 12 largest groups. Use Focus to inspect any of the ${groups.length} groups with matching description evidence.`));
+}
+
+function researchProfileChip(metric) {
+  const chip = vizElement("span", `research-profile-chip signal-${metric.category}`);
+  chip.append(vizElement("span", "", metric.label), vizElement("strong", "", vizPercent(metric.jobCount, metric.groupSize)));
+  return chip;
+}
+
+function researchDistinctiveMetric(metrics) {
+  const minimumJobs = metrics[0]?.groupSize >= 5 ? 2 : 1;
+  return metrics.filter((metric) => metric.source === "recognized" && metric.jobCount >= minimumJobs && metric.coverage >= 0.2 && metric.lift >= 1.5)
+    .sort((a, b) => b.lift * b.coverage - a.lift * a.coverage || b.jobCount - a.jobCount)[0] || null;
+}
+
+function researchLiftLabel(metric) {
+  if (!metric.lift || metric.lift < 1.5) return "Shared signal";
+  if (metric.restCoverage === 0) return "Unique in this sample";
+  return `${Number(metric.lift.toFixed(1))}× more common here`;
+}
+
+function researchFocusedProfile(content, group, corpus, showJobs, redraw) {
+  const metrics = researchCandidateMetrics(corpus, group.entries);
+  const recognized = researchRankedMetrics(metrics);
+  const discovered = researchDistinctPhrases(researchRankedMetrics(metrics, "discovered")
+    .filter((metric) => metric.coverage >= Math.min(0.34, 2 / Math.max(metric.groupSize, 1))));
+  const heading = vizElement("div", "research-focused-heading");
+  const back = vizElement("button", "research-back", `← Compare ${researchState.analysisDimension === "role" ? "roles" : "industries"}`);
+  back.type = "button";
+  back.addEventListener("click", () => {
+    researchState.analysisGroup = "";
+    redraw();
+  });
+  const title = vizElement("div");
+  title.append(vizElement("span", "research-brief-label", `${researchState.analysisDimension.toUpperCase()} PROFILE`), vizElement("h3", "", group.label),
+    vizElement("p", "", researchProfileSummary(group, recognized)));
+  const copy = vizElement("button", "research-copy", "Copy profile");
+  copy.type = "button";
+  copy.addEventListener("click", () => researchCopyProfile(group, recognized, discovered));
+  heading.append(back, title, copy);
+
+  const categories = vizElement("div", "research-skill-columns");
+  [
+    ["technology", "Tools & platforms"],
+    ["domain", "Methods & domain knowledge"],
+    ["capability", "Ways of working"],
+    ["qualification", "Credentials & conditions"],
+  ].forEach(([category, label]) => {
+    const column = vizElement("section", "research-skill-column");
+    column.append(vizElement("h4", "", label));
+    const matching = recognized.filter((metric) => metric.category === category).slice(0, 9);
+    matching.forEach((metric) => column.append(researchMetricButton(metric, () => renderEvidence(metric))));
+    if (!matching.length) column.append(vizElement("p", "viz-note", "No repeated recognized signals."));
+    categories.append(column);
+  });
+
+  const discoveredSection = vizElement("section", "research-discovered");
+  discoveredSection.append(vizElement("h4", "", "Automatically discovered phrases"),
+    vizElement("p", "", "Exact multi-word language mined from this group, including terms outside the recognized skill library."));
+  const phraseList = vizElement("div", "research-discovered-list");
+  discovered.forEach((metric) => phraseList.append(researchMetricButton(metric, () => renderEvidence(metric))));
+  if (!discovered.length) phraseList.append(vizElement("p", "viz-note", "No multi-word phrase repeats enough to report for this sample."));
+  discoveredSection.append(phraseList);
+
+  const evidence = vizElement("section", "research-evidence");
+  content.append(heading, categories, discoveredSection, evidence);
+  const initial = recognized.find((metric) => ["technology", "domain"].includes(metric.category)) || recognized[0] || discovered[0];
+  if (initial) renderEvidence(initial);
+
+  function renderEvidence(metric) {
+    evidence.replaceChildren();
+    const evidenceHeader = vizElement("div", "research-evidence-header");
+    const evidenceTitle = vizElement("div");
+    evidenceTitle.append(vizElement("span", "research-brief-label", "SOURCE EVIDENCE"), vizElement("h4", "", metric.label),
+      vizElement("p", "", `${metric.jobCount} of ${metric.groupSize} descriptions · ${vizPercent(metric.jobCount, metric.groupSize)} coverage${metric.lift >= 1.5 ? ` · ${researchLiftLabel(metric).toLocaleLowerCase()}` : ""}`));
+    const jobsButton = vizElement("button", "research-copy", `Show ${metric.jobCount} matching ${metric.jobCount === 1 ? "job" : "jobs"}`);
+    jobsButton.type = "button";
+    jobsButton.addEventListener("click", () => showJobs(`${group.label} · ${metric.label}`, metric.jobs));
+    evidenceHeader.append(evidenceTitle, jobsButton);
+    const snippets = researchEvidenceSnippets(metric, group.entries, researchState.analysisSection);
+    const list = vizElement("div", "research-evidence-list");
+    snippets.forEach(({ entry, snippet }) => {
+      const item = vizElement("article", "research-evidence-item");
+      item.append(vizElement("strong", "", `${entry.job.company || "Unnamed company"} · ${entry.job.title || "Untitled job"}`), vizElement("blockquote", "", snippet));
+      list.append(item);
+    });
+    if (!snippets.length) list.append(vizElement("p", "viz-note", "The phrase was counted, but no short evidence excerpt could be isolated."));
+    evidence.append(evidenceHeader, list);
+  }
+}
+
+function researchProfileSummary(group, recognized) {
+  const top = recognized.filter((metric) => ["technology", "domain"].includes(metric.category)).slice(0, 4);
+  const ways = recognized.filter((metric) => metric.category === "capability").slice(0, 2);
+  const clauses = [];
+  if (top.length) clauses.push(`the strongest technical and domain signals are ${researchJoin(top.map((metric) => `${metric.label} (${vizPercent(metric.jobCount, metric.groupSize)})`))}`);
+  if (ways.length) clauses.push(`recurring ways of working include ${researchJoin(ways.map((metric) => metric.label))}`);
+  return `${group.entries.length} classified ${group.entries.length === 1 ? "description" : "descriptions"}; ${clauses.join("; ") || "not enough repeated signals for a stable summary"}.`;
+}
+
+async function researchCopyProfile(group, recognized, discovered) {
+  const lines = [
+    `${group.label} — ${researchProfileSummary(group, recognized)}`,
+    ...[["Tools", "technology"], ["Methods/domain", "domain"], ["Ways of working", "capability"], ["Credentials", "qualification"]]
+      .map(([label, category]) => `${label}: ${recognized.filter((metric) => metric.category === category).slice(0, 8).map((metric) => `${metric.label} (${vizPercent(metric.jobCount, metric.groupSize)})`).join(", ")}`),
+    `Discovered phrases: ${discovered.slice(0, 10).map((metric) => metric.label).join(", ")}`,
+  ];
+  try {
+    await navigator.clipboard.writeText(lines.join("\n"));
+    showToast("Role or industry profile copied.");
+  } catch (error) {
+    showToast("Copy was blocked by the browser.");
+  }
+}
+
+function researchMetricButton(metric, onClick) {
+  const button = vizElement("button", `research-metric signal-${metric.category}`);
+  button.type = "button";
+  button.append(vizElement("span", "", metric.label), vizElement("strong", "", vizPercent(metric.jobCount, metric.groupSize)));
+  if (metric.lift >= 1.5) button.append(vizElement("small", "", researchLiftLabel(metric)));
+  button.title = `${metric.label}: ${metric.jobCount} of ${metric.groupSize} descriptions. Select to read source evidence.`;
+  button.addEventListener("click", onClick);
+  return button;
+}
+
+function researchEvidenceSnippets(metric, entries, section) {
+  const matchingIds = new Set(metric.jobs.map((job) => job.id));
+  return entries.filter((entry) => matchingIds.has(entry.job.id)).flatMap((entry) => {
+    const sections = researchDescriptionSections(entry.text);
+    const units = sections[section]?.length ? sections[section] : sections.all;
+    const unit = units.find((candidate) => metric.aliases.some((alias) => researchPhraseCount(researchNormalizeText(candidate), [alias])));
+    if (!unit) return [];
+    const clean = unit.replace(/\s+/g, " ").trim();
+    const snippet = clean.length > 260 ? `${clean.slice(0, 257).replace(/\s+\S*$/, "")}…` : clean;
+    return [{ entry, snippet }];
+  }).slice(0, 3);
 }
 
 function researchDistributionPanel(records, dimension, number, title, description, className) {
