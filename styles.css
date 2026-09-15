@@ -1201,6 +1201,15 @@ button:focus-visible {
   font-weight: 750;
 }
 
+.job-opening-deadline {
+  gap: 5px;
+}
+
+.date-line {
+  display: grid;
+  gap: 1px;
+}
+
 .na-value {
   color: var(--red);
   font-weight: 900;

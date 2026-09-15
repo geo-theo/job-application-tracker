@@ -702,7 +702,7 @@ function updatePageControls() {
 }
 
 function usesScopedTypeFilter(page = activePage) {
-  return ["favorites", "applied", "reference"].includes(page);
+  return ["upcoming", "favorites", "applied", "reference"].includes(page);
 }
 
 function usesPriorityFilter(page = activePage) {
@@ -2328,16 +2328,38 @@ function createPayCell(job) {
 }
 
 function createDeadlineCell(job) {
+  if (activePage === "upcoming" && job.datePosted) {
+    const dates = cell("", "job-date job-opening-deadline");
+    dates.append(createDateLine("Opens", formatDate(job.datePosted)));
+    const deadlineValue = createDeadlineValue(job);
+    if (deadlineValue) dates.append(createDateLine("Deadline", deadlineValue));
+    return dates;
+  }
+
   const deadline = cell("");
-  if (job.deadline) {
-    deadline.textContent = formatDate(job.deadline);
-  } else if (getDeadlineChoice(job) === "ASAP") {
+  const deadlineValue = createDeadlineValue(job);
+  if (deadlineValue) deadline.append(deadlineValue);
+  return deadline;
+}
+
+function createDeadlineValue(job) {
+  if (job.deadline) return formatDate(job.deadline);
+  if (getDeadlineChoice(job) === "ASAP") {
     const asap = document.createElement("span");
     asap.className = "asap";
     asap.textContent = "ASAP";
-    deadline.append(asap);
+    return asap;
   }
-  return deadline;
+  return "";
+}
+
+function createDateLine(label, value) {
+  const line = document.createElement("span");
+  line.className = "date-line";
+  const labelEl = document.createElement("small");
+  labelEl.textContent = label;
+  line.append(labelEl, value);
+  return line;
 }
 
 function labelledDateCell(label, date, showMissing = false) {
