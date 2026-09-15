@@ -1,11 +1,10 @@
 "use strict";
 
-const DB_NAME = "job-application-tracker";
-const DB_VERSION = 2;
-const JOB_STORE = "jobs";
-const COMPANY_STORE = "companies";
-const DESCRIPTION_STORE = "descriptions";
-const SETTINGS_STORE = "settings";
+// CSV files in the connected folder are the source of truth. These records
+// exist only for this page session; never open or restore the old browser DB.
+const sessionJobs = new Map();
+const sessionCompanies = new Map();
+const sessionDescriptions = new Map();
 
 const ROLE_OPTIONS = [
   "Cartographer",
@@ -314,12 +313,12 @@ const els = {
   toast: document.querySelector("#toast"),
 };
 
-let db;
 let jobs = [];
 let companies = [];
 let editingId = "";
 let editingCompanyId = "";
 let directoryHandle = null;
+let connectingFolder = false;
 let toastTimer = null;
 let isResettingForm = false;
 let isResettingCompanyForm = false;
@@ -352,17 +351,8 @@ async function init() {
   syncPageFromHash();
   updateFilterControls();
   resetForm();
-  els.saveButton.disabled = true;
-  try {
-    db = await openDatabase();
-    setFolderGate(true);
-  } catch (error) {
-    setFolderGate(
-      true,
-      "The folder could not be opened. Try connecting again.",
-    );
-    showToast("Local database could not be opened.");
-  }
+  resetSessionRecords();
+  setFolderGate(true);
 }
 
 function bindEvents() {
@@ -1014,97 +1004,53 @@ async function handleCompanySubmit(event) {
   closeCompanyFormDialog();
   showToast(
     syncStatus === "failed"
-      ? "Company saved locally. Folder export failed."
+      ? "Company is only saved in this tab. Folder export failed; export before closing."
       : "Company saved.",
   );
 }
 
-function openDatabase() {
-  return new Promise((resolve, reject) => {
-    const request = indexedDB.open(DB_NAME, DB_VERSION);
-    request.onupgradeneeded = () => {
-      const nextDb = request.result;
-      if (!nextDb.objectStoreNames.contains(JOB_STORE)) {
-        nextDb.createObjectStore(JOB_STORE, { keyPath: "id" });
-      }
-      if (!nextDb.objectStoreNames.contains(COMPANY_STORE)) {
-        nextDb.createObjectStore(COMPANY_STORE, { keyPath: "id" });
-      }
-      if (!nextDb.objectStoreNames.contains(DESCRIPTION_STORE)) {
-        nextDb.createObjectStore(DESCRIPTION_STORE, { keyPath: "jobId" });
-      }
-      if (!nextDb.objectStoreNames.contains(SETTINGS_STORE)) {
-        nextDb.createObjectStore(SETTINGS_STORE, { keyPath: "key" });
-      }
-    };
-    request.onsuccess = () => resolve(request.result);
-    request.onerror = () => reject(request.error);
-  });
-}
-
-function transaction(storeNames, mode = "readonly") {
-  return db.transaction(storeNames, mode);
-}
-
-function getStore(storeName, mode = "readonly") {
-  return transaction(storeName, mode).objectStore(storeName);
-}
-
-function idbRequest(request) {
-  return new Promise((resolve, reject) => {
-    request.onsuccess = () => resolve(request.result);
-    request.onerror = () => reject(request.error);
-  });
+function resetSessionRecords() {
+  sessionJobs.clear();
+  sessionCompanies.clear();
+  sessionDescriptions.clear();
+  jobs = [];
+  companies = [];
+  editingId = "";
+  editingCompanyId = "";
+  directoryHandle = null;
 }
 
 async function getAllJobs() {
-  return idbRequest(getStore(JOB_STORE).getAll());
+  return structuredClone([...sessionJobs.values()]);
 }
 
 async function getAllCompanies() {
-  return idbRequest(getStore(COMPANY_STORE).getAll());
+  return structuredClone([...sessionCompanies.values()]);
 }
 
 async function putJob(job) {
-  return idbRequest(getStore(JOB_STORE, "readwrite").put(job));
+  sessionJobs.set(job.id, structuredClone(job));
 }
 
 async function putCompany(company) {
-  return idbRequest(getStore(COMPANY_STORE, "readwrite").put(company));
+  sessionCompanies.set(company.id, structuredClone(company));
 }
 
 async function deleteJobRecord(id) {
-  const tx = transaction([JOB_STORE, DESCRIPTION_STORE], "readwrite");
-  tx.objectStore(JOB_STORE).delete(id);
-  tx.objectStore(DESCRIPTION_STORE).delete(id);
-  return transactionDone(tx);
+  sessionJobs.delete(id);
+  sessionDescriptions.delete(id);
 }
 
 async function getDescription(jobId) {
-  const record = await idbRequest(getStore(DESCRIPTION_STORE).get(jobId));
-  return record?.text ?? "";
+  return sessionDescriptions.get(jobId) || "";
 }
 
 async function putDescription(jobId, text) {
-  return idbRequest(
-    getStore(DESCRIPTION_STORE, "readwrite").put({
-      jobId,
-      text,
-      updatedAt: new Date().toISOString(),
-    }),
-  );
+  sessionDescriptions.set(jobId, text);
 }
 
 async function deleteDescription(jobId) {
-  return idbRequest(getStore(DESCRIPTION_STORE, "readwrite").delete(jobId));
-}
-
-function transactionDone(tx) {
-  return new Promise((resolve, reject) => {
-    tx.oncomplete = () => resolve();
-    tx.onerror = () => reject(tx.error);
-    tx.onabort = () => reject(tx.error);
-  });
+  sessionDescriptions.delete(jobId);
 }
 
 async function refreshJobs() {
@@ -1256,7 +1202,7 @@ async function handleSubmit(event) {
   const syncStatus = await safeSyncToConnectedFolder();
   showToast(
     syncStatus === "failed"
-      ? "Job saved locally. Folder export failed."
+      ? "Job is only saved in this tab. Folder export failed; export before closing."
       : "Job saved.",
   );
 }
@@ -1274,7 +1220,7 @@ async function handleDelete() {
   const syncStatus = await safeSyncToConnectedFolder();
   showToast(
     syncStatus === "failed"
-      ? "Job deleted locally. Folder export failed."
+      ? "Job is only deleted in this tab. Folder export failed."
       : "Job deleted.",
   );
 }
@@ -2798,6 +2744,7 @@ function extractReadableText(html) {
 }
 
 async function connectFolder() {
+  if (connectingFolder) return;
   if (!("showDirectoryPicker" in window)) {
     setFolderGate(
       true,
@@ -2807,28 +2754,28 @@ async function connectFolder() {
     return;
   }
 
+  connectingFolder = true;
+  let pickedFolder = false;
   try {
     const pickedHandle = await window.showDirectoryPicker({
       mode: "readwrite",
     });
+    pickedFolder = true;
+    setFolderGate(true, "Loading jobs from the selected folder…");
+    resetSessionRecords();
+    resetForm();
+    await refreshJobs();
     const permission = await requestDirectoryPermission(pickedHandle);
     if (permission !== "granted") {
-      directoryHandle = null;
+      setFolderGate(true, "Folder permission is needed to continue.");
       showToast("Folder permission is needed to import and export files.");
       return;
     }
-    directoryHandle = await getDataDirectoryHandle(pickedHandle);
-    const importResult = await importFromConnectedFolder(directoryHandle);
+    const dataHandle = await getDataDirectoryHandle(pickedHandle);
+    const importResult = await importFromConnectedFolder(dataHandle);
     await refreshJobs();
-    const syncStatus = await safeSyncToConnectedFolder();
-    if (syncStatus === "failed") {
-      setFolderGate(
-        true,
-        "The folder connected, but synchronization failed. Try again.",
-      );
-      showToast("Folder connected, but export failed.");
-      return;
-    }
+    // Connecting only reads files. Write back when the user saves or exports.
+    directoryHandle = dataHandle;
     setFolderGate(false);
     const importedParts = [];
     if (importResult.jobs) {
@@ -2847,8 +2794,16 @@ async function connectFolder() {
         : "Folder connected.",
     );
   } catch (error) {
-    setFolderGate(true);
-    showToast("Folder connection canceled.");
+    if (!pickedFolder && error.name === "AbortError") {
+      showToast("Folder connection canceled.");
+      return;
+    }
+    resetSessionRecords();
+    await refreshJobs();
+    setFolderGate(true, "The folder could not be read. Try connecting again.");
+    showToast("Folder connection failed. No files were changed.");
+  } finally {
+    connectingFolder = false;
   }
 }
 
@@ -2927,17 +2882,7 @@ async function getExistingDirectoryHandle(parentHandle, directoryName) {
 async function getDataDirectoryHandle(pickedHandle) {
   if (pickedHandle.name === "db") return pickedHandle;
   const dbHandle = await getExistingDirectoryHandle(pickedHandle, "db");
-  if (!dbHandle) return pickedHandle;
-  const [jobsCsv, companiesCsv] = await Promise.all([
-    readTextFile(dbHandle, "jobs.csv"),
-    readTextFile(dbHandle, "companies.csv"),
-  ]);
-  if (jobsCsv !== null || companiesCsv !== null) return dbHandle;
-  const descriptionsDir = await getExistingDirectoryHandle(
-    dbHandle,
-    "job-descriptions",
-  );
-  return descriptionsDir || pickedHandle;
+  return dbHandle || pickedHandle;
 }
 
 async function exportCsv() {
@@ -3024,7 +2969,7 @@ async function importCsv(event) {
     const syncStatus = await safeSyncToConnectedFolder();
     showToast(
       syncStatus === "failed"
-        ? `${imported.length} imported locally. Folder export failed.`
+        ? `${imported.length} imported into this tab. Folder export failed; export before closing.`
         : `${imported.length} ${imported.length === 1 ? "job" : "jobs"} imported.`,
     );
   } catch (error) {
@@ -3044,7 +2989,7 @@ async function importCompaniesCsv(event) {
     const syncStatus = await safeSyncToConnectedFolder();
     showToast(
       syncStatus === "failed"
-        ? `${result.saved} companies imported locally. Folder export failed.`
+        ? `${result.saved} companies imported into this tab. Folder export failed; export before closing.`
         : `${result.saved} ${result.saved === 1 ? "company" : "companies"} imported.`,
     );
   } catch (error) {
@@ -3059,96 +3004,32 @@ async function importFromConnectedFolder(handle) {
     readTextFile(handle, "jobs.csv"),
     readTextFile(handle, "companies.csv"),
   ]);
-  if (!jobsCsv && !companiesCsv) {
-    return { jobs: 0, companies: 0, descriptions: 0 };
+  const imported = jobsCsv ? parseJobsCsv(jobsCsv) : [];
+  const importedCompanies = companiesCsv ? parseCompaniesCsv(companiesCsv) : [];
+  const descriptionsDir = await getExistingDirectoryHandle(handle, "job-descriptions");
+  const descriptions = new Map();
+  for (const job of imported) {
+    const text = descriptionsDir && job.descriptionFilename
+      ? await readTextFile(descriptionsDir, job.descriptionFilename)
+      : null;
+    job.descriptionLength = text?.length || 0;
+    if (text !== null) descriptions.set(job.id, text);
   }
 
-  const companyImport = companiesCsv
-    ? await importCompanies(parseCompaniesCsv(companiesCsv))
-    : { saved: 0, idMap: new Map() };
-  const imported = jobsCsv ? parseJobsCsv(jobsCsv) : [];
+  // Replace the entire session, including for an empty folder. No timestamp
+  // comparison against a previous folder or browser records is allowed here.
+  resetSessionRecords();
+  const companyImport = await importCompanies(importedCompanies);
   imported.forEach((job) => {
     job.companyId = companyImport.idMap.get(job.companyId) || job.companyId;
   });
-  const existingJobs = await getAllJobs();
-  const existingById = new Map(existingJobs.map((job) => [job.id, job]));
-  const jobsToImport = imported.filter((job) =>
-    shouldImportJob(job, existingById.get(job.id)),
-  );
-  const descriptionsDir = await getExistingDirectoryHandle(
-    handle,
-    "job-descriptions",
-  );
-  let descriptionCount = 0;
-
-  if (descriptionsDir) {
-    for (const job of jobsToImport) {
-      if (!job.descriptionFilename) continue;
-      const text = await readTextFile(descriptionsDir, job.descriptionFilename);
-      if (text === null) continue;
-      await putDescription(job.id, text);
-      job.descriptionLength = text.length;
-      descriptionCount += 1;
-    }
-  }
-
   const savedJobs = await importJobs(imported);
+  for (const [jobId, text] of descriptions) await putDescription(jobId, text);
   return {
     jobs: savedJobs,
     companies: companyImport.saved,
-    descriptions: descriptionCount,
+    descriptions: descriptions.size,
   };
-}
-
-async function importFromRepositoryFiles() {
-  const [jobsCsv, companiesCsv] = await Promise.all([
-    fetchTextFile("db/jobs.csv"),
-    fetchTextFile("db/companies.csv"),
-  ]);
-  if (!jobsCsv && !companiesCsv) {
-    return { jobs: 0, companies: 0, descriptions: 0 };
-  }
-
-  const companyImport = companiesCsv
-    ? await importCompanies(parseCompaniesCsv(companiesCsv))
-    : { saved: 0, idMap: new Map() };
-  const imported = jobsCsv ? parseJobsCsv(jobsCsv) : [];
-  imported.forEach((job) => {
-    job.companyId = companyImport.idMap.get(job.companyId) || job.companyId;
-  });
-  const descriptionCount = await importDescriptionsFromRepository(imported);
-  const savedJobs = await importJobs(imported);
-  return {
-    jobs: savedJobs,
-    companies: companyImport.saved,
-    descriptions: descriptionCount,
-  };
-}
-
-async function importDescriptionsFromRepository(imported) {
-  const counts = await Promise.all(
-    imported.map(async (job) => {
-      if (!job.descriptionFilename) return 0;
-      const text = await fetchTextFile(
-        `db/job-descriptions/${encodeURIComponent(job.descriptionFilename)}`,
-      );
-      if (text === null) return 0;
-      await putDescription(job.id, text);
-      job.descriptionLength = text.length;
-      return 1;
-    }),
-  );
-  return counts.reduce((total, count) => total + count, 0);
-}
-
-async function fetchTextFile(path) {
-  try {
-    const response = await fetch(path, { cache: "no-store" });
-    if (!response.ok) return null;
-    return response.text();
-  } catch (error) {
-    return null;
-  }
 }
 
 async function importJobs(imported) {

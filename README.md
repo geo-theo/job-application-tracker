@@ -45,7 +45,7 @@ Each component of the tool should have the features listed below.
 
 ## Implementation notes
 
-This is a static GitHub Pages app, so it cannot write directly back to the GitHub repository without a separate backend service. The app uses browser IndexedDB as the live database, with separate stores for jobs, companies, and job descriptions.
+This is a static GitHub Pages app, so it cannot write directly back to the GitHub repository without a separate backend service. The connected folder's CSV files and job descriptions are the source of truth. Every launch starts empty and requires **Connect Folder**. Records are held only in memory for the current tab; old browser IndexedDB entries are never read or merged.
 
 `companies.csv` contains `id`, `createdAt`, `updatedAt`, `name`, `industry`, `sector`, `mission`, `website`, and `rank`. The timestamps are system-managed merge metadata. Company names are unique case-insensitively, custom Industry/Sector entries are stored directly in those columns, and Mission values use the same semicolon-separated convention as other multi-select fields. Company ranks are Favorite, Target, Normal, and Agency.
 
@@ -58,12 +58,14 @@ Data controls in the board let you:
 
 ## Git sync workflow
 
-Use Git as the portable source of truth and the browser database as a local cache:
+Use Git to move the data files between computers:
 
-1. Open the app through GitHub Pages or a local server, not directly from `index.html`, so it can read `db/jobs.csv` and `db/companies.csv`.
-2. Click **Connect Folder** and select either the repository folder or its `db` folder. After that, saved jobs are written to `db/jobs.csv`, company records to `db/companies.csv`, and descriptions to `db/job-descriptions/`.
+1. Open the app through GitHub Pages or a local server in a browser with folder access support. It starts empty, with the folder connection screen.
+2. Click **Connect Folder** and select either the repository folder or its `db` folder. This replaces the current session with the selected folder's jobs, companies, and descriptions, including when the folder is empty. Connecting only reads files. Subsequent saves write jobs to `jobs.csv`, companies to `companies.csv`, and descriptions to `job-descriptions/` in that data folder.
 3. Commit and push those changed files.
-4. On another device, pull the repo and reload the app. The app imports both CSV files and joins jobs to companies by ID.
+4. On another device, pull the repo, open the app, and click **Connect Folder** to select that computer's repository or `db` folder. The app loads those CSV files and joins jobs to companies by ID. Reconnecting or reloading never restores saved browser entries.
+
+If a folder write fails, changes remain only in the current tab. Export them before closing or reconnecting.
 
 To deploy, enable GitHub Pages for the repository root. Include `index.html`, `styles.css`, `app.js`, `viz.css`, `viz.js`, `viz-geography.js`, `research.css`, `research.js`, and the `img` directory. No build step or chart CDN is required.
 
