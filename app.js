@@ -2091,7 +2091,6 @@ function createCompanyCard(company) {
   const count = document.createElement("span");
   count.className = "company-job-count";
   count.textContent = `${companyJobs.length} ${companyJobs.length === 1 ? "job" : "jobs"}`;
-  main.append(name, count);
 
   const mission = cell((company.mission || []).join(" · "), "company-mission");
   const rank = document.createElement("div");
@@ -2122,14 +2121,14 @@ function createCompanyCard(company) {
     openCompanyEditor(company.id);
   });
 
-  const jobsDetails = document.createElement("details");
-  jobsDetails.className = "company-jobs";
-  const jobsSummary = document.createElement("summary");
-  jobsSummary.textContent = companyJobs.length
-    ? `Jobs · ${companyJobs.length} ${companyJobs.length === 1 ? "job" : "jobs"}`
-    : "No linked jobs";
-  jobsDetails.append(jobsSummary);
+  const jobsPanel = document.createElement("div");
+  jobsPanel.className = "company-jobs";
+  jobsPanel.hidden = true;
   if (companyJobs.length) {
+    const jobsHeading = document.createElement("p");
+    jobsHeading.className = "company-jobs-heading";
+    jobsHeading.textContent = "Linked jobs";
+    jobsPanel.append(jobsHeading);
     const jobsList = document.createElement("div");
     jobsList.className = "company-job-list";
     companyJobs.forEach((job) => {
@@ -2159,21 +2158,37 @@ function createCompanyCard(company) {
       row.append(jobMain, jobEdit);
       jobsList.append(row);
     });
-    jobsDetails.append(jobsList);
+    jobsPanel.append(jobsList);
   }
 
   if (companyJobs.length) {
     card.classList.add("company-card-expandable");
     card.tabIndex = 0;
     card.setAttribute("aria-label", `${company.name}, ${companyJobs.length} linked jobs`);
+    const jobToggle = document.createElement("button");
+    jobToggle.type = "button";
+    jobToggle.className = "company-job-toggle";
+    jobToggle.setAttribute("aria-expanded", "false");
+    jobToggle.setAttribute("aria-controls", `company-jobs-${company.id}`);
+    jobToggle.textContent = `Show ${companyJobs.length} ${companyJobs.length === 1 ? "job" : "jobs"}`;
+    jobsPanel.id = `company-jobs-${company.id}`;
+    main.append(name, count, jobToggle);
     const toggleJobs = () => {
-      jobsDetails.open = !jobsDetails.open;
+      const isOpen = jobsPanel.hidden;
+      jobsPanel.hidden = !isOpen;
+      jobToggle.setAttribute("aria-expanded", String(isOpen));
+      jobToggle.textContent = `${isOpen ? "Hide" : "Show"} ${companyJobs.length} ${companyJobs.length === 1 ? "job" : "jobs"}`;
+      card.classList.toggle("is-expanded", isOpen);
     };
+    jobToggle.addEventListener("click", (event) => {
+      event.stopPropagation();
+      toggleJobs();
+    });
     card.addEventListener("click", (event) => {
       const target = event.target instanceof Element ? event.target : null;
       if (
-        (target && jobsDetails.contains(target)) ||
-        target?.closest("button, a, summary")
+        (target && jobsPanel.contains(target)) ||
+        target?.closest("button, a")
       ) {
         return;
       }
@@ -2186,6 +2201,8 @@ function createCompanyCard(company) {
       event.preventDefault();
       toggleJobs();
     });
+  } else {
+    main.append(name, count);
   }
 
   card.append(
@@ -2196,7 +2213,7 @@ function createCompanyCard(company) {
     rank,
     website,
     edit,
-    jobsDetails,
+    jobsPanel,
   );
   return card;
 }

@@ -938,13 +938,27 @@ button:focus-visible {
   padding-top: 10px;
 }
 
-.company-jobs summary {
-  width: fit-content;
-  padding: 4px 0;
+.company-jobs-heading {
+  margin: 0 0 6px;
   color: #3b352d;
-  cursor: pointer;
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 850;
+}
+
+.company-job-toggle {
+  width: fit-content;
+  min-height: 0;
+  padding: 2px 0;
+  border: 0;
+  background: transparent;
+  color: #255b75;
+  font-size: 0.78rem;
+  font-weight: 850;
+  text-align: left;
+}
+
+.company-job-toggle:hover {
+  text-decoration: underline;
 }
 
 .company-job-list {

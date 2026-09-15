@@ -1,0 +1,213 @@
+The Alaska Native Tribal Health Consortium is a non-profit Tribal health organization designed to meet the unique health needs of Alaska Native and American Indian people living in Alaska. In partnership with the more than 171,000 Alaska Native and American Indian people that we serve and the Tribal health organizations of the Alaska Tribal Health System, ANTHC provides world-class health services, which include comprehensive medical services at the Alaska Native Medical Center, wellness programs, disease research and prevention, rural provider training and rural water and sanitation systems construction. 
+
+ANTHC is the largest, most comprehensive Tribal health organization in the United States, and Alaska’s second-largest health employer with more than 3,100 employees offering an array of health services to people around the nation’s largest state. 
+
+Our vision: Alaska Native people are the healthiest people in the world.
+
+ANTHC offers a competitive and comprehensive Benefits Package for all Benefit Eligible Employees, which includes:
+
+Medical Insurance provided through the Federal Employee Health Benefits Program as a Tribal Employee, with over 20 plans and tiers.
+Cost-Share Dental and Vision Insurances
+Discounted Pet Insurance
+Retirement Contributions with Pre-Tax or Roth options into a 403(b).
+401(a) ANTHC Retirement Plan:  After one year of employment, ANTHC will begin making matching contributions of up to 5% of your eligible pay, based on your own contributions. In addition, you may be eligible for an annual discretionary contribution of up to 3% from the employer.
+Paid Time Off starts immediately, earning up to 6 hours per pay period, with paid time off accruals increasing based on years of service.
+Eleven Paid Holidays
+Paid Parental Leave or miscarriage/stillbirth eligibility after six months of employment
+Basic Short/Long Term Disability premiums, Accidental Death and Dismemberment (AD&D) Insurance, and Basic Life Insurance are covered 100% by ANTHC, with additional options for Short-Term Disability Buy-Up Coverage and Voluntary Life for yourself and your family members.
+Flexible Spending Accounts for Healthcare and Dependent Care.
+Ancillary Cash Benefits for accident, hospital indemnity, and critical illness.
+On-Site Child Care Facility with expert-designed classrooms for early child development and preschool.
+Employee Assistance Program with support for grief, financial counseling, mental/emotional health, and discounted legal advice.
+Tuition Discounts for you and your eligible dependents at Alaska Pacific University.
+On-Site Training Courses and Professional Development Opportunities.
+License and certification reimbursements and occupational insurance for medical staff.
+Emergency Travel Assistance
+Education Assistance or Education leave eligibility
+Discount program for travel, gym memberships, amusement parks, and more.
+Visit us online at www.anthc.org or contact Recruitment directly at HRRecruiting@anthc.org.
+
+Alaska Native Tribal Health Consortium has a hiring preference for qualified Alaska Native and American Indian applicants pursuant to P.L. 93-638 Indian Self Determination Act.
+
+Summary:
+
+Geospatial Analysts support DEHE programs and Alaska Native communities by managing geospatial data, performing mapping and analysis, and maintaining GIS infrastructure. They collaborate with project teams to deliver geospatial products that aid planning, engineering, construction, and operations. Responsibilities range from routine data tasks to advanced analysis, automation, data governance, and enterprise GIS administration, with opportunities to specialize in areas such as data management, scripting, and infrastructure management.
+
+
+Geospatial Analysts support DEHE programs and Alaska Native communities by managing geospatial data, performing mapping and analysis, and maintaining GIS infrastructure. They collaborate with project teams to deliver geospatial products that aid planning, engineering, construction, and operations. Responsibilities range from routine data tasks to advanced analysis, automation, data governance, and enterprise GIS administration, with opportunities to specialize in areas such as data management, scripting, and infrastructure management.
+Responsibilities:
+
+Geospatial Analyst I
+
+Under close supervision, performs geospatial tasks including map creation, data editing, and dataset conversion, ingestion, and maintenance. Supports project teams by coordinating data needs, timelines, and basic deliverables. Collects and validates spatial and tabular data from field tools, GPS, imagery, CAD, and public datasets and applies established QA and QC procedures. Demonstrates solid knowledge of GIS concepts, projections, attribute management, and Alaska geospatial resources, with practical experience using field data collection tools. Produces clear cartographic products and simple dashboards using established symbology and layout standards. Performs basic spatial analysis such as overlays and proximity and summarizes results clearly. Supports basic field and web applications, assists with web maps and layers, and uses scripting to assist with geoprocessing tasks. Prepares straightforward documentation for technical and non-technical audiences, participates in field work following safety practices, and stays aware of current GIS tools and methods.
+
+Geospatial Analyst II
+
+Under general supervision, applies spatial analysis methods and develops geospatial workflows that maintain and improve datasets, processes, and maps. Coordinates with project teams and stakeholders to ensure data requirements, documentation, and review cycles are met. Performs intermediate analyses including suitability, routing, change detection, interpolation, and basic spatial statistics and validates outputs with clear documentation. Produces high quality maps and dashboards and develops, configures, and supports field and web GIS applications. Designs and maintains geodatabases using naming conventions, domains, topology, and versioning. Builds data pipelines for recurring updates and publishing and automates common tasks. Supports alignment of data standards and sharing across programs and contributes to grant reporting and transparency efforts. Maintains training materials, provides coaching and workshops, plans field data collection missions, and evaluates new tools and methods to recommend workflow improvements.
+
+Geospatial Analyst III
+
+Under limited supervision, performs advanced GIS analysis, solution design, automation, and enterprise data management. Works with project teams and leadership to define geospatial approaches, data architecture needs, and long-term workflows. Develops scripts and automated processes for geoprocessing and system integration and implements monitoring for data freshness, schema validation, and enterprise or cloud updates. Manages complex datasets, services, and integrations, administers ArcGIS Enterprise, and publishes and maintains enterprise web services and layers. Applies Alaska geospatial data to advanced modeling, hazard assessment, remote sensing, or infrastructure planning. Contributes to and leads development of data governance standards, data dictionaries, and enterprise patterns. Mentors staff, reviews work products, supports cross departmental integration with systems such as asset management and permitting, and leads evaluation and adoption of emerging geospatial tools and methods.
+
+
+Geospatial Analyst I
+
+Under close supervision, performs geospatial tasks including map creation, data editing, and dataset conversion, ingestion, and maintenance. Supports project teams by coordinating data needs, timelines, and basic deliverables. Collects and validates spatial and tabular data from field tools, GPS, imagery, CAD, and public datasets and applies established QA and QC procedures. Demonstrates solid knowledge of GIS concepts, projections, attribute management, and Alaska geospatial resources, with practical experience using field data collection tools. Produces clear cartographic products and simple dashboards using established symbology and layout standards. Performs basic spatial analysis such as overlays and proximity and summarizes results clearly. Supports basic field and web applications, assists with web maps and layers, and uses scripting to assist with geoprocessing tasks. Prepares straightforward documentation for technical and non-technical audiences, participates in field work following safety practices, and stays aware of current GIS tools and methods.
+
+Geospatial Analyst II
+
+Under general supervision, applies spatial analysis methods and develops geospatial workflows that maintain and improve datasets, processes, and maps. Coordinates with project teams and stakeholders to ensure data requirements, documentation, and review cycles are met. Performs intermediate analyses including suitability, routing, change detection, interpolation, and basic spatial statistics and validates outputs with clear documentation. Produces high quality maps and dashboards and develops, configures, and supports field and web GIS applications. Designs and maintains geodatabases using naming conventions, domains, topology, and versioning. Builds data pipelines for recurring updates and publishing and automates common tasks. Supports alignment of data standards and sharing across programs and contributes to grant reporting and transparency efforts. Maintains training materials, provides coaching and workshops, plans field data collection missions, and evaluates new tools and methods to recommend workflow improvements.
+
+Geospatial Analyst III
+
+Under limited supervision, performs advanced GIS analysis, solution design, automation, and enterprise data management. Works with project teams and leadership to define geospatial approaches, data architecture needs, and long-term workflows. Develops scripts and automated processes for geoprocessing and system integration and implements monitoring for data freshness, schema validation, and enterprise or cloud updates. Manages complex datasets, services, and integrations, administers ArcGIS Enterprise, and publishes and maintains enterprise web services and layers. Applies Alaska geospatial data to advanced modeling, hazard assessment, remote sensing, or infrastructure planning. Contributes to and leads development of data governance standards, data dictionaries, and enterprise patterns. Mentors staff, reviews work products, supports cross departmental integration with systems such as asset management and permitting, and leads evaluation and adoption of emerging geospatial tools and methods.
+
+Other information:
+
+KNOWLEDGE, SKILLS, ABILITIES:
+
+· Knowledge of geospatial data types including LiDAR, SAR, imagery, elevation models, and vector datasets, as well as foundational remote sensing and spatial analysis concepts.
+
+· Knowledge of GIS principles; ArcGIS platforms including Pro, Online, and Enterprise; CAD integration approaches; and cartographic design standards.
+
+· Knowledge of Alaska-specific datasets, statewide mapping standards, geodatabase design practices, QA and QC methods, and metadata management requirements.
+
+· Knowledge of current GIS trends, data governance practices, and enterprise administration concepts.
+
+· Ability to use GIS software to create maps, dashboards, and analyses; troubleshoot workflows; and provide user support.
+
+· Skill to automate and integrate workflows using Python, ModelBuilder, REST APIs, web GIS tools, and data pipelines.
+
+· Skill to communicate clearly with technical and non-technical audiences and manage multiple priorities to meet deadlines.
+
+· Skill to apply analytical and research techniques to solve spatial problems and maintain collaborative working relationships with teams and stakeholders.
+
+MINIMUM EDUCATION QUALIFICATION
+
+All Levels
+
+Bachelor’s degree in GIS, geomatics, geography, computer science, environmental science, natural resources, or related fields. Progressive professional work-related experience, education, or training may be substituted on a year-for-year basis for college education.
+
+ 
+
+MINIMUM EXPERIENCE QUALIFICATION
+
+Geospatial Analyst I
+Non-supervisory - Zero (0) to two (2) years of relevant GIS experience, including coursework, internships, or geospatial responsibilities as part of another position. An equivalent combination of relevant education and/or training may be substituted on a year-for-year basis for experience.
+
+Geospatial Analyst II
+Non-supervisory - Minimum two (2) years of progressively responsible GIS experience and demonstrated ability to perform work independently at the Level II scope. An equivalent combination of relevant education and/or training may be substituted on a year-for-year basis for experience.
+
+Geospatial Analyst III
+Non-supervisory - Minimum five (5) years of progressively responsible GIS experience, including advanced analysis, automation, system integration, or enterprise GIS administration. An equivalent combination of relevant education and/or training may be substituted on a year-for-year basis for experience.
+
+MINIMUM CERTIFICATION QUALIFICATION
+
+N/A
+
+PREFERRED EDUCATION QUALIFICATION
+
+Geospatial Analyst I
+
+Specialized coursework or certifications in remote sensing, cartography, spatial analytics, or CAD/GIS interoperability.
+
+ 
+
+Geospatial Analyst II & III
+
+Master’s degree in GIS, geography, computer science, environmental science, natural resources, or a related discipline.
+
+Advanced training or certifications in enterprise GIS administration, system integration, automation, cloud platforms, or data governance.
+
+ 
+
+PREFERRED CERTIFICATION QUALIFICATION
+
+All Levels
+
+GIS certificate or degree from an accredited institution
+
+ 
+
+GISP
+
+Part 107 license for positions requiring drone use
+
+ADDITIONAL REQUIREMENTS
+
+N/A
+
+
+KNOWLEDGE, SKILLS, ABILITIES:
+
+· Knowledge of geospatial data types including LiDAR, SAR, imagery, elevation models, and vector datasets, as well as foundational remote sensing and spatial analysis concepts.
+
+· Knowledge of GIS principles; ArcGIS platforms including Pro, Online, and Enterprise; CAD integration approaches; and cartographic design standards.
+
+· Knowledge of Alaska-specific datasets, statewide mapping standards, geodatabase design practices, QA and QC methods, and metadata management requirements.
+
+· Knowledge of current GIS trends, data governance practices, and enterprise administration concepts.
+
+· Ability to use GIS software to create maps, dashboards, and analyses; troubleshoot workflows; and provide user support.
+
+· Skill to automate and integrate workflows using Python, ModelBuilder, REST APIs, web GIS tools, and data pipelines.
+
+· Skill to communicate clearly with technical and non-technical audiences and manage multiple priorities to meet deadlines.
+
+· Skill to apply analytical and research techniques to solve spatial problems and maintain collaborative working relationships with teams and stakeholders.
+
+
+MINIMUM EDUCATION QUALIFICATION
+
+All Levels
+
+Bachelor’s degree in GIS, geomatics, geography, computer science, environmental science, natural resources, or related fields. Progressive professional work-related experience, education, or training may be substituted on a year-for-year basis for college education.
+
+ 
+
+MINIMUM EXPERIENCE QUALIFICATION
+
+Geospatial Analyst I
+Non-supervisory - Zero (0) to two (2) years of relevant GIS experience, including coursework, internships, or geospatial responsibilities as part of another position. An equivalent combination of relevant education and/or training may be substituted on a year-for-year basis for experience.
+
+Geospatial Analyst II
+Non-supervisory - Minimum two (2) years of progressively responsible GIS experience and demonstrated ability to perform work independently at the Level II scope. An equivalent combination of relevant education and/or training may be substituted on a year-for-year basis for experience.
+
+Geospatial Analyst III
+Non-supervisory - Minimum five (5) years of progressively responsible GIS experience, including advanced analysis, automation, system integration, or enterprise GIS administration. An equivalent combination of relevant education and/or training may be substituted on a year-for-year basis for experience.
+
+MINIMUM CERTIFICATION QUALIFICATION
+
+N/A
+
+PREFERRED EDUCATION QUALIFICATION
+
+Geospatial Analyst I
+
+Specialized coursework or certifications in remote sensing, cartography, spatial analytics, or CAD/GIS interoperability.
+
+ 
+
+Geospatial Analyst II & III
+
+Master’s degree in GIS, geography, computer science, environmental science, natural resources, or a related discipline.
+
+Advanced training or certifications in enterprise GIS administration, system integration, automation, cloud platforms, or data governance.
+
+ 
+
+PREFERRED CERTIFICATION QUALIFICATION
+
+All Levels
+
+GIS certificate or degree from an accredited institution
+
+ 
+
+GISP
+
+Part 107 license for positions requiring drone use
+
+ADDITIONAL REQUIREMENTS
+
+N/A

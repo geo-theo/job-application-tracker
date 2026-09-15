@@ -1,6 +1,7 @@
 id,createdAt,updatedAt,name,industry,sector,mission,website,rank
 d7687978-32b2-484b-bb4b-ed1dcfaeb088,2026-07-26T23:34:20.179Z,2026-09-11T09:18:16.662Z,Accenture,Consulting,,Rich,,Target
 0749aa70-c090-427e-a832-cc8afccb64a1,2026-08-30T07:23:48.058Z,2026-09-10T23:47:45.767Z,ACLED,NGO,War & Conflict,Poor,,Favorite
+b9169378-2bb7-4d45-900a-f7179861b82c,2026-09-15T03:57:46.038Z,2026-09-15T03:57:46.038Z,Alaska Native Tribal Health Consortium,NGO,Health,Poor,,
 1cde1baf-9bb2-4230-b516-14207c5f2edd,2026-08-31T00:32:00.100Z,2026-09-06T05:53:46.639Z,Amazon,Tech,,Rich,,
 678707ad-ae95-46ae-8f46-bd0f9f81d1ee,2026-09-08T07:51:17.817Z,2026-09-08T11:29:55.843Z,Anheuser Busch,Consumer Products,,Rich,,
 5c3a7b53-9119-4789-95bc-91cf95f79c8f,2026-09-09T08:08:18.100Z,2026-09-09T08:08:18.100Z,Apple,,,,,
@@ -79,5 +80,5 @@ cc92addf-62b8-4250-ac7b-2aac8e371d70,2026-08-11T22:49:03.481Z,2026-08-25T05:55:1
 914421a6-4d33-4f60-9b8a-afb6306b3189,2026-07-27T09:14:11.678Z,2026-09-05T07:13:52.061Z,VINCI,Transportation,,Govt,,
 d809ad98-ce7b-4439-9fd7-54537718229c,2026-09-11T00:02:22.622Z,2026-09-11T00:04:19.807Z,Washington Post,Journalism / Media,News,Poor,https://careers.washingtonpost.com/,Target
 902fa283-82b2-47c4-940c-a04b73b35eaa,2026-07-26T04:30:09.889Z,2026-08-25T05:50:43.993Z,WBI Energy,Energy,,Rich,,
-2f73ef77-0f1c-40de-8b1b-d7b05510bf1a,2026-09-08T12:14:20.524Z,2026-09-08T12:14:20.524Z,World Bank,Intl Development,,Poor,,Favorite
+2f73ef77-0f1c-40de-8b1b-d7b05510bf1a,2026-09-08T12:14:20.524Z,2026-09-15T03:47:43.421Z,World Bank,Intl Development,Economic Development,Poor,,Favorite
 0b3d87b2-df3d-4af5-ab68-8087f96831a9,2026-08-31T00:48:43.108Z,2026-08-31T00:48:43.108Z,Young Innovations,Manufacturing,,Rich,,
