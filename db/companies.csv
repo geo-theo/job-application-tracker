@@ -9,7 +9,7 @@ b9169378-2bb7-4d45-900a-f7179861b82c,2026-09-15T03:57:46.038Z,2026-09-15T03:57:4
 69f4a27b-f81a-4378-a7db-781fdd372903,2026-09-15T06:21:39.202Z,2026-09-15T06:21:39.202Z,Caltopo,Tech,Outdoors,Rich,https://caltopo.com/about,
 3fa0d7fa-6151-4676-8b0a-580258d387d5,2026-09-10T07:16:22.008Z,2026-09-10T07:16:22.008Z,Carto,Geospatial,GIS Software,Rich,,Favorite
 a1ee3fe5-69b4-4eb2-8516-0d43577d74e4,2026-09-09T10:16:20.594Z,2026-09-09T10:16:20.594Z,Chartis Federal,MIC,Defense Technology,,,
-819b6841-07a0-432a-929d-7ee055ea7297,2026-09-10T05:42:36.427Z,2026-09-10T05:42:36.427Z,Chemonics,Intl Development,Contractor,Poor,,Favorite
+819b6841-07a0-432a-929d-7ee055ea7297,2026-09-10T05:42:36.427Z,2026-09-15T07:52:50.507Z,Chemonics,Intl Development,Big Contractor,Poor,,Favorite
 82cd7685-001f-4861-be63-00f5a2476df8,2026-09-10T08:26:48.448Z,2026-09-10T08:26:48.448Z,Cherokee Federal,,,,,
 85b18b0e-4a94-4449-a034-c93967f5bbae,2026-07-26T23:24:51.699Z,2026-08-25T05:49:59.058Z,Chevron,Energy,,Rich,,
 33acbb3c-b735-47eb-8e9a-d82ca8193c88,2026-08-15T05:34:05.988Z,2026-08-25T05:50:56.674Z,CIA,MIC,,Govt,,
@@ -54,7 +54,7 @@ b647c7de-36b7-4740-b922-9e3004075aaf,2026-09-09T07:28:10.829Z,2026-09-09T08:04:0
 b14bf2a9-0263-40ca-b00d-832ab4d726e7,2026-09-08T07:45:36.753Z,2026-09-11T08:55:17.574Z,New York Times,Journalism / Media,News,Poor,,
 dd15193b-f0a9-4c77-9e21-23b6750c5101,2026-09-11T09:26:21.894Z,2026-09-11T09:26:21.894Z,NORC at the University of Chicago,Policy / Think Tank,Research,Academia,https://www.norc.org/about/careers.html,Target
 4b522965-1fa6-40e9-b74a-541cfd512cb5,2026-09-11T10:07:16.791Z,2026-09-12T21:47:01.268Z,Oceaneering,Engineering,Manufacturing,Rich,,
-7824f226-18cb-42bc-8776-a40577f1d554,2026-09-10T05:48:42.241Z,2026-09-10T05:48:42.241Z,OnX Maps,Tech,Geospatial,Startup,,Favorite
+7824f226-18cb-42bc-8776-a40577f1d554,2026-09-10T05:48:42.241Z,2026-09-15T08:00:31.259Z,OnX Maps,Tech,Geospatial,Startup,,Favorite
 87c84fc3-897d-43f4-bca4-2e694e80ccf1,2026-09-11T10:10:12.006Z,2026-09-11T10:10:12.006Z,Pacific Northwest National Laboratory,,,,,
 2a1e2be8-363c-43b1-8f15-66f1557ed1f2,2026-09-11T08:45:04.853Z,2026-09-11T08:46:10.549Z,Planet Fitness,Tourism / Leisure,Ftiness,Rich,,
 ad63f659-ea39-42ba-baf9-0cf5d63e706b,2026-09-11T08:53:25.596Z,2026-09-11T09:51:49.645Z,Planet Labs,Geospatial,Earth Observation,Rich,,Favorite
@@ -63,11 +63,11 @@ e960d95b-e94e-43bc-bb0a-c441d6b6e9bf,2026-08-04T12:51:03.077Z,2026-08-19T22:02:0
 dc2aedb7-469e-4aa0-b49a-661c6badc9dd,2026-07-23T03:41:12.404Z,2026-09-08T23:10:56.019Z,Rocky Mountain Elk Foundation,NGO,Conservation,Environment,https://rmef.org/,Favorite
 f78070d4-c4cf-4893-92fc-89134deff13b,2026-08-22T06:43:46.150Z,2026-09-09T08:26:44.812Z,Salomon,Consumer Products,Outdoors,Rich,,Favorite
 d99c6dca-9a4a-4775-b12f-1ca2568988ad,2026-07-23T03:50:53.916Z,2026-08-25T05:17:54.945Z,Sibylline,Geopolitical Risk,,Rich,,
-3f90992e-6b45-4f19-9f4f-98705c83bc85,2026-09-10T08:38:46.967Z,2026-09-10T08:38:46.967Z,Stantec,,,,,
+3f90992e-6b45-4f19-9f4f-98705c83bc85,2026-09-10T08:38:46.967Z,2026-09-15T06:40:40.338Z,Stantec,Engineering,Environmental Engineering,Rich,,
 3c3f2483-f1bf-4aec-abd2-bf4ee04a4b4c,2026-09-11T10:02:34.157Z,2026-09-11T10:02:34.157Z,State of Minnesota,Local Government,Health,Govt,,
 94ac752d-1ea1-40c7-a134-18a5d3a91acc,2026-07-26T04:20:02.417Z,2026-08-25T05:49:36.962Z,State of Montana,Local Government,,Govt,,Favorite
 dec1d5dc-78f9-4f9a-bc74-b0e704f6d866,2026-09-13T11:02:47.244Z,2026-09-13T11:02:47.244Z,State of Texas,Local Government,Regional,Govt,,
-a065e272-4301-4dbb-b4bf-94343eb5dda2,2026-09-11T09:38:03.294Z,2026-09-11T09:39:49.221Z,State of Washington,Local Government,Regional,Govt,,Normal
+a065e272-4301-4dbb-b4bf-94343eb5dda2,2026-09-11T09:38:03.294Z,2026-09-15T06:39:11.915Z,State of Washington,Local Government,Regional,Govt,,Normal
 72a3f2ee-d979-4fdf-81cf-9c94a3eead53,2026-08-22T06:10:36.222Z,2026-09-05T07:13:58.870Z,StepRanger,Utilities / Telecommunications,,Startup,,
 2431b23f-368d-49b9-8333-5641748ea8e3,2026-08-11T21:18:39.818Z,2026-09-08T07:52:30.632Z,Submittable,Tech,,Rich,,
 3d501d10-7e88-41d1-b041-622e87cc728c,2026-09-11T09:55:58.854Z,2026-09-11T10:02:47.686Z,Texas Health and Human Services Commission,Local Government,Health,Govt,,
