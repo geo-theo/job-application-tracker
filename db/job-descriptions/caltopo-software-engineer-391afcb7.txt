@@ -1,0 +1,17 @@
+We’re Hiring Software Engineers
+September 11, 2026/2 Comments/in Hiring, Uncategorized /
+Whether it’s daydreaming at work or navigating a backcountry rescue, you already know that CalTopo has the power to improve and save lives.  Come join us as a software engineer and build cool stuff that you’ll actually use.
+
+CalTopo is a fully-remote company headquartered in Truckee CA.  We have a flexible schedule, good health insurance and 7 weeks of PTO (but no holidays, so a more-flexible equivalent to 5 weeks PTO + 10 holidays).  We’re a small (11 people total), metric- and process-lite, mission-driven organization where everyone works with limited structure and minimal supervision.  We’re building long term value and not chasing quarterly numbers, and develop with that in mind – code as if you’ll be the one maintaining it in five years, because hopefully you will be.
+
+What we’re looking for
+Generalist software engineers.  We need people who are comfortable working across the stack and implementing a feature from the database through web and mobile front ends.  Our stack is primarily Java and Typescript/React, but specific languages and frameworks are less important than the ability and willingness to work on all parts of the platform.
+CS degree and at least 2 years’ work experience.  In previous rounds of hiring, candidates without a CS degree have struggled with design-level work such as data structures and order of growth performance, that CS degrees help form a foundational basis for.  And while we are extremely sympathetic to the plight of new CS grads in the age of AI, as a process-lite organization, we do not think we can do a good job offering the structure, mentorship and support needed for those just moving from an academic environment to a professional one.
+Someone based in CA, WA or CO, as each state we expand our employment footprint to adds an extra compliance burden.  We’re willing to consider exceptional candidates from other states, but the bar is higher.  Bonus points for being near our Truckee, CA virtual headquarters.
+An easygoing approach with a focus on functional solutions.  We are looking for someone who can be flexible, and is not dogmatic about specific processes or frameworks.
+Our general process starts with several (at least two, probably three, hopefully not four) rounds of remote 1hr technical interviews.  After that is an in-person interview in Truckee, which will include some pre-interview homework on a small project to build up context so that we can engage in deeper design and problem-solving discussions when we meet.
+
+Because we work with sensitive government information, candidates must be able to pass a background check.  While fully remote, occasional travel is required, such as for our 2x/yr in-person meetings.  Approximate salary range is $120k-$200k.
+
+To apply
+Reach out to us (including your resume) at [rhymes with wiring, but involves bringing people onto a company] at our domain name.
