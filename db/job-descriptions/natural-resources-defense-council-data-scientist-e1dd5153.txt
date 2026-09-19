@@ -1,0 +1,83 @@
+Data Scientist
+Posted Date12 hours ago(9/17/2026 12:44 PM)
+Job ID 2026-6015 # of Openings 0 Group Science Office
+Overview
+NRDC is a non-profit environmental advocacy organization. We use law, science, and the support of 3.1 million members and online activists to protect the planet's wildlife and wild places and to ensure the rights of all people to clean air, clean water, and healthy communities. NRDC was founded in 1970 and our people helped write some of America's bedrock environmental laws, including the Clean Water Act and many of the implementing regulations. Today, our team of more than 700 lawyers, scientists, economists, policy advocates, communications experts, and others work across the United States and the globe from our offices in Bozeman, Montana; Chicago; New York; San Francisco; Santa Monica; Washington, D.C.; and Beijing.
+
+ 
+
+NRDC is seeking a Data Scientist to work with the Science Office team in our Washington DC office.
+
+ 
+
+Position Summary
+
+ 
+
+The Data Scientist conducts statistical analysis, computation, geospatial analysis, and data visualization and mapping to support NRDC’s advocacy priorities, turning environmental data into rigorous, defensible findings. Working within the Data Science team in the Science Office, the Data Scientist leads discrete projects from intake through final product, with substantial mentoring and team collaboration, helping the team meet sustained, organization-wide demand for data analysis and visualization support. 
+
+ 
+
+The position you are applying for is part of the bargaining unit represented by The Washington Baltimore News Guild (WBNG / The Newsguild-CWA Local 32035).  
+
+Responsibilities
+To perform this job successfully, an individual must be able to perform each essential duty satisfactorily. Reasonable accommodations may be made to enable qualified individuals to expand their knowledge and familiarity with certain data science tools used for these duties as part of their work at NRDC: 
+
+Conduct statistical analysis of environmental data, such as pollution levels, species counts, and climate measurements, producing defensible findings that can withstand scrutiny from regulators, courts, and public review. 
+Apply modern statistical methods, including approaches such as regression analysis, hypothesis and significance testing, and time-series analysis, to detect trends, quantify uncertainty, and strengthen evidence-based recommendations. 
+Develop user-friendly, tailored resources such as interactive maps, dashboards, graphics, factsheets, and presentations to support NRDC advocacy priorities. 
+Build and refine data visualizations and maps in tools such as ArcGIS Online and Tableau, making project-specific design decisions. 
+Clean, validate, and manage data manually to ensure accuracy and credibility. 
+Serve as project lead on data analysis and visualization requests, working directly with NRDC advocates, litigators, scientists, and external partners. 
+Research, collect, and synthesize information relevant to data science requests received by the team. 
+Manage projects across their full lifecycle from data acquisition, cleaning, analysis, visualization development, stakeholder review, revision, and quality assurance, to include project management pieces such as timelines, deliverables, and meeting agendas. 
+Synthesize technical information and communicate findings clearly to non-expert audiences, including through written products such as NRDC blogs. 
+Participate in internal and external meetings and activities of the Science Office as required. 
+The above list of duties is not comprehensive but generally demonstrates the types of matters under this position’s responsibility. Other duties may be assigned. 
+
+Qualifications
+Minimum Education & Experience: 
+
+Bachelor’s degree in statistics, data science, environmental science, or a related field, or an equivalent combination of education and experience, required.
+2–4 years of related experience in data analysis and research, with experience in environmental policy and advocacy preferred. 
+Skills, Abilities, Competencies: 
+
+Proficiency with R or Python, and ArcGIS or Tableau, to conduct statistical analysis and develop data visualizations.
+Demonstrated statistical expertise, with familiarity in modern methods.
+Familiarity with SQL and data-wrangling
+Proficiency in Microsoft Office, including advanced Excel skills preferred, Word, PowerPoint, and Outlook.
+Strong writing and verbal communication skills, with demonstrated ability to translate technical information for non-expert audiences.
+Ability to work independently and on quick timelines, managing multiple workstreams from kickoff to end-product design.
+Ability to work collaboratively in teams toward shared outcomes.
+Working understanding of key energy and environmental policies preferred.
+Ability to travel to NRDC U.S.-based offices, approximately <20% annually.
+Commitment to NRDC’s mission, values, and DEI principles. 
+NRDC is committed to advancing diversity, equity, and inclusion, both in our work and in our workplace. We believe that celebrating and actively welcoming diverse voices and perspectives is essential to solving the planet's most pressing environmental problems, and we encourage applications from candidates whose identities have been historically under-represented in the environmental movement.
+
+ 
+
+We are an equal opportunity employer and do not discriminate in hiring or employment on the basis of race, color, religion, gender, gender identity or expression, marital status, sexual orientation, national origin, citizenship, age, disability, veteran status, or any other characteristic protected by federal, state, or local law. Pursuant to the San Francisco Fair Chance Ordinance, we will consider for employment qualified applicants with arrest and conviction records.
+
+ 
+
+We offer competitive salaries, excellent benefits, and a supportive working environment. Salary is based on a nonprofit scale and is commensurate with skills and experience. Internal equity will be reviewed and considered to determine a final offer. For this position, the salary range is $90,000 to $100,000.
+
+ 
+
+NRDC operates under a hybrid work model. Employees are required to come to the office 8 days per month.
+
+ 
+
+As a science-based organization, NRDC aims to do our part to help contain the COVID-19 public health crisis. For the sake of health, safety, and equity, we ask that people be vaccinated unless they have an approved medical or religious accommodation or other exemption in accordance with state and local law. We consider a person to be vaccinated two weeks after receiving one full course of a CDC-approved vaccine. In accordance with state or local law, new hires will be asked to attest to vaccination, those wishing to do so may request medical or religious accommodations or other exemptions via NRDC Employee Relations. NRDC treats all vaccine-related data confidentially, in keeping with local, state, and federal laws.
+
+ 
+
+To apply, visit www.nrdc.org/careers and upload your résumé and cover letter. Please mention where you saw this posting and upload any additional materials that showcase your abilities, such as a portfolio, GIS Map, Python programming script, or capstone with statistical work. Due to the high volume of applications, we will contact only those candidates we would like to interview. Please no phone calls, emails, or in-person résumé drop-offs.
+
+ 
+
+If you experience technical problems while applying or if you are a person with a disability and need assistance applying online, please reach out to iCIMS Customer Care at 1-800-889-4422.
+
+ 
+
+For more about NRDC, visit www.nrdc.org.

@@ -1,0 +1,67 @@
+Geospatial Cloud Support Scientist - Technical Specialist 1 or 2
+United Support Services, Inc.
+
+Sioux Falls, SD 57198
+Hybrid work
+Full-time
+
+Full job description
+United Support Services, Inc., founded in 2003, is an innovative engineering and technology business headquartered in San Diego, CA. We have an exciting new opportunity and are currently looking to add a Geospatial Cloud Support Scientist- Technical Specialist 1 or 2 to our team, supporting the KBR South Dakota Team. USS offers competitive salaries and excellent benefits! Veterans are highly encouraged to apply!
+
+The successful candidate will become an integral part of the TSSC’s support for the Landsat Mission at the USGS EROS Center. The TSSC Team is comprised of highly talented remote sensing scientists, land cover scientists, software engineers, web developers, systems engineers and more who work together to support the dynamic science and technical requirements of our USGS Customer. This includes a wide-ranging portfolio of projects focused on land cover and land change monitoring, remote sensing time-series algorithm development, land cover forecasting, land change assessments, fire science, drought monitoring, ecosystem & vegetation dynamics, and other related areas.
+
+This position will work with the Data Processing and Archive System (DPAS) project and will be responsible for assisting and providing outreach to EROS data users on cloud access and completing internal analysis of USGS Landsat and related geospatial data. This role will support an examination of Landsat and EROS data products and develop data tutorials and tools to enable analysis on how and where respective products are complementary and can be used together to describe U.S. landscape characteristics. Outreach includes creating instructional documentation, videos, and analysis workflows; developing use-case example applications and website materials; and providing webinars and trainings on cloud access and geospatial data processing within Amazon Web Services (AWS) among others. This role will also function as the primary technical support contact when end users reach out to User Services for assistance with more technical questions and troubleshooting related to coding, cloud access, and associated tools.
+
+The Geospatial/Cloud Support Scientist must have the ability to work both autonomously and in a team environment with other contractor staff, the Government customer, and our end users. The position requires strong written and verbal communication skills. The individual must have the ability to take initiative, to develop creative solutions, and to have a willingness to learn. The position also requires a knowledge of coding as well as AWS cloud data access and processing skills to guide and mentor end users. Intermediate knowledge of moderate-resolution satellite data (Landsat, VIIRS, ECOSTRESS, etc.) and other geospatial data products (NLCD, LANDFIRE, MTBS) is a plus.
+
+If you have a related skillset or background and are interested in an exciting and challenging career in the field of land cover and remote sensing science, we invite you to apply for this position.
+
+Responsibilities
+
+Create outreach materials to aid users in transitioning to and working within the AWS cloud space. These materials will include instructional documentation, web-based e-learning content, and video tutorials produced in collaboration with an in-house videography. Duties also include creating and conducting virtual and in-person webinars and trainings.
+Develop demonstration workflows and tutorials on accessing Landsat imagery and geospatial data in the cloud, and processing data in the cloud for science applications, building upon resources currently available at https://code.usgs.gov/eros-user-services.
+Serve as the point of contact for assisting Landsat and geospatial data users in answering more technical related questions and troubleshooting issues related to cloud‑based data access and analysis, including script‑based workflows.
+Minimum Requirements
+
+Candidates must meet the requirements listed below to be considered for this position; please note required items on your résumé. Cover letters are welcome.
+
+This position requires the ability to obtain and maintain a national agency check and background investigation after hire, in order to obtain credentials for facility access and user accounts.
+Must have at least three years of residency in the United States.
+Education:
+
+Minimum of bachelor's degree (master's preferred) in Earth Science, Natural Science, Physical Science, or Computer Science related with emphasis in geography, landscape ecology, forestry, land use/land cover science, hydrology, remote sensing (time-series monitoring, land cover classification, vegetation monitoring), with course work in statistics, remote sensing, GIS.
+Years of Experience:
+
+At least three years of directly related professional experience (willing to consider differing combinations of education and experience).
+Technical Skills:
+
+Proficiency in geospatial data analysis and interpretation.
+Experience working with GIS applications (ArcGIS, QGIS, ENVI, ERDAS, etc.).
+Fundamental understanding of remote sensing science and the characteristics of geospatial data (Landsat, LCMAP, NLCD, LANDFIRE, MODIS, VIIRS, hyperspectral data, aerial imagery, etc.).
+Demonstrable proficiency with Python and/or R.
+Experience using Application Programing Interfaces (APIs), such as the M2M API, AppEEARS API, and Earthdata CMR.
+Experience working with cloud technologies (AWS, Azure, Google Earth Engine).
+Experience with Git, GitHub, Bitbucket.
+Excellent written and oral communication skills, including effective questioning, listening, and presentation abilities.
+Areas of Desired Experience & Skills
+
+Familiarity with issue-tracking/ticketing systems (e.g., Jira, Zendesk).
+Experience conducting spatial analysis to address research questions.
+Knowledge of statistical data analysis and validation techniques.
+Experience with metadata standards (e.g., STAC).
+Demonstrable proficiency with GDAL.
+Strong writing ability and experience authoring process documentation, metadata, reports, and research papers (including peer-reviewed publications).
+Work Location
+
+This position supports a team anchored in Sioux Falls, SD and is offered as onsite, hybrid remote/onsite or a fully remote. Occasional Travel will be required to support conference participation.
+
+Application Question(s):
+
+Please briefly list describe any relevant experience as a Technical Specialist?
+Education:
+
+Bachelor's (Required)
+Experience:
+
+Technical Specialist: 3 years (Preferred)
+Work Location: Hybrid remote in Sioux Falls, SD 57198
