@@ -1632,11 +1632,11 @@ function getEmptyMessage() {
 
 function deadlineRank(job) {
   const deadlineChoice = getDeadlineChoice(job);
+  if (deadlineChoice === "ASAP") return 0;
   if (deadlineChoice === "Select Date" && job.deadline) {
     const timestamp = new Date(`${job.deadline}T00:00:00`).getTime();
     if (Number.isFinite(timestamp)) return timestamp;
   }
-  if (deadlineChoice === "ASAP") return Number.MAX_SAFE_INTEGER - 1;
   return Number.MAX_SAFE_INTEGER;
 }
 
