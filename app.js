@@ -60,6 +60,7 @@ const JOB_CSV_COLUMNS = [
   "locationChoice",
   "locationOther",
   "location",
+  ...LOCATION_JOB_FIELDS,
   "payType",
   "payMin",
   "payMax",
@@ -1082,6 +1083,11 @@ function collectFormData(companyId = "") {
   const locationChoice = getRadioValue("locationChoice");
   const locationOther = els.locationOther.value.trim();
   const location = locationChoice === "Other" ? locationOther : locationChoice;
+  const canonicalLocation = canonicalLocationFieldsForJob(
+    location,
+    existing,
+    jobs,
+  );
   const payMin = normalizeNumberString(els.payMin.value);
   const payMax = normalizeNumberString(els.payMax.value);
   const payMidpoint = calculateMidpoint(payMin, payMax);
@@ -1133,6 +1139,7 @@ function collectFormData(companyId = "") {
       locationChoice,
       locationOther,
       location,
+      ...canonicalLocation,
       payType: getRadioValue("payType"),
       payMin,
       payMax,
@@ -3242,6 +3249,9 @@ function csvRowToJob(header, row) {
     locationChoice: record.locationChoice || "",
     locationOther: record.locationOther || "",
     location: record.location || "",
+    ...Object.fromEntries(
+      LOCATION_JOB_FIELDS.map((field) => [field, record[field] || ""]),
+    ),
     payType: record.payType || "",
     payMin: record.payMin || "",
     payMax: record.payMax || "",

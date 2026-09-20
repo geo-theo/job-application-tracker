@@ -1,9 +1,10 @@
 "use strict";
 
 // Charts use non-reference applications; only the ready-to-apply card uses pending jobs.
-const vizState = { excludedJobTypes: [], salaryGroup: "industry", salaryMode: "annualized", region: "remote", flowPeriod: "all", activityPeriod: "all", activityUnit: "auto", flowDates: {}, activityDates: {} };
+const vizState = { excludedJobTypes: [], salaryGroup: "industry", salaryMode: "annualized", region: "remote", mapMetric: "count", mapSelected: "", flowPeriod: "all", activityPeriod: "all", activityUnit: "auto", flowDates: {}, activityDates: {} };
 const VIZ_ANNUAL_HOURS = 8 * 21 * 12;
 const VIZ_DAY = 86400000;
+let vizLastLocationSearchAt = 0;
 const VIZ_PERIODS = [["week", "Last week", 7], ["month", "Last month", 30], ["quarter", "Last quarter", 90], ["year", "Last year", 365], ["all", "All time", null]];
 const VIZ_COLORS = { teal: "#177b70", blue: "#497baf", purple: "#8873ad", orange: "#c18441", gray: "#82918e", red: "#bd6b60" };
 const VIZ_STAGES = [
@@ -595,67 +596,24 @@ function vizImpactPanel(records) {
   return panel;
 }
 
-// Offline city centers and explicit aliases for the locations in this search.
-// Unknown locations stay in the list instead of being assigned guessed coordinates.
-const VIZ_PLACES = [
-  ["Missoula, MT", -113.994, 46.872, ["Missoula", "Missoula, MT"], "us"],
-  ["Seattle, WA", -122.332, 47.606, ["Seattle", "Seattle, WA"], "us"],
-  ["Redlands, CA", -117.182, 34.055, ["Redlands", "Redlands, CA"], "us"],
-  ["Washington, DC", -77.037, 38.907, ["Washington, DC", "Washington DC"], "us"],
-  ["DMV region", -77.15, 39.0, ["DMV", "DMV region"], "us"],
-  ["Reston, VA", -77.357, 38.958, ["Reston, VA", "Reston"], "us"],
-  ["San Bruno, CA", -122.411, 37.63, ["San Bruno, CA", "San Bruno"], "us"],
-  ["Helena, MT", -112.037, 46.589, ["Helena, MT", "Helena"], "us"],
-  ["Glendive, MT", -104.712, 47.105, ["Glendive, MT", "Glendive"], "us"],
-  ["Bozeman, MT", -111.043, 45.677, ["Bozeman, MT", "Bozeman"], "us"],
-  ["Arlee, MT", -114.085, 47.163, ["Arlee, MT", "Arlee"], "us"],
-  ["Austin, TX", -97.743, 30.267, ["Austin, TX", "Austin"], "us"],
-  ["Annecy, France", 6.129, 45.899, ["Annecy, France", "Annecy"], "fr"],
-  ["Nanterre, France", 2.207, 48.892, ["Nanterre, France", "Nanterre, Île-de-France, France", "Nanterre"], "fr"],
-  ["Rueil, France", 2.181, 48.877, ["Rueil, France", "Rueil-Malmaison, France"], "fr"],
-  ["Vélizy-Villacoublay, France", 2.19, 48.782, ["Vélizy-Villacoublay, Yvelines, France", "Vélizy-Villacoublay, France"], "fr"],
-  ["Cardiff, UK", -3.18, 51.481, ["Cardiff, United Kingdom", "Cardiff, UK", "Cardiff"], "gb"],
-  ["Silicon Valley", -122.04, 37.36, ["Silicon Valley", "Silicon Valley, CA", "Silicon Valley area", "Silicon Valley, USA"], "us"],
-  ["Los Angeles area", -118.244, 34.052, ["Los Angeles", "Los Angeles area", "Los Angeles, CA", "Los Angeles area, CA", "Greater Los Angeles", "LA area"], "us"],
-  ["London area", -.128, 51.507, ["London", "London area", "London, UK", "London area, UK", "London, United Kingdom", "Greater London"], "gb"],
-  ["Paris area", 2.352, 48.857, ["Paris", "Paris area", "Paris, France", "Paris area, France", "Greater Paris"], "fr"],
-  ["Amsterdam area", 4.904, 52.368, ["Amsterdam", "Amsterdam area", "Amsterdam, Netherlands", "Amsterdam area, Netherlands", "Amsterdam, The Netherlands"], "nl"],
-];
-
-function vizNormalizePlace(value) {
-  return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/\./g, "").replace(/,\s*/g, ", ").replace(/\s+/g, " ").trim();
-}
-
-function vizCountry(raw) {
-  const suffix = vizNormalizePlace(raw.split(",").pop());
-  if (["usa", "us", "united states", "united states of america"].includes(suffix)) return "us";
-  if (["uk", "gb", "united kingdom", "england", "scotland", "wales", "northern ireland"].includes(suffix)) return "gb";
-  if (suffix === "the netherlands") return "nl";
-  // State abbreviations need a comma so a bare country code is not misclassified.
-  if (raw.includes(",") && /^(AL|AK|AZ|AR|CA|CO|CT|DE|DC|FL|GA|HI|ID|IL|IN|IA|KS|KY|LA|ME|MD|MA|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NM|NY|NC|ND|OH|OK|OR|PA|RI|SC|SD|TN|TX|UT|VT|VA|WA|WV|WI|WY)$/.test(raw.split(",").pop().trim())) return "us";
-  return Object.entries(VIZ_COUNTRIES).find(([, country]) => country.aliases.some((alias) => vizNormalizePlace(alias) === suffix))?.[0] || "unmapped";
-}
-
 function vizLocation(job) {
-  const raw = (job.location || (job.locationChoice === "Other" ? job.locationOther : job.locationChoice) || "").trim();
-  if (!raw) return { label: "Location not recorded", kind: "missing", country: "remote" };
-  if (/^remote(?:$|[\s,(/-])/i.test(raw)) return { label: "Remote", kind: "remote", country: "remote" };
-  const country = vizCountry(raw);
-  const normalized = vizNormalizePlace(raw);
-  const withoutCountry = raw.split(",").slice(0, -1).join(",");
-  const place = VIZ_PLACES.find((entry) => entry[3].some((alias) => vizNormalizePlace(alias) === normalized ||
-    (entry[4] === country && vizNormalizePlace(alias) === vizNormalizePlace(withoutCountry))));
-  return place ? { label: place[0], lon: place[1], lat: place[2], country: place[4], kind: "mapped" } : { label: raw, kind: "unmapped", country };
+  const place = resolveJobLocation(job, typeof jobs === "undefined" ? [] : jobs);
+  return { ...place, country: place.countryCode };
 }
 
 function vizLocationGroups(records) {
   const groups = new Map();
   records.forEach((job) => {
-    const place = vizLocation(job);
-    if (!groups.has(place.label)) groups.set(place.label, { ...place, jobs: [] });
-    groups.get(place.label).jobs.push(job);
+    const resolved = resolveJobLocation(job, records);
+    const place = { ...resolved, country: resolved.countryCode };
+    const key = `${place.country}|${normalizeLocationText(place.label)}|${place.precision}`;
+    if (!groups.has(key)) groups.set(key, { ...place, key, jobs: [], rawValues: new Set() });
+    const group = groups.get(key);
+    group.jobs.push(job);
+    if (place.raw) group.rawValues.add(place.raw);
   });
-  return [...groups.values()].sort((a, b) => b.jobs.length - a.jobs.length || a.label.localeCompare(b.label));
+  return [...groups.values()].map((group) => ({ ...group, rawValues: [...group.rawValues] }))
+    .sort((a, b) => b.jobs.length - a.jobs.length || a.label.localeCompare(b.label));
 }
 
 function vizProject(lon, lat, bounds) {
@@ -664,23 +622,57 @@ function vizProject(lon, lat, bounds) {
 }
 
 function vizMapCountries(groups) {
-  return ["remote", "us", "fr", "gb", ...new Set(groups.map((group) => group.country))].filter((key, index, keys) => keys.indexOf(key) === index);
+  const keys = [...new Set(groups.map((group) => group.country))];
+  return ["remote", "missing", ...keys.filter((key) => !["remote", "missing", "unmapped"].includes(key))
+    .sort((a, b) => vizCountryLabel(a).localeCompare(vizCountryLabel(b))), ...(keys.includes("unmapped") ? ["unmapped"] : [])]
+    .filter((key) => groups.some((group) => group.country === key));
 }
 
 function vizCountryLabel(key) {
-  return ({ remote: "Remote", us: "USA", gb: "UK", unmapped: "Unmapped" })[key] || VIZ_COUNTRIES[key]?.label || key;
+  return ({ remote: "Remote", missing: "Location not recorded", us: "USA", gb: "UK", unmapped: "Country not recognized" })[key] || locationCountryLabel(key) || key;
 }
 
-function vizCountryBounds(key) {
-  if (key === "remote") return [-122, -106, 43, 51];
-  if (key === "us") return [-126, -66, 24, 51];
-  if (key === "unmapped") return [-180, 180, -60, 85];
-  const [west, east, south, north] = VIZ_COUNTRIES[key]?.bounds || [-180, 180, -60, 85];
+function vizCountryBounds(key, places = []) {
+  if (["remote", "missing"].includes(key)) return [-122, -106, 43, 51];
+  let bounds;
+  if (key === "us") bounds = [-126, -66, 24, 51];
+  else if (key === "unmapped") bounds = [-180, 180, -60, 85];
+  else {
+    const [west, east, south, north] = VIZ_COUNTRIES[key]?.bounds || [-180, 180, -60, 85];
+    const centerLon = (west + east) / 2;
+    const centerLat = (south + north) / 2;
+    const ratio = 800 / 380 / Math.max(.3, Math.cos(centerLat * Math.PI / 180));
+    const height = Math.max((north - south) * 1.2, (east - west) * 1.2 / ratio, 2);
+    bounds = [centerLon - height * ratio / 2, centerLon + height * ratio / 2, centerLat - height / 2, centerLat + height / 2];
+  }
+  const points = places.filter((place) => Number.isFinite(place.lon) && Number.isFinite(place.lat));
+  if (!points.some((place) => place.lon < bounds[0] || place.lon > bounds[1] || place.lat < bounds[2] || place.lat > bounds[3])) return bounds;
+  let [west, east, south, north] = bounds;
+  points.forEach((place) => {
+    west = Math.min(west, place.lon);
+    east = Math.max(east, place.lon);
+    south = Math.min(south, place.lat);
+    north = Math.max(north, place.lat);
+  });
+  const lonPad = Math.max(1, (east - west) * .04);
+  const latPad = Math.max(1, (north - south) * .04);
+  west -= lonPad;
+  east += lonPad;
+  south -= latPad;
+  north += latPad;
+  const mapRatio = 800 / 380;
   const centerLon = (west + east) / 2;
   const centerLat = (south + north) / 2;
-  const ratio = 800 / 380 / Math.max(.3, Math.cos(centerLat * Math.PI / 180));
-  const height = Math.max((north - south) * 1.2, (east - west) * 1.2 / ratio, 2);
-  return [centerLon - height * ratio / 2, centerLon + height * ratio / 2, centerLat - height / 2, centerLat + height / 2];
+  if ((east - west) / (north - south) > mapRatio) {
+    const height = (east - west) / mapRatio;
+    south = centerLat - height / 2;
+    north = centerLat + height / 2;
+  } else {
+    const width = (north - south) * mapRatio;
+    west = centerLon - width / 2;
+    east = centerLon + width / 2;
+  }
+  return [west, east, south, north];
 }
 
 function vizMapBackground(svg, bounds, country) {
@@ -693,7 +685,7 @@ function vizMapBackground(svg, bounds, country) {
   const land = vizSvg("g", { fill: "#f5f4e9", stroke: "#c7d2c0", "stroke-width": 1, "stroke-linejoin": "round", "aria-hidden": "true" });
   VIZ_LAND.filter(intersects).forEach((ring) => land.append(vizSvg("path", { d: `${path(ring)}Z` })));
   svg.append(land);
-  if (["us", "remote"].includes(country)) {
+  if (country === "us") {
     const states = vizSvg("g", { fill: "none", stroke: "#d4dacb", "stroke-width": .8, "aria-hidden": "true" });
     VIZ_STATE_LINES.filter(intersects).forEach((line) => states.append(vizSvg("path", { d: path(line) })));
     svg.append(states);
@@ -703,100 +695,384 @@ function vizMapBackground(svg, bounds, country) {
 function vizPlaceSummary(place) {
   const pay = vizPaySummary(place.jobs);
   const roles = [...new Set(place.jobs.flatMap((job) => job.roles?.length ? job.roles.map((role) => role === "Other" ? job.roleOther || "Other" : role) : job.roleOther ? [job.roleOther] : []))].sort();
-  return { pay, roles };
+  const outcomes = Object.fromEntries(VIZ_OUTCOMES.map(({ label }) => [label, place.jobs.filter((job) => vizOutcome(job) === label).length]));
+  return { pay, roles, outcomes };
+}
+
+function vizLocationChoices(records) {
+  const choices = LOCATION_DATABASE.map((place) => locationFieldsFromPlace(place, "manual"));
+  records.forEach((job) => {
+    const saved = savedJobLocation(job);
+    if (saved && saved.precision !== "remote") choices.push(locationFieldsFromPlace(saved, "manual"));
+  });
+  return [...new Map(choices.filter((choice) => choice.locationCanonical)
+    .map((choice) => [`${normalizeLocationText(choice.locationCanonical)}|${choice.locationCountryCode}`, choice])).values()]
+    .sort((a, b) => a.locationCanonical.localeCompare(b.locationCanonical));
+}
+
+function vizGeocodeResult(result) {
+  const address = result.address || {};
+  const countryCode = String(address.country_code || "").toLowerCase() || "unmapped";
+  const city = address.city || address.town || address.village || address.municipality || address.hamlet || "";
+  const region = address.state || address.region || address.county || "";
+  const subdivision = countryCode === "us" ? String(address["ISO3166-2-lvl4"] || "").split("-").at(-1) || region : "";
+  const precision = city ? "city" : region ? "region" : address.country ? "country" : "unknown";
+  const label = city ? `${city}${countryCode === "us" && subdivision ? `, ${subdivision}` : address.country ? `, ${address.country}` : ""}` : region ? `${region}${address.country ? `, ${address.country}` : ""}` : address.country || result.display_name;
+  return locationFieldsFromPlace({ label, countryCode, country: address.country || locationCountryLabel(countryCode), region, city, lat: Number(result.lat), lon: Number(result.lon), precision }, "geocoded");
+}
+
+async function vizSearchLocations(query) {
+  const delay = Math.max(0, 1000 - (Date.now() - vizLastLocationSearchAt));
+  if (delay) await new Promise((resolve) => setTimeout(resolve, delay));
+  vizLastLocationSearchAt = Date.now();
+  const parameters = new URLSearchParams({ q: query, format: "jsonv2", addressdetails: "1", limit: "5", "accept-language": "en" });
+  const response = await fetch(`https://nominatim.openstreetmap.org/search?${parameters}`);
+  if (!response.ok) throw new Error("Location search failed");
+  return (await response.json()).map(vizGeocodeResult);
+}
+
+async function vizSaveLocationResolution(place, fields) {
+  const rawKeys = new Set(place.rawValues.map(normalizeLocationText));
+  const matches = jobs.filter((job) => rawKeys.has(normalizeLocationText(rawJobLocation(job))));
+  const now = new Date().toISOString();
+  await Promise.all(matches.map((job) => putJob(stripLegacyCompanyFields({ ...job, ...fields, updatedAt: now }))));
+  await refreshJobs();
+  const syncStatus = await safeSyncToConnectedFolder();
+  showToast(syncStatus === "failed" ? "Location saved in this tab. Folder export failed; export before closing." : `Location saved for ${matches.length} ${matches.length === 1 ? "job" : "jobs"}.`);
+}
+
+function vizLocationEditor(place, records) {
+  const editor = vizElement("div", "viz-location-editor");
+  editor.append(vizElement("h4", "", `Resolve “${place.rawValues[0] || place.label}”`),
+    vizElement("p", "viz-note", `${place.jobs.length} ${place.jobs.length === 1 ? "job uses" : "jobs use"} this location. Saving updates every matching job and reuses the result next time.`));
+
+  const existing = vizElement("div", "viz-location-resolve-row");
+  const selectLabel = vizElement("label", "viz-select", "Resolve to an existing place");
+  const select = vizElement("select");
+  const choices = vizLocationChoices(records);
+  const chooseOption = vizElement("option", "", "Choose a saved place…");
+  chooseOption.value = "";
+  chooseOption.disabled = true;
+  chooseOption.selected = true;
+  select.append(chooseOption);
+  choices.forEach((choice, index) => {
+    const option = vizElement("option", "", `${choice.locationCanonical}${choice.locationPrecision === "metro" ? " · metro" : ""}`);
+    option.value = String(index);
+    select.append(option);
+  });
+  selectLabel.append(select);
+  const useExisting = vizElement("button", "viz-location-action", "Use selected place");
+  useExisting.type = "button";
+  useExisting.disabled = true;
+  select.addEventListener("change", () => { useExisting.disabled = select.value === ""; });
+  useExisting.addEventListener("click", () => {
+    const choice = choices[Number(select.value)];
+    if (choice) vizSaveLocationResolution(place, choice);
+  });
+  existing.append(selectLabel, useExisting);
+
+  const search = vizElement("div", "viz-location-search");
+  const searchButton = vizElement("button", "viz-location-action", "Find suggestions");
+  searchButton.type = "button";
+  const searchStatus = vizElement("p", "viz-location-search-status", "Search runs only when you choose this button.");
+  searchStatus.setAttribute("aria-live", "polite");
+  const results = vizElement("div", "viz-location-suggestions");
+  searchButton.addEventListener("click", async () => {
+    searchButton.disabled = true;
+    searchStatus.textContent = "Searching OpenStreetMap…";
+    results.replaceChildren();
+    try {
+      const suggestions = await vizSearchLocations(place.rawValues[0] || place.label);
+      searchStatus.textContent = suggestions.length ? "Choose the correct result to save it." : "No suggestions found. Create the location manually below.";
+      suggestions.forEach((suggestion) => {
+        const button = vizElement("button", "viz-location-suggestion");
+        button.type = "button";
+        button.append(vizElement("strong", "", suggestion.locationCanonical), vizElement("small", "", [suggestion.locationRegion, suggestion.locationCountry].filter(Boolean).join(" · ")));
+        button.addEventListener("click", () => vizSaveLocationResolution(place, suggestion));
+        results.append(button);
+      });
+    } catch (error) {
+      searchStatus.textContent = "Suggestions could not be loaded. You can still create the location manually.";
+    } finally {
+      searchButton.disabled = false;
+    }
+  });
+  search.append(searchButton, searchStatus, results);
+
+  const form = vizElement("form", "viz-location-form");
+  const formTitle = vizElement("h5", "", "Create a city, metro, or region");
+  const field = (caption, name, type = "text") => {
+    const label = vizElement("label", "", caption);
+    const input = vizElement("input");
+    input.name = name;
+    input.type = type;
+    label.append(input);
+    return { label, input };
+  };
+  const labelField = field("Canonical label", "label");
+  labelField.input.value = place.label;
+  labelField.input.required = true;
+  const regionField = field("State or region", "region");
+  const cityField = field("City or metro", "city");
+  const latField = field("Latitude", "lat", "number");
+  latField.input.step = "any";
+  latField.input.min = "-90";
+  latField.input.max = "90";
+  const lonField = field("Longitude", "lon", "number");
+  lonField.input.step = "any";
+  lonField.input.min = "-180";
+  lonField.input.max = "180";
+  const countryLabel = vizElement("label", "", "Country");
+  const countrySelect = vizElement("select");
+  countrySelect.name = "country";
+  const unknownCountry = vizElement("option", "", "Country not recognized");
+  unknownCountry.value = "unmapped";
+  countrySelect.append(unknownCountry);
+  Object.keys(VIZ_COUNTRIES).sort((a, b) => vizCountryLabel(a).localeCompare(vizCountryLabel(b))).forEach((code) => {
+    const option = vizElement("option", "", vizCountryLabel(code));
+    option.value = code;
+    countrySelect.append(option);
+  });
+  countrySelect.value = place.country === "unmapped" ? "unmapped" : place.country;
+  countryLabel.append(countrySelect);
+  const precisionLabel = vizElement("label", "", "Precision");
+  const precision = vizElement("select");
+  precision.name = "precision";
+  [["city", "City"], ["metro", "Metro area"], ["region", "Region"], ["country", "Country only"]].forEach(([value, caption]) => {
+    const option = vizElement("option", "", caption);
+    option.value = value;
+    precision.append(option);
+  });
+  precisionLabel.append(precision);
+  const formStatus = vizElement("p", "viz-location-form-status");
+  formStatus.setAttribute("role", "alert");
+  const formActions = vizElement("div", "viz-location-form-actions");
+  const save = vizElement("button", "viz-location-action primary", "Save new location");
+  save.type = "submit";
+  const leave = vizElement("button", "viz-location-action quiet", "Leave unmapped");
+  leave.type = "button";
+  leave.addEventListener("click", () => vizSaveLocationResolution(place, locationFieldsFromPlace({ label: place.label, countryCode: place.country === "unmapped" ? "" : place.country, precision: "unknown" }, "manual")));
+  formActions.append(save, leave);
+  form.append(formTitle, labelField.label, countryLabel, regionField.label, cityField.label, precisionLabel, latField.label, lonField.label, formStatus, formActions);
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const selectedPrecision = data.get("precision");
+    const region = String(data.get("region") || "").trim();
+    const city = String(data.get("city") || "").trim();
+    const lat = locationCoordinate(data.get("lat"));
+    const lon = locationCoordinate(data.get("lon"));
+    if (["city", "metro"].includes(selectedPrecision) && !city) {
+      formStatus.textContent = "Enter the city or metro name for this location.";
+      return;
+    }
+    if (selectedPrecision === "region" && !region) {
+      formStatus.textContent = "Enter the state or region name for this location.";
+      return;
+    }
+    if (["city", "metro"].includes(selectedPrecision) && (lat === null || lon === null)) {
+      formStatus.textContent = "City and metro locations need latitude and longitude so they can be placed on the map.";
+      return;
+    }
+    const countryCode = data.get("country");
+    vizSaveLocationResolution(place, locationFieldsFromPlace({ label: String(data.get("label") || "").trim(), countryCode: countryCode === "unmapped" ? "" : countryCode, region, city, lat: lat ?? "", lon: lon ?? "", precision: selectedPrecision }, "manual"));
+  });
+
+  const privacy = vizElement("p", "viz-note");
+  const osm = vizElement("a", "", "OpenStreetMap Nominatim");
+  osm.href = "https://nominatim.openstreetmap.org/";
+  osm.target = "_blank";
+  osm.rel = "noopener noreferrer";
+  const policy = vizElement("a", "", "usage policy");
+  policy.href = "https://operations.osmfoundation.org/policies/nominatim/";
+  policy.target = "_blank";
+  policy.rel = "noopener noreferrer";
+  privacy.append("Suggestions use ", osm, ". The raw location text is sent only after you choose Find suggestions. Results are saved in your jobs CSV. ", policy, ".");
+  editor.append(existing, search, form, privacy);
+  return editor;
+}
+
+function vizLocationDetail(place, showJobs) {
+  const detail = vizElement("aside", "viz-location-detail");
+  if (!place) {
+    detail.append(vizElement("p", "viz-empty", "Choose a location to see its pay, roles, and outcomes."));
+    return detail;
+  }
+  const { pay, roles, outcomes } = vizPlaceSummary(place);
+  detail.append(vizElement("span", "viz-location-kicker", place.precision === "metro" ? "Metro area" : place.precision === "region" ? "Region" : place.kind === "remote" ? "Remote work" : place.kind === "missing" ? "Missing location" : "Location"),
+    vizElement("h3", "", place.label));
+  const stats = vizElement("div", "viz-location-detail-stats");
+  [[place.jobs.length, "applications"], [vizMoney(pay.mean), `average pay · ${pay.count}/${place.jobs.length} covered`]].forEach(([value, caption]) => {
+    const item = vizElement("div");
+    item.append(vizElement("strong", "", value), vizElement("small", "", caption));
+    stats.append(item);
+  });
+  const outcomeList = vizElement("div", "viz-location-outcomes");
+  Object.entries(outcomes).filter(([, count]) => count).forEach(([label, count]) => outcomeList.append(vizElement("span", "", `${label} ${count}`)));
+  const tags = vizElement("div", "viz-tooltip-roles");
+  (roles.length ? roles : ["No roles recorded"]).forEach((role) => tags.append(vizElement("span", "", role)));
+  const jobsButton = vizElement("button", "viz-location-action", `Show ${place.jobs.length} ${place.jobs.length === 1 ? "job" : "jobs"}`);
+  jobsButton.type = "button";
+  jobsButton.addEventListener("click", () => showJobs(place.label, place.jobs));
+  detail.append(stats, outcomeList, tags, jobsButton);
+  return detail;
 }
 
 function vizMapPanel(records) {
-  const panel = vizPanel("04", "A world of possibilities", "Your applications, country by country. Hover over a pin for pay and roles.", "viz-map-panel");
+  const panel = vizPanel("04", "Where is the opportunity?", "Explore applied jobs by country and location, then resolve anything the map does not recognize.", "viz-map-panel viz-wide");
   const groups = vizLocationGroups(records);
   const countries = vizMapCountries(groups);
-  if (!countries.includes(vizState.region)) vizState.region = "remote";
-  const controls = vizElement("div", "viz-map-tabs");
-  controls.setAttribute("role", "group");
-  controls.setAttribute("aria-label", "Map country");
+  if (!countries.includes(vizState.region)) vizState.region = countries[0] || "remote";
+  const countryControls = vizElement("div", "viz-map-tabs");
+  countryControls.setAttribute("role", "group");
+  countryControls.setAttribute("aria-label", "Location view");
   countries.forEach((key) => {
     const count = groups.filter((place) => place.country === key).reduce((sum, place) => sum + place.jobs.length, 0);
     const button = vizElement("button", "", `${vizCountryLabel(key)} · ${count}`);
     button.type = "button";
     button.dataset.region = key;
-    button.addEventListener("click", () => { vizState.region = key; draw(); });
-    controls.append(button);
+    button.addEventListener("click", () => { vizState.region = key; vizState.mapSelected = ""; draw(); });
+    countryControls.append(button);
   });
+  const metricControls = vizElement("div", "viz-map-metrics");
+  metricControls.setAttribute("role", "group");
+  metricControls.setAttribute("aria-label", "Map measure");
+  [["count", "Job count"], ["pay", "Average pay"]].forEach(([value, caption]) => {
+    const button = vizElement("button", "", caption);
+    button.type = "button";
+    button.dataset.metric = value;
+    button.addEventListener("click", () => { vizState.mapMetric = value; draw(); });
+    metricControls.append(button);
+  });
+  const toolbar = vizElement("div", "viz-map-toolbar");
+  toolbar.append(countryControls, metricControls);
+  const summary = vizElement("div", "viz-map-summary");
   const map = vizElement("div", "viz-map");
-  const tooltip = vizElement("div", "viz-map-tooltip");
-  tooltip.id = "viz-map-tooltip";
-  tooltip.setAttribute("role", "tooltip");
-  tooltip.hidden = true;
+  const detail = vizElement("div", "viz-location-detail-wrap");
+  const layout = vizElement("div", "viz-map-layout");
+  layout.append(map, detail);
   const coverage = vizElement("p", "viz-note");
   const locations = vizElement("div", "viz-location-list");
-  panel.append(controls, map, coverage, locations,
-    vizElement("p", "viz-note", "Bubble area = applications. City and area pins are approximate centers. Remote and missing-location applications share a home-base pin in Missoula; this is an anchor, not their job location. Salary includes hourly × 8 × 21 × 12."));
+  const review = vizElement("section", "viz-location-review");
+  panel.append(toolbar, summary, layout, coverage, locations, review,
+    vizElement("p", "viz-note", "Count view sizes bubbles by applications. Pay view sizes and labels them by average annualized pay; hourly pay uses × 2,016. Remote and missing locations are separate summaries and never appear as geographic pins."));
   const attribution = vizElement("p", "viz-note");
   const source = vizElement("a", "", "Natural Earth");
   source.href = "https://www.naturalearthdata.com/";
   source.target = "_blank";
   source.rel = "noopener noreferrer";
-  attribution.append("Map outlines: ", source, " · stored locally, no geocoding requests.");
+  attribution.append("Map outlines: ", source, " · location matching starts with the bundled local catalog.");
   panel.append(attribution);
   const showJobs = vizDrilldown(panel);
+
+  function choosePlace(place, openJobs = false) {
+    vizState.mapSelected = place.key;
+    draw();
+    if (openJobs) showJobs(place.label, place.jobs);
+  }
+
   function draw() {
-    tooltip.hidden = true;
     panel.querySelector(".viz-drilldown").hidden = true;
-    controls.querySelectorAll("button").forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.region === vizState.region)));
+    countryControls.querySelectorAll("button").forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.region === vizState.region)));
+    metricControls.querySelectorAll("button").forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.metric === vizState.mapMetric)));
     const country = vizState.region;
-    const bounds = vizCountryBounds(country);
     const selected = groups.filter((place) => place.country === country);
     const count = selected.reduce((sum, place) => sum + place.jobs.length, 0);
-    const svg = vizSvg("svg", { viewBox: "0 0 800 380", role: "group", "aria-label": `${vizCountryLabel(country)} application map. Focus a marker for salary and roles; activate to see jobs.` });
-    vizMapBackground(svg, bounds, country);
-    const visible = country === "remote" && count ? [{ label: "Remote & unlocated · Missoula home base", lon: -113.994, lat: 46.872, jobs: selected.flatMap((place) => place.jobs) }] : selected.filter((place) => place.kind === "mapped");
+    const visible = selected.filter((place) => place.kind === "mapped");
+    const needsReview = selected.filter((place) => place.kind === "unmapped" && !place.reviewed);
+    const selectedPay = vizPaySummary(selected.flatMap((place) => place.jobs));
+    if (!selected.some((place) => place.key === vizState.mapSelected)) vizState.mapSelected = selected[0]?.key || "";
+    const activePlace = selected.find((place) => place.key === vizState.mapSelected) || null;
+    summary.replaceChildren();
+    [[count, "applications"], [visible.length, "mapped places"], [vizMoney(selectedPay.mean), `${selectedPay.count}/${count} with pay`], [needsReview.reduce((sum, place) => sum + place.jobs.length, 0), "need review"]].forEach(([value, caption]) => {
+      const item = vizElement("div");
+      item.append(vizElement("strong", "", value), vizElement("small", "", caption));
+      summary.append(item);
+    });
+    detail.replaceChildren(vizLocationDetail(activePlace, showJobs));
+    metricControls.hidden = ["remote", "missing"].includes(country);
+
+    if (["remote", "missing"].includes(country)) {
+      const message = country === "remote" ? "Remote applications are summarized separately because they do not have a truthful map position." : "These applications have no recorded location. Add one in the job form when it becomes known.";
+      const special = vizElement("div", `viz-map-special ${country}`);
+      special.append(vizElement("strong", "", count), vizElement("span", "", vizCountryLabel(country)), vizElement("p", "", message));
+      map.replaceChildren(special);
+    } else {
+      const bounds = vizCountryBounds(country, visible);
+      const tooltip = vizElement("div", "viz-map-tooltip");
+      tooltip.id = "viz-map-tooltip";
+      tooltip.setAttribute("role", "tooltip");
+      tooltip.hidden = true;
+      const svg = vizSvg("svg", { viewBox: "0 0 800 380", role: "group", "aria-label": `${vizCountryLabel(country)} map showing ${vizState.mapMetric === "pay" ? "average annualized pay" : "application count"} by location.` });
+      vizMapBackground(svg, bounds, country);
+      const maxCount = Math.max(1, ...visible.map((place) => place.jobs.length));
+      const maxPay = Math.max(1, ...visible.map((place) => vizPlaceSummary(place).pay.mean || 0));
+      [...visible].sort((a, b) => b.jobs.length - a.jobs.length).forEach((place) => {
+        const [x, y] = vizProject(place.lon, place.lat, bounds);
+        const { pay, roles } = vizPlaceSummary(place);
+        const radius = vizState.mapMetric === "pay" ? pay.mean ? 17 + 9 * Math.sqrt(pay.mean / maxPay) : 12 : 9 + 11 * Math.sqrt(place.jobs.length / maxCount);
+        const marker = vizSvg("g", { class: `viz-map-marker${pay.mean ? "" : " no-pay"}` });
+        const markerText = vizState.mapMetric === "pay" ? pay.mean ? vizMoney(pay.mean) : "—" : place.jobs.length;
+        marker.append(vizSvg("circle", { cx: x, cy: y, r: radius, fill: VIZ_COLORS.teal, "fill-opacity": pay.mean || vizState.mapMetric === "count" ? ".82" : ".35", stroke: "#fffdf8", "stroke-width": 2 }),
+          vizSvg("text", { x, y: y + 4, "text-anchor": "middle", class: `viz-map-count${vizState.mapMetric === "pay" ? " pay" : ""}` }, markerText));
+        const description = `${place.label}: ${place.jobs.length} applications. Average annual pay ${vizMoney(pay.mean)}, ${pay.count} with pay. Roles: ${roles.join(", ") || "Not recorded"}.`;
+        vizActivateSvg(marker, description, () => { choosePlace(place, true); });
+        marker.querySelector("title").remove();
+        marker.setAttribute("aria-describedby", tooltip.id);
+        const showPopup = () => {
+          tooltip.replaceChildren(vizElement("strong", "", place.label), vizElement("span", "viz-tooltip-pay", `${vizMoney(pay.mean)} / year · average`), vizElement("small", "", `${place.jobs.length} applications · ${pay.count} with pay`));
+          const tags = vizElement("div", "viz-tooltip-roles");
+          (roles.length ? roles : ["No roles recorded"]).forEach((role) => tags.append(vizElement("span", "", role)));
+          tooltip.append(tags);
+          tooltip.hidden = false;
+          const mapWidth = map.clientWidth;
+          const mapHeight = map.clientHeight;
+          tooltip.style.left = `${Math.max(8, Math.min(mapWidth - tooltip.offsetWidth - 8, x / 800 * mapWidth + 14))}px`;
+          tooltip.style.top = `${Math.max(8, Math.min(mapHeight - tooltip.offsetHeight - 8, y / 380 * mapHeight - tooltip.offsetHeight - 12))}px`;
+        };
+        marker.addEventListener("mouseenter", showPopup);
+        marker.addEventListener("focus", showPopup);
+        marker.addEventListener("mouseleave", () => { if (document.activeElement !== marker) tooltip.hidden = true; });
+        marker.addEventListener("blur", () => { tooltip.hidden = true; });
+        marker.addEventListener("keydown", (event) => { if (event.key === "Escape") tooltip.hidden = true; });
+        svg.append(marker);
+      });
+      if (!visible.length) svg.append(vizSvg("text", { x: 400, y: 190, "text-anchor": "middle", class: "viz-svg-label" }, count ? "Resolve a location below to add its pin" : "No applications here yet"));
+      map.replaceChildren(svg, tooltip);
+    }
+
+    coverage.textContent = `${count} of ${records.length} applications · ${vizCountryLabel(country)}${needsReview.length ? ` · ${needsReview.reduce((sum, place) => sum + place.jobs.length, 0)} awaiting location review` : ""}`;
     locations.replaceChildren();
-    selected.forEach((place) => {
-      const button = vizElement("button", `viz-location ${place.kind}`);
+    const ordered = [...selected].sort((a, b) => vizState.mapMetric === "pay" ? (vizPlaceSummary(b).pay.mean || -1) - (vizPlaceSummary(a).pay.mean || -1) : b.jobs.length - a.jobs.length || a.label.localeCompare(b.label));
+    ordered.forEach((place) => {
+      const { pay, outcomes } = vizPlaceSummary(place);
+      const button = vizElement("button", `viz-location ${place.kind}${place.key === vizState.mapSelected ? " selected" : ""}`);
       button.type = "button";
       const label = vizElement("span", "", place.label);
-      if (place.kind === "unmapped") label.append(vizElement("small", "", "City not mapped yet"));
-      button.append(label, vizElement("strong", "", place.jobs.length));
-      button.addEventListener("click", () => showJobs(place.label, place.jobs));
+      label.append(vizElement("small", "", place.kind === "unmapped" ? place.reviewed ? "Saved without coordinates" : "Needs location review" : `${pay.count}/${place.jobs.length} with pay · ${Object.entries(outcomes).filter(([, value]) => value).map(([name, value]) => `${name} ${value}`).join(" · ")}`));
+      const value = vizElement("strong", "", vizState.mapMetric === "pay" ? vizMoney(pay.mean) : place.jobs.length);
+      button.append(label, value);
+      button.addEventListener("click", () => choosePlace(place, true));
       locations.append(button);
     });
-    // Draw smaller bubbles last so nearby locations remain selectable.
-    visible.forEach((place) => {
-      const [x, y] = vizProject(place.lon, place.lat, bounds);
-      const radius = 9 * Math.sqrt(place.jobs.length);
-      const group = vizSvg("g", { class: "viz-map-marker" });
-      group.append(vizSvg("circle", { cx: x, cy: y, r: radius, fill: VIZ_COLORS.teal, "fill-opacity": ".8", stroke: "#fffdf8", "stroke-width": 2 }),
-        vizSvg("text", { x, y: y + 4, "text-anchor": "middle", class: "viz-map-count" }, place.jobs.length));
-      const { pay, roles } = vizPlaceSummary(place);
-      const description = `${place.label}: ${place.jobs.length} applications. Average annual salary ${vizMoney(pay.mean)}, ${pay.count} with pay. Roles: ${roles.join(", ") || "Not recorded"}.`;
-      vizActivateSvg(group, description, () => { showPopup(); showJobs(place.label, place.jobs); });
-      // Use the accessible custom popup instead of a second native title tooltip.
-      group.querySelector("title").remove();
-      group.setAttribute("aria-describedby", tooltip.id);
-      function showPopup() {
-        tooltip.replaceChildren(vizElement("strong", "", place.label), vizElement("span", "viz-tooltip-pay", `${vizMoney(pay.mean)} / year · average`),
-          vizElement("small", "", `${pay.count} of ${place.jobs.length} applications with pay`));
-        const tags = vizElement("div", "viz-tooltip-roles");
-        (roles.length ? roles : ["No role attributes recorded"]).forEach((role) => tags.append(vizElement("span", "", role)));
-        tooltip.append(tags);
-        if (country === "remote") tooltip.append(vizElement("small", "", `${selected.find((place) => place.kind === "remote")?.jobs.length || 0} remote · ${selected.find((place) => place.kind === "missing")?.jobs.length || 0} location not recorded`));
-        tooltip.hidden = false;
-        const mapWidth = map.clientWidth;
-        const mapHeight = map.clientHeight;
-        tooltip.style.left = `${Math.max(8, Math.min(mapWidth - tooltip.offsetWidth - 8, x / 800 * mapWidth + 14))}px`;
-        tooltip.style.top = `${Math.max(8, Math.min(mapHeight - tooltip.offsetHeight - 8, y / 380 * mapHeight - tooltip.offsetHeight - 12))}px`;
-      }
-      group.addEventListener("mouseenter", showPopup);
-      group.addEventListener("focus", showPopup);
-      group.addEventListener("mouseleave", () => { if (document.activeElement !== group) tooltip.hidden = true; });
-      group.addEventListener("blur", () => { tooltip.hidden = true; });
-      group.addEventListener("keydown", (event) => { if (event.key === "Escape") tooltip.hidden = true; });
-      svg.append(group);
-    });
-    const unmapped = selected.filter((place) => place.kind === "unmapped").reduce((sum, place) => sum + place.jobs.length, 0);
-    coverage.textContent = `${count} of ${records.length} applications · ${vizCountryLabel(country)}${unmapped ? ` · ${unmapped} without a mapped city` : ""}${country === "remote" ? " · home-base pin at Missoula, MT" : ""}`;
-    if (!visible.length) svg.append(vizSvg("text", { x: 400, y: 190, "text-anchor": "middle", class: "viz-svg-label" }, count ? "Locations listed below; city pins not mapped yet" : "No applications here yet"));
-    map.replaceChildren(svg, tooltip);
+
+    review.replaceChildren();
+    if (needsReview.length) {
+      review.append(vizElement("h3", "", `Needs location review · ${needsReview.length}`), vizElement("p", "viz-note", "Resolve these raw locations once. The saved country, city, coordinates, precision, and source are then reused by matching jobs."));
+      const queue = vizElement("div", "viz-location-review-queue");
+      const editor = vizElement("div");
+      needsReview.forEach((place) => {
+        const row = vizElement("div", "viz-location-review-row");
+        const text = vizElement("span");
+        text.append(vizElement("strong", "", place.rawValues[0] || place.label), vizElement("small", "", `${place.jobs.length} ${place.jobs.length === 1 ? "job" : "jobs"} · ${place.country === "unmapped" ? "country unknown" : vizCountryLabel(place.country)}`));
+        const button = vizElement("button", "viz-location-action quiet", "Review");
+        button.type = "button";
+        button.addEventListener("click", () => { editor.replaceChildren(vizLocationEditor(place, jobs)); editor.scrollIntoView({ behavior: "smooth", block: "nearest" }); });
+        row.append(text, button);
+        queue.append(row);
+      });
+      review.append(queue, editor);
+    }
   }
   draw();
   return panel;

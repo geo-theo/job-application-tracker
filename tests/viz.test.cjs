@@ -7,10 +7,10 @@ const context = vm.createContext({
   document: { querySelector: () => null, querySelectorAll: () => [], addEventListener() {} },
   window: { location: { hash: "#viz" } },
 });
-for (const filename of ["app.js", "viz-geography.js", "viz.js"]) {
+for (const filename of ["viz-geography.js", "locations.js", "app.js", "viz.js"]) {
   vm.runInContext(fs.readFileSync(path.join(__dirname, "..", filename), "utf8"), context);
 }
-const api = vm.runInContext("({ getVizJobs, vizPay, vizAveragePay, vizPaySummary, vizSalaryGroups, vizFlowModel, vizAwaitingReply, vizIsPublicPurpose, vizLocation, vizLocationGroups, vizMapCountries, vizCountryBounds, vizPlaceSummary, vizActivityModel, vizActivityMetrics, vizDate, vizToday, vizCalendarRange, vizPeriodRange, vizInRange, vizMissionChange, getIndustryDisplay, industryForForm, normalizeRolesForForm, splitList, parseJobsCsv, parseCompaniesCsv, joinJobsWithCompanies, SECTOR_OPTIONS_BY_INDUSTRY, vizState })", context);
+const api = vm.runInContext("({ JOB_CSV_COLUMNS, LOCATION_JOB_FIELDS, getVizJobs, vizPay, vizAveragePay, vizPaySummary, vizSalaryGroups, vizFlowModel, vizAwaitingReply, vizIsPublicPurpose, vizLocation, vizLocationGroups, vizMapCountries, vizCountryBounds, vizPlaceSummary, vizActivityModel, vizActivityMetrics, vizDate, vizToday, vizCalendarRange, vizPeriodRange, vizInRange, vizMissionChange, getIndustryDisplay, industryForForm, normalizeRolesForForm, splitList, parseJobsCsv, parseCompaniesCsv, joinJobsWithCompanies, resolveJobLocation, canonicalLocationFieldsForJob, vizGeocodeResult, SECTOR_OPTIONS_BY_INDUSTRY, vizState })", context);
 const plain = (value) => JSON.parse(JSON.stringify(value));
 
 test("reference definitions are excluded before all scopes and aggregations", () => {
@@ -120,6 +120,7 @@ test("job and company CSV schemas are relational and non-overlapping", () => {
   for (const column of ["company", "favoriteCompany", "industry", "industryOther", "helping"]) {
     assert.ok(!jobHeader.includes(column), `${column} should not remain in jobs.csv`);
   }
+  api.LOCATION_JOB_FIELDS.forEach((field) => assert.ok(api.JOB_CSV_COLUMNS.includes(field), field));
   assert.deepEqual(companyHeader, ["id", "createdAt", "updatedAt", "name", "industry", "sector", "mission", "website", "rank"]);
   assert.match(html, /data-page="companies"/);
   assert.match(html, /id="edit-company-info-button"/);
@@ -233,7 +234,7 @@ test("mission comparison uses application-month shares, relative change and perc
   assert.equal(noPrevious.points, null);
 });
 
-test("area aliases receive the right country and new countries become tabs", () => {
+test("area aliases resolve locally and only represented countries become tabs", () => {
   for (const [location, country] of [["Silicon Valley", "us"], ["Los Angeles area", "us"], ["London area", "gb"], ["Paris area", "fr"], ["Amsterdam area", "nl"], ["DMV", "us"], ["Seattle, WA, USA", "us"]]) {
     const place = api.vizLocation({ location });
     assert.equal(place.country, country, location);
@@ -242,12 +243,52 @@ test("area aliases receive the right country and new countries become tabs", () 
     assert.ok(place.lon >= bounds[0] && place.lon <= bounds[1] && place.lat >= bounds[2] && place.lat <= bounds[3]);
   }
   const groups = api.vizLocationGroups([{ location: "Amsterdam" }, { location: "Hamburg, Germany" }, { location: "Remote" }, {}, { location: "Unknown place" }]);
-  assert.deepEqual(plain(api.vizMapCountries(groups).slice(0, 4)), ["remote", "us", "fr", "gb"]);
-  assert.ok(api.vizMapCountries(groups).includes("nl"));
-  assert.ok(api.vizMapCountries(groups).includes("de"));
-  assert.equal(groups.filter((place) => place.country === "remote").reduce((sum, place) => sum + place.jobs.length, 0), 2);
+  assert.deepEqual(plain(api.vizMapCountries(groups)), ["remote", "missing", "de", "nl", "unmapped"]);
+  assert.equal(groups.filter((place) => place.country === "remote").reduce((sum, place) => sum + place.jobs.length, 0), 1);
+  assert.equal(groups.filter((place) => place.country === "missing").reduce((sum, place) => sum + place.jobs.length, 0), 1);
   assert.equal(api.vizLocation({ location: "Hamburg, Germany" }).kind, "unmapped");
+  assert.equal(api.vizLocation({ location: "Hamburg, Germany" }).reviewed, false);
   assert.equal(api.vizLocation({ location: "Unknown place" }).country, "unmapped");
+  const alaskaBounds = api.vizCountryBounds("us", [{ lon: -149.9, lat: 61.218 }]);
+  assert.ok(-149.9 >= alaskaBounds[0] && -149.9 <= alaskaBounds[1]);
+  assert.ok(61.218 >= alaskaBounds[2] && 61.218 <= alaskaBounds[3]);
+});
+
+test("saved canonical locations override raw text and are reusable by matching jobs", () => {
+  const resolved = {
+    id: "saved", location: "Twin Cities", locationCanonical: "Minneapolis–Saint Paul",
+    locationCountryCode: "us", locationCountry: "United States", locationRegion: "Minnesota",
+    locationCity: "Minneapolis–Saint Paul", locationLatitude: "44.95", locationLongitude: "-93.2",
+    locationPrecision: "metro", locationResolutionSource: "manual",
+  };
+  const fresh = { id: "fresh", location: "Twin Cities" };
+  const direct = api.resolveJobLocation(resolved, [resolved, fresh]);
+  const reused = api.resolveJobLocation(fresh, [resolved, fresh]);
+  assert.equal(direct.label, "Minneapolis–Saint Paul");
+  assert.equal(direct.kind, "mapped");
+  assert.equal(reused.label, "Minneapolis–Saint Paul");
+  assert.equal(reused.source, "manual");
+  assert.equal(reused.lon, -93.2);
+});
+
+test("job edits preserve confirmed locations and reset canonical fields after raw location changes", () => {
+  const existing = {
+    location: "Twin Cities", locationCanonical: "Minneapolis–Saint Paul", locationCountryCode: "us",
+    locationCountry: "United States", locationRegion: "Minnesota", locationCity: "Minneapolis–Saint Paul",
+    locationLatitude: "44.95", locationLongitude: "-93.2", locationPrecision: "metro", locationResolutionSource: "manual",
+  };
+  assert.equal(api.canonicalLocationFieldsForJob("Twin Cities", existing, []).locationCanonical, "Minneapolis–Saint Paul");
+  assert.equal(api.canonicalLocationFieldsForJob("Unrecognized new city", existing, []).locationCanonical, "");
+  assert.equal(api.canonicalLocationFieldsForJob("Olympia, WA", null, []).locationCanonical, "Olympia, WA");
+});
+
+test("geocoder results become user-confirmable canonical fields", () => {
+  const result = api.vizGeocodeResult({ lat: "47.0379", lon: "-122.9007", display_name: "Olympia, Washington, United States", address: { city: "Olympia", state: "Washington", country: "United States", country_code: "us", "ISO3166-2-lvl4": "US-WA" } });
+  assert.equal(result.locationCanonical, "Olympia, WA");
+  assert.equal(result.locationCountryCode, "us");
+  assert.equal(result.locationPrecision, "city");
+  assert.equal(result.locationResolutionSource, "geocoded");
+  assert.equal(result.locationLatitude, 47.0379);
 });
 
 test("map popup pay includes hourly estimates and role attributes are deduplicated", () => {
