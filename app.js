@@ -9,21 +9,26 @@ const sessionDescriptions = new Map();
 const ROLE_OPTIONS = [
   "Cartographer",
   "Geospatial Analyst",
+  "GIS Engineer",
+  "GIS Developer",
+  "Remote Sensing Tech/Analyst",
+  "Survey/UAV/3D Tech/Analyst",
+  "Asset Mgmt Tech/Analyst",
+  "Supply Chain Analyst",
+  "Geopolitical Risk Analyst",
+  "Intelligence",
   "Data Analyst",
   "Data Governance",
   "Data Viz",
   "Data Engineer",
   "Product Engineer",
   "Software Engineer",
-  "Geopolitical Risk",
-  "Intelligence",
-  "Supply Chain",
-  "Researcher",
   "Project Manager",
   "Ops / Mgmt",
   "Business Development",
   "Technical Writer",
   "Technician",
+  "Researcher",
   "Teacher",
   "Retail / Customer Service",
   "Other",
@@ -32,21 +37,26 @@ const ROLE_OPTIONS = [
 const ROLE_ICONS = {
   Cartographer: "GIS",
   "Geospatial Analyst": "GIS",
+  "GIS Engineer": "GIS",
+  "GIS Developer": "GIS",
+  "Remote Sensing Tech/Analyst": "GIS",
+  "Survey/UAV/3D Tech/Analyst": "GIS",
+  "Asset Mgmt Tech/Analyst": "GIS",
   "Data Analyst": "DATA",
   "Data Governance": "DATA",
   "Data Viz": "DATA",
-  "Data Engineer": "CODE",
+  "Data Engineer": "DATA",
   "Product Engineer": "CODE",
   "Software Engineer": "CODE",
   "Geopolitical Risk": "IR",
   Intelligence: "IR",
-  "Supply Chain": "SC",
+  "Supply Chain Analyst": "SC",
   Researcher: "RSC",
   "Project Manager": "PM",
   "Ops / Mgmt": "OPS",
   "Business Development": "BD",
   "Technical Writer": "TW",
-  Technician: "TECH",
+  Technician: "!",
   "Retail / Customer Service": "!",
 };
 
@@ -704,9 +714,7 @@ function usesPriorityFilter(page = activePage) {
     "companies",
     "research",
     "viz",
-  ].includes(
-    page,
-  );
+  ].includes(page);
 }
 
 function setFolderGate(
@@ -1512,10 +1520,10 @@ function renderCompanies() {
 function hasCompanyFilters() {
   return Boolean(
     filters.companyName.trim() ||
-      filters.companyIndustries.length ||
-      filters.companySectors.length ||
-      filters.companyMissions.length ||
-      filters.companyRanks.length,
+    filters.companyIndustries.length ||
+    filters.companySectors.length ||
+    filters.companyMissions.length ||
+    filters.companyRanks.length,
   );
 }
 
@@ -1584,7 +1592,9 @@ function getVisibleJobs() {
   } else if (sortBy === "priority") {
     visible.sort(comparePriorityJobs);
   } else if (sortBy === "applied-date") {
-    visible.sort((a, b) => compareDatesNewestFirst(a.appliedDate, b.appliedDate));
+    visible.sort((a, b) =>
+      compareDatesNewestFirst(a.appliedDate, b.appliedDate),
+    );
   } else if (sortBy === "last-responded") {
     visible.sort((a, b) =>
       compareDatesNewestFirst(getLastRespondedDate(a), getLastRespondedDate(b)),
@@ -1689,8 +1699,7 @@ function compareApplicationStages(a, b) {
     Applied: 5,
   };
   const difference =
-    (ranks[getApplicationStage(a)] ?? 6) -
-    (ranks[getApplicationStage(b)] ?? 6);
+    (ranks[getApplicationStage(a)] ?? 6) - (ranks[getApplicationStage(b)] ?? 6);
   if (difference) return difference;
   return compareDatesNewestFirst(
     getLastRespondedDate(a) || a.appliedDate,
@@ -2117,7 +2126,10 @@ function createCompanyCard(company) {
   if (companyJobs.length) {
     card.classList.add("company-card-expandable");
     card.tabIndex = 0;
-    card.setAttribute("aria-label", `${company.name}, ${companyJobs.length} linked jobs`);
+    card.setAttribute(
+      "aria-label",
+      `${company.name}, ${companyJobs.length} linked jobs`,
+    );
     const jobToggle = document.createElement("button");
     jobToggle.type = "button";
     jobToggle.className = "company-job-toggle";
@@ -2148,7 +2160,10 @@ function createCompanyCard(company) {
       toggleJobs();
     });
     card.addEventListener("keydown", (event) => {
-      if (event.target !== card || (event.key !== "Enter" && event.key !== " ")) {
+      if (
+        event.target !== card ||
+        (event.key !== "Enter" && event.key !== " ")
+      ) {
         return;
       }
       event.preventDefault();
@@ -2500,9 +2515,7 @@ function isFavoriteJob(job) {
 }
 
 function isReferenceJob(job) {
-  return (
-    normalizePriority(job.priority) === "Future" || isAppliedNo(job)
-  );
+  return normalizePriority(job.priority) === "Future" || isAppliedNo(job);
 }
 
 function normalizePriority(value) {
@@ -3013,12 +3026,16 @@ async function importFromConnectedFolder(handle) {
   ]);
   const imported = jobsCsv ? parseJobsCsv(jobsCsv) : [];
   const importedCompanies = companiesCsv ? parseCompaniesCsv(companiesCsv) : [];
-  const descriptionsDir = await getExistingDirectoryHandle(handle, "job-descriptions");
+  const descriptionsDir = await getExistingDirectoryHandle(
+    handle,
+    "job-descriptions",
+  );
   const descriptions = new Map();
   for (const job of imported) {
-    const text = descriptionsDir && job.descriptionFilename
-      ? await readTextFile(descriptionsDir, job.descriptionFilename)
-      : null;
+    const text =
+      descriptionsDir && job.descriptionFilename
+        ? await readTextFile(descriptionsDir, job.descriptionFilename)
+        : null;
     job.descriptionLength = text?.length || 0;
     if (text !== null) descriptions.set(job.id, text);
   }
