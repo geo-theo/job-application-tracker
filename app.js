@@ -392,7 +392,7 @@ function bindEvents() {
   els.payMin.addEventListener("input", updatePayMidpoint);
   els.payMax.addEventListener("input", updatePayMidpoint);
   els.roleCategory.addEventListener("change", () => {
-    syncRoleSelectionFromSelect();
+    selectedFormRoles.clear();
     renderRoleOptions();
   });
   els.roles.addEventListener("change", syncConditionalFields);
@@ -1652,18 +1652,19 @@ function getPageJobs(page = activePage) {
   const pendingJobs = jobs.filter(
     (job) => !isAppliedJob(job) && !isReferenceJob(job),
   );
+  const nonUpcomingJobs = pendingJobs.filter((job) => !isUpcomingJob(job));
   if (page === "full-time")
-    return pendingJobs.filter((job) => matchesJobType(job, "Full-time"));
+    return nonUpcomingJobs.filter((job) => matchesJobType(job, "Full-time"));
   if (page === "internship")
-    return pendingJobs.filter((job) => matchesJobType(job, "Internship"));
+    return nonUpcomingJobs.filter((job) => matchesJobType(job, "Internship"));
   if (page === "part-time")
-    return pendingJobs.filter((job) => matchesJobType(job, "Part-time"));
+    return nonUpcomingJobs.filter((job) => matchesJobType(job, "Part-time"));
   if (page === "upcoming")
     return pendingJobs.filter(
-      (job) => normalizePriority(job.priority) === "Upcoming",
+      isUpcomingJob,
     );
   if (page === "favorites") return pendingJobs.filter(isFavoriteJob);
-  return pendingJobs;
+  return nonUpcomingJobs;
 }
 
 function getEmptyMessage() {
@@ -2554,6 +2555,10 @@ function isFavoriteJob(job) {
 
 function isReferenceJob(job) {
   return normalizePriority(job.priority) === "Future" || isAppliedNo(job);
+}
+
+function isUpcomingJob(job) {
+  return normalizePriority(job.priority) === "Upcoming";
 }
 
 function normalizePriority(value) {
