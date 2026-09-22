@@ -49,6 +49,7 @@ const ROLE_ICONS = {
   "Product Engineer": "CODE",
   "Software Engineer": "CODE",
   "Geopolitical Risk": "IR",
+  "Geopolitical Risk Analyst": "IR",
   Intelligence: "IR",
   "Supply Chain Analyst": "SC",
   Researcher: "RSC",
@@ -59,6 +60,8 @@ const ROLE_ICONS = {
   Technician: "!",
   "Retail / Customer Service": "!",
 };
+
+const ROLE_CATEGORIES = unique([...Object.values(ROLE_ICONS), "Other"]);
 
 const JOB_CSV_COLUMNS = [
   "id",
@@ -239,6 +242,7 @@ const els = {
   referenceCountWrap: document.querySelector("#reference-count-wrap"),
   referenceCount: document.querySelector("#reference-count"),
   favoriteJob: document.querySelector("#favorite-job"),
+  roleCategory: document.querySelector("#role-category"),
   roles: document.querySelector("#roles"),
   roleOtherWrap: document.querySelector("#role-other-wrap"),
   roleOther: document.querySelector("#role-other"),
@@ -337,6 +341,7 @@ let activePage = getPageFromHash();
 let lastFocusedElement = null;
 let lastCompanyFocusedElement = null;
 let companyEditorOpenedFromJob = false;
+let selectedFormRoles = new Set();
 
 const filters = {
   type: "All",
@@ -386,6 +391,10 @@ function bindEvents() {
   els.deleteButton.addEventListener("click", handleDelete);
   els.payMin.addEventListener("input", updatePayMidpoint);
   els.payMax.addEventListener("input", updatePayMidpoint);
+  els.roleCategory.addEventListener("change", () => {
+    syncRoleSelectionFromSelect();
+    renderRoleOptions();
+  });
   els.roles.addEventListener("change", syncConditionalFields);
   els.company.addEventListener("input", syncJobCompanySelection);
   els.company.addEventListener("change", syncJobCompanySelection);
@@ -605,11 +614,47 @@ function bindEvents() {
 }
 
 function populateRoleOptions() {
-  ROLE_OPTIONS.forEach((role) => {
-    els.roles.append(new Option(role, role));
-  });
+  els.roleCategory.replaceChildren(new Option("Select a category", ""));
+  ROLE_CATEGORIES.forEach((category) =>
+    els.roleCategory.append(new Option(category, category)),
+  );
+  renderRoleOptions();
   updateRoleFilterOptions([]);
   updateIndustryFilterOptions([]);
+}
+
+function getRoleCategory(role) {
+  return ROLE_ICONS[role] || "Other";
+}
+
+function renderRoleOptions() {
+  const category = els.roleCategory.value;
+  els.roles.replaceChildren();
+  els.roles.disabled = !category;
+
+  if (!category) {
+    els.roles.append(new Option("Select a category first", ""));
+    return;
+  }
+
+  const roles = ROLE_OPTIONS.filter((role) => getRoleCategory(role) === category);
+  selectedFormRoles.forEach((role) => {
+    if (getRoleCategory(role) === category && !roles.includes(role)) {
+      roles.push(role);
+    }
+  });
+  roles.forEach((role) => {
+    const option = new Option(role, role);
+    option.selected = selectedFormRoles.has(role);
+    els.roles.append(option);
+  });
+}
+
+function syncRoleSelectionFromSelect() {
+  const category = els.roleCategory.value;
+  if (!category) return;
+  [...els.roles.options].forEach((option) => selectedFormRoles.delete(option.value));
+  getSelectedValues(els.roles).forEach((role) => selectedFormRoles.add(role));
 }
 
 function populateSectorOptions(selectedValue = "") {
@@ -623,19 +668,6 @@ function populateSectorOptions(selectedValue = "") {
   els.companySector.append(new Option("Other", "Other"));
   els.companySector.value =
     presets.includes(current) || current === "Other" ? current : "";
-}
-
-function ensureRoleOptions(roles) {
-  const existing = new Set(
-    [...els.roles.options].map((option) => option.value),
-  );
-  const otherOption =
-    [...els.roles.options].find((option) => option.value === "Other") || null;
-  roles.filter(Boolean).forEach((role) => {
-    if (existing.has(role)) return;
-    els.roles.insertBefore(new Option(role, role), otherOption);
-    existing.add(role);
-  });
 }
 
 function getPageFromHash() {
@@ -1099,7 +1131,8 @@ function collectFormData(companyId = "") {
   const payMin = normalizeNumberString(els.payMin.value);
   const payMax = normalizeNumberString(els.payMax.value);
   const payMidpoint = calculateMidpoint(payMin, payMax);
-  const roles = getSelectedValues(els.roles);
+  syncRoleSelectionFromSelect();
+  const roles = [...selectedFormRoles];
   const roleOther = els.roleOther.value.trim();
   const allRoles = rolesToSave(roles, roleOther);
   const deadlineChoice = els.deadlineChoice.value;
@@ -1253,6 +1286,9 @@ function resetForm() {
   els.deleteButton.hidden = true;
   els.editBanner.hidden = true;
   els.downloadDescriptionButton.hidden = true;
+  selectedFormRoles.clear();
+  els.roleCategory.value = "";
+  renderRoleOptions();
   syncConditionalFields();
   updatePayMidpoint();
 }
@@ -1321,8 +1357,9 @@ async function loadJobIntoForm(jobId) {
   setRadioValue("jobLevel", getJobLevelForForm(job));
   els.favoriteJob.checked = Boolean(job.favoriteJob);
   const formRoles = normalizeRolesForForm(job.roles || [], job.roleOther);
-  ensureRoleOptions(formRoles.filter((role) => role !== "Other"));
-  setMultiSelectValues(els.roles, formRoles);
+  selectedFormRoles = new Set(formRoles);
+  els.roleCategory.value = formRoles.length ? getRoleCategory(formRoles[0]) : "";
+  renderRoleOptions();
   els.roleOther.value = job.roleOther || "";
   els.jobDescription.value = await getDescription(job.id);
   els.scrapeStatus.textContent = "";
@@ -1345,7 +1382,8 @@ function syncConditionalFields() {
   const locationChoice = getRadioValue("locationChoice");
   els.locationOther.hidden = locationChoice !== "Other";
 
-  const selectedRoles = getSelectedValues(els.roles);
+  syncRoleSelectionFromSelect();
+  const selectedRoles = [...selectedFormRoles];
   els.roleOtherWrap.hidden = !selectedRoles.includes("Other");
   if (els.roleOtherWrap.hidden) els.roleOther.value = "";
 

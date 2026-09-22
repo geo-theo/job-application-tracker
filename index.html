@@ -510,8 +510,23 @@
             </div>
 
             <label class="field">
+              <span>Role category</span>
+              <select id="role-category" name="roleCategory"></select>
+            </label>
+
+            <label class="field">
               <span>Role</span>
-              <select id="roles" name="roles" multiple size="7"></select>
+              <select
+                id="roles"
+                name="roles"
+                multiple
+                size="7"
+                aria-describedby="role-selection-help"
+              ></select>
+              <small class="field-note" id="role-selection-help">
+                Choose a category first, then select one or more roles. You
+                can change categories to add roles from another group.
+              </small>
             </label>
 
             <label class="field" id="role-other-wrap" hidden>
