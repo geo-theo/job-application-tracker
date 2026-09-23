@@ -559,6 +559,62 @@ button:focus-visible {
   line-height: 1.35;
 }
 
+.role-category-reference {
+  display: grid;
+  gap: 9px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--paper-strong);
+}
+
+.role-category-reference h3 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 0.92rem;
+}
+
+.role-category-reference .field-note {
+  min-height: 0;
+}
+
+#role-category-reference-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 14px;
+}
+
+.role-category-reference-item {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  gap: 8px;
+  align-items: start;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.role-category-reference-item strong {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--ink);
+  font-size: 0.8rem;
+}
+
+.role-category-reference-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--paper);
+  color: var(--focus);
+  font-size: 1rem;
+  font-weight: 900;
+}
+
 .edit-banner {
   display: flex;
   align-items: center;
@@ -1554,6 +1610,10 @@ button:focus-visible {
   }
 
   .checkbox-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #role-category-reference-list {
     grid-template-columns: 1fr;
   }
 

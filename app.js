@@ -63,6 +63,21 @@ const ROLE_ICONS = {
 
 const ROLE_CATEGORIES = unique([...Object.values(ROLE_ICONS), "Other"]);
 
+const ROLE_CATEGORY_ICONS = {
+  GIS: "⌖",
+  DATA: "▦",
+  CODE: "⌘",
+  IR: "◎",
+  SC: "↗",
+  RSC: "✦",
+  PM: "◆",
+  OPS: "⚙",
+  BD: "↗",
+  TW: "✎",
+  "!": "⚡",
+  Other: "?",
+};
+
 const JOB_CSV_COLUMNS = [
   "id",
   "createdAt",
@@ -243,6 +258,9 @@ const els = {
   referenceCount: document.querySelector("#reference-count"),
   favoriteJob: document.querySelector("#favorite-job"),
   roleCategory: document.querySelector("#role-category"),
+  roleCategoryReferenceList: document.querySelector(
+    "#role-category-reference-list",
+  ),
   roles: document.querySelector("#roles"),
   roleOtherWrap: document.querySelector("#role-other-wrap"),
   roleOther: document.querySelector("#role-other"),
@@ -619,12 +637,41 @@ function populateRoleOptions() {
     els.roleCategory.append(new Option(category, category)),
   );
   renderRoleOptions();
+  renderRoleCategoryReference();
   updateRoleFilterOptions([]);
   updateIndustryFilterOptions([]);
 }
 
 function getRoleCategory(role) {
   return ROLE_ICONS[role] || "Other";
+}
+
+function getRoleCategoryIcon(category) {
+  return ROLE_CATEGORY_ICONS[category] || "?";
+}
+
+function renderRoleCategoryReference() {
+  els.roleCategoryReferenceList.replaceChildren();
+  ROLE_CATEGORIES.forEach((category) => {
+    const item = document.createElement("div");
+    item.className = "role-category-reference-item";
+
+    const icon = document.createElement("span");
+    icon.className = "role-category-reference-icon";
+    icon.setAttribute("aria-hidden", "true");
+    icon.textContent = getRoleCategoryIcon(category);
+
+    const details = document.createElement("div");
+    const title = document.createElement("strong");
+    title.textContent = category;
+    const roles = document.createElement("span");
+    roles.textContent = ROLE_OPTIONS.filter(
+      (role) => getRoleCategory(role) === category,
+    ).join(", ");
+    details.append(title, roles);
+    item.append(icon, details);
+    els.roleCategoryReferenceList.append(item);
+  });
 }
 
 function renderRoleOptions() {
@@ -682,6 +729,7 @@ function syncPageFromHash() {
     return;
   }
   activePage = nextPage;
+  resetUnavailablePriorityFilters();
   closeFilterAccordions();
   updateFilterControls();
   renderJobs();
@@ -695,6 +743,7 @@ function setActivePage(page) {
   if (window.location.hash !== hash) {
     window.location.hash = hash;
   }
+  resetUnavailablePriorityFilters();
   closeFilterAccordions();
   updateFilterControls();
   renderJobs();
@@ -747,6 +796,15 @@ function usesPriorityFilter(page = activePage) {
     "research",
     "viz",
   ].includes(page);
+}
+
+function usesUpcomingPriorityFilter(page = activePage) {
+  return page === "favorites";
+}
+
+function resetUnavailablePriorityFilters() {
+  if (usesUpcomingPriorityFilter()) return;
+  filters.priorities = filters.priorities.filter((priority) => priority !== "Upcoming");
 }
 
 function setFolderGate(
@@ -1784,6 +1842,9 @@ function updateFilterControls() {
   els.appliedStatusFilterButton.textContent = `Status: ${filters.applicationStatus}`;
 
   els.priorityButtons.forEach((button) => {
+    button.hidden =
+      button.dataset.priorityFilter === "Upcoming" &&
+      !usesUpcomingPriorityFilter();
     button.classList.toggle(
       "active",
       filters.priorities.includes(button.dataset.priorityFilter),
@@ -2448,7 +2509,8 @@ function roleChip(role) {
   const icon = document.createElement("span");
   icon.className = "chip-icon";
   icon.setAttribute("aria-hidden", "true");
-  icon.textContent = getRoleIcon(role);
+  icon.textContent = getRoleCategoryIcon(getRoleCategory(role));
+  icon.title = `${getRoleCategory(role)} category`;
   span.prepend(icon);
   return span;
 }
@@ -2457,15 +2519,6 @@ function getRoleStyleIndex(role) {
   const optionIndex = ROLE_OPTIONS.indexOf(role);
   if (optionIndex >= 0) return optionIndex % 8;
   return hashString(role) % 8;
-}
-
-function getRoleIcon(role) {
-  if (ROLE_ICONS[role]) return ROLE_ICONS[role];
-  const words = role
-    .split(/[^a-z0-9]+/i)
-    .filter(Boolean)
-    .slice(0, 2);
-  return (words.map((word) => word[0]).join("") || "?").toUpperCase();
 }
 
 function getIndustryDisplay(job) {
