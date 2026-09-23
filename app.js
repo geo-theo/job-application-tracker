@@ -2273,10 +2273,6 @@ function createJobCard(job) {
   levelChips.className = "chips level-chips";
   if (activePage === "applied") {
     levelChips.append(applicationStageChip(job));
-  } else {
-    const jobLevel = normalizeJobLevel(job.jobLevel);
-    if (jobLevel)
-      levelChips.append(chip(jobLevel, `level-${jobLevel.toLowerCase()}`));
   }
 
   const priorityChips = document.createElement("div");
