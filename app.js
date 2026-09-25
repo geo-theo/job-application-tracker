@@ -15,8 +15,10 @@ const ROLE_OPTIONS = [
   "Survey/UAV/3D Tech/Analyst",
   "Asset Mgmt Tech/Analyst",
   "Supply Chain Analyst",
-  "Geopolitical Risk Analyst", "GEOSINT Analyst"
-  "Urban Planner", "Transportation Analyst",
+  "Geopolitical Risk Analyst",
+  "GEOSINT Analyst",
+  "Urban Planner",
+  "Transportation Analyst",
   "Data Analyst",
   "Data Steward",
   "Data Viz",
@@ -28,7 +30,7 @@ const ROLE_OPTIONS = [
   "Business Development",
   "Technical Writer",
   "Technician",
-  "Data Journalist"
+  "Data Journalist",
   "Researcher",
   "Teacher",
   "Retail / Customer Service",
