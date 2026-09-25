@@ -1,0 +1,44 @@
+Senior GIS Analyst
+RemoteGIS TeamFull timeIII
+
+Arlington, Virginia, United States
+Overview
+Application
+Description
+We're looking for a Senior level GIS Analyst with strong programming skills and a passion for delivering impactful projects. You'll work with a collaborative team to analyze spatial data and build modern web GIS applications that directly serve our clients and their global missions. The ideal candidate is equally comfortable working independently and alongside others, and is driven to continuously learn and share knowledge.
+
+RESPONSIBILITIES 
+
+Own the architecture of Python based data pipelines, setting standards for automation, cleaning, transformation, and analysis of geospatial datasets across projects.
+Develop ArcGIS Online Hosted Notebooks, ArcGIS Pro Python Toolboxes, and ArcGIS Geoprocessing services to support geospatial applications and workflows
+Lead database architecture decisions for enterprise relational and spatial systems, balancing performance, scalability, and maintainability.
+Deliver production-quality code following professional development standards, including version control with Git and GitHub for collaboration, collaborative code review, and release management
+Perform quality assurance and debugging of geospatial data, scripts, and services to ensure accuracy, performance, and reliability of delivered solutions
+Give live demonstrations and presentations to clients showcasing workflows, solutions, and outcomes
+Collaborate with clients to define project requirements, translate business needs into technical specifications, and communicate progress throughout the project lifecycle
+Serve as technical lead on select engagements, guiding architecture and implementation approach
+Mentor junior analysts and foster knowledge-sharing across the team
+Requirements
+8+ years of professional GIS experience
+Advanced proficiency across the Esri stack: ArcGIS Pro (with extensions), ArcGIS Online, and ArcGIS Enterprise (Server, Portal, Image Server)
+Demonstrated Python 3.x development experience building complex, production-ready geospatial tools; proficiency with ArcPy, ArcGIS API for Python, NumPy, and Pandas at minimum
+Proven ability to manage multiple concurrent projects, proactively identify risks, and communicate clearly with both technical and non-technical stakeholders in a client-facing environment
+Strong oral and written communication skills; ability to thrive in a fast-paced, collaborative environment
+Bachelor's or master's degree in Geography, GIS, or a related field — or equivalent professional experience
+Must be legally eligible to work in the United States. Sponsorship not available.
+Benefits
+Blue Raster offers a friendly work environment, competitive salaries, and a generous benefits package. Our benefits package includes:
+
+CareFirst Medical, Dental, Vision with HSA option
+401k benefits
+Paid Time Off that starts on your first day
+Parental Leave
+Training opportunities
+Support for personal and career growth
+We also provide opportunities to work on a number of concurrent projects with clients from a variety of sectors, including Conservation, Health, Government, Global Affairs, and Education.
+
+Our mission and our applications are meant to connect the world and everyone in it, regardless of gender, race, creed, or any other distinction. We believe in a diverse and inclusive workplace, and we encourage all people to join our team and bring their unique perspective to help make us stronger.
+
+Compensation decisions and the base range for this role take into account many factors including but not limited to skill sets; experience and training; licensure and certifications; and other business and organizational needs.
+
+A reasonable estimate of the base salary range is $85,000-$125,000 USD.

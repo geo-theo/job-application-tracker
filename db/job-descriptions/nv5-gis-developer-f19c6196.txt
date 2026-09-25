@@ -1,0 +1,72 @@
+GIS Developer
+Posted Date3 days ago(9/21/2026 4:17 PM)
+Job ID 2026-12610 # of Openings 2 Location US-Remote Additional Locations US-CO-Gunnison Category Geospatial/GIS Type Regular Full-Time
+Overview
+NV5 is seeking a GIS Developer to work directly with its federal government client in Colorado. The successful candidate will have specific technical skills and expertise to enhance reporting and application improvements to the current land use planning decisions database through user engagement. This initiative will transform the system into a more effective web mapping application within the federal mission services data infrastructure, serving all federal offices. The national application currently manages complex and extensive data related to land use planning decisions.
+
+ 
+
+Work Setting:  This role offers flexibility in location, with the option to work from any NV5 Regional Office or remotely from home. Occasional travel may be required, typically less than 20%.
+
+ 
+
+NV5 is a global technology solutions and consulting services company with a workforce of over 4,500 professionals in more than 100 offices worldwide.  NV5’s continued growth has been spurred through strategic investments in firms with unique capabilities to help current and future customers solve the world’s toughest problems.  The NV5 family brings together talent across a wide range of markets and fields, including Professional Engineers, Professional Land Surveyors, Architects, Photogrammetrists, GIS Professionals, Software Developers, IT, Project Management Professionals, and more.
+
+ 
+
+At NV5 Geospatial, we are a collaboration of intelligent, innovative thinkers who care for each other, our communities, and the environment.  We value both heart and head, the diversity of our people, and their experiences because that is how we continue to grow as a leader in our industry and expand our individual and collective potential.
+
+ 
+
+Responsibilities
+Enhance the current land use planning decisions database. 
+Transform the system into a more effective web mapping application. 
+Ensure quick and easy retrieval of data through the existing IT infrastructure. 
+Utilize Power BI to create interactive and dynamic reports and dashboards. 
+Integrate Power BI with ArcGIS for enhanced mapping and spatial analysis. 
+Explore Azure Maps 
+Create and maintain data and metadata management automation scripts, batch processes using federal metadata tools, ArcGIS Pro, ArcGIS Online (AGOL), Python, R, SQL scripts, and/or other data and metadata management software. 
+Develop processes to improve data retrieval speeds including analysis of current data processing and infrastructure such as ArcGIS Server, SDE and ArcGIS Portal through the ESRI Experience Application.  
+Develop and improve Power BI apps to access data and create reports from Geospatial Analysis in conjunction with ESRI Experience Apps.   
+Qualifications
+Required Knowledge and Experience
+
+ 
+
+Enterprise GIS and Business Intelligence
+Power BI Administration and Development
+ArcGIS Enterprise and ArcGIS Online
+Metadata and Data Governance
+Cloud Integration and Azure Services
+Database Optimization and Data Architecture
+Information Security and Compliance
+Technical Documentation and Training
+Stakeholder Engagement and Customer Support
+Geospatial Analysis and Cartographic Production
+Preferred Qualifications
+
+Experience supporting federal land-use planning, environmental management, or natural resource programs.
+Knowledge of federal geospatial policies, standards, and mission-support systems.
+Experience with Azure Maps capabilities, including vector tiles, routing, geocoding, spatial operations, and cloud-based mapping services.
+Familiarity with AI and emerging technology guidance applicable to federal environmental, planning, and geospatial programs.
+ 
+
+Education/Experience
+
+5 years of application development experience preferred.
+Bachelor’s degree in Geography, GIS, Computer Science, or related field.
+Employment is contingent upon successful completion of a background check and drug screening.
+
+ 
+
+NV5 offers a competitive compensation and benefits package including medical, dental, life insurance, FTO, 401(k) and professional development/advancement opportunities.
+
+ 
+
+NV5 provides equal employment opportunities (EEO) to all applicants for employment without regard to race, color, religion, gender, sexual orientation, gender identity or expression, national origin, age, disability, genetic information, marital status, amnesty, or status as a covered veteran in accordance with applicable federal, state and local laws. NV5 complies with applicable state and local laws governing non-discrimination in employment in every location in which the company has facilities. This policy applies to all terms and conditions of employment, including, but not limited to, hiring, placement, promotion, termination, layoff, recall, transfer, leaves of absence, compensation, and training.
+
+ 
+
+#LI-JG1
+
+#LI-Remote

@@ -1,0 +1,64 @@
+Title	
+Geospatial Support Specialist 
+EOE Statement	Anakim Consulting provides equal employment opportunities to all employees and applicants for employment and prohibits discrimination and harassment of any type without regard to race, color, religion, age, sex, national origin, disability status, genetics, protected veteran status, sexual orientation, gender identity or expression, or any other characteristic protected by federal, state, or local laws.  
+Description	
+Geospatial Support Specialist
+Sioux Falls, SD 57198
+
+Location: Flexible for on-site, hybrid, or remote from a U.S. based location
+
+Job Description:
+Anakim Consulting Inc. is hiring a Geospatial Support Specialist to support the USGS EROS User Services team focused on inquiries related to NASA Earthdata. Qualified candidates will have experience working with hyperspectral geospatial data and the ability to provide data and access support in a dynamic environment. This position requires experience with remote sensing tools, coding knowledge to troubleshoot Python and R code questions, and an interest in ongoing learning about NASA Earthdata products and services.
+
+Daily responsibilities include:
+
+Answer inbound User Service’s phone calls, emails, web-form submissions, and Earthdata Forum posts.
+Make follow-up phone calls to resolve user issues.
+Research and assist with resolving user questions and issues.
+Review and write basic code snippets to support users in accessing and processing geospatial data.
+Raise issues beyond personal technical knowledge to appropriate technical points of contact.
+Build strong working relationships and deliver responsive, friendly support to management, colleagues, and end users through effective daily communication and customer service.
+Provide specialist support for a subset of datasets and serve as a technical point of contact for peers regarding those data.
+Review and maintain project-related webpages for content accuracy.
+Draft and maintain frequently asked questions for data products and publish content to the web.
+Create and conduct webinars and conference presentations on various datasets and tools.
+Additional responsibilities include:
+
+Initiate and improve internal User Services Standard Operating Procedure (SOP) documents and assist in their maintenance.
+
+Perform occasional testing and evaluation of data products and related software.
+Gain knowledge of additional NASA Earthdata processes and products relevant to EROS User Services.
+Attend meetings to represent User Services concerns, products, and processes.
+Maintain regular attendance and punctuality.
+Perform other duties as assigned.
+ 
+Position Requirements	
+Basic Qualifications:
+
+U.S. citizenship (no dual citizenship)
+Ability to obtain U.S. Government security access (Public Trust level)
+Bachelor’s degree in  Geography, Remote Sensing, Geoscience, or related field
+1-5 years of experience working with remote sensing and geospatial hyperspectral data with a willingness to learn more about the data, tools, and services.
+Experience with GIS / Remote Sensing software such as ArcGIS Pro, QGIS, ENVI, etc.
+Basic understanding of Python or R and ability to troubleshoot code
+Strong troubleshooting skills and the ability to effectively answer user inquiries ranging from simple to complex.
+Excellent interpersonal, organizational, and communication skills
+Ability to work independently and as part of a team
+Excellent written and verbal communication skills including providing user support via phone, email, MS Teams and in-person.
+Ability to present technical information to technical and non-technical team members
+Strong analytical and problem-solving abilities
+Ability to work collaboratively in a fast-paced team environment
+Preferred Qualifications:
+
+Prior experience supporting a user help desk environment
+Experience working with Zendesk is a plus
+Understanding of NASA Earthdata search and order processes
+Knowledge of NASA Earthdata products and services including EMIT, ECOSTRESS, HLS, and VIIRS is a plus
+Knowledge of hyperspectral geospatial data including EMIT, PRISMA, AVIRIS, and EAGLE is a plus
+#Geospatial #RemoteSensing #GISJobs #Hiring #EarthData #Python #DataScience #GISHiring #CareersInScience #JobOpening
+
+ 
+Full-Time/Part-Time	Full-Time  
+Salary Range	This position offers a full time W2 salary plus eligibility to participate in the company's benefits program.  
+Req Number	INF-26-00031  
+About the Organization	Anakim Consulting is a privately held small company that provides growth opportunities for employees. Come join our team!

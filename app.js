@@ -154,6 +154,7 @@ const SECTOR_OPTIONS_BY_INDUSTRY = {
     "Earth Observation",
     "Surveying / Mapping",
     "Location Intelligence",
+    "Government Contracting",
   ],
   "Geopolitical Risk": [
     "Risk Intelligence",
@@ -164,6 +165,7 @@ const SECTOR_OPTIONS_BY_INDUSTRY = {
     "Humanitarian Aid",
     "Economic Development",
     "Global Health",
+    "Government Contracting",
   ],
   MIC: ["Defense Technology", "Weapons", "Government Contracting"],
   Tech: ["Software", "Hardware", "Cloud Services"],
@@ -172,17 +174,49 @@ const SECTOR_OPTIONS_BY_INDUSTRY = {
     "Foreign Government",
     "Intergovernmental",
   ],
+  Finance: [
+    "Banking",
+    "Consulting",
+    "Professional Services",
+    "Insurance",
+    "Government Contracting",
+  ],
   "Federal Government": ["Civilian Agency", "Defense", "Intelligence"],
   "Local Government": ["City", "County", "Regional"],
-  NGO: ["Humanitarian", "Conservation", "Advocacy"],
-  "Policy / Think Tank": ["Public Policy", "Research", "Advocacy"],
+  NGO: ["Humanitarian", "Conservation", "Advocacy", "Government Contracting"],
+  "Policy / Think Tank": [
+    "Public Policy",
+    "Research",
+    "Advocacy",
+    "Government Contracting",
+  ],
   "Journalism / Media": ["News", "Digital Media", "Publishing"],
-  Academia: ["Higher Education", "Research Institute", "K-12"],
-  Energy: ["Oil & Gas", "Renewable Energy", "Mining"],
-  "Utilities / Telecommunications": ["Electric", "Water", "Telecommunications"],
-  Engineering: ["Civil Engineering", "Architecture", "Construction"],
-  Transportation: ["Aviation", "Rail", "Logistics"],
-  "Tourism / Leisure": ["Outdoor Recreation", "Hospitality", "Travel"],
+  Academia: [
+    "Higher Education",
+    "Research Institute",
+    "K-12",
+    "Government Contracting",
+  ],
+  Energy: ["Oil & Gas", "Renewable Energy", "Mining", "Government Contracting"],
+  "Utilities / Telecommunications": [
+    "Electric",
+    "Water",
+    "Telecommunications",
+    "Government Contracting",
+  ],
+  Engineering: [
+    "Civil Engineering",
+    "Architecture",
+    "Construction",
+    "Government Contracting",
+  ],
+  Transportation: ["Aviation", "Rail", "Logistics", "Government Contracting"],
+  "Tourism / Leisure": [
+    "Outdoor Recreation",
+    "Hospitality",
+    "Travel",
+    "Government Contracting",
+  ],
   "Consumer Products": [
     "Food & Beverage",
     "Apparel",
@@ -270,9 +304,6 @@ const els = {
   referenceCount: document.querySelector("#reference-count"),
   favoriteJob: document.querySelector("#favorite-job"),
   roleCategory: document.querySelector("#role-category"),
-  roleCategoryReferenceList: document.querySelector(
-    "#role-category-reference-list",
-  ),
   roles: document.querySelector("#roles"),
   roleOtherWrap: document.querySelector("#role-other-wrap"),
   roleOther: document.querySelector("#role-other"),
@@ -649,7 +680,6 @@ function populateRoleOptions() {
     els.roleCategory.append(new Option(category, category)),
   );
   renderRoleOptions();
-  renderRoleCategoryReference();
   updateRoleFilterOptions([]);
   updateIndustryFilterOptions([]);
 }
@@ -660,30 +690,6 @@ function getRoleCategory(role) {
 
 function getRoleCategoryIcon(category) {
   return ROLE_CATEGORY_ICONS[category] || "?";
-}
-
-function renderRoleCategoryReference() {
-  els.roleCategoryReferenceList.replaceChildren();
-  ROLE_CATEGORIES.forEach((category) => {
-    const item = document.createElement("div");
-    item.className = "role-category-reference-item";
-
-    const icon = document.createElement("span");
-    icon.className = "role-category-reference-icon";
-    icon.setAttribute("aria-hidden", "true");
-    icon.textContent = getRoleCategoryIcon(category);
-
-    const details = document.createElement("div");
-    const title = document.createElement("strong");
-    title.textContent = category;
-    const roles = document.createElement("span");
-    roles.textContent = ROLE_OPTIONS.filter(
-      (role) => getRoleCategory(role) === category,
-    ).join(", ");
-    details.append(title, roles);
-    item.append(icon, details);
-    els.roleCategoryReferenceList.append(item);
-  });
 }
 
 function renderRoleOptions() {
