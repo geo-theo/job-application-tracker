@@ -1,0 +1,55 @@
+https://assets.cfr.org/images/DataVisualizationSpring2027JD/DataVisualizationSpring2027JD.pdf
+
+Council on Foreign Relations
+58 East 68 Street, New York, NY 10065
+internships@cfr.org
+www.cfr.org
+POSITION ANNOUNCEMENT
+Title: Intern, Data Visualization
+Location: In person in New York Office
+Pay rate: $18.50/hr
+Founded in 1921, the Council on Foreign Relations (CFR) is a leading nonprofit membership organization,
+research center, and publisher, with headquarters in New York, an office in Washington, DC, and programs
+nationwide. It is dedicated to increasing America’s understanding of the world and contributing ideas to U.S.
+foreign policy. CFR’s 5,000+ members are leaders in international affairs and foreign policy. CFR also publishes
+Foreign Affairs, the preeminent magazine on global issues, and provides up-to-date information about the world and
+U.S. foreign policy on its award-winning website, CFR.org.
+CFR’s Blavatnik and Robina Franklin Williams internships give selected interns the opportunity to receive training
+in the field of foreign policy, as well as skills training in areas such as writing, research, and program planning and
+much more.
+
+As a nonpartisan organization dedicated to informing and educating a wide range of audiences about global issues
+and foreign policy choices, CFR recognizes the importance of continually engaging the next generation of digital
+talent. e intern's fresh perspective will be invaluable as we navigate the ever-changing multimedia landscape,
+helping us to continually mature the way we visually communicate complex issues.
+The major responsibilities of this position will include (but are not limited to):
+• Create compelling visual representations of complex data sets to aid in the understanding of key foreign
+policy issues
+• Collect and analyze data using tools like Excel or R/Python
+• Design data visualizations using tools like Adobe Illustrator, Figma, and Datawrapper
+• Assist with web development to create interactive graphics
+• Assist with style guide updates and internal process improvements
+• Develop engaging visual content for CFR’s social media channels, video, and email
+• Lead your own project, decided on with your supervisors, such as an article to be published on cfr.org, as a
+capstone project
+
+Qualifications:
+• Undergraduate or graduate student who has completed coursework or has experience in visual
+communication design, data visualization, data journalism, or a related field
+• All applicants should have completed the equivalent of four semesters of college coursework (not including
+AP classes in high school) by the time they begin an internship
+• Experience with Microsoft Excel or Google Sheets
+• Experience with Datawrapper; Adobe Creative Suit, including Illustrator; Python/R, Figma; and JavaScript
+(D3.js, ObservableHQ) is preferred but not required
+• Previous experience working in a newsroom is preferred
+• Strong attention to detail and resourcefulness
+• Please include a portfolio or links to relevant projects as part of your application
+CFR’s internships are funded by the generous gifts of the Blavatnik Family Foundation, Robina Foundation, and
+the Franklin Williams Family.
+e Council on Foreign Relations (CFR) is committed to fostering a foreign policy community in the United States
+that is more representative of American society, recognizing that diverse backgrounds and perspectives contribute to
+broader, more informed participation in the foreign policy debate and lead to an enhanced understanding of the
+world and the United States’role therein. To that end, CFR is dedicated to continuing to advance diversity, equity,
+and inclusion throughout its work and workplace by building a more diverse membership and staff, producing and
+dispensing thoughtful analysis on a broad range of foreign policy issues, and developing relevant, wide-reaching
+programming that also serves to expand the foreign policy talent pipeline to underrepresented populations.
