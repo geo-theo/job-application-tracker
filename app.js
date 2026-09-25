@@ -48,15 +48,16 @@ const ROLE_ICONS = {
   "Data Engineer": "DATA",
   "Product Engineer": "CODE",
   "Software Engineer": "CODE",
-  "Geopolitical Risk": "IR",
   "Geopolitical Risk Analyst": "IR",
-  Intelligence: "IR",
-  "Supply Chain Analyst": "SC",
-  Researcher: "RSC",
-  "Project Manager": "PM",
-  "Ops / Mgmt": "OPS",
-  "Business Development": "BD",
-  "Technical Writer": "TW",
+  "GEOSINT Analyst": "IR",
+  "Supply Chain Analyst": "SPECIALIST",
+  "Urban Planner": "SPECIALIST",
+  "Transportation Analyst": "SPECIALIST",
+  Researcher: "Academia",
+  "Project Manager": "BIZ",
+  "Ops / Mgmt": "BIZ",
+  "Business Development": "BIZ",
+  "Technical Writer": "BIZ",
   Technician: "!",
   "Retail / Customer Service": "!",
 };
@@ -64,17 +65,14 @@ const ROLE_ICONS = {
 const ROLE_CATEGORIES = unique([...Object.values(ROLE_ICONS), "Other"]);
 
 const ROLE_CATEGORY_ICONS = {
-  GIS: "⌖",
-  DATA: "▦",
-  CODE: "⌘",
-  IR: "◎",
-  SC: "↗",
-  RSC: "✦",
-  PM: "◆",
-  OPS: "⚙",
-  BD: "↗",
-  TW: "✎",
-  "!": "⚡",
+  GIS: "⌖ GIS",
+  DATA: "▦ DATA",
+  CODE: "⌘ CODE",
+  IR: "◎ IR",
+  SPECIALIST: "✎ SPECIALIST",
+  ACADEMIA: "✦ Academia",
+  BIZ: "↗ BIZ",
+  "!": "!",
   Other: "?",
 };
 
@@ -684,7 +682,9 @@ function renderRoleOptions() {
     return;
   }
 
-  const roles = ROLE_OPTIONS.filter((role) => getRoleCategory(role) === category);
+  const roles = ROLE_OPTIONS.filter(
+    (role) => getRoleCategory(role) === category,
+  );
   selectedFormRoles.forEach((role) => {
     if (getRoleCategory(role) === category && !roles.includes(role)) {
       roles.push(role);
@@ -700,7 +700,9 @@ function renderRoleOptions() {
 function syncRoleSelectionFromSelect() {
   const category = els.roleCategory.value;
   if (!category) return;
-  [...els.roles.options].forEach((option) => selectedFormRoles.delete(option.value));
+  [...els.roles.options].forEach((option) =>
+    selectedFormRoles.delete(option.value),
+  );
   getSelectedValues(els.roles).forEach((role) => selectedFormRoles.add(role));
 }
 
@@ -804,7 +806,9 @@ function usesUpcomingPriorityFilter(page = activePage) {
 
 function resetUnavailablePriorityFilters() {
   if (usesUpcomingPriorityFilter()) return;
-  filters.priorities = filters.priorities.filter((priority) => priority !== "Upcoming");
+  filters.priorities = filters.priorities.filter(
+    (priority) => priority !== "Upcoming",
+  );
 }
 
 function setFolderGate(
@@ -1421,7 +1425,9 @@ async function loadJobIntoForm(jobId) {
   els.favoriteJob.checked = Boolean(job.favoriteJob);
   const formRoles = normalizeRolesForForm(job.roles || [], job.roleOther);
   selectedFormRoles = new Set(formRoles);
-  els.roleCategory.value = formRoles.length ? getRoleCategory(formRoles[0]) : "";
+  els.roleCategory.value = formRoles.length
+    ? getRoleCategory(formRoles[0])
+    : "";
   renderRoleOptions();
   els.roleOther.value = job.roleOther || "";
   els.jobDescription.value = await getDescription(job.id);
@@ -1721,10 +1727,7 @@ function getPageJobs(page = activePage) {
     return nonUpcomingJobs.filter((job) => matchesJobType(job, "Internship"));
   if (page === "part-time")
     return nonUpcomingJobs.filter((job) => matchesJobType(job, "Part-time"));
-  if (page === "upcoming")
-    return pendingJobs.filter(
-      isUpcomingJob,
-    );
+  if (page === "upcoming") return pendingJobs.filter(isUpcomingJob);
   if (page === "favorites") return pendingJobs.filter(isFavoriteJob);
   return nonUpcomingJobs;
 }
