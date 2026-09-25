@@ -1316,42 +1316,37 @@ button:focus-visible {
   line-height: 1;
 }
 
-.chip.role-0 {
-  background: #e1f0ed;
-  color: #005c52;
-}
-
-.chip.role-1 {
-  background: #e9edfb;
-  color: #264f91;
-}
-
-.chip.role-2 {
-  background: #f1e8fb;
-  color: #5a388c;
-}
-
-.chip.role-3 {
-  background: #f7eadb;
-  color: #8f440f;
-}
-
-.chip.role-4 {
-  background: #e5f1fb;
-  color: #1d5d83;
-}
-
-.chip.role-5 {
+.chip.role-category-gis {
   background: #ecf0dd;
   color: #49630f;
 }
 
-.chip.role-6 {
-  background: #fbe7ef;
-  color: #8a2851;
+.chip.role-category-data {
+  background: #e6edf8;
+  color: #274f83;
 }
 
-.chip.role-7 {
+.chip.role-category-specialist {
+  background: #f1e8fb;
+  color: #5a388c;
+}
+
+.chip.role-category-academia {
+  background: #fff0df;
+  color: #8f440f;
+}
+
+.chip.role-category-biz {
+  background: #e1f0ed;
+  color: #005c52;
+}
+
+.chip.role-category-alert {
+  background: #fde8e4;
+  color: var(--red);
+}
+
+.chip.role-category-other {
   background: #ede7df;
   color: #5b4a39;
 }

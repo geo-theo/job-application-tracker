@@ -5,6 +5,7 @@
 const sessionJobs = new Map();
 const sessionCompanies = new Map();
 const sessionDescriptions = new Map();
+const ANNUAL_WORK_HOURS = 8 * 21 * 12;
 
 const ROLE_OPTIONS = [
   "Cartographer",
@@ -14,17 +15,22 @@ const ROLE_OPTIONS = [
   "Remote Sensing Tech/Analyst",
   "Survey/UAV/3D Tech/Analyst",
   "Asset Mgmt Tech/Analyst",
+  "Geospatial Project Manager",
   "Supply Chain Analyst",
   "Geopolitical Risk Analyst",
   "GEOSINT Analyst",
   "Urban Planner",
   "Transportation Analyst",
+  "Consultant",
   "Data Analyst",
   "Data Steward",
   "Data Viz",
   "Data Engineer",
+  "Cloud Engineer",
   "Product Engineer",
   "Software Engineer",
+  "AI Engineer",
+  "QA Tester",
   "Project Manager",
   "Ops / Mgmt",
   "Business Development",
@@ -45,19 +51,25 @@ const ROLE_ICONS = {
   "Remote Sensing Tech/Analyst": "GIS",
   "Survey/UAV/3D Tech/Analyst": "GIS",
   "Asset Mgmt Tech/Analyst": "GIS",
+  "Geospatial Project Manager": "GIS",
   "Data Analyst": "DATA",
   "Data Steward": "DATA",
   "Data Viz": "DATA",
   "Data Engineer": "DATA",
+  "Cloud Engineer": "DATA",
   "Product Engineer": "DATA",
   "Software Engineer": "DATA",
+  "AI Engineer": "DATA",
+  "QA Tester": "DATA",
   "Geopolitical Risk Analyst": "SPECIALIST",
   "GEOSINT Analyst": "SPECIALIST",
   "Supply Chain Analyst": "SPECIALIST",
   "Urban Planner": "SPECIALIST",
   "Transportation Analyst": "SPECIALIST",
   "Data Journalist": "SPECIALIST",
-  Researcher: "Academia",
+  Consultant: "SPECIALIST",
+  Researcher: "ACADEMIA",
+  Teacher: "ACADEMIA",
   "Project Manager": "BIZ",
   "Ops / Mgmt": "BIZ",
   "Business Development": "BIZ",
@@ -71,8 +83,8 @@ const ROLE_CATEGORIES = unique([...Object.values(ROLE_ICONS), "Other"]);
 const ROLE_CATEGORY_ICONS = {
   GIS: "◎ GIS",
   DATA: "⌘ DATA",
-  SPECIALIST: "✎ SPECIALIST",
-  ACADEMIA: "✦ Academia",
+  SPECIALIST: "✎ SPL",
+  ACADEMIA: "⌂ ACD",
   BIZ: "↗ BIZ",
   "!": "!",
   Other: "?",
@@ -2514,20 +2526,27 @@ function chip(text, extraClass) {
 }
 
 function roleChip(role) {
-  const span = chip(role, `role-${getRoleStyleIndex(role)}`);
+  const category = getRoleCategory(role);
+  const span = chip(role, `role-category-${getRoleCategoryClass(category)}`);
   const icon = document.createElement("span");
   icon.className = "chip-icon";
   icon.setAttribute("aria-hidden", "true");
-  icon.textContent = getRoleCategoryIcon(getRoleCategory(role));
-  icon.title = `${getRoleCategory(role)} category`;
+  icon.textContent = getRoleCategoryIcon(category);
+  icon.title = `${category} category`;
   span.prepend(icon);
   return span;
 }
 
-function getRoleStyleIndex(role) {
-  const optionIndex = ROLE_OPTIONS.indexOf(role);
-  if (optionIndex >= 0) return optionIndex % 8;
-  return hashString(role) % 8;
+function getRoleCategoryClass(category) {
+  const classes = {
+    GIS: "gis",
+    DATA: "data",
+    SPECIALIST: "specialist",
+    ACADEMIA: "academia",
+    BIZ: "biz",
+    "!": "alert",
+  };
+  return classes[category] || "other";
 }
 
 function getIndustryDisplay(job) {
@@ -2692,29 +2711,44 @@ function getDeadlineChoice(job) {
 }
 
 function getPayDisplay(job) {
-  const min = parseNumber(job.payMin);
-  const max = parseNumber(job.payMax);
-  const midpoint = parseNumber(job.payMidpoint);
-  const suffix = job.payType ? ` ${job.payType.toLowerCase()}` : "";
+  const isHourly = String(job.payType || "").toLowerCase() === "hourly";
+  const annualize = (value) =>
+    isHourly && Number.isFinite(value) ? value * ANNUAL_WORK_HOURS : value;
+  const min = annualize(parseNumber(job.payMin));
+  const max = annualize(parseNumber(job.payMax));
+  const midpoint = annualize(parseNumber(job.payMidpoint));
+  const suffix = isHourly
+    ? " annualized"
+    : job.payType
+      ? ` ${job.payType.toLowerCase()}`
+      : "";
   if (Number.isFinite(min) && Number.isFinite(max)) {
     return {
       main: `${formatCurrency(min)} - ${formatCurrency(max)}`,
       detail: midpoint
         ? `Mid ${formatCurrency(midpoint)}${suffix}`
-        : job.payType || "",
+        : isHourly
+          ? "Annualized"
+          : job.payType || "",
     };
   }
   if (Number.isFinite(midpoint)) {
     return {
       main: `Avg ${formatCurrency(midpoint)}`,
-      detail: job.payType || "",
+      detail: isHourly ? "Annualized" : job.payType || "",
     };
   }
   if (Number.isFinite(min)) {
-    return { main: `Avg ${formatCurrency(min)}`, detail: job.payType || "" };
+    return {
+      main: `Avg ${formatCurrency(min)}`,
+      detail: isHourly ? "Annualized" : job.payType || "",
+    };
   }
   if (Number.isFinite(max)) {
-    return { main: `Avg ${formatCurrency(max)}`, detail: job.payType || "" };
+    return {
+      main: `Avg ${formatCurrency(max)}`,
+      detail: isHourly ? "Annualized" : job.payType || "",
+    };
   }
   return { main: "", detail: "" };
 }

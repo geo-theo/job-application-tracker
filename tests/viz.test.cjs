@@ -10,7 +10,7 @@ const context = vm.createContext({
 for (const filename of ["viz-geography.js", "locations.js", "app.js", "viz.js"]) {
   vm.runInContext(fs.readFileSync(path.join(__dirname, "..", filename), "utf8"), context);
 }
-const api = vm.runInContext("({ JOB_CSV_COLUMNS, LOCATION_JOB_FIELDS, getVizJobs, vizPay, vizAveragePay, vizPaySummary, vizSalaryGroups, vizFlowModel, vizAwaitingReply, vizIsPublicPurpose, vizLocation, vizLocationGroups, vizMapCountries, vizCountryBounds, vizPlaceSummary, vizActivityModel, vizActivityMetrics, vizDate, vizToday, vizCalendarRange, vizPeriodRange, vizInRange, vizMissionChange, getIndustryDisplay, industryForForm, normalizeRolesForForm, splitList, parseJobsCsv, parseCompaniesCsv, joinJobsWithCompanies, resolveJobLocation, canonicalLocationFieldsForJob, vizGeocodeResult, SECTOR_OPTIONS_BY_INDUSTRY, vizState })", context);
+const api = vm.runInContext("({ JOB_CSV_COLUMNS, LOCATION_JOB_FIELDS, getVizJobs, vizPay, vizAveragePay, vizPaySummary, vizSalaryGroups, vizFlowModel, vizAwaitingReply, vizIsPublicPurpose, vizLocation, vizLocationGroups, vizMapCountries, vizCountryBounds, vizPlaceSummary, vizActivityModel, vizActivityMetrics, vizDate, vizToday, vizCalendarRange, vizPeriodRange, vizInRange, vizMissionChange, getIndustryDisplay, industryForForm, normalizeRolesForForm, getRoleCategoryClass, splitList, parseJobsCsv, parseCompaniesCsv, joinJobsWithCompanies, resolveJobLocation, canonicalLocationFieldsForJob, vizGeocodeResult, SECTOR_OPTIONS_BY_INDUSTRY, vizState })", context);
 const plain = (value) => JSON.parse(JSON.stringify(value));
 
 test("reference definitions are excluded before all scopes and aggregations", () => {
@@ -94,6 +94,15 @@ test("form values preserve legacy and custom classifications without inventing c
   assert.deepEqual(plain(api.industryForForm({ industry: "Other", industryOther: "Food & Beverage" }, ["", "Other"])), { value: "Other", other: "Food & Beverage" });
   assert.deepEqual(plain(api.normalizeRolesForForm(["GIS / Geospatial"], "")), ["GIS / Geospatial"]);
   assert.deepEqual(plain(api.splitList("Academia; Academia; Govt")), ["Academia", "Govt"]);
+});
+
+test("role chip classes are stable by category", () => {
+  assert.deepEqual(
+    ["GIS", "DATA", "SPECIALIST", "ACADEMIA", "BIZ", "!", "Other"].map(
+      api.getRoleCategoryClass,
+    ),
+    ["gis", "data", "specialist", "academia", "biz", "alert", "other"],
+  );
 });
 
 test("classification option labels save the value shown to the user", () => {
