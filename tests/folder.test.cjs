@@ -6,6 +6,14 @@ const vm = require("node:vm");
 const { webcrypto } = require("node:crypto");
 
 const source = fs.readFileSync(path.join(__dirname, "..", "app.js"), "utf8");
+const geographySource = fs.readFileSync(
+  path.join(__dirname, "..", "viz-geography.js"),
+  "utf8",
+);
+const locationsSource = fs.readFileSync(
+  path.join(__dirname, "..", "locations.js"),
+  "utf8",
+);
 const plain = (value) => JSON.parse(JSON.stringify(value));
 
 function app() {
@@ -26,6 +34,8 @@ function app() {
     get localStorage() { throw new Error("Old browser storage accessed"); },
     fetch() { throw new Error("Unexpected repository fetch"); },
   });
+  vm.runInContext(geographySource, context);
+  vm.runInContext(locationsSource, context);
   vm.runInContext(source, context);
   // Keep the real startup, storage, folder, parsing, joining and sync behavior;
   // replace only DOM rendering and event wiring in this integration harness.
@@ -196,6 +206,25 @@ test("repository selection resolves its db folder even when CSV files are absent
   const data = folder("db", {}, { "job-descriptions": folder("job-descriptions") });
   assert.equal(await instance.api.getDataDirectoryHandle(folder("repo", {}, { db: data })), data);
   assert.equal(await instance.api.getDataDirectoryHandle(data), data);
+});
+
+test("applied CSV rows discard pre-application priority", () => {
+  const instance = app();
+  const parseJobsCsv = vm.runInContext("parseJobsCsv", instance.context);
+  const rows = parseJobsCsv([
+    "id,appliedStatus,appliedDate,finalStatus,priority",
+    "pending,,,,Urgent",
+    "applied,Yes,2026-09-20,,High",
+    "accepted,,,Accepted,Medium",
+    "reference,No,,,Low",
+  ].join("\n"));
+  const priorities = Object.fromEntries(rows.map((job) => [job.id, job.priority]));
+  assert.deepEqual(priorities, {
+    pending: "Urgent",
+    applied: "",
+    accepted: "",
+    reference: "Future",
+  });
 });
 
 test("the actual repository CSVs load exclusively from the selected folder", async () => {

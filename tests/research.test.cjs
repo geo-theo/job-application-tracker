@@ -8,7 +8,7 @@ const context = vm.createContext({
   document: { querySelector: () => null, querySelectorAll: () => [], addEventListener() {} },
   window: { location: { hash: "#research" } },
 });
-for (const filename of ["app.js", "viz-geography.js", "viz.js", "research.js"]) {
+for (const filename of ["viz-geography.js", "locations.js", "app.js", "viz.js", "research.js"]) {
   vm.runInContext(fs.readFileSync(path.join(__dirname, "..", filename), "utf8"), context);
 }
 const api = vm.runInContext("({ getResearchJobs, researchAnalyzeDescriptions, researchGroups, researchDescriptionSections, researchCandidateCorpus, researchDescriptionGroups, researchCandidateMetrics, researchRankedMetrics, researchEvidenceSnippets, researchNormalizeText, parseJobsCsv, parseCompaniesCsv, joinJobsWithCompanies, isAppliedJob, isReferenceJob })", context);

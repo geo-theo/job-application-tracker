@@ -1198,7 +1198,9 @@ function collectFormData(companyId = "") {
   const priority =
     appliedStatus === "No"
       ? "Future"
-      : normalizePriority(getRadioValue("priority"));
+      : appliedStatus === "Yes"
+        ? ""
+        : normalizePriority(getRadioValue("priority"));
   const responseStatus = getAppliedLifecycleChoice(
     "responseStatus",
     appliedStatus,
@@ -1366,7 +1368,10 @@ async function loadJobIntoForm(jobId) {
   setRadioValue("payType", job.payType || "");
   els.payMin.value = job.payMin || "";
   els.payMax.value = job.payMax || "";
-  setRadioValue("priority", normalizePriority(job.priority));
+  setRadioValue(
+    "priority",
+    isAppliedJob(job) ? "" : normalizePriority(job.priority),
+  );
   els.datePosted.value = job.datePosted || "";
   els.deadlineChoice.value = getDeadlineChoice(job);
   els.deadline.value = job.deadline || "";
@@ -1475,7 +1480,9 @@ function syncConditionalFields() {
 
 function handlePriorityChange(event) {
   const changedInput = event.currentTarget;
-  if (changedInput.value === "Future" && changedInput.checked) {
+  if (changedInput.checked && getRadioValue("appliedStatus") === "Yes") {
+    setRadioValue("priority", "");
+  } else if (changedInput.value === "Future" && changedInput.checked) {
     setRadioValue("appliedStatus", "No");
   } else if (changedInput.checked && getRadioValue("appliedStatus") === "No") {
     setRadioValue("appliedStatus", "");
@@ -1494,10 +1501,7 @@ function handleAppliedStatusChange(event) {
   const appliedStatus = getRadioValue("appliedStatus");
   if (appliedStatus === "No") {
     setRadioValue("priority", "Future");
-  } else if (
-    appliedStatus === "Yes" &&
-    getRadioValue("priority") === "Future"
-  ) {
+  } else if (appliedStatus === "Yes") {
     setRadioValue("priority", "");
   } else if (
     changedInput.value === "No" &&
@@ -3313,9 +3317,13 @@ function csvRowToJob(header, row) {
   const jobTypes = getImportedJobTypes(record);
   const appliedStatus =
     record.appliedStatus || (record.appliedDate ? "Yes" : "");
-  const priority =
-    appliedStatus === "No" ? "Future" : normalizePriority(record.priority);
   const finalStatus = getImportedFinalStatus(record);
+  const priority =
+    appliedStatus === "No"
+      ? "Future"
+      : appliedStatus === "Yes" || finalStatus
+        ? ""
+        : normalizePriority(record.priority);
   const finalStatusDate = isDatedFinalStatus(finalStatus)
     ? record.finalStatusDate || ""
     : "";
